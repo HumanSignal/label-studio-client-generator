@@ -17,6 +17,11 @@ Install the Label Studio SDK using pip:
 ```
 pip install label-studio-sdk
 ```
+or
+```
+poetry add label-studio-sdk
+```
+
 
 ## Authentication
 In your Python script, do the following:
@@ -213,7 +218,9 @@ for task in tasks:
 
 Read more about export formats in the [Label Studio SDK documentation](https://labelstud.io/guide/export).
 
-## Handling Errors
+## Advanced
+
+### Handling Errors
 
 If you encounter an error while using the Label Studio Python SDK, you can catch the error and handle it in your script.
 
@@ -228,3 +235,39 @@ except ApiError as e:
 ```
 
 Annotations are exported in the format specified in the [Label Studio JSON format](tasks.html#Basic-Label-Studio-JSON-format).
+
+### Timeouts
+By default, requests time out after 60 seconds. You can configure this with a 
+timeout option at the client or request level.
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+ls = LabelStudio(
+    # All timeouts set to 20 seconds
+    timeout=20.0
+)
+
+ls.projects.create(..., {
+    # Override timeout for a specific method
+    timeout=20.0
+})
+```
+
+### Custom HTTP client
+You can override the httpx client to customize it for your use-case. Some common use-cases 
+include support for proxies and transports.
+
+```python
+import httpx
+
+from label_studio_sdk.client import LabelStudio
+
+ls = LabelStudio(
+    http_client=httpx.Client(
+        proxies="http://my.test.proxy.example.com",
+        transport=httpx.HTTPTransport(local_address="0.0.0.0"),
+    ),
+)
+```
+
