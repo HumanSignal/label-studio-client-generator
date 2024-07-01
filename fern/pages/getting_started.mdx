@@ -218,6 +218,31 @@ for task in tasks:
 
 Read more about export formats in the [Label Studio SDK documentation](https://labelstud.io/guide/export).
 
+## SDK versions and compatibility
+
+In June 2024, we released SDK 1.0. The previous SDK (version &lt; 1) is deprecated and no longer supported. We recommend upgrading to [the latest version](https://github.com/HumanSignal/label-studio-sdk). 
+
+If you still want to use the older version, you can install it using `pip install "label-studio-sdk<1"`. 
+
+You can also check out an older branch version in the GitHub repository:
+
+```sh
+git clone https://github.com/HumanSignal/label-studio-sdk.git
+cd label-studio-sdk
+git fetch origin
+git checkout release/0.0.34
+```
+
+Or you can simply modify you code to change the import stream as follows:
+
+```python
+from label_studio_sdk._legacy import Client
+from label_studio_sdk.data_manager import Filters, Column, Operator, Type
+from label_studio_sdk._legacy import Project
+```
+
+If you're looking for the documentation for the older version, you can find it [here](https://labelstud.io/sdk/).
+
 ## Advanced
 
 ### Handling Errors
