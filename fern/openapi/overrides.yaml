@@ -1673,208 +1673,40 @@ components:
             type: integer
           description: List of comment authors' IDs for this task
     data_manager_task_serializer:
-      required:
-        - data
-      type: object
       properties:
-        id:
-          title: ID
-          type: integer
-          readOnly: true
-        predictions:
-          title: Predictions
-          type: array
-          readOnly: true
-          description: Predictions for this task
-          items:
-            type: object
-            title: Prediction object
-            properties:
-              result:
-                type: array
-                title: Prediction result
-                items:
-                  type: object
-                  title: Prediction result item
-              score:
-                type: number
-                title: Prediction score
-              model_version:
-                type: string
-                title: Model version
-              model:
-                type: object
-                title: ML Backend instance
-              model_run:
-                type: object
-                title: Model Run instance
-              task:
-                type: integer
-                title: Task ID related to the prediction
-              project:
-                type: number
-                title: Project ID related to the prediction
-              created_at:
-                type: string
-                format: date-time
-                title: Creation time
-              updated_at:
-                type: string
-                format: date-time
-                title: Last update time
-        annotations:
-          type: array
-          items:
-            $ref: "#/components/schemas/AnnotationsDMField"
-          readOnly: true
-          default: []
-        drafts:
-          title: Annotation drafts
-          type: array
-          readOnly: true
-          description: Drafts for this task
-          items:
-            type: object
-            title: Draft object
-            properties:
-              result:
-                type: array
-                title: Draft result
-                items:
-                  type: object
-                  title: Draft result item
-              created_at:
-                type: string
-                format: date-time
-                title: Creation time
-              updated_at:
-                type: string
-                format: date-time
-                title: Last update time
         annotators:
           title: Annotators
           type: array
           readOnly: true
           description: Annotators who annotated this task
           items:
+            type: object
             anyOf:
               - type: integer
               - type: object
-        inner_id:
-          title: Inner id
-          type: integer
-        cancelled_annotations:
-          title: Cancelled annotations
-          type: integer
-        total_annotations:
-          title: Total annotations
-          type: integer
-        total_predictions:
-          title: Total predictions
-          type: integer
-        completed_at:
-          title: Completed at
-          type: string
-          format: date-time
-        annotations_results:
-          title: Annotations results
-          type: string
-          readOnly: true
-        predictions_results:
-          title: Predictions results
-          type: string
-          readOnly: true
-        predictions_score:
-          title: Predictions score
-          type: number
+    BaseTask:
+      properties:
         file_upload:
-          title: File upload
-          type: string
-          readOnly: true
-        storage_filename:
-          title: Storage filename
-          type: string
-          readOnly: true
-        annotations_ids:
-          title: Annotations ids
-          type: string
-          readOnly: true
-        predictions_model_versions:
-          title: Predictions model versions
-          type: string
-          readOnly: true
-        avg_lead_time:
-          title: Avg lead time
-          type: number
-        draft_exists:
-          title: Draft exists
-          type: boolean
+          type: object
+          anyOf:
+            - type: string
+              title: File upload
+              description: Uploaded file used as data source for this task
+              nullable: true
+            - type: integer
+              title: File upload ID
+              description: Uploaded file ID used as data source for this task
+              nullable: true
         updated_by:
-          title: User IDs
-          type: array
-          readOnly: true
-          description: User IDs who updated this task
-          items:
-            type: object
-            title: User IDs
-        data:
-          title: Data
-          description: User imported or uploaded data for a task. Data is formatted
-            according to the project label config. You can find examples of data
-            for your project on the Import page in the Label Studio Data Manager
-            UI.
           type: object
-        meta:
-          title: Meta
-          description: Meta is user imported (uploaded) data and can be useful as input
-            for an ML Backend for embeddings, advanced vectors, and other info.
-            It is passed to ML during training/predicting steps.
-          type: object
-          nullable: true
-        created_at:
-          title: Created at
-          description: Time a task was created
-          type: string
-          format: date-time
-          readOnly: true
-        updated_at:
-          title: Updated at
-          description: Last time a task was updated
-          type: string
-          format: date-time
-          readOnly: true
-        is_labeled:
-          title: Is_labeled
-          description: True if the number of annotations for this task is greater than or
-            equal to the number of maximum_completions for the project
-          type: boolean
-        overlap:
-          title: Overlap
-          description: Number of distinct annotators that processed the current task
-          type: integer
-        comment_count:
-          title: Comment count
-          description: Number of comments in the task including all annotations
-          type: integer
-        unresolved_comment_count:
-          title: Unresolved comment count
-          description: Number of unresolved comments in the task including all annotations
-          type: integer
-        last_comment_updated_at:
-          title: Last comment updated at
-          description: When the last comment was updated
-          type: string
-          format: date-time
-          nullable: true
-        project:
-          title: Project
-          description: Project ID for this task
-          type: integer
-          nullable: true
-        comment_authors:
-          description: Users who wrote comments
-          type: array
-          items:
-            description: Users who wrote comments
-            type: integer
-          uniqueItems: true
+          anyOf:
+            - type: integer
+              title: Updated by
+              description: Last annotator who updated this task
+              nullable: true
+            - type: array
+              title: Updated by
+              description: Last annotators or reviewers who updated this task
+              items:
+                  type: object
+              nullable: true
