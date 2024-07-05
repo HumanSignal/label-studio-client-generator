@@ -49,16 +49,19 @@ Specify the project title and the labeling configuration. Choose your labeling c
 
 For example, create a text classification project in your Python code:
 ```python
+from label_studio_sdk.labeling_interface import LabelInterface
+from label_studio_sdk.labeling_interface.create import choices
+
+# Define labeling interface
+label_config = LabelInterface.create({
+    'text': 'Text',
+    'label': choices(['Positive', 'Negative'])
+})
+
+# Create a project with the specified title and labeling configuration
 project = ls.projects.create(
     title='Text Classification',
-    label_config='''
-    <View>
-        <Text name="text" value="$text" />
-        <Choices name="label" toName="text" choice="single">
-            <Choice value="Positive" />
-            <Choice value="Negative" />
-        </Choices>
-    </View>'''
+    label_config=label_config
 )
 ```
 
@@ -125,14 +128,23 @@ You can add predictions to existing tasks in Label Studio in your Python script.
 
 For an existing simple image classification project, you can do the following to add predictions of "Dog" for image tasks that you retrieve:
 ```python
+from label_studio_sdk.label_interface import LabelInterface
+from label_studio_sdk.label_interface.objects import PredictionValue
+
+project = ls.projects.get(id=123)
+
+li = LabelInterface(project.label_config)
+
 tasks = ls.tasks.list(project=project.id, include='id')
 for task in tasks:
-    ls.predictions.create(
-        task=task.id,
-        result=[{'from_name': 'label', 'to_name': 'text', 'type': 'choices', 'value': {'choices': ['Positive']}}],
+    # create predicted label per task, using `label` control tag name
+    predicted_label = li.get_control('label').label(choices=['Positive'])
+    prediction = PredictionValue(
+        model_version='my-super-ai',
         score=0.99,
-        model_version='my-super-ai'
+        result=[predicted_label]
     )
+    ls.predictions.create(task=task.id, **prediction.model_dump())
 ```
 
 For another example, see the [Jupyter notebook example of importing pre-annotated data](https://github.com/heartexlabs/label-studio-sdk/blob/master/examples/import_preannotations/import_preannotations.ipynb).
