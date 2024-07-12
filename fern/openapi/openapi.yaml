@@ -5837,6 +5837,77 @@ paths:
         required: true
         schema:
           type: string
+          
+#  /api/storages/s3s/:
+#    get:
+#      summary: List import storages
+#      description: >
+#
+#        You can connect your S3 bucket to Label Studio as a source storage or target storage. Use this API request to get a list of all Google import (source) storage connections for a specific project.
+#
+#
+#        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
+#
+#
+#        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+#      parameters:
+#        - name: project
+#          in: query
+#          description: Project ID
+#          schema:
+#            type: integer
+#      responses:
+#        "200":
+#          description: ""
+#          content:
+#            application/json:
+#              schema:
+#                type: array
+#                items:
+#                  $ref: "./resources/s3s.yaml#/components/schemas/S3SImportStorage"
+#      x-fern-sdk-group-name:
+#        - import_storage
+#        - s3s
+#      x-fern-sdk-method-name: list
+#      x-fern-audiences:
+#        - public
+
+#  /api/storages/s3s/:
+#    $ref: "./resources/s3s.yaml#/paths/~1api~1storages~1s3s~1"
+#    get:
+#      summary: List import storages
+#      description: >
+#
+#        You can connect your S3 bucket to Label Studio as a source storage or target storage. Use this API request to get a list of all Google import (source) storage connections for a specific project.
+#
+#
+#        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
+#
+#
+#        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+#      parameters:
+#        - name: project
+#          in: query
+#          description: Project ID
+#          schema:
+#            type: integer
+#      responses:
+#        "200":
+#          description: ""
+#          content:
+#            application/json:
+#              schema:
+#                type: array
+#                items:
+#                  type: object
+#      x-fern-sdk-group-name:
+#        - import_storage
+#        - s3s
+#      x-fern-sdk-method-name: list
+#      x-fern-audiences:
+#        - public
+
+
   /api/storages/s3/:
     get:
       operationId: api_storages_s3_list

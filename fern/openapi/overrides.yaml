@@ -1153,7 +1153,347 @@ paths:
         Sync operations with external buckets only go one way. They either create tasks from objects in the bucket (source/import storage) or push annotations to the output bucket (export/target storage). Changing something on the bucket side doesn’t guarantee consistency in results.
 
 
-        <Note>Before proceeding, you should review [How sync operations work - Source storage](https://labelstud.io/guide/storage#Source-storage) to ensure that your data remains secure and private.</Note> 
+        <Note>Before proceeding, you should review [How sync operations work - Source storage](https://labelstud.io/guide/storage#Source-storage) to ensure that your data remains secure and private.</Note>
+
+  /api/storages/s3s/:
+    get:
+      summary: List import storages
+      description: >
+        
+        You can connect your S3 bucket to Label Studio as a source storage or target storage. Use this API request to get a list of all Google import (source) storage connections for a specific project. 
+
+
+        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list). 
+
+
+        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+      parameters:
+        - name: project
+          in: query
+          description: Project ID
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/S3SImportStorage"
+      x-fern-sdk-group-name:
+        - import_storage
+        - s3s
+      x-fern-sdk-method-name: list
+      x-fern-audiences:
+        - public
+    post:
+      summary: Create import storage
+      description: >
+
+        Create a new source storage connection to a S3 bucket.
+
+
+        For information about the required fields and prerequisites, see [Amazon S3](https://labelstud.io/guide/storage#Amazon-S3) in the Label Studio documentation.
+
+
+        <Info>Ensure you configure CORS before adding cloud storage. This ensures you will be able to see the content of the data rather than just a link.</Info>
+
+
+        <Tip>After you add the storage, you should validate the connection before attempting to sync your data. Your data will not be imported until you [sync your connection](sync).</Tip>
+      requestBody:
+        $ref: "#/components/requestBodies/api_storages_s3s_createData"
+      responses:
+        "201":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/S3SImportStorage"
+      x-fern-sdk-group-name:
+        - import_storage
+        - s3s
+      x-fern-sdk-method-name: create
+      x-fern-audiences:
+        - public
+  /api/storages/s3s/{id}:
+    get:
+        summary: Get import storage
+        description: >
+    
+            Get a specific S3 import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
+        parameters:
+          - name: id
+            in: path
+            description: Import storage ID
+            required: true
+            schema:
+              type: integer
+        responses:
+            "200":
+                description: ""
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/S3SImportStorage"
+        x-fern-sdk-group-name:
+          - import_storage
+          - s3s
+        x-fern-sdk-method-name: get
+        x-fern-audiences:
+          - public
+    patch:
+      summary: Update import storage
+      description: >
+
+        Update a specific S3 import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
+
+
+        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+      parameters:
+        - name: id
+          in: path
+          description: Import storage ID
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        $ref: "#/components/requestBodies/api_storages_s3s_createData"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/S3SImportStorage"
+      x-fern-sdk-group-name:
+        - import_storage
+        - s3s
+      x-fern-sdk-method-name: update
+      x-fern-audiences:
+        - public
+    delete:
+      summary: Delete import storage
+      description: >
+
+        Delete a specific S3 import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
+
+
+        Deleting a source storage connection does not affect tasks with synced data in Label Studio. The sync process is designed to import new or updated tasks from the connected storage into the project, but it does not track deletions of files from the storage. Therefore, if you remove the external storage connection, the tasks that were created from that storage will remain in the project.
+
+
+        If you want to remove the tasks that were synced from the external storage, you will need to delete them manually from within the Label Studio UI or use the [Delete tasks](../../tasks/delete-all-tasks) API.
+      parameters:
+        - name: id
+          in: path
+          description: Import storage ID
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: "Storage deleted"
+      x-fern-sdk-group-name:
+        - import_storage
+        - s3s
+      x-fern-sdk-method-name: delete
+      x-fern-audiences:
+        - public
+  /api/storages/s3s/validate:
+    post:
+      summary: Validate import storage
+      description: >
+
+        Validate a specific S3 import storage connection. This is useful to ensure that the storage configuration settings are correct and operational before attempting to import data.
+      requestBody:
+        $ref: "#/components/requestBodies/api_storages_s3s_createData"
+      responses:
+        "200":
+          description: "Validation successful"
+      x-fern-sdk-group-name:
+        - import_storage
+        - s3s
+      x-fern-sdk-method-name: validate
+      x-fern-audiences:
+        - public
+  /api/storages/s3s/{id}/sync:
+    post:
+      summary: Sync import storage
+      description: >
+
+        Sync tasks from an S3 import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
+      parameters:
+        - name: id
+          in: path
+          description: Storage ID
+          required: true
+          schema:
+            type: integer
+      responses:
+        "201":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/S3SImportStorage"
+      x-fern-sdk-group-name:
+        - import_storage
+        - s3s
+      x-fern-sdk-method-name: sync
+      x-fern-audiences:
+        - public
+
+
+  /api/storages/export/s3s/:
+    get:
+      summary: List export storages
+      description: > 
+        
+        You can connect your S3 bucket to Label Studio as a source storage or target storage. Use this API request to get a list of all S3 export (target) storage connections for a specific project. 
+
+
+        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list). 
+
+
+        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+      parameters:
+        - name: project
+          in: query
+          description: Project ID
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/S3SExportStorage"
+      x-fern-sdk-group-name:
+        - export_storage
+        - s3s
+      x-fern-sdk-method-name: list
+      x-fern-audiences:
+        - public
+
+    post:
+      summary: Create export storage
+      description: > 
+      
+        Create a new target storage connection to a S3 bucket with IAM role access.
+
+        
+        For information about the required fields and prerequisites, see [Amazon S3](https://docs.humansignal.com/guide/storage#Set-up-an-S3-connection-with-IAM-role-access) in the Label Studio documentation.
+      requestBody:
+        $ref: "#/components/requestBodies/api_storages_export_s3s_createData"
+      responses:
+        "201":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/S3SExportStorage"
+      x-fern-sdk-group-name:
+        - export_storage
+        - s3s
+      x-fern-sdk-method-name: create
+      x-fern-audiences:
+        - public
+  /api/storages/export/s3s/{id}:
+    get:
+        summary: Get export storage
+        description: >
+
+            Get a specific S3 export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
+        parameters:
+          - name: id
+            in: path
+            description: Export storage ID
+            required: true
+            schema:
+              type: integer
+        responses:
+          "200":
+            description: ""
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/S3SExportStorage"
+        x-fern-sdk-group-name:
+          - export_storage
+          - s3s
+        x-fern-sdk-method-name: get
+        x-fern-audiences:
+          - public
+    patch:
+      summary: Update export storage
+      description: >
+
+          Update a specific S3 export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
+      parameters:
+        - name: id
+          in: path
+          description: Export storage ID
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        $ref: "#/components/requestBodies/api_storages_export_s3s_createData"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/S3SExportStorage"
+      x-fern-sdk-group-name:
+        - export_storage
+        - s3s
+      x-fern-sdk-method-name: update
+      x-fern-audiences:
+        - public
+    delete:
+      summary: Delete export storage
+      description: >
+
+            Delete a specific S3 export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
+      parameters:
+        - name: id
+          in: path
+          description: Export storage ID
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: "Storage deleted"
+      x-fern-sdk-group-name:
+        - export_storage
+        - s3s
+      x-fern-sdk-method-name: delete
+      x-fern-audiences:
+        - public
+
+  /api/storages/export/s3s/validate:
+    post:
+      summary: Validate export storage
+      description: >
+
+        Validate a specific S3 export storage connection. This is useful to ensure that the storage configuration settings are correct and operational before attempting to export data.
+      requestBody:
+        $ref: "#/components/requestBodies/api_storages_export_s3s_createData"
+      responses:
+        "200":
+          description: "Validation successful"
+      x-fern-sdk-group-name:
+        - export_storage
+        - s3s
+      x-fern-sdk-method-name: validate
+      x-fern-audiences:
+        - public
 
   /api/storages/export/azure:
     get:
@@ -1710,3 +2050,280 @@ components:
               items:
                   type: object
               nullable: true
+    S3SImportStorage:
+      required:
+        - project
+      type: object
+      properties:
+        id:
+          title: ID
+          type: integer
+          readOnly: true
+        synchronizable:
+          title: Synchronizable
+          type: boolean
+          default: true
+        presign:
+          title: Presign
+          type: boolean
+          default: true
+        last_sync:
+          title: Last sync
+          description: Last sync finished time
+          type: string
+          format: date-time
+          nullable: true
+        last_sync_count:
+          title: Last sync count
+          description: Count of tasks synced last time
+          type: integer
+          nullable: true
+        last_sync_job:
+          title: Last_sync_job
+          description: Last sync job ID
+          type: string
+          maxLength: 256
+          nullable: true
+        status:
+          title: Status
+          type: string
+          enum:
+            - initialized
+            - queued
+            - in_progress
+            - failed
+            - completed
+        traceback:
+          title: Traceback
+          description: Traceback report for the last failed sync
+          type: string
+          nullable: true
+        meta:
+          title: Meta
+          description: Meta and debug information about storage processes
+          type: object
+          nullable: true
+        title:
+          title: Title
+          description: Cloud storage title
+          type: string
+          maxLength: 256
+          nullable: true
+        description:
+          title: Description
+          description: Cloud storage description
+          type: string
+          nullable: true
+        created_at:
+          title: Created at
+          description: Creation time
+          type: string
+          format: date-time
+          readOnly: true
+        bucket:
+          title: Bucket
+          description: S3 bucket name
+          type: string
+          nullable: true
+        prefix:
+          title: Prefix
+          description: S3 bucket prefix
+          type: string
+          nullable: true
+        regex_filter:
+          title: Regex_filter
+          description: Cloud storage regex for filtering objects
+          type: string
+          nullable: true
+        use_blob_urls:
+          title: Use_blob_urls
+          description: Interpret objects as BLOBs and generate URLs
+          type: boolean
+        region_name:
+          title: Region_name
+          description: AWS Region
+          type: string
+          nullable: true
+        external_id:
+          title: External ID
+          description: AWS External ID
+          type: string
+          nullable: true
+        role_arn:
+          title: Role ARN
+          description: AWS Role ARN
+          type: string
+          nullable: true
+        s3_endpoint:
+          title: S3_endpoint
+          description: S3 Endpoint
+          type: string
+          nullable: true
+        presign_ttl:
+          title: Presign_ttl
+          description: Presigned URLs TTL (in minutes)
+          type: integer
+        recursive_scan:
+          title: Recursive scan
+          description: Perform recursive scan over the bucket content
+          type: boolean
+        project:
+          title: Project
+          description: A unique integer value identifying this project.
+          type: integer
+    S3SExportStorage:
+      required:
+        - project
+      type: object
+      properties:
+        id:
+          title: ID
+          type: integer
+          readOnly: true
+        title:
+          title: Title
+          description: Cloud storage title
+          type: string
+          maxLength: 256
+          nullable: true
+        description:
+          title: Description
+          description: Cloud storage description
+          type: string
+          nullable: true
+        created_at:
+          title: Created at
+          description: Creation time
+          type: string
+          format: date-time
+          readOnly: true
+        bucket:
+          title: Bucket
+          description: S3 bucket name
+          type: string
+          nullable: true
+        prefix:
+          title: Prefix
+          description: S3 bucket prefix
+          type: string
+          nullable: true
+        external_id:
+          title: External ID
+          description: AWS External ID
+          type: string
+          nullable: true
+        role_arn:
+          title: Role ARN
+          description: AWS Role ARN
+          type: string
+          nullable: true
+        region_name:
+          title: Region_name
+          description: AWS Region
+          type: string
+          nullable: true
+        s3_endpoint:
+          title: S3_endpoint
+          description: S3 Endpoint
+          type: string
+          nullable: true
+        project:
+          title: Project
+          description: A unique integer value identifying this project.
+          type: integer
+
+  requestBodies:
+    api_storages_s3s_createData:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              regex_filter:
+                description: Cloud storage regex for filtering objects. You must specify it
+                  otherwise no objects will be imported.
+                type: string
+              use_blob_urls:
+                description: Interpret objects as BLOBs and generate URLs. For example, if your
+                  bucket contains images, you can use this option to generate
+                  URLs for these images. If set to False, it will read the
+                  content of the file and load it into Label Studio.
+                type: boolean
+                default: false
+              presign:
+                description: Presign URLs for download
+                type: boolean
+                default: true
+              presign_ttl:
+                description: Presign TTL in minutes
+                type: integer
+                default: 1
+              recursive_scan:
+                description: Scan recursively
+                type: boolean
+              title:
+                description: Storage title
+                type: string
+              description:
+                description: Storage description
+                type: string
+              project:
+                description: Project ID
+                type: integer
+              bucket:
+                description: S3 bucket name
+                type: string
+              prefix:
+                description: S3 bucket prefix
+                type: string
+              external_id:
+                description: AWS External ID
+                type: string
+              role_arn:
+                description: AWS Role ARN
+                type: string
+              region_name:
+                description: AWS Region
+                type: string
+              s3_endpoint:
+                description: S3 Endpoint
+                type: string
+      required: true
+
+    api_storages_export_s3s_createData:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              can_delete_objects:
+                description: Deletion from storage enabled.
+                type: boolean
+              title:
+                description: Storage title
+                type: string
+              description:
+                description: Storage description
+                type: string
+              project:
+                description: Project ID
+                type: integer
+              bucket:
+                description: S3 bucket name
+                type: string
+              prefix:
+                description: S3 bucket prefix
+                type: string
+              external_id:
+                description: AWS External ID
+                type: string
+              role_arn:
+                description: AWS Role ARN
+                type: string
+              region_name:
+                description: AWS Region
+                type: string
+              s3_endpoint:
+                description: S3 Endpoint
+                type: string
+      required: true

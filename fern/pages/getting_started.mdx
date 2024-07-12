@@ -33,6 +33,7 @@ In your Python script, do the following:
 ```python
 # Define the URL where Label Studio is accessible and the API key for your user account
 LABEL_STUDIO_URL = 'http://localhost:8080'
+# API key is available at the Account & Settings > Access Tokens page in Label Studio UI
 API_KEY = 'd6f8a2622d39e9d89ff0dfef1a80ad877f4ee9e3'
 
 # Import the SDK and the client module
@@ -64,6 +65,8 @@ project = ls.projects.create(
     label_config=label_config
 )
 ```
+
+`label_config` is XML string that represents [the labeling interface with object and control tags](https://labelstud.io/tags).
 
 For more about what you can do with the project module of the SDK, see the [project module SDK reference](https://labelstud.io/sdk/project.html).
 
@@ -118,6 +121,30 @@ You can import tasks from your script using the [Label Studio Python SDK client]
     )
     ```
 
+    More customizable way to import preannotations:
+
+    ```python
+    from label_studio_sdk.label_interface.objects import PredictionValue
+
+    # this returns the same `LabelInterface` object as above
+    li = ls.projects.get(id=project.id).get_label_interface()
+
+    # by specifying what fields to `include` we can speed up task loading
+    for task in ls.tasks.list(project=project.id, include=["id"]):
+        task_id = task.id
+        prediction = PredictionValue(
+            # tag predictions with specific model version string
+            # it can help managing multiple models in Label Studio UI
+            model_version='my_model_v1',
+            # define your labels here
+            result=[
+                li.get_control('label').label(['Positive']),
+                # ... add more labels if needed
+            ]
+        )
+        ls.predictions.create(task=task_id, **prediction.model_dump())
+    ```
+
     Read more about importing pre-annotations in the [Label Studio SDK documentation](https://labelstud.io/guide/predictions).
   </Accordion>
 </AccordionGroup>
@@ -133,7 +160,8 @@ from label_studio_sdk.label_interface.objects import PredictionValue
 
 project = ls.projects.get(id=123)
 
-li = LabelInterface(project.label_config)
+# LabelInterface provides a handy way to validate Label Studio JSON format for annotations and predictions
+li = project.get_label_interface()
 
 tasks = ls.tasks.list(project=project.id, include='id')
 for task in tasks:
@@ -148,10 +176,6 @@ for task in tasks:
 ```
 
 For another example, see the [Jupyter notebook example of importing pre-annotated data](https://github.com/heartexlabs/label-studio-sdk/blob/master/examples/import_preannotations/import_preannotations.ipynb).
-
-The image is specified in the `image` key using a public URL, and the prediction is referenced in an arbitrary `pet` key, which is then specified in the `preannotated_from_fields()` method.
-
-For more examples, see the [Jupyter notebook example of importing pre-annotated data](https://github.com/heartexlabs/label-studio-sdk/blob/master/examples/import_preannotations/import_preannotations.ipynb).
 
 ## Managing Labeling Jobs
 
