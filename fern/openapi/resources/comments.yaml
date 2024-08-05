@@ -44,11 +44,11 @@ paths:
           $ref: "#/components/requestBodies/api_comments_create"
       responses:
           "201":
-          description: ""
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Comment"
+            description: ""
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/Comment"
 
 
 components:
