@@ -1,4 +1,17 @@
 paths:
+  /api/comments/:
+    get:
+      $ref: "./resources/comments.yaml#/paths/~1api~1comments/get"
+      x-fern-sdk-group-name: comments
+      x-fern-sdk-method-name: list
+      x-fern-audiences:
+        - public
+    post:
+      $ref: "./resources/comments.yaml#/paths/~1api~1comments/post"
+      x-fern-sdk-group-name: comments
+      x-fern-sdk-method-name: create
+      x-fern-audiences:
+        - public
   "/api/annotations/{id}/":
     get:
       summary: Get annotation by its ID

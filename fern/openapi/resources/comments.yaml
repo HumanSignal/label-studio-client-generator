@@ -1,0 +1,118 @@
+paths:
+  /api/comments:
+    get:
+      summary: List comments
+      description: >
+            
+            Get a list of comments for a specific project.
+      parameters:
+        - name: project
+          in: query
+          description: Project ID
+          schema:
+            type: integer
+        - name: expand_created_by
+          in: query
+          description: Expand the created_by field with object instead of ID
+          schema:
+            type: boolean
+        - name: annotation
+          in: query
+          description: Annotation ID
+          schema:
+            type: integer
+        - name: project
+          in: query
+          description: Project ID
+          schema:
+              type: integer
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Comment"
+    post:
+      summary: Create comment
+      description: >
+              
+              Create a new comment.
+      requestBody:
+          $ref: "#/components/requestBodies/api_comments_create"
+      responses:
+          "201":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Comment"
+
+
+components:
+  schemas:
+    Comment:
+      required:
+        - id
+        - text
+        - project
+        - task
+        - annotation
+        - created_by
+        - created_at
+        - updated_at
+      type: object
+      properties:
+        id:
+          title: ID
+          type: integer
+        text:
+          title: Text
+          type: string
+        project:
+          title: Project
+          type: integer
+        task:
+          title: Task
+          type: integer
+        annotation:
+          title: Annotation
+          type: integer
+        created_by:
+          anyOf:
+            - type: integer
+            - type: object
+        created_at:
+          title: Created at
+          type: string
+          format: date-time
+        updated_at:
+          title: Updated at
+          type: string
+          format: date-time
+        is_resolved:
+          title: Is resolved
+          type: boolean
+        resolved_at:
+          title: Resolved at
+          type: string
+          format: date-time
+
+  requestBodies:
+    api_comments_create:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              annotation:
+                title: Annotation
+                type: integer
+              project:
+                title: Project
+                type: integer
+              text:
+                title: Comment message
+                type: string
