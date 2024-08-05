@@ -17,9 +17,9 @@ groups:
         github:
           repository: HumanSignal/label-studio-sdk
           # Specify branch here if you want to push to a specific branch
-#          branch: fern-bot/07-12-2024-1241PM
-#          mode: push
-          mode: pull-request
+          branch: fern-bot/08-05-2024-0231PM
+          mode: push
+#           mode: pull-request
         config:
           inline_request_params: false
           package_name: label_studio_sdk
@@ -45,6 +45,7 @@ groups:
             xmljson: '0.2.1'
             jsonschema: '3.2.0'
             requests-mock: '1.12.1'
+            scikit-learn: '1.5.1'
         smart-casing: true
   python-sdk-local:
     audiences:
