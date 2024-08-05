@@ -1,4 +1,17 @@
 paths:
+  /api/comments/:
+    get:
+      $ref: "./resources/comments.yaml#/paths/~1api~1comments/get"
+      x-fern-sdk-group-name: comments
+      x-fern-sdk-method-name: list
+      x-fern-audiences:
+        - public
+    post:
+      $ref: "./resources/comments.yaml#/paths/~1api~1comments/post"
+      x-fern-sdk-group-name: comments
+      x-fern-sdk-method-name: create
+      x-fern-audiences:
+        - public
   "/api/annotations/{id}/":
     get:
       summary: Get annotation by its ID
@@ -1155,7 +1168,7 @@ paths:
 
         <Note>Before proceeding, you should review [How sync operations work - Source storage](https://labelstud.io/guide/storage#Source-storage) to ensure that your data remains secure and private.</Note>
 
-  /api/storages/s3s/:
+  /api/storages/s3s:
     get:
       summary: List import storages
       description: >
@@ -1345,7 +1358,7 @@ paths:
         - public
 
 
-  /api/storages/export/s3s/:
+  /api/storages/export/s3s:
     get:
       summary: List export storages
       description: > 
@@ -1904,6 +1917,226 @@ paths:
 
         For more information about webhooks, see [Set up webhooks in Label Studio](https://labelstud.io/guide/webhooks) and the [Webhook event reference](https://labelstud.io/guide/webhook_reference).
 
+
+  /api/workspaces:
+    get:
+      summary: List workspaces
+      description: >
+          
+          List all workspaces for your organization. 
+          
+          
+          Workspaces in Label Studio let you organize your projects and users into separate spaces. This is useful for managing different teams, departments, or projects within your organization. 
+          
+          
+          For more information, see [Workspaces in Label Studio](https://docs.humansignal.com/guide/workspaces).
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Workspace"
+      x-fern-sdk-group-name: workspaces
+      x-fern-sdk-method-name: list
+      x-fern-audiences:
+        - public
+    post:
+      summary: Create workspace
+      description: >
+
+          Create a new workspace.
+
+
+          Workspaces in Label Studio let you organize your projects and users into separate spaces. This is useful for managing different teams, departments, or projects within your organization.
+
+
+          For more information, see [Workspaces in Label Studio](https://docs.humansignal.com/guide/workspaces).
+      requestBody:
+        $ref: '#/components/requestBodies/api_workspaces_createData'
+      responses:
+        "201":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Workspace"
+      x-fern-sdk-group-name: workspaces
+      x-fern-sdk-method-name: create
+      x-fern-audiences:
+        - public
+
+  /api/workspaces/{id}:
+    get:
+      summary: Get workspace
+      description: >
+
+          Get information about a specific workspace. You will need to provide the workspace ID. You can find this using [List workspaces](list).
+      parameters:
+        - name: id
+          in: path
+          description: Workspace ID
+          required: true
+          schema:
+            type: integer
+      responses:
+          "200":
+            description: ""
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/Workspace"
+      x-fern-sdk-group-name: workspaces
+      x-fern-sdk-method-name: get
+      x-fern-audiences:
+        - public
+    patch:
+      summary: Update workspace
+      description: >
+
+          Update a specific workspace. You will need to provide the workspace ID. You can find this using [List workspaces](list).
+      parameters:
+        - name: id
+          in: path
+          description: Workspace ID
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        $ref: '#/components/requestBodies/api_workspaces_createData'
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Workspace"
+      x-fern-sdk-group-name: workspaces
+      x-fern-sdk-method-name: update
+      x-fern-audiences:
+          - public
+    delete:
+      summary: Delete workspace
+      description: >
+
+          Delete a specific workspace. You will need to provide the workspace ID. You can find this using [List workspaces](list).
+      parameters:
+        - name: id
+          in: path
+          description: Workspace ID
+          required: true
+          schema:
+              type: integer
+      responses:
+        "204":
+          description: "Workspace deleted"
+      x-fern-sdk-group-name: workspaces
+      x-fern-sdk-method-name: delete
+      x-fern-audiences:
+          - public
+
+  /api/workspaces/{id}/memberships:
+    get:
+      summary: List workspace memberships
+      description: >
+
+          List all workspace memberships for a specific workspace. You will need to provide the workspace ID. You can find this using [List workspaces](list).
+      parameters:
+        - name: id
+          in: path
+          description: Workspace ID
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    user:
+                      type: object
+                      description: User ID of the workspace member
+      x-fern-sdk-group-name:
+        - workspaces
+        - members
+      x-fern-sdk-method-name: list
+      x-fern-audiences:
+        - public
+    post:
+      summary: Create workspace membership
+      description: >
+
+          Create a new workspace membership. You will need to provide the workspace ID. You can find this using [List workspaces](list).
+      parameters:
+        - name: id
+          in: path
+          description: Workspace ID
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  type: integer
+                  description: User ID of the workspace member
+      responses:
+        "201":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    type: integer
+                    description: User ID of the workspace member
+      x-fern-sdk-group-name:
+        - workspaces
+        - members
+      x-fern-sdk-method-name: create
+      x-fern-audiences:
+          - public
+    delete:
+      summary: Delete workspace membership
+      description: >
+  
+          Delete a specific workspace membership. You will need to provide the workspace ID and the user ID. You can find this using [List workspace memberships](list).
+      parameters:
+        - name: id
+          in: path
+          description: Workspace ID
+          required: true
+          schema:
+              type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  type: integer
+                  description: User ID of the workspace member
+      responses:
+          "204":
+          description: "Membership deleted"
+      x-fern-sdk-group-name:
+          - workspaces
+          - members
+      x-fern-sdk-method-name: delete
+      x-fern-audiences:
+          - public
 components:
   securitySchemes:
     Token:
@@ -2012,6 +2245,46 @@ components:
           items:
             type: integer
           description: List of comment authors' IDs for this task
+    Workspace:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique ID of the workspace
+          readOnly: true
+        title:
+          type: string
+          description: Workspace title
+        description:
+          type: string
+          description: Workspace description
+        is_public:
+          type: boolean
+          description: Whether the workspace is public or not
+        is_personal:
+          type: boolean
+          description: Whether the workspace is personal or not
+        is_archived:
+          type: boolean
+          description: Whether the workspace is archived or not
+        created_at:
+          type: string
+          format: date-time
+          description: Creation time of the workspace
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          description: Last updated time of the workspace
+          readOnly: true
+        created_by:
+          type: integer
+          description: User ID of the workspace creator
+          readOnly: true
+        color:
+          type: string
+          description: Workspace color
+
     data_manager_task_serializer:
       properties:
         annotators:
@@ -2326,4 +2599,125 @@ components:
               s3_endpoint:
                 description: S3 Endpoint
                 type: string
+      required: true
+
+    api_projects_createData:
+      content:
+        application/json:
+          schema:
+            title: Project
+            description: Project
+            type: object
+            properties:
+              title:
+                title: title
+                description: Project title
+                type: string
+                example: My project
+              description:
+                title: description
+                description: Project description
+                type: string
+                example: My first project
+              label_config:
+                title: label_config
+                description: Label config in XML format
+                type: string
+                example: <View>[...]</View>
+              expert_instruction:
+                title: expert_instruction
+                description: Labeling instructions to show to the user
+                type: string
+                example: Label all cats
+              show_instruction:
+                title: show_instruction
+                description: Show labeling instructions
+                type: boolean
+              show_skip_button:
+                title: show_skip_button
+                description: Show skip button
+                type: boolean
+              enable_empty_annotation:
+                title: enable_empty_annotation
+                description: Allow empty annotations
+                type: boolean
+              show_annotation_history:
+                title: show_annotation_history
+                description: Show annotation history
+                type: boolean
+              reveal_preannotations_interactively:
+                title: reveal_preannotations_interactively
+                description: Reveal preannotations interactively. If set to True, predictions
+                  will be shown to the user only after selecting the area of
+                  interest
+                type: boolean
+              show_collab_predictions:
+                title: show_collab_predictions
+                description: Show predictions to annotators
+                type: boolean
+              maximum_annotations:
+                title: maximum_annotations
+                description: Maximum annotations per task
+                type: integer
+              color:
+                title: color
+                description: Project color in HEX format
+                type: string
+                default: "#FFFFFF"
+              control_weights:
+                title: control_weights
+                description: "Dict of weights for each control tag in metric calculation. Each
+                  control tag (e.g. label or choice) will have its own key in
+                  control weight dict with weight for each label and overall
+                  weight. For example, if a bounding box annotation with a
+                  control tag named my_bbox should be included with 0.33 weight
+                  in agreement calculation, and the first label Car should be
+                  twice as important as Airplane, then you need to specify:
+                  {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0,
+                  'Airplane': 0.5}, 'overall': 0.33}"
+                type: object
+                example:
+                  my_bbox:
+                    type: RectangleLabels
+                    labels:
+                      Car: 1
+                      Airplaine: 0.5
+                    overall: 0.33
+              workspace:
+                title: workspace
+                description: Workspace ID
+                type: integer
+      required: true
+
+    api_workspaces_createData:
+      content:
+        application/json:
+          schema:
+            title: Workspace
+            description: Workspace
+            type: object
+            properties:
+              title:
+                title: title
+                description: Workspace title
+                type: string
+                example: My workspace
+              description:
+                title: description
+                description: Workspace description
+                type: string
+                example: My first workspace
+              is_public:
+                title: is_public
+                description: Is workspace public
+                type: boolean
+              is_personal:
+                title: is_personal
+                description: Is workspace personal
+                type: boolean
+              color:
+                title: color
+                description: Workspace color in HEX format
+                type: string
+                default: "#FFFFFF"
       required: true
