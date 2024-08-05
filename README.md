@@ -37,14 +37,6 @@
    this will define the public methods called `client.comments.list()` and `client.comments.create()`. Read more about [Fern's OpenAPI extensions](https://buildwithfern.com/learn/api-definition/openapi/extensions)
 3. Create a PR in `label-studio-client-generator` using [Follow-Merge workflow](https://www.notion.so/214a17976c254100a4c261ec800cf3e8?pvs=21). For example, push a branch called `fb-PRJ-123-update-comments-api` 
 4. Ensure PR is created in `label-studio-sdk` and Label Studio repo
-    
-    <aside>
-    ⚠️ Note: Follow-Merge automation is in progress. Until then, do it manually:
-    1. In `label-studio-client-generator` , perform Actions > Use workflow from [your PR branch] > Run workflow
-    2. Check the branches generated in `label-studio-sdk` repo and Label Studio repo.
-    
-    </aside>
-    
 5. Update added endpoints in Django code.
 6. Add integration tests with newly added functions in LS: `https://github.com/HumanSignal/label-studio/tree/develop/label_studio/tests/sdk`
    
