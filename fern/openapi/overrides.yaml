@@ -12,6 +12,25 @@ paths:
       x-fern-sdk-method-name: create
       x-fern-audiences:
         - public
+  /api/comments/{id}:
+    get:
+      $ref: "./resources/comments.yaml#/paths/~1api~1comments~1{id}/get"
+      x-fern-sdk-group-name: comments
+      x-fern-sdk-method-name: get
+      x-fern-audiences:
+        - public
+    patch:
+      $ref: "./resources/comments.yaml#/paths/~1api~1comments~1{id}/patch"
+      x-fern-sdk-group-name: comments
+      x-fern-sdk-method-name: update
+      x-fern-audiences:
+          - public
+    delete:
+      $ref: "./resources/comments.yaml#/paths/~1api~1comments~1{id}/delete"
+      x-fern-sdk-group-name: comments
+      x-fern-sdk-method-name: delete
+      x-fern-audiences:
+        - public
   "/api/annotations/{id}/":
     get:
       summary: Get annotation by its ID
@@ -2687,6 +2706,11 @@ components:
                 title: workspace
                 description: Workspace ID
                 type: integer
+              model_version:
+                title: model_version
+                description: Model version
+                type: string
+                example: 1.0
       required: true
 
     api_workspaces_createData:
@@ -2720,4 +2744,8 @@ components:
                 description: Workspace color in HEX format
                 type: string
                 default: "#FFFFFF"
+              is_archived:
+                title: is_archived
+                description: Is workspace archived
+                type: boolean
       required: true

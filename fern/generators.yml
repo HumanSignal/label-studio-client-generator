@@ -33,7 +33,7 @@ groups:
             - from: _legacy
               imports:
                 - Client
-          pyproject_python_version: '^3.9'
+#          pyproject_python_version: '^3.9'
           extra_dependencies:
             pandas: '>=0.24.0'
             requests: '>=2.22.0'
@@ -44,9 +44,9 @@ groups:
             appdirs: '>=1.4.3'
             lxml: '>=4.2.5'
             xmljson: '0.2.1'
-            jsonschema: '3.2.0'
+            jsonschema: '>=4.23.0'
             requests-mock: '1.12.1'
-            scikit-learn: '1.5.1'
+#            scikit-learn: '1.5.1'
         smart-casing: true
   python-sdk-local:
     audiences:

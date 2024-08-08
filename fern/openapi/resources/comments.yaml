@@ -49,7 +49,62 @@ paths:
               application/json:
                 schema:
                   $ref: "#/components/schemas/Comment"
-
+  /api/comments/{id}:
+    get:
+      summary: Get comment
+      description: >
+            
+            Get a specific comment.
+      parameters:
+        - name: id
+          in: path
+          description: Comment ID
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Comment"
+    patch:
+      summary: Update comment
+      description: >
+            
+            Update a specific comment.
+      parameters:
+        - name: id
+          in: path
+          description: Comment ID
+          required: true
+          schema:
+            type: integer
+      requestBody:
+          $ref: "#/components/requestBodies/api_comments_create"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Comment"
+    delete:
+      summary: Delete comment
+      description: >
+            
+            Delete a specific comment.
+      parameters:
+        - name: id
+          in: path
+          description: Comment ID
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: ""
 
 components:
   schemas:
@@ -116,3 +171,6 @@ components:
               text:
                 title: Comment message
                 type: string
+              is_resolved:
+                title: Is comment resolved
+                type: boolean
