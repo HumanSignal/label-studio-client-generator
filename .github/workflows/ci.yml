@@ -48,7 +48,7 @@ jobs:
               path: pyProjectPath,
             });
             const pyproject = Buffer.from(pyprojectBlob.data.content, pyprojectBlob.data.encoding).toString("utf8");
-            const versionMatch = pyproject.match(/version = "(?<version>[.a-f0-9]+)"/);
+            const versionMatch = pyproject.match(/version = "(?<version>[\.a-z0-9]+)"/);
             if (versionMatch && versionMatch.groups.version) {
               core.setOutput('version', versionMatch.groups.version);
             } else {
