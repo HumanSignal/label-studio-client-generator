@@ -49,7 +49,7 @@ jobs:
             });
             const pyproject = Buffer.from(pyprojectBlob.data.content, pyprojectBlob.data.encoding).toString("utf8");
             const versionMatch = pyproject.match(/version = "(?<version>[.a-f0-9]+)"/);
-            if (versionMatch && versionMatch.groups.version && false) {
+            if (versionMatch && versionMatch.groups.version) {
               core.setOutput('version', versionMatch.groups.version);
             } else {
               throw `Version not found in ${pyprojectBlob.url}`
