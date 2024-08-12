@@ -46,6 +46,7 @@ groups:
             xmljson: '0.2.1'
             jsonschema: '>=4.23.0'
             requests-mock: '1.12.1'
+            numpy: '<2.0.0'
 #            scikit-learn: '1.5.1'
         smart-casing: true
   python-sdk-local:
