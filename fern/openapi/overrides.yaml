@@ -133,7 +133,7 @@ paths:
       summary: Delete annotation
       description: >
       
-        Delete an annotation. 
+        Delete an annotation.
         
         
         <Warning>This action can't be undone!</Warning>
