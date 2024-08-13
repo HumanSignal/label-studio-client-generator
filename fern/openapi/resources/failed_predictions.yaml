@@ -1,0 +1,70 @@
+paths:
+  /api/predictions/failed:
+    get:
+      summary: List failed predictions
+      description: >
+            
+            Get a list of failed predictions for a specific project.
+      parameters:
+        - name: project
+          in: query
+          description: Project ID
+          schema:
+            type: integer
+        - name: task
+          in: query
+          description: Task ID
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/FailedPrediction"
+
+components:
+  schemas:
+    FailedPrediction:
+      type: object
+      required:
+        - id
+        - message
+        - error_type
+        - created_at
+      properties:
+        id:
+          title: ID
+          type: integer
+        message:
+          title: Message
+          description: The message explaining why generating this prediction failed
+          type: string
+        error_type:
+          title: Error Type
+          description: The type of error that caused prediction to fail
+          type: string
+        created_at:
+          title: Created At
+          description: The date and time when the failed prediction was created.
+          type: string
+          format: date-time
+        model_version:
+          title: Model Version
+          description: A string value that for model version that produced the failed prediction.
+          type: string
+        model_run:
+          title: ModelRun ID
+          description: A run of a ModelVersion that created the failed prediction.
+          type: integer
+        task:
+          title: Task ID
+          description: The ID of the task that the failed prediction was generated for.
+          type: integer
+        project:
+          title: Project ID
+          description: The ID of the project that the failed prediction was generated for.
+          type: integer
