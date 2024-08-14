@@ -29,7 +29,7 @@ paths:
       x-fern-sdk-group-name:
         - prompts
         - versions
-      x-fern-sdk-method-name: run
+      x-fern-sdk-method-name: create_run
       x-fern-audiences:
         - public
 
