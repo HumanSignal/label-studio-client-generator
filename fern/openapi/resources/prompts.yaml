@@ -25,9 +25,6 @@ components:
           schema:
             type: object
             properties:
-              job_id:
-                title: Job ID
-                type: string
               modelrun_id:
                 title: Model Run ID
                 type: integer
