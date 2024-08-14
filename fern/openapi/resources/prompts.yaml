@@ -30,6 +30,65 @@ paths:
               schema:
                 $ref: "#/components/schemas/Prompt"
 
+  /api/prompts/{id}/versions:
+    post:
+      summary: Create prompt version
+      description: >
+          Create a new version of a prompt.
+      parameters:
+        - name: id
+          in: path
+          description: Prompt ID
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PromptVersion"
+
+      responses:
+        "201":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PromptVersion"
+
+  /api/prompts/{id}/versions/{version_id}/inference-runs:
+    post:
+      summary: Run prompt
+      description: >
+          Run a prompt.
+      parameters:
+        - name: id
+          in: path
+          description: Prompt ID
+          required: true
+          schema:
+            type: integer
+        - name: version_id
+          in: path
+          description: Prompt Version ID
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PromptRun"
+      responses:
+        "201":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PromptRun"
+
+
+
   /api/model-run/batch-predictions:
     post:
       summary: Create batch predictions
@@ -113,6 +172,132 @@ components:
           items:
             type: integer
           nullable: true
+    PromptVersion:
+      required:
+        - title
+        - prompt
+        - provider
+        - provider_model_id
+      type: object
+      properties:
+        title:
+          title: Title
+          type: string
+          maxLength: 500
+        parent_model:
+          title: Parent Model ID
+          type: integer
+        prompt:
+          title: Prompt
+          type: string
+
+        provider:
+          title: Provider
+          type: string
+          enum:
+            - OpenAI
+            - AzureOpenAI
+        provider_model_id:
+          title: Provider Model ID
+          type: string
+        created_by:
+          anyOf:
+            - type: integer
+            - type: object
+          nullable: true
+        created_at:
+          title: Created at
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          title: Updated at
+          type: string
+          format: date-time
+          readOnly: true
+        organization:
+          anyOf:
+            - type: integer
+            - type: object
+          nullable: true
+    PromptRun:
+      required:
+        - project
+        - project_subset
+      type: object
+      properties:
+        organization:
+          anyOf:
+            - type: integer
+            - type: object
+          nullable: true
+        project:
+          title: Project ID
+          type: integer
+        model_version:
+          title: Prompt Version ID
+          type: string
+        created_by:
+          anyOf:
+            - type: integer
+            - type: object
+          nullable: true
+        project_subset:
+          title: Project Subset
+          type: string
+          enum:
+            - All
+            - HasGT
+            - Sample
+        status:
+          title: Status
+          type: string
+          enum:
+            - Pending
+            - InProgress
+            - Completed
+            - Failed
+            - Canceled
+        job_id:
+          title: Job ID
+          type: string
+          nullable: true
+        total_predictions:
+          title: Total Predictions
+          type: integer
+          readOnly: true
+        total_correct_predictions:
+          title: Total Correct Predictions
+          type: integer
+          readOnly: true
+        total_tasks:
+          title: Total Tasks
+          type: integer
+          readOnly: true
+        created_at:
+          title: Created at
+          type: string
+          format: date-time
+          readOnly: true
+        triggered_at:
+          title: Triggered at
+          type: string
+          format: date-time
+          nullable: true
+          readOnly: true
+        predictions_updated_at:
+          title: Predictions Updated at
+          type: string
+          format: date-time
+          nullable: true
+          readOnly: true
+        completed_at:
+          title: Completed at
+          type: string
+          format: date-time
+          nullable: true
+          readOnly: true
+
   requestBodies:
 
     api_prompts_batch_predictions_create:

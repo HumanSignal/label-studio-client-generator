@@ -12,6 +12,27 @@ paths:
       x-fern-sdk-method-name: create
       x-fern-audiences:
         - public
+
+  /api/prompts/{id}/versions:
+    post:
+      $ref: "./resources/prompts.yaml#/paths/~1api~1prompts~1{id}~1versions/post"
+      x-fern-sdk-group-name:
+        - prompts
+        - versions
+      x-fern-sdk-method-name: create
+      x-fern-audiences:
+        - public
+
+  /api/prompts/{id}/versions/{version_id}/inference-runs:
+    post:
+      $ref: "./resources/prompts.yaml#/paths/~1api~1prompts~1{id}~1versions~1{version_id}~1inference-runs/post"
+      x-fern-sdk-group-name:
+        - prompts
+        - versions
+      x-fern-sdk-method-name: run
+      x-fern-audiences:
+        - public
+
   /api/model-run/batch-predictions/:
     post:
       $ref: "./resources/prompts.yaml#/paths/~1api~1model-run~1batch-predictions/post"
