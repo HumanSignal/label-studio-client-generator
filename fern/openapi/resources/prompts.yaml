@@ -1,0 +1,38 @@
+paths:
+  /api/model-run/batch-predictions:
+    post:
+      summary: Create batch predictions
+      description: >
+          Create a new batch prediction.
+      requestBody:
+          $ref: "#/components/requestBodies/api_prompts_batch_predictions_create"
+      responses:
+        "201":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+
+components:
+  requestBodies:
+    api_prompts_batch_predictions_create:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              job_id:
+                title: Job ID
+                type: string
+              modelrun_id:
+                title: Model Run ID
+                type: integer
+              results:
+                title: Results
+                type: array
+                items:
+                  type: object
