@@ -1,4 +1,17 @@
 paths:
+  /api/prompts/:
+    get:
+      $ref: "./resources/prompts.yaml#/paths/~1api~1prompts/get"
+      x-fern-sdk-group-name: prompts
+      x-fern-sdk-method-name: list
+      x-fern-audiences:
+        - public
+    post:
+      $ref: "./resources/prompts.yaml#/paths/~1api~1prompts/post"
+      x-fern-sdk-group-name: prompts
+      x-fern-sdk-method-name: create
+      x-fern-audiences:
+        - public
   /api/model-run/batch-predictions/:
     post:
       $ref: "./resources/prompts.yaml#/paths/~1api~1model-run~1batch-predictions/post"
