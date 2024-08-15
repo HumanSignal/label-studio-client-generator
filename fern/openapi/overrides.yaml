@@ -33,6 +33,14 @@ paths:
       x-fern-audiences:
         - public
 
+  /api/model-provider-connections/:
+    post:
+      $ref: "./resources/prompts.yaml#/paths/~1api~1model-provider-connections/post"
+      x-fern-sdk-group-name: model_providers
+      x-fern-sdk-method-name: create
+      x-fern-audiences:
+        - public
+
   /api/model-run/batch-predictions/:
     post:
       $ref: "./resources/prompts.yaml#/paths/~1api~1model-run~1batch-predictions/post"

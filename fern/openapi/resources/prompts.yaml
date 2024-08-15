@@ -87,6 +87,23 @@ paths:
               schema:
                 $ref: "#/components/schemas/InferenceRun"
 
+  /api/model-provider-connections:
+    post:
+      summary: Create model provider connection
+      description: >
+          Create a new model provider connection.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ModelProviderConnection"
+      responses:
+        "201":
+          description: ""
+          content:
+            application/json:
+              schema:
+                  $ref: "#/components/schemas/ModelProviderConnection"
 
 
   /api/model-run/batch-predictions:
@@ -296,6 +313,58 @@ components:
           type: string
           format: date-time
           nullable: true
+          readOnly: true
+    ModelProviderConnection:
+      required:
+        - provider
+        - api_key
+      type: object
+      properties:
+        provider:
+          title: Provider
+          type: string
+          enum:
+            - OpenAI
+            - AzureOpenAI
+        api_key:
+          title: API Key
+          type: string
+          nullable: true
+        deployment_name:
+          title: Deployment Name
+          type: string
+          nullable: true
+        endpoint:
+          title: Endpoint
+          type: string
+          nullable: true
+        scope:
+          title: Scope
+          type: string
+          enum:
+            - Organization
+            - User
+            - Model
+        organization:
+          anyOf:
+            - type: integer
+            - type: object
+          nullable: true
+        created_by:
+          anyOf:
+            - type: integer
+            - type: object
+          nullable: true
+          readOnly: true
+        created_at:
+          title: Created at
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          title: Updated at
+          type: string
+          format: date-time
           readOnly: true
 
   requestBodies:
