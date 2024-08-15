@@ -189,6 +189,11 @@ components:
           items:
             type: integer
           nullable: true
+        skill_name:
+          title: Skill name
+          description: Name of the skill
+          type: string
+          nullable: true
     PromptVersion:
       required:
         - title
