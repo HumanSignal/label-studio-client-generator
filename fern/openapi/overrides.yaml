@@ -41,7 +41,7 @@ paths:
       x-fern-audiences:
         - public
 
-  /api/model-run/batch-predictions/:
+  /api/model-run/batch-predictions:
     post:
       $ref: "./resources/prompts.yaml#/paths/~1api~1model-run~1batch-predictions/post"
       x-fern-sdk-group-name: prompts
