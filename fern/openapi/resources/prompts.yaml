@@ -58,9 +58,9 @@ paths:
 
   /api/prompts/{id}/versions/{version_id}/inference-runs:
     post:
-      summary: Run prompt
+      summary: Run prompt inference
       description: >
-          Run a prompt.
+          Run a prompt inference.
       parameters:
         - name: id
           in: path
@@ -78,14 +78,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/PromptRun"
+              $ref: "#/components/schemas/InferenceRun"
       responses:
         "201":
           description: ""
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/PromptRun"
+                $ref: "#/components/schemas/InferenceRun"
 
 
 
@@ -220,7 +220,7 @@ components:
             - type: integer
             - type: object
           nullable: true
-    PromptRun:
+    InferenceRun:
       required:
         - project
         - project_subset
