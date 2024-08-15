@@ -21,7 +21,7 @@ groups:
           mode: push
 #          mode: pull-request
         config:
-          inline_request_params: false
+          inline_request_params: true
           package_name: label_studio_sdk
           client:
             class_name: LabelStudioBase
@@ -60,7 +60,7 @@ groups:
           path: ../label_studio_sdk
         smart-casing: true
         config:
-          inline_request_params: false
+          inline_request_params: true
           package_name: label_studio_sdk
           client:
             class_name: LabelStudioBase
