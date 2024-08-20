@@ -38,7 +38,7 @@ groups:
             pandas: '>=0.24.0'
             requests: '>=2.22.0'
             Pillow: '>=10.0.1'
-            nltk: '^3.8.1'
+            nltk: '^3.9.1'
             ujson: '>=5.8.0'
             ijson: '>=3.2.3'
             appdirs: '>=1.4.3'
