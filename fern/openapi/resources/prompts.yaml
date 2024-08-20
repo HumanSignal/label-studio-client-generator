@@ -1,0 +1,390 @@
+paths:
+  /api/prompts:
+    get:
+      summary: List prompts
+      description: >
+          Get a list of prompts.
+      responses:
+          "200":
+            description: ""
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: "#/components/schemas/Prompt"
+    post:
+      summary: Create prompt
+      description: >
+          Create a new prompt.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Prompt"
+      responses:
+        "201":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Prompt"
+
+  /api/prompts/{id}/versions:
+    post:
+      summary: Create prompt version
+      description: >
+          Create a new version of a prompt.
+      parameters:
+        - name: id
+          in: path
+          description: Prompt ID
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PromptVersion"
+
+      responses:
+        "201":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PromptVersion"
+
+  /api/prompts/{id}/versions/{version_id}/inference-runs:
+    post:
+      summary: Run prompt inference
+      description: >
+          Run a prompt inference.
+      parameters:
+        - name: id
+          in: path
+          description: Prompt ID
+          required: true
+          schema:
+            type: integer
+        - name: version_id
+          in: path
+          description: Prompt Version ID
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InferenceRun"
+      responses:
+        "201":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InferenceRun"
+
+  /api/model-provider-connections:
+    post:
+      summary: Create model provider connection
+      description: >
+          Create a new model provider connection.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ModelProviderConnection"
+      responses:
+        "201":
+          description: ""
+          content:
+            application/json:
+              schema:
+                  $ref: "#/components/schemas/ModelProviderConnection"
+
+
+  /api/model-run/batch-predictions:
+    post:
+      summary: Create batch predictions
+      description: >
+          Create a new batch prediction.
+      requestBody:
+          $ref: "#/components/requestBodies/api_prompts_batch_predictions_create"
+      responses:
+        "201":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+
+components:
+  schemas:
+    Prompt:
+      required:
+        - title
+        - input_fields
+        - output_classes
+      type: object
+      properties:
+        title:
+          title: Title
+          description: Title of the prompt
+          type: string
+          maxLength: 500
+        description:
+          title: Description
+          description: Description of the prompt
+          type: string
+          nullable: true
+        created_by:
+          title: Created by
+          description: User ID of the creator of the prompt
+          anyOf:
+            - type: integer
+            - type: object
+          nullable: true
+          readOnly: true
+        created_at:
+          title: Created at
+          description: Date and time the prompt was created
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          title: Updated at
+          description: Date and time the prompt was last updated
+          type: string
+          format: date-time
+          readOnly: true
+        organization:
+          title: Organization
+          description: Organization ID of the prompt
+          anyOf:
+            - type: integer
+            - type: object
+          nullable: true
+        input_fields:
+          title: Input fields
+          description: List of input fields
+          type: array
+          items:
+            type: string
+        output_classes:
+          title: Output classes
+          description: List of output classes
+          type: array
+          items:
+            type: string
+        associated_projects:
+          title: Associated projects
+          description: List of associated projects IDs
+          type: array
+          items:
+            type: integer
+          nullable: true
+        skill_name:
+          title: Skill name
+          description: Name of the skill
+          type: string
+          nullable: true
+    PromptVersion:
+      required:
+        - title
+        - prompt
+        - provider
+        - provider_model_id
+      type: object
+      properties:
+        title:
+          title: Title
+          type: string
+          maxLength: 500
+        parent_model:
+          title: Parent Model ID
+          type: integer
+        prompt:
+          title: Prompt
+          type: string
+
+        provider:
+          title: Provider
+          type: string
+          enum:
+            - OpenAI
+            - AzureOpenAI
+        provider_model_id:
+          title: Provider Model ID
+          type: string
+        created_by:
+          anyOf:
+            - type: integer
+            - type: object
+          nullable: true
+        created_at:
+          title: Created at
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          title: Updated at
+          type: string
+          format: date-time
+          readOnly: true
+        organization:
+          anyOf:
+            - type: integer
+            - type: object
+          nullable: true
+    InferenceRun:
+      required:
+        - project
+        - project_subset
+      type: object
+      properties:
+        organization:
+          anyOf:
+            - type: integer
+            - type: object
+          nullable: true
+        project:
+          title: Project ID
+          type: integer
+        model_version:
+          title: Prompt Version ID
+          type: string
+        created_by:
+          anyOf:
+            - type: integer
+            - type: object
+          nullable: true
+        project_subset:
+          title: Project Subset
+          type: string
+          enum:
+            - All
+            - HasGT
+            - Sample
+        status:
+          title: Status
+          type: string
+          enum:
+            - Pending
+            - InProgress
+            - Completed
+            - Failed
+            - Canceled
+        job_id:
+          title: Job ID
+          type: string
+          nullable: true
+        total_predictions:
+          title: Total Predictions
+          type: integer
+          readOnly: true
+        total_correct_predictions:
+          title: Total Correct Predictions
+          type: integer
+          readOnly: true
+        total_tasks:
+          title: Total Tasks
+          type: integer
+          readOnly: true
+        created_at:
+          title: Created at
+          type: string
+          format: date-time
+          readOnly: true
+        triggered_at:
+          title: Triggered at
+          type: string
+          format: date-time
+          nullable: true
+          readOnly: true
+        predictions_updated_at:
+          title: Predictions Updated at
+          type: string
+          format: date-time
+          nullable: true
+          readOnly: true
+        completed_at:
+          title: Completed at
+          type: string
+          format: date-time
+          nullable: true
+          readOnly: true
+    ModelProviderConnection:
+      required:
+        - provider
+        - api_key
+      type: object
+      properties:
+        provider:
+          title: Provider
+          type: string
+          enum:
+            - OpenAI
+            - AzureOpenAI
+        api_key:
+          title: API Key
+          type: string
+          nullable: true
+        deployment_name:
+          title: Deployment Name
+          type: string
+          nullable: true
+        endpoint:
+          title: Endpoint
+          type: string
+          nullable: true
+        scope:
+          title: Scope
+          type: string
+          enum:
+            - Organization
+            - User
+            - Model
+        organization:
+          anyOf:
+            - type: integer
+            - type: object
+          nullable: true
+        created_by:
+          anyOf:
+            - type: integer
+            - type: object
+          nullable: true
+          readOnly: true
+        created_at:
+          title: Created at
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          title: Updated at
+          type: string
+          format: date-time
+          readOnly: true
+
+  requestBodies:
+
+    api_prompts_batch_predictions_create:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              modelrun_id:
+                title: Model Run ID
+                type: integer
+              results:
+                title: Results
+                type: array
+                items:
+                  type: object

@@ -21,7 +21,7 @@ groups:
           mode: push
 #          mode: pull-request
         config:
-          inline_request_params: false
+          inline_request_params: true
           package_name: label_studio_sdk
           client:
             class_name: LabelStudioBase
@@ -38,7 +38,7 @@ groups:
             pandas: '>=0.24.0'
             requests: '>=2.22.0'
             Pillow: '>=10.0.1'
-            nltk: '^3.8.2'
+            nltk: '^3.8.1'
             ujson: '>=5.8.0'
             ijson: '>=3.2.3'
             appdirs: '>=1.4.3'
@@ -54,13 +54,13 @@ groups:
       - public
     generators:
       - name: fernapi/fern-python-sdk
-        version: 2.14.0-rc0
+        version: 3.10.3
         output:
           location: local-file-system
           path: ../label_studio_sdk
         smart-casing: true
         config:
-          inline_request_params: false
+          inline_request_params: true
           package_name: label_studio_sdk
           client:
             class_name: LabelStudioBase
