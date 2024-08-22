@@ -3,20 +3,20 @@ paths:
     get:
       summary: List prompts
       description: >
-          Get a list of prompts.
+        Get a list of prompts.
       responses:
-          "200":
-            description: ""
-            content:
-              application/json:
-                schema:
-                  type: array
-                  items:
-                    $ref: "#/components/schemas/Prompt"
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Prompt"
     post:
       summary: Create prompt
       description: >
-          Create a new prompt.
+        Create a new prompt.
       requestBody:
         content:
           application/json:
@@ -34,7 +34,7 @@ paths:
     post:
       summary: Create prompt version
       description: >
-          Create a new version of a prompt.
+        Create a new version of a prompt.
       parameters:
         - name: id
           in: path
@@ -60,7 +60,7 @@ paths:
     post:
       summary: Run prompt inference
       description: >
-          Run a prompt inference.
+        Run a prompt inference.
       parameters:
         - name: id
           in: path
@@ -86,12 +86,51 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/InferenceRun"
+    get:
+      summary: Get information (status, etadata, etc) about an existing inference run
+      description: >-
+        Get information (status, etadata, etc) about an existing inference run
+      parameters:
+        - name: id
+          in: path
+          description: Prompt ID
+          required: true
+          schema:
+            type: integer
+        - name: version_id
+          in: path
+          description: Prompt Version ID
+          required: true
+          schema:
+            type: integer
+        - name: project
+          in: query
+          description: The ID of the project that this Interence Run makes predictions on
+          required: true
+          schema:
+            type: integer
+        - name: project_subset
+          in: query
+          description: >
+            Defines which tasks are operated on
+            (e.g. HasGT will only operate on tasks with a ground truth annotation, but All will operate on all records)
+          required: true
+          schema:
+            type: string
+            enum: [All, HasGT, Sample]
+      responses:
+        "200":
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InferenceRun"
 
   /api/model-provider-connections:
     post:
       summary: Create model provider connection
       description: >
-          Create a new model provider connection.
+        Create a new model provider connection.
       requestBody:
         content:
           application/json:
@@ -284,18 +323,6 @@ components:
           title: Job ID
           type: string
           nullable: true
-        total_predictions:
-          title: Total Predictions
-          type: integer
-          readOnly: true
-        total_correct_predictions:
-          title: Total Correct Predictions
-          type: integer
-          readOnly: true
-        total_tasks:
-          title: Total Tasks
-          type: integer
-          readOnly: true
         created_at:
           title: Created at
           type: string
@@ -319,6 +346,55 @@ components:
           format: date-time
           nullable: true
           readOnly: true
+        indicators:
+          title: Scores and metadata
+          type: array
+          items:
+            type: object
+            properties:
+              key:
+                title: The key for this KPI, where you can find the value from inside main_kpi
+                type: string
+              title:
+                title: The title for this metric, to be displayed to the user
+                type: string
+              main_kpi:
+                title: The primary KPI, displayed in the top left of the box
+                type: object
+                properties:
+                  title:
+                    title: The name of this indicator
+                    type: string
+                  values:
+                    title: The numerical values to fill in for this KPI
+                    type: object
+                    properties:
+                      accuracy:
+                        title: The number correct over the number predicted
+                        # TODO fern seems to crash if I use float/double?
+                        # type: float
+                        type: string
+                      num_successful_predictions:
+                        title: The number of predictions which have a successful prediction (as opposed to an error)
+                        type: integer
+                      num_correct_predictions:
+                        title: The number of predictions that were correct (compared to ground truth)
+                        type: integer
+              addidional_kpis:
+                title: Secondary KPIs, displayed below the main_kpi
+                type: array
+                items:
+                  type: object
+                  properties:
+                    key:
+                      title: The key where the value for this metric can be found (from the main kpi's payload)
+                      type: string
+                    label:
+                      title: The name to print on the screen, describing this additional KPI
+                      type: string
+              extra_kpis:
+                title: Secondary KPIs, displayed to the right of the main_kpi
+                type: array
     ModelProviderConnection:
       required:
         - provider
