@@ -5,6 +5,10 @@ components:
       type: array
       items:
         type: object
+        required:
+          - key
+          - title
+          - main_kpi
         properties:
           key:
             title: Indicator key
@@ -22,11 +26,22 @@ components:
             type: string
           additional_kpis:
             title: Additional KPIs
+            description: Additional KPIs to be displayed at the bottom of the box
             type: array
             items:
               type: object
+              properties:
+                key:
+                  title: Indicator key
+                  description: The key for this KPI, where you can find the value from inside main_kpi
+                  type: string
+                label:
+                  title: Label
+                  description: The label for this KPI, to be displayed to the user
+                  type: string
           extra_kpis:
             title: Extra KPIs
+            description: Extra KPIs to be displayed in the hover-tootip for that indicator
             type: array
             items:
               type: object
