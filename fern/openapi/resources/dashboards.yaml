@@ -1,0 +1,49 @@
+components:
+  schemas:
+    KeyIndicators:
+      title: Scores and metadata
+      type: array
+      items:
+        type: object
+        properties:
+          key:
+            title: The key for this KPI, where you can find the value from inside main_kpi
+            type: string
+          title:
+            title: The title for this metric, to be displayed to the user
+            type: string
+          main_kpi:
+            title: The primary KPI, displayed in the top left of the box
+            type: object
+            properties:
+              title:
+                title: The name of this indicator
+                type: string
+              values:
+                title: The numerical values to fill in for this KPI
+                type: object
+                properties:
+                  accuracy:
+                    title: The number correct over the number predicted
+                    type: number
+                  num_successful_predictions:
+                    title: The number of predictions which have a successful prediction (as opposed to an error)
+                    type: integer
+                  num_correct_predictions:
+                    title: The number of predictions that were correct (compared to ground truth)
+                    type: integer
+          additional_kpis:
+            title: Secondary KPIs, displayed below the main_kpi
+            type: array
+            items:
+              type: object
+              properties:
+                key:
+                  title: The key where the value for this metric can be found (from the main kpi's payload)
+                  type: string
+                label:
+                  title: The name to print on the screen, describing this additional KPI
+                  type: string
+          extra_kpis:
+            title: Secondary KPIs, displayed to the right of the main_kpi
+            type: array

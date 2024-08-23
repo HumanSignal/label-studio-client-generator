@@ -24,12 +24,20 @@ paths:
         - public
 
   /api/prompts/{id}/versions/{version_id}/inference-runs:
+    get:
+      $ref: "./resources/prompts.yaml#/paths/~1api~1prompts~1{id}~1versions~1{version_id}~1inference-runs/get"
+      x-fern-sdk-group-name:
+          - prompts
+          - runs
+      x-fern-sdk-method-name: list
+      x-fern-audiences:
+          - public
     post:
       $ref: "./resources/prompts.yaml#/paths/~1api~1prompts~1{id}~1versions~1{version_id}~1inference-runs/post"
       x-fern-sdk-group-name:
         - prompts
-        - versions
-      x-fern-sdk-method-name: create_run
+        - runs
+      x-fern-sdk-method-name: create
       x-fern-audiences:
         - public
 
