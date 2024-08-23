@@ -47,3 +47,14 @@ components:
           extra_kpis:
             title: Secondary KPIs, displayed to the right of the main_kpi
             type: array
+
+    KeyIndicatorValue:
+      title: Key Indicator Value
+      type: object
+      properties:
+        title:
+          title: Key Indicator Title
+          type: string
+        values:
+          title: Key Indicator Values
+          type: object

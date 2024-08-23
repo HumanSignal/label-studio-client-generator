@@ -41,6 +41,26 @@ paths:
       x-fern-audiences:
         - public
 
+  /api/prompts/indicators:
+    get:
+      $ref: "./resources/prompts.yaml#/paths/~1api~1prompts~1indicators/get"
+      x-fern-sdk-group-name:
+        - prompts
+        - indicators
+      x-fern-sdk-method-name: list
+      x-fern-audiences:
+        - public
+
+  /api/prompts/indicators/{key}:
+    get:
+      $ref: "./resources/prompts.yaml#/paths/~1api~1prompts~1indicators~1{key}/get"
+      x-fern-sdk-group-name:
+          - prompts
+          - indicators
+      x-fern-sdk-method-name: get
+      x-fern-audiences:
+          - public
+
   /api/model-provider-connections/:
     post:
       $ref: "./resources/prompts.yaml#/paths/~1api~1model-provider-connections/post"
