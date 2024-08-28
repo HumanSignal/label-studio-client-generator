@@ -41,9 +41,9 @@ paths:
       x-fern-audiences:
         - public
 
-  /api/prompts/indicators:
+  /api/prompts/{prompt_id}/versions/{version_id}/inference-runs/{pk}/indicators:
     get:
-      $ref: "./resources/prompts.yaml#/paths/~1api~1prompts~1indicators/get"
+      $ref: "./resources/prompts.yaml#/paths/~1api~1prompts~1{prompt_id}~1versions~1{version_id}~1inference-runs~1{pk}~1indicators/get"
       x-fern-sdk-group-name:
         - prompts
         - indicators
@@ -51,9 +51,9 @@ paths:
       x-fern-audiences:
         - public
 
-  /api/prompts/indicators/{key}:
+  /api/prompts/{prompt_id}/versions/{version_id}/inference-runs/{pk}/indicators/{indicator_key}:
     get:
-      $ref: "./resources/prompts.yaml#/paths/~1api~1prompts~1indicators~1{key}/get"
+      $ref: "./resources/prompts.yaml#/paths/~1api~1prompts~1{prompt_id}~1versions~1{version_id}~1inference-runs~1{pk}~1indicators~1{indicator_key}/get"
       x-fern-sdk-group-name:
           - prompts
           - indicators
