@@ -126,26 +126,14 @@ paths:
               schema:
                 $ref: "#/components/schemas/InferenceRun"
 
-  /api/prompts/{prompt_id}/versions/{version_id}/inference-runs/{pk}/indicators:
+  /api/prompts/indicators:
     get:
       summary: Get key indicators
       description: >
         Get key indicators for the Prompt dashboard.
       parameters:
-        - name: prompt_id
-          in: path
-          description: Prompt ID
-          required: true
-          schema:
-            type: integer
-        - name: version_id
-          in: path
-          description: Prompt Version ID
-          required: true
-          schema:
-            type: integer
         - name: pk
-          in: path
+          in: query
           description: Inference run ID
           required: true
           schema:
@@ -158,36 +146,24 @@ paths:
               schema:
                 $ref: "./dashboards.yaml#/components/schemas/KeyIndicators"
 
-  /api/prompts/{prompt_id}/versions/{version_id}/inference-runs/{pk}/indicators/{indicator_key}:
+  /api/prompts/indicators/{key}:
     get:
       summary: Get key indicator
       description: >
         Get a specific key indicator for the Prompt dashboard.
       parameters:
-        - name: prompt_id
-          in: path
-          description: Prompt ID
-          required: true
-          schema:
-            type: integer
-        - name: version_id
-          in: path
-          description: Prompt Version ID
-          required: true
-          schema:
-            type: integer
-        - name: pk
-          in: path
-          description: Inference run ID
-          required: true
-          schema:
-            type: integer
-        - name: indicator_key
+        - name: key
           in: path
           description: Key of the indicator
           required: true
           schema:
             type: string
+        - name: pk
+          in: query
+          description: Inference run ID
+          required: true
+          schema:
+            type: integer
       responses:
         "200":
           description: ""
@@ -212,16 +188,15 @@ paths:
           content:
             application/json:
               schema:
-                  $ref: "#/components/schemas/ModelProviderConnection"
-
+                $ref: "#/components/schemas/ModelProviderConnection"
 
   /api/model-run/batch-predictions:
     post:
       summary: Create batch predictions
       description: >
-          Create a new batch prediction.
+        Create a new batch prediction.
       requestBody:
-          $ref: "#/components/requestBodies/api_prompts_batch_predictions_create"
+        $ref: "#/components/requestBodies/api_prompts_batch_predictions_create"
       responses:
         "201":
           description: ""
@@ -471,7 +446,6 @@ components:
           readOnly: true
 
   requestBodies:
-
     api_prompts_batch_predictions_create:
       content:
         application/json:
