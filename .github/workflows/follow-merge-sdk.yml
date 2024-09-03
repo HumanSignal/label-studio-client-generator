@@ -14,6 +14,9 @@ on:
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref }}
 
+env:
+  DOWNSTREAM_REPOSITORY: "label-studio-sdk"
+
 jobs:
   sync:
     name: "Sync"
@@ -67,4 +70,4 @@ jobs:
         uses: ./.github/actions-hub/actions/follow-merge-dispatch
         with:
           github_token: ${{ secrets.GIT_PAT }}
-          downstream_repository: "label-studio-sdk"
+          downstream_repository: "${{ env.DOWNSTREAM_REPOSITORY }}"
