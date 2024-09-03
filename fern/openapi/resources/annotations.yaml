@@ -30,9 +30,10 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                  message:
-                    type: string
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      title: Annotation ID
+                      type: integer
