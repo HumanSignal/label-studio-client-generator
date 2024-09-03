@@ -2234,6 +2234,13 @@ paths:
       x-fern-sdk-method-name: delete
       x-fern-audiences:
           - public
+  /api/annotations/bulk:
+    post:
+      $ref: "./resources/annotations.yaml#/paths/~1api~1annotations~1bulk/post"
+      x-fern-sdk-group-name: annotations
+      x-fern-sdk-method-name: createBulk
+      x-fern-audiences:
+        - public
 components:
   securitySchemes:
     Token:
