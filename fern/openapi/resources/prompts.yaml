@@ -549,7 +549,7 @@ components:
                 title: Model Run ID
                 description: Model Run ID where the failed predictions came from
                 type: integer
-              results:
+              failed_predictions:
                 title: Results
                 type: array
                 items:
