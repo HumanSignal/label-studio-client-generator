@@ -1,0 +1,39 @@
+paths:
+  /api/annotations/bulk:
+    post:
+      summary: Create annotations in bulk
+      description: >
+        Create multiple annotations for specific tasks in a bulk operation.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                tasks:
+                  title: Task IDs
+                  type: array
+                  items:
+                    type: integer
+                lead_time:
+                  title: Lead Time
+                  type: number
+                project:
+                  title: Project ID
+                  type: integer
+                result:
+                  title: Result Data
+                  type: object
+      responses:
+        "201":
+          description: Annotations created successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      title: Annotation ID
+                      type: integer
