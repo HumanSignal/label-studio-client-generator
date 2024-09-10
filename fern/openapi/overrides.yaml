@@ -76,6 +76,13 @@ paths:
       x-fern-sdk-method-name: batch_predictions
       x-fern-audiences:
         - public
+  /api/model-run/batch-failed-predictions:
+    post:
+      $ref: "./resources/prompts.yaml#/paths/~1api~1model-run~1batch-failed-predictions/post"
+      x-fern-sdk-group-name: prompts
+      x-fern-sdk-method-name: batch_failed_predictions
+      x-fern-audiences:
+        - public
 
   /api/comments/:
     get:

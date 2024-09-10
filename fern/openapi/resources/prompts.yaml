@@ -208,6 +208,24 @@ paths:
                   detail:
                     type: string
 
+  /api/model-run/batch-failed-predictions:
+    post:
+      summary: Create batch of failed predictions
+      description: >
+        Create a new batch of failed predictions.
+      requestBody:
+        $ref: "#/components/requestBodies/api_prompts_batch_failed_predictions_create"
+      responses:
+        "201":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+
 components:
   schemas:
     Prompt:
@@ -454,9 +472,100 @@ components:
             properties:
               modelrun_id:
                 title: Model Run ID
+                description: Model Run ID to associate the prediction with
                 type: integer
               results:
                 title: Results
                 type: array
                 items:
                   type: object
+                  properties:
+                    task_id:
+                      type: integer
+                      title: Task ID
+                      description: Task ID to associate the prediction with
+                    output:
+                      type: object
+                      title: Prediction Output
+                      description: >
+                        Prediction output that contains keys from labeling config.
+                        Each key must be a valid control tag name from the labeling config.
+                        For example, given the output:
+                        ```json
+                        {"sentiment": "positive"}
+                        ```
+                        it will be converted to the internal LS annotation format:
+                        ```json
+                        {
+                          "value": {
+                            "choices": ["positive"]
+                          },
+                          "from_name": "label",
+                          "to_name": "",
+                          ...
+                        }
+                        ```
+                      example:
+                        sentiment: positive
+                        key1: value1
+                        key2: value2
+                    prompt_tokens:
+                      type: integer
+                      title: Prompt Tokens
+                      description: Number of tokens in the prompt
+                      nullable: true
+                    completion_tokens:
+                      type: integer
+                      title: Completion Tokens
+                      description: Number of tokens in the completion
+                      nullable: true
+                    prompt_cost_usd:
+                      type: number
+                      format: float
+                      title: Prompt Cost
+                      description: Cost of the prompt (in USD)
+                      nullable: true
+                    completion_cost_usd:
+                      type: number
+                      format: float
+                      title: Completion Cost
+                      description: Cost of the completion (in USD)
+                      nullable: true
+                    total_cost_usd:
+                      type: number
+                      format: float
+                      title: Total Cost
+                      description: Total cost of the inference (in USD)
+                      nullable: true
+                  additionalProperties:
+                    nullable: true
+    api_prompts_batch_failed_predictions_create:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              modelrun_id:
+                title: Model Run ID
+                description: Model Run ID where the failed predictions came from
+                type: integer
+              failed_predictions:
+                title: Results
+                type: array
+                items:
+                  type: object
+                  properties:
+                    task_id:
+                      type: integer
+                      title: Task ID
+                      description: Task ID to associate the prediction with
+                    error_type:
+                      type: string
+                      title: Error Type
+                      description: Type of error (e.g. "Timeout", "Rate Limit", etc)
+                    message:
+                      type: string
+                      title: Message
+                      description: Error message details
+                  additionalProperties:
+                    nullable: true
