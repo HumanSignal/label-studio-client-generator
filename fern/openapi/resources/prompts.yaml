@@ -311,6 +311,11 @@ components:
         parent_model:
           title: Parent Model ID
           type: integer
+        model_provider_connection:
+          title: Model Provider Connection
+          type: integer
+          nullable: true
+
         prompt:
           title: Prompt
           type: string
