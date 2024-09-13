@@ -314,6 +314,7 @@ components:
         model_provider_connection:
           title: Model Provider Connection
           type: integer
+          nullable: true
 
         prompt:
           title: Prompt
