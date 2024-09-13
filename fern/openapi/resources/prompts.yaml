@@ -457,22 +457,26 @@ components:
           title: Title
           type: string
           maxLength: 500
+          nullable: true
         parent_model:
           title: Parent Model ID
           type: integer
+          nullable: true
         prompt:
           title: Prompt
           type: string
-
+          nullable: true
         provider:
           title: Provider
           type: string
           enum:
             - OpenAI
             - AzureOpenAI
+          nullable: true
         provider_model_id:
           title: Provider Model ID
           type: string
+          nullable: true
         created_by:
           anyOf:
             - type: integer
