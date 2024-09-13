@@ -451,11 +451,6 @@ components:
           type: string
           nullable: true
     PromptVersion:
-      required:
-        - title
-        - prompt
-        - provider
-        - provider_model_id
       type: object
       properties:
         title:
