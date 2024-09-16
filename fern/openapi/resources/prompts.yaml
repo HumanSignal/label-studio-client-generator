@@ -462,6 +462,10 @@ components:
           title: Parent Model ID
           type: integer
           nullable: true
+        model_provider_connection:
+          title: Model Provider Connection
+          type: integer
+          nullable: true
         prompt:
           title: Prompt
           type: string
