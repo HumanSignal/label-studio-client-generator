@@ -30,7 +30,86 @@ paths:
               schema:
                 $ref: "#/components/schemas/Prompt"
 
+  /api/prompts/{id}:
+    get:
+      summary: Get prompt
+      description: >
+        Get a prompt by ID.
+      parameters:
+        - name: id
+          in: path
+          description: Prompt ID
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Prompt"
+
+    patch:
+      summary: Update prompt
+      description: >
+        Update a prompt by ID.
+      parameters:
+        - name: id
+          in: path
+          description: Prompt ID
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Prompt"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Prompt"
+
+    delete:
+      summary: Delete prompt
+      description: >
+        Delete a prompt by ID.
+      parameters:
+        - name: id
+          in: path
+          description: Prompt ID
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: ""
+
   /api/prompts/{id}/versions:
+    get:
+      summary: List prompt versions
+      description: >
+        Get a list of prompt versions.
+      parameters:
+        - name: id
+          in: path
+          description: Prompt ID
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PromptVersion"
     post:
       summary: Create prompt version
       description: >
@@ -47,7 +126,6 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/PromptVersion"
-
       responses:
         "201":
           description: ""
@@ -55,6 +133,82 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/PromptVersion"
+
+  /api/prompts/{id}/versions/{version_id}:
+    get:
+      summary: Get prompt version
+      description: >
+        Get a prompt version by ID.
+      parameters:
+        - name: id
+          in: path
+          description: Prompt ID
+          required: true
+          schema:
+            type: integer
+        - name: version_id
+          in: path
+          description: Prompt Version ID
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PromptVersion"
+    patch:
+      summary: Update prompt version
+      description: >
+        Update a prompt version by ID.
+      parameters:
+        - name: id
+          in: path
+          description: Prompt ID
+          required: true
+          schema:
+            type: integer
+        - name: version_id
+          in: path
+          description: Prompt Version ID
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PromptVersion"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PromptVersion"
+
+    delete:
+      summary: Delete prompt version
+      description: >
+        Delete a prompt version by ID.
+      parameters:
+        - name: id
+          in: path
+          description: Prompt ID
+          required: true
+          schema:
+            type: integer
+        - name: version_id
+          in: path
+          description: Prompt Version ID
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: ""
 
   /api/prompts/{id}/versions/{version_id}/inference-runs:
     post:
@@ -117,7 +271,7 @@ paths:
           required: true
           schema:
             type: string
-            enum: [All, HasGT, Sample]
+            enum: [ All, HasGT, Sample ]
       responses:
         "200":
           description: "Success"
@@ -297,38 +451,36 @@ components:
           type: string
           nullable: true
     PromptVersion:
-      required:
-        - title
-        - prompt
-        - provider
-        - provider_model_id
       type: object
       properties:
         title:
           title: Title
           type: string
           maxLength: 500
+          nullable: true
         parent_model:
           title: Parent Model ID
           type: integer
+          nullable: true
         model_provider_connection:
           title: Model Provider Connection
           type: integer
           nullable: true
-
         prompt:
           title: Prompt
           type: string
-
+          nullable: true
         provider:
           title: Provider
           type: string
           enum:
             - OpenAI
             - AzureOpenAI
+          nullable: true
         provider_model_id:
           title: Provider Model ID
           type: string
+          nullable: true
         created_by:
           anyOf:
             - type: integer
