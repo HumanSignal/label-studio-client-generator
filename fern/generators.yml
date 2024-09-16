@@ -17,9 +17,9 @@ groups:
         github:
           repository: HumanSignal/label-studio-sdk
           # Branch will be automatically replaced during Follow Merge
-          branch: fern-bot/08-05-2024-0231PM
-          mode: push
-#          mode: pull-request
+#          branch: fern-bot/08-05-2024-0231PM
+#          mode: push
+          mode: pull-request
         config:
           inline_request_params: true
           package_name: label_studio_sdk
