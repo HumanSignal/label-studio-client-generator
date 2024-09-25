@@ -747,7 +747,7 @@ components:
                       description: Error message details
                   additionalProperties:
                     nullable: true
-    api_prompts_version_refine_prompt_create:
+    api_prompts_versions_refine_prompt_create:
       content:
         application/json:
           schema:
