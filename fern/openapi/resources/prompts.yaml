@@ -280,6 +280,33 @@ paths:
               schema:
                 $ref: "#/components/schemas/InferenceRun"
 
+  /api/prompts/{prompt_id}/versions/{version_id}/refine:
+    post:
+      summary: Refine a prompt version
+      description: >
+        Refine a prompt version using a teacher model and save the refined prompt as a new version.
+      parameters:
+        - name: prompt_id
+          in: path
+          description: Prompt ID
+          required: true
+          schema:
+            type: integer
+        - name: version_id
+          in: path
+          description: Base Prompt Version ID
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        $ref: "#/components/requestBodies/api_prompts_versions_refine_prompt_create"
+      responses:
+        "201":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PromptVersion"
   /api/inference-runs/{pk}/indicators:
     get:
       summary: Get key indicators
@@ -726,3 +753,23 @@ components:
                       description: Error message details
                   additionalProperties:
                     nullable: true
+    api_prompts_versions_refine_prompt_create:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:  # TODO need to add model version from url here?
+              teacher_model_provider_connection_id:
+                title: Teacher Model Provider Connection ID
+                description: Model Provider Connection ID to use to refine the prompt
+                type: integer
+              teacher_model_name:
+                title: Teacher Model Name
+                description: Name of the model to use to refine the prompt
+                type: string
+                additionalProperties:
+                  nullable: true
+              project_id:
+                title: Project ID
+                description: Project ID to target the refined prompt for
+                type: integer
