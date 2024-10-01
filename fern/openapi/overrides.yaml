@@ -77,7 +77,7 @@ paths:
       x-fern-audiences:
         - public
 
-  /api/prompts/{id}/versions/{version_id}/refine-prompt:
+  /api/prompts/{prompt_id}/versions/{version_id}/refine-prompt:
     post:
       $ref: "./resources/prompts.yaml#/paths/~1api~1prompts~1{id}~1versions~1{version_id}~1refine-prompt/post"
       x-fern-sdk-group-name:
