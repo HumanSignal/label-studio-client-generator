@@ -292,6 +292,7 @@ paths:
           required: true
           schema:
             type: integer
+          x-fern-ignore-in-client: true  # not used in the api
         - name: version_id
           in: path
           description: Base Prompt Version ID
