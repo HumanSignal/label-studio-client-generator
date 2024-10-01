@@ -292,7 +292,7 @@ paths:
           required: true
           schema:
             type: integer
-        - name: base_model_version_id
+        - name: version_id
           in: path
           description: Base Prompt Version ID
           required: true
