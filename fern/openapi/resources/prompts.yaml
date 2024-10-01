@@ -280,7 +280,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/InferenceRun"
 
-  /api/prompts/{prompt_id}/versions/{version_id}/refine-prompt:
+  /api/prompts/{prompt_id}/versions/{version_id}/refine:
     post:
       summary: Refine a prompt version
       description: >
