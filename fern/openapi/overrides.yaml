@@ -77,6 +77,16 @@ paths:
       x-fern-audiences:
         - public
 
+  /api/prompts/{prompt_id}/versions/{version_id}/cost-estimate:
+    post:
+      $ref: "./resources/prompts.yaml#/paths/~1api~1prompts~1{prompt_id}~1versions~1{version_id}~1cost-estimate/get"
+      x-fern-sdk-group-name:
+        - prompts
+        - versions
+      x-fern-sdk-method-name: cost_estimate
+      x-fern-audiences:
+        - public
+
   /api/prompts/{prompt_id}/versions/{version_id}/refine:
     post:
       $ref: "./resources/prompts.yaml#/paths/~1api~1prompts~1{prompt_id}~1versions~1{version_id}~1refine/post"

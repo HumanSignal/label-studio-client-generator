@@ -210,6 +210,45 @@ paths:
         "204":
           description: ""
 
+  /api/prompts/{prompt_id}/versions/{version_id}/cost-estimate:
+    get:
+      summary: Get cost estimate for running a prompt version on a particular project/subset
+      description: >
+        Get cost estimate for running a prompt version on a particular project/subset
+      parameters:
+        - name: prompt_id
+          in: path
+          description: Prompt ID
+          required: true
+          schema:
+            type: integer
+        - name: version_id
+          in: path
+          description: Prompt Version ID
+          required: true
+          schema:
+            type: integer
+        - name: project_id
+          in: query
+          description: ID of the project to get an estimate for running on
+          required: true
+          schema:
+            type: integer
+        - name: project_subset
+          in: query
+          description: Subset of the project to get an estimate for running on (e.g. 'All', 'Sample', or 'HasGT')
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: number
+                format: float
+
   /api/prompts/{id}/versions/{version_id}/inference-runs:
     post:
       summary: Run prompt inference
