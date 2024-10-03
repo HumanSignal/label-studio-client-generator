@@ -306,7 +306,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/PromptVersion"
+                $ref: "#/components/schemas/RefinedPromptResponse"
+                
   /api/inference-runs/{pk}/indicators:
     get:
       summary: Get key indicators
@@ -646,6 +647,32 @@ components:
           type: string
           format: date-time
           readOnly: true
+
+    RefinedPromptResponse:
+      type: object
+      properties:
+        title:
+          type: string
+          title: Title
+          description: Title of the refined prompt
+        reasoning:
+          type: string
+          title: Reasoning
+          description: Reasoning behind the refinement
+        prompt:
+          type: string
+          title: Prompt
+          description: The refined prompt text
+        refinement_job_id:
+          type: string
+          title: Refinement Job ID
+          description: Unique identifier for the refinement job
+          readOnly: true
+      required:
+        - title
+        - reasoning
+        - prompt
+        - refinement_job_id
 
   requestBodies:
     api_prompts_batch_predictions_create:
