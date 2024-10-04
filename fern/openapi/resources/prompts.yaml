@@ -329,6 +329,12 @@ paths:
           required: true
           schema:
             type: integer
+        - name: async
+          in: query
+          description: Run the refinement job asynchronously
+          required: false
+          schema:
+            type: boolean
       requestBody:
         $ref: "#/components/requestBodies/api_prompts_versions_refine_prompt_create"
       responses:
