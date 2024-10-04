@@ -301,6 +301,9 @@ paths:
         - name: refinement_job_id
           in: query
           description: Refinement Job ID acquired from the `POST /api/prompts/{prompt_id}/versions/{version_id}/refine` endpoint
+          required: true
+          schema:
+            type: string
       responses:
         "200":
           description: ""
