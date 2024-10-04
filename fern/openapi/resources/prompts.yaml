@@ -281,6 +281,37 @@ paths:
                 $ref: "#/components/schemas/InferenceRun"
 
   /api/prompts/{prompt_id}/versions/{version_id}/refine:
+    get:
+      summary: Get refined prompt
+      description: >
+        Get the refined prompt based on the `refinement_job_id`.
+      parameters:
+        - name: prompt_id
+          in: path
+          description: Prompt ID
+          required: true
+          schema:
+            type: integer
+        - name: version_id
+          in: path
+          description: Prompt Version ID
+          required: true
+          schema:
+            type: integer
+        - name: refinement_job_id
+          in: query
+          description: Refinement Job ID acquired from the `POST /api/prompts/{prompt_id}/versions/{version_id}/refine` endpoint
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RefinedPromptResponse"
+      
     post:
       summary: Refine a prompt version
       description: >
@@ -668,11 +699,19 @@ components:
           title: Refinement Job ID
           description: Unique identifier for the refinement job
           readOnly: true
+        refinement_status:
+          type: string
+          title: Refinement Status
+          description: Status of the refinement job
+          enum:
+            - Pending
+            - InProgress
+            - Completed
+            - Failed
+          readOnly: true
+          default: Pending
       required:
-        - title
-        - reasoning
         - prompt
-        - refinement_job_id
 
   requestBodies:
     api_prompts_batch_predictions_create:
