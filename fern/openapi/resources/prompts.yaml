@@ -319,6 +319,37 @@ paths:
                 $ref: "#/components/schemas/InferenceRun"
 
   /api/prompts/{prompt_id}/versions/{version_id}/refine:
+    get:
+      summary: Get refined prompt
+      description: >
+        Get the refined prompt based on the `refinement_job_id`.
+      parameters:
+        - name: prompt_id
+          in: path
+          description: Prompt ID
+          required: true
+          schema:
+            type: integer
+        - name: version_id
+          in: path
+          description: Prompt Version ID
+          required: true
+          schema:
+            type: integer
+        - name: refinement_job_id
+          in: query
+          description: Refinement Job ID acquired from the `POST /api/prompts/{prompt_id}/versions/{version_id}/refine` endpoint
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RefinedPromptResponse"
+      
     post:
       summary: Refine a prompt version
       description: >
@@ -336,6 +367,12 @@ paths:
           required: true
           schema:
             type: integer
+        - name: async
+          in: query
+          description: Run the refinement job asynchronously
+          required: false
+          schema:
+            type: boolean
       requestBody:
         $ref: "#/components/requestBodies/api_prompts_versions_refine_prompt_create"
       responses:
@@ -344,7 +381,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/PromptVersion"
+                $ref: "#/components/schemas/RefinedPromptResponse"
+                
   /api/inference-runs/{pk}/indicators:
     get:
       summary: Get key indicators
@@ -708,6 +746,40 @@ components:
           title: Total Cost
           description: Total cost of the inference (in USD)
           nullable: true
+
+    RefinedPromptResponse:
+      type: object
+      properties:
+        title:
+          type: string
+          title: Title
+          description: Title of the refined prompt
+        reasoning:
+          type: string
+          title: Reasoning
+          description: Reasoning behind the refinement
+        prompt:
+          type: string
+          title: Prompt
+          description: The refined prompt text
+        refinement_job_id:
+          type: string
+          title: Refinement Job ID
+          description: Unique identifier for the refinement job
+          readOnly: true
+        refinement_status:
+          type: string
+          title: Refinement Status
+          description: Status of the refinement job
+          enum:
+            - Pending
+            - InProgress
+            - Completed
+            - Failed
+          readOnly: true
+          default: Pending
+      required:
+        - prompt
 
   requestBodies:
     api_prompts_batch_predictions_create:

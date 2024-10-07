@@ -88,6 +88,14 @@ paths:
         - public
 
   /api/prompts/{prompt_id}/versions/{version_id}/refine:
+    get:
+      $ref: "./resources/prompts.yaml#/paths/~1api~1prompts~1{prompt_id}~1versions~1{version_id}~1refine/get"
+      x-fern-sdk-group-name:
+        - prompts
+        - versions
+      x-fern-sdk-method-name: get_refined_prompt
+      x-fern-audiences:
+        - public
     post:
       $ref: "./resources/prompts.yaml#/paths/~1api~1prompts~1{prompt_id}~1versions~1{version_id}~1refine/post"
       x-fern-sdk-group-name:
