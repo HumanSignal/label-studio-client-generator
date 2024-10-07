@@ -246,8 +246,7 @@ paths:
           content:
             application/json:
               schema:
-                type: number
-                format: float
+                $ref: "#/components/schemas/InferenceRunCostEstimate"
 
   /api/prompts/{id}/versions/{version_id}/inference-runs:
     post:
@@ -685,6 +684,30 @@ components:
           type: string
           format: date-time
           readOnly: true
+
+    InferenceRunCostEstimate:
+      required:
+        - total_cost_usd
+      type: object
+      properties:
+        prompt_cost_usd:
+          type: number
+          format: float
+          title: Prompt Cost
+          description: Cost of the prompt (in USD)
+          nullable: true
+        completion_cost_usd:
+          type: number
+          format: float
+          title: Completion Cost
+          description: Cost of the completion (in USD)
+          nullable: true
+        total_cost_usd:
+          type: number
+          format: float
+          title: Total Cost
+          description: Total cost of the inference (in USD)
+          nullable: true
 
   requestBodies:
     api_prompts_batch_predictions_create:
