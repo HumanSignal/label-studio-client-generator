@@ -716,6 +716,17 @@ components:
             - Failed
           readOnly: true
           default: Pending
+        total_cost:
+          type: number
+          format: float
+          title: Total Cost
+          description: Total cost of the refinement job (in USD)
+          nullable: true
+        previous_version:
+          title: Previous Version
+          description: Previous version of the prompt
+          $ref: "#/components/schemas/PromptVersion"
+              
       required:
         - prompt
 
