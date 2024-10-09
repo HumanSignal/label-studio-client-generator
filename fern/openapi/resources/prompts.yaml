@@ -729,20 +729,17 @@ components:
       type: object
       properties:
         prompt_cost_usd:
-          type: number
-          format: float
+          type: string
           title: Prompt Cost
           description: Cost of the prompt (in USD)
           nullable: true
         completion_cost_usd:
-          type: number
-          format: float
+          type: string
           title: Completion Cost
           description: Cost of the completion (in USD)
           nullable: true
         total_cost_usd:
-          type: number
-          format: float
+          type: string
           title: Total Cost
           description: Total cost of the inference (in USD)
           nullable: true
