@@ -741,7 +741,7 @@ components:
           title: Total Cost
           description: Total cost of the inference (in USD)
           nullable: true
-        error:
+        is_error:
           type: boolean
           title: Error
           description: Whether an error occurred or not
