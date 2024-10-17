@@ -724,8 +724,6 @@ components:
           readOnly: true
 
     InferenceRunCostEstimate:
-      required:
-        - total_cost_usd
       type: object
       properties:
         prompt_cost_usd:
@@ -742,6 +740,21 @@ components:
           type: string
           title: Total Cost
           description: Total cost of the inference (in USD)
+          nullable: true
+        error:
+          type: boolean
+          title: Error
+          description: Whether an error occurred or not
+          nullable: true
+        error_type:
+          type: string
+          title: Error Type
+          description: Type of error (e.g. "Timeout", "Rate Limit", etc)
+          nullable: true
+        error_message:
+          type: string
+          title: Error Message
+          description: Error message details
           nullable: true
 
     RefinedPromptResponse:
