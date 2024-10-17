@@ -210,6 +210,44 @@ paths:
         "204":
           description: ""
 
+  /api/prompts/{prompt_id}/versions/{version_id}/cost-estimate:
+    get:
+      summary: Get cost estimate for running a prompt version on a particular project/subset
+      description: >
+        Get cost estimate for running a prompt version on a particular project/subset
+      parameters:
+        - name: prompt_id
+          in: path
+          description: Prompt ID
+          required: true
+          schema:
+            type: integer
+        - name: version_id
+          in: path
+          description: Prompt Version ID
+          required: true
+          schema:
+            type: integer
+        - name: project_id
+          in: query
+          description: ID of the project to get an estimate for running on
+          required: true
+          schema:
+            type: integer
+        - name: project_subset
+          in: query
+          description: Subset of the project to get an estimate for running on (e.g. 'All', 'Sample', or 'HasGT')
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InferenceRunCostEstimate"
+
   /api/prompts/{id}/versions/{version_id}/inference-runs:
     post:
       summary: Run prompt inference
@@ -684,6 +722,40 @@ components:
           type: string
           format: date-time
           readOnly: true
+
+    InferenceRunCostEstimate:
+      type: object
+      properties:
+        prompt_cost_usd:
+          type: string
+          title: Prompt Cost
+          description: Cost of the prompt (in USD)
+          nullable: true
+        completion_cost_usd:
+          type: string
+          title: Completion Cost
+          description: Cost of the completion (in USD)
+          nullable: true
+        total_cost_usd:
+          type: string
+          title: Total Cost
+          description: Total cost of the inference (in USD)
+          nullable: true
+        is_error:
+          type: boolean
+          title: Error
+          description: Whether an error occurred or not
+          nullable: true
+        error_type:
+          type: string
+          title: Error Type
+          description: Type of error (e.g. "Timeout", "Rate Limit", etc)
+          nullable: true
+        error_message:
+          type: string
+          title: Error Message
+          description: Error message details
+          nullable: true
 
     RefinedPromptResponse:
       type: object
