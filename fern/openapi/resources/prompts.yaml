@@ -789,8 +789,7 @@ components:
           readOnly: true
           default: Pending
         total_cost:
-          type: number
-          format: float
+          type: string
           title: Total Cost
           description: Total cost of the refinement job (in USD)
           nullable: true
