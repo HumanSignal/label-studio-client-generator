@@ -2463,8 +2463,11 @@ components:
         comment_authors:
           type: array
           items:
-            type: integer
-          description: List of comment authors' IDs for this task
+            oneOf:
+              - type: integer
+              - type: object
+                additionalProperties: true
+          description: List of comment authors for this task
     Workspace:
       type: object
       properties:
