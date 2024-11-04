@@ -483,6 +483,13 @@ paths:
       summary: Update model provider connection
       description: >
         Update a model provider connection by ID.
+      parameters:
+        - name: pk
+          in: path
+          description: Model Provider Connection ID
+          required: true
+          schema:
+            type: integer
       requestBody:
         content:
           application/json:

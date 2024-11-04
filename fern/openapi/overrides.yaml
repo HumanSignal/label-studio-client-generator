@@ -144,10 +144,37 @@ paths:
         - public
 
   /api/model-provider-connections/:
+    get:
+      $ref: "./resources/prompts.yaml#/paths/~1api~1model-provider-connections/get"
+      x-fern-sdk-group-name: model_providers
+      x-fern-sdk-method-name: list
+      x-fern-audiences:
+        - public
+
     post:
       $ref: "./resources/prompts.yaml#/paths/~1api~1model-provider-connections/post"
       x-fern-sdk-group-name: model_providers
       x-fern-sdk-method-name: create
+      x-fern-audiences:
+        - public
+
+  /api/model-provider-connections/{pk}:
+    get:
+      $ref: "./resources/prompts.yaml#/paths/~1api~1model-provider-connections~1{pk}/get"
+      x-fern-sdk-group-name: model_providers
+      x-fern-sdk-method-name: get
+      x-fern-audiences:
+        - public
+    patch:
+      $ref: "./resources/prompts.yaml#/paths/~1api~1model-provider-connections~1{pk}/patch"
+      x-fern-sdk-group-name: model_providers
+      x-fern-sdk-method-name: update
+      x-fern-audiences:
+        - public
+    delete:
+      $ref: "./resources/prompts.yaml#/paths/~1api~1model-provider-connections~1{pk}/delete"
+      x-fern-sdk-group-name: model_providers
+      x-fern-sdk-method-name: delete
       x-fern-audiences:
         - public
 
