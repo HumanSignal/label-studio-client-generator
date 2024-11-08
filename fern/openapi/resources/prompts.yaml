@@ -430,6 +430,19 @@ paths:
                 $ref: "./dashboards.yaml#/components/schemas/KeyIndicatorValue"
 
   /api/model-provider-connections:
+    get:
+      summary: Get model provider connections
+      description: >
+        Get all model provider connections created by the user in the current organization.
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ModelProviderConnection"
     post:
       summary: Create model provider connection
       description: >
@@ -446,6 +459,63 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ModelProviderConnection"
+  
+  /api/model-provider-connections/{pk}:
+    get:
+      summary: Get model provider connection
+      description: >
+        Get a model provider connection by ID.
+      parameters:
+        - name: pk
+          in: path
+          description: Model Provider Connection ID
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ModelProviderConnection"
+    patch:
+      summary: Update model provider connection
+      description: >
+        Update a model provider connection by ID.
+      parameters:
+        - name: pk
+          in: path
+          description: Model Provider Connection ID
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ModelProviderConnection"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ModelProviderConnection"
+    delete:
+      summary: Delete model provider connection
+      description: >
+        Delete a model provider connection by ID.
+      parameters:
+        - name: pk
+          in: path
+          description: Model Provider Connection ID
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: ""
 
   /api/model-run/batch-predictions:
     post:
