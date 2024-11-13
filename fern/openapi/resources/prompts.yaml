@@ -823,10 +823,16 @@ components:
           default: None
         budget_total_spent:
           title: Budget Total Spent
-          description: Tracked total budget spent for the given provider connection
+          description: Tracked total budget spent for the given provider connection within the current budget period
           type: number
           nullable: true
-          default: null 
+          default: null
+        budget_alert_threshold:
+          title: Budget Alert Threshold
+          description: Budget alert threshold for the given provider connection
+          type: number
+          nullable: true
+          default: null
 
     InferenceRunCostEstimate:
       type: object
