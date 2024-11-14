@@ -752,6 +752,7 @@ components:
           enum:
             - OpenAI
             - AzureOpenAI
+            - Custom
         api_key:
           title: API Key
           type: string
@@ -792,6 +793,46 @@ components:
           type: string
           format: date-time
           readOnly: true
+        is_internal:
+          title: Is Internal
+          description: Whether the model provider connection is internal, not visible to the user.
+          type: boolean
+          readOnly: true
+          default: false
+        budget_limit:
+          title: Budget Limit
+          description: Budget limit for the model provider connection (null if unlimited)
+          type: number
+          nullable: true
+          default: null
+        budget_last_reset_date:
+          title: Budget Last Reset Date
+          description: Date and time the budget was last reset
+          type: string
+          format: date-time
+          nullable: true
+          default: null
+        budget_reset_period:
+          title: Budget Reset Period
+          description: Budget reset period for the model provider connection (null if not reset)
+          type: string
+          enum:
+            - Monthly
+            - Yearly
+            - None
+          default: None
+        budget_total_spent:
+          title: Budget Total Spent
+          description: Tracked total budget spent for the given provider connection within the current budget period
+          type: number
+          nullable: true
+          default: null
+        budget_alert_threshold:
+          title: Budget Alert Threshold
+          description: Budget alert threshold for the given provider connection
+          type: number
+          nullable: true
+          default: null
 
     InferenceRunCostEstimate:
       type: object
