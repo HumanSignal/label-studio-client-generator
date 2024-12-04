@@ -2357,6 +2357,42 @@ paths:
       x-fern-sdk-method-name: createBulk
       x-fern-audiences:
         - public
+  "/api/organizations/{id}/memberships/{user_pk}/":
+    get:
+      operationId: api_organizations_memberships_read
+      summary: Get organization member details
+      description: Get organization member details by user ID.
+      parameters:
+        - name: user_pk
+          in: path
+          description: A unique integer value identifying the user to get organization details for.
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrganizationMember"
+      tags:
+        - Organizations
+      x-fern-sdk-group-name:
+        - organizations
+        - members
+      x-fern-sdk-method-name: get
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: user_pk
+        in: path
+        required: true
+        schema:
+          type: string
 components:
   securitySchemes:
     Token:
@@ -2727,7 +2763,33 @@ components:
           title: Project
           description: A unique integer value identifying this project.
           type: integer
-
+    OrganizationMember:
+      required:
+        - user
+        - organization
+      type: object
+      properties:
+        user:
+          title: User
+          description: User ID
+          type: integer
+        organization:
+          title: Organization
+          description: Organization ID
+          type: integer
+        contributed_projects_count:
+          title: Contributed projects count
+          type: string
+          readOnly: true
+        annotations_count:
+          title: Annotations count
+          type: string
+          readOnly: true
+        created_at:
+          title: Created at
+          type: string
+          format: date-time
+          readOnly: true
   requestBodies:
     api_storages_s3s_createData:
       content:
