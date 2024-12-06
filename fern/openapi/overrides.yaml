@@ -225,6 +225,13 @@ paths:
       x-fern-sdk-method-name: delete
       x-fern-audiences:
         - public
+  /api/comments/export/:
+    get:
+      $ref: "./resources/comments.yaml#/paths/~1api~1comments~1/export"
+      x-fern-sdk-group-name: comments
+      x-fern-sdk-method-name: export
+      x-fern-audiences:
+        - public
   "/api/annotations/{id}/":
     get:
       summary: Get annotation by its ID

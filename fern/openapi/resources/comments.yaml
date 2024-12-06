@@ -4,13 +4,13 @@ paths:
       summary: List comments
       description: >
             
-            Get a list of comments for a specific project.
+            Get a list of comments for the specified annotation, annotators or projects.
       parameters:
-        - name: project
+        - name: projects
           in: query
-          description: Project ID
+          description: Comma-separated list of project IDs
           schema:
-            type: integer
+            type: string
         - name: expand_created_by
           in: query
           description: Expand the created_by field with object instead of ID
@@ -21,11 +21,11 @@ paths:
           description: Annotation ID
           schema:
             type: integer
-        - name: project
+        - name: annotators
           in: query
-          description: Project ID
+          description: Comma-separated list of annotator user IDs
           schema:
-              type: integer
+            type: string
       responses:
         "200":
           description: ""
@@ -105,6 +105,47 @@ paths:
       responses:
         "204":
           description: ""
+  /api/comments/export/:
+    get:
+      summary: Export comments
+      description: >
+            
+            Export comments for a specific annotation or list of projects.
+      parameters:
+        - name: projects
+          in: query
+          description: Comma-separated list of project IDs
+          schema:
+            type: string
+        - name: expand_created_by
+          in: query
+          description: Expand the created_by field with object instead of ID
+          schema:
+            type: boolean
+        - name: annotation
+          in: query
+          description: Annotation ID
+          schema:
+            type: integer
+        - name: annotators
+          in: query
+          description: Comma-separated list of annotator user IDs
+          schema:
+            type: string
+        - name: tz
+          in: query
+          description: Timezone in which to export the data. Format IANA timezone name, e.g. "America/New_York"
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+          content:
+            text/csv:
+              schema:
+                type: array
+                items:
+                  type: string
 
 components:
   schemas:
