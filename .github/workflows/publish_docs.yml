@@ -22,7 +22,7 @@ jobs:
         uses: actions/setup-node@v4
 
       - name: Download Fern
-        run: npm install -g fern-api
+        run: npm install -g fern-api@latest
 
       - name: Generate and Publish
         env:
