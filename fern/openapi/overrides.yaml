@@ -5,6 +5,7 @@ paths:
       x-fern-sdk-group-name: users
       x-fern-sdk-method-name: get_product_tour
       x-fern-audiences:
+        # internal is not used in the default generator - we skip function generation for this endpoint because it's not user facing
         - internal
     patch:
       $ref: "./resources/users.yaml#/paths/~1api~1current-user~1product-tour/patch"
