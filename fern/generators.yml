@@ -33,8 +33,6 @@ groups:
             - from: _legacy
               imports:
                 - Client
-          pydantic_config:
-            version: v1
           pyproject_python_version: '>=3.9,<4' # Can't use >=3.10 because of https://github.com/fern-api/fern/blob/main/generators/python/sdk/Dockerfile#L1
           extra_dependencies:
             pandas: '>=0.24.0'
