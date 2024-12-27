@@ -690,7 +690,7 @@ components:
           type: integer
         model_version:
           title: Prompt Version ID
-          type: string
+          type: integer
         created_by:
           anyOf:
             - type: integer
