@@ -1,4 +1,19 @@
 paths:
+  /api/current-user/product-tour:
+    get:
+      $ref: "./resources/users.yaml#/paths/~1api~1current-user~1product-tour/get"
+      x-fern-sdk-group-name: users
+      x-fern-sdk-method-name: get_product_tour
+      x-fern-audiences:
+        # internal is not used in the default generator - we skip function generation for this endpoint because it's not user facing
+        - internal
+    patch:
+      $ref: "./resources/users.yaml#/paths/~1api~1current-user~1product-tour/patch"
+      x-fern-sdk-group-name: users
+      x-fern-sdk-method-name: update_product_tour
+      x-fern-audiences:
+        - internal
+
   /api/prompts/:
     get:
       $ref: "./resources/prompts.yaml#/paths/~1api~1prompts/get"
