@@ -10,15 +10,15 @@ groups:
       - public
     generators:
       - name: fernapi/fern-python-sdk
-        version: 4.3.10
+        version: 4.3.11
         output:
           location: pypi
           package-name: label-studio-sdk
         github:
           repository: HumanSignal/label-studio-sdk
           # Branch and Mode will be automatically replaced during Follow Merge
-          #          branch: fern-bot/08-05-2024-0231PM
-          #          mode: push
+          # branch: fern-generate # replace with your branch name
+          # mode: push
           mode: pull-request
         config:
           inline_request_params: true
@@ -56,7 +56,7 @@ groups:
       - public
     generators:
       - name: fernapi/fern-python-sdk
-        version: 4.3.10
+        version: 4.3.11
         output:
           location: local-file-system
           path: ../label_studio_sdk
