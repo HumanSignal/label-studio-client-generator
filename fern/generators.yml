@@ -33,7 +33,7 @@ groups:
             - from: _legacy
               imports:
                 - Client
-          pyproject_python_version: '>=3.9,<4'
+          pyproject_python_version: '>=3.10,<4'
           extra_dependencies:
             pandas: '>=0.24.0'
             requests: '>=2.22.0'
