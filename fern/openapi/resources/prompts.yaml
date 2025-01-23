@@ -646,9 +646,8 @@ components:
         provider:
           title: Provider
           type: string
-          enum:
-            - OpenAI
-            - AzureOpenAI
+          default:
+            - OPENAI
           nullable: true
         provider_model_id:
           title: Provider Model ID
@@ -749,10 +748,8 @@ components:
         provider:
           title: Provider
           type: string
-          enum:
-            - OpenAI
-            - AzureOpenAI
-            - Custom
+          default:
+            - OPENAI
         api_key:
           title: API Key
           type: string
