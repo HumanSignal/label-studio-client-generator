@@ -4,7 +4,6 @@ paths:
       $ref: "./resources/pauses.yaml#/paths/~1api~1projects~1{project_pk}~1members~1{user_pk}~1pauses/get"
       x-fern-sdk-group-name:
         - projects
-        - members
         - pauses
       x-fern-sdk-method-name: list
       x-fern-audiences:
@@ -13,7 +12,6 @@ paths:
       $ref: "./resources/pauses.yaml#/paths/~1api~1projects~1{project_pk}~1members~1{user_pk}~1pauses/post"
       x-fern-sdk-group-name:
         - projects
-        - members
         - pauses
       x-fern-sdk-method-name: create
       x-fern-audiences:
@@ -24,7 +22,6 @@ paths:
       $ref: "./resources/pauses.yaml#/paths/~1api~1projects~1{project_pk}~1members~1{user_pk}~1pauses~1{id}/get"
       x-fern-sdk-group-name:
         - projects
-        - members
         - pauses
       x-fern-sdk-method-name: get
       x-fern-audiences:
@@ -33,7 +30,6 @@ paths:
       $ref: "./resources/pauses.yaml#/paths/~1api~1projects~1{project_pk}~1members~1{user_pk}~1pauses~1{id}/patch"
       x-fern-sdk-group-name:
         - projects
-        - members
         - pauses
       x-fern-sdk-method-name: update
       x-fern-audiences:
@@ -42,7 +38,6 @@ paths:
       $ref: "./resources/pauses.yaml#/paths/~1api~1projects~1{project_pk}~1members~1{user_pk}~1pauses~1{id}/delete"
       x-fern-sdk-group-name:
         - projects
-        - members
         - pauses
       x-fern-sdk-method-name: delete
       x-fern-audiences:
