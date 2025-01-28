@@ -16,6 +16,11 @@ paths:
           schema:
             type: integer
           description: User ID
+        - name: include_deleted
+          in: query
+          description: Include deleted pauses
+          schema:
+            type: boolean
       responses:
         "200":
           description: Successfully retrieved a list of pauses
