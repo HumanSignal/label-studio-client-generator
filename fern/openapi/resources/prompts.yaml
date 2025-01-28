@@ -653,8 +653,12 @@ components:
         provider:
           title: Provider
           type: string
-          default:
-            - OPENAI
+          enum:
+            - OpenAI
+            - AzureOpenAI
+            - VertexAI
+            - Gemini
+            - Custom
           nullable: true
         provider_model_id:
           title: Provider Model ID
@@ -755,8 +759,12 @@ components:
         provider:
           title: Provider
           type: string
-          default:
-            - OPENAI
+          enum:
+            - OpenAI
+            - AzureOpenAI
+            - VertexAI
+            - Gemini
+            - Custom
         api_key:
           title: API Key
           type: string
