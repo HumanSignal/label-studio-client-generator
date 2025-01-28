@@ -15,6 +15,27 @@ paths:
                   type: array
                   items:
                     type: integer
+                selectedItems:
+                  title: Selected Items
+                  type: object
+                  properties:
+                    all:
+                      type: boolean
+                      description: >
+                        Indicates whether to apply the operation to all tasks.
+                        If true, this overrides any included or excluded lists.
+                    included:
+                      type: array
+                      items:
+                        type: integer
+                      description: >
+                        An explicit list of task IDs to include.
+                    excluded:
+                      type: array
+                      items:
+                        type: integer
+                      description: >
+                        An explicit list of task IDs to exclude.
                 lead_time:
                   title: Lead Time
                   type: number

@@ -613,10 +613,17 @@ components:
             type: string
         associated_projects:
           title: Associated projects
-          description: List of associated projects IDs
+          description: List of associated projects IDs or objects
           type: array
           items:
-            type: integer
+            anyOf:
+              - type: integer
+              - type: object
+                properties:
+                  id:
+                    type: integer
+                  title:
+                    type: string
           nullable: true
         skill_name:
           title: Skill name
