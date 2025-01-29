@@ -658,6 +658,7 @@ components:
             - AzureOpenAI
             - VertexAI
             - Gemini
+            - Anthropic
             - Custom
           nullable: true
         provider_model_id:
@@ -764,6 +765,7 @@ components:
             - AzureOpenAI
             - VertexAI
             - Gemini
+            - Anthropic
             - Custom
         api_key:
           title: API Key
