@@ -1,0 +1,418 @@
+paths:
+  /api/projects/{project_id}/exports:
+    get:
+      summary: List all export snapshots
+      description: >
+        
+        Returns a list of export file (snapshots) for a specific project by ID. The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list). 
+
+
+        Included in the response is information about each snapshot, such as who created it and what format it is in. 
+      parameters:
+        - name: project_id
+          in: path
+          description: A unique integer value identifying this project.
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Export"
+    post:
+      summary: Create new export snapshot
+      description: >
+
+        Create a new export request to start a background task and generate an export file (snapshot) for a specific project by ID. The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list). 
+        
+        
+        A snapshot is a static export of your project's data and annotations at a specific point in time. It captures the current state of your tasks, annotations, and other relevant data, allowing you to download and review them later. Snapshots are particularly useful for large projects as they help avoid timeouts during export operations by processing the data asynchronously.
+
+
+        For more information, see the [Label Studio documentation on exporting annotations](https://labelstud.io/guide/export.html).
+      parameters:
+        - name: project_id
+          in: path
+          description: A unique integer value identifying this project.
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ExportSnapshot"
+        required: true
+      responses:
+        "201":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExportSnapshot"
+
+
+  /api/projects/{project_id}/exports/{export_pk}:
+    get:
+      summary: Get export snapshot by ID
+      description: >
+        
+        Retrieve information about a specific export file (snapshot). 
+        
+        
+        You will need the export ID. You can find this in the response when you [create the snapshot via the API](create) or using [List all export snapshots](list).   
+
+
+        You will also need the project ID. This can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list). 
+      parameters:
+        - name: project_id
+          in: path
+          description: A unique integer value identifying this project.
+          required: true
+          schema:
+            type: integer
+        - name: export_pk
+          in: path
+          description: Primary key identifying the export file.
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Export"
+    delete:
+      summary: Delete export snapshot
+      description: >
+        
+        Delete an export file by specified export ID.
+
+
+        You will need the export ID. You can find this in the response when you [create the snapshot via the API](create) or using [List all export snapshots](list). 
+      parameters:
+        - name: project_id
+          in: path
+          description: A unique integer value identifying this project.
+          required: true
+          schema:
+            type: integer
+        - name: export_pk
+          in: path
+          description: Primary key identifying the export file.
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: ""
+
+  #         type: string
+  /api/projects/{project_id}/exports/{export_pk}/convert:
+    post:
+      summary: Export conversion
+      description: >
+        
+        You can use this to convert an export snapshot into the selected format. 
+
+
+        To see what formats are supported, you can use [Get export formats](list-formats) or see [Export formats supported by Label Studio](https://labelstud.io/guide/export#Export-formats-supported-by-Label-Studio). 
+
+
+        You will need to provide the project ID and export ID (`export_pk`). The export ID is returned when you create the export or you can use [List all export snapshots](list).
+
+
+        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list). 
+      parameters:
+        - name: project_id
+          in: path
+          description: A unique integer value identifying this project.
+          required: true
+          schema:
+            type: integer
+        - name: export_pk
+          in: path
+          description: Primary key identifying the export file.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                export_type:
+                  $ref: "#/components/schemas/ExportFormat"
+                download_resources:
+                  type: boolean
+                  description: If true, download all resource files such as images, audio, and others relevant to the tasks.
+        required: true
+      responses:
+        "201":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  export_type:
+                    $ref: "#/components/schemas/ExportFormat"
+                  converted_format:
+                    type: integer
+                    description: ID of the converted format
+
+  /api/projects/{project_id}/exports/{export_pk}/download:
+      get:
+        summary: Download export snapshot
+        description: >
+          
+          Download an export snapshot as a file in a specified format. To see what formats are supported, you can use [Get export formats](list-formats) or see [Export formats supported by Label Studio](https://labelstud.io/guide/export#Export-formats-supported-by-Label-Studio). 
+
+
+          You will need to provide the project ID and export ID (`export_pk`). The export ID is returned when you create the export or you can use [List all export snapshots](list).
+
+
+          The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list). 
+        parameters:
+          - name: exportType
+            in: query
+            description: Selected export format. JSON is available by default. For other formats, you need to convert the export first.
+            schema:
+              $ref: "#/components/schemas/ExportFormat"
+          - name: project_id
+            in: path
+            description: A unique integer value identifying this project.
+            required: true
+            schema:
+              type: integer
+          - name: export_pk
+            in: path
+            description: Primary key identifying the export file.
+            required: true
+            schema:
+              type: string
+        responses:
+          "200":
+            description: Exported data in binary format
+            content:
+              application/*:
+                schema:
+                  type: string
+                  format: binary
+
+  /api/projects/{id}/export:
+    get:
+      summary: Easy export of tasks and annotations
+      description: >
+        
+        <Note>If you have a large project it's recommended to use export snapshots, this easy export endpoint might have timeouts.</Note>
+
+        Export annotated tasks as a file in a specific format.
+
+        For example, to export JSON annotations for a project to a file called `annotations.json`,
+
+        run the following from the command line:
+
+        ```bash
+
+        curl -X GET https://localhost:8080/api/projects/{id}/export?exportType=JSON -H 'Authorization: Token abc123' --output 'annotations.json'
+
+        ```
+
+        To export all tasks, including skipped tasks and others without annotations, run the following from the command line:
+
+        ```bash
+
+        curl -X GET https://localhost:8080/api/projects/{id}/export?exportType=JSON&download_all_tasks=true -H 'Authorization: Token abc123' --output 'annotations.json'
+
+        ```
+
+        To export specific tasks with IDs of 123 and 345, run the following from the command line:
+
+        ```bash
+
+        curl -X GET https://localhost:8080/api/projects/{id}/export?ids[]=123\&ids[]=345 -H 'Authorization: Token abc123' --output 'annotations.json'
+
+        ```
+
+
+        You must provide a project ID. The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list). 
+
+      parameters:
+        - name: export_type
+          in: query
+          description: Selected export format (JSON by default)
+          schema:
+            type: string
+        - name: download_all_tasks
+          in: query
+          description: >
+            
+            If true, download all tasks regardless of status. If false, download only annotated tasks.
+          schema:
+            type: boolean
+        - name: download_resources
+          in: query
+          description: >
+            
+            If true, download all resource files such as images, audio, and others relevant to the tasks.
+          schema:
+            type: boolean
+        - name: ids
+          in: query
+          description: >
+            
+            Specify a list of task IDs to retrieve only the details for those tasks.
+          style: form
+          explode: false
+          schema:
+            type: array
+            items:
+              title: Task ID
+              description: Individual task ID
+              type: integer
+        - name: id
+          in: path
+          description: A unique integer value identifying this project.
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Exported data in binary format
+          content:
+            application/*:
+              schema:
+                type: string
+                format: binary
+
+
+  /api/projects/{id}/export/formats:
+    get:
+      summary: Get export formats
+      description: >
+        
+        Before exporting annotations, you can check with formats are supported by the specified project. For more information about export formats, see [Export formats supported by Label Studio](https://labelstud.io/guide/export#Export-formats-supported-by-Label-Studio). 
+
+
+        You must provide a project ID. The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list). 
+      parameters:
+        - name: id
+          in: path
+          description: A unique integer value identifying this project.
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Export formats
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      $ref: "#/components/schemas/ExportFormat"
+                    title:
+                      type: string
+                      description: Export format title
+                    description:
+                      type: string
+                      description: Export format description
+                    link:
+                      type: string
+                      format: uri
+                      description: Export format documentation link
+                    tags:
+                      type: array
+                      description: Export format tags
+                      items:
+                        type: string
+                    disabled:
+                      type: boolean
+                      description: If true, the export format is not supported by the project.
+
+components:
+  schemas:
+    ExportSnapshot:
+      type: object
+      properties:
+        title:
+          title: Title
+          type: string
+          maxLength: 2048
+        id:
+          title: ID
+          type: integer
+          readOnly: true
+        created_by:
+          $ref: "#/components/schemas/UserSimple"
+        created_at:
+          title: Created at
+          description: Creation time
+          type: string
+          format: date-time
+          readOnly: true
+        finished_at:
+          title: Finished at
+          description: Complete or fail time
+          type: string
+          format: date-time
+          nullable: true
+        status:
+          title: Export status
+          type: string
+          enum:
+            - created
+            - in_progress
+            - failed
+            - completed
+        md5:
+          title: Md5 of file
+          type: string
+          maxLength: 128
+          minLength: 1
+        counters:
+          title: Exporting meta data
+          type: object
+        converted_formats:
+          type: array
+          items:
+            $ref: "#/components/schemas/ConvertedFormat"
+        task_filter_options:
+          $ref: "#/components/schemas/TaskFilterOptions"
+        annotation_filter_options:
+          $ref: "#/components/schemas/AnnotationFilterOptions"
+        serialization_options:
+          $ref: "#/components/schemas/SerializationOptions"
+
+    ExportFormat:
+      type: string
+      description: Export file format.
+      enum:
+        - JSON
+        - JSON_MIN
+        - CSV
+        - TSV
+        - CONLL2003
+        - COCO
+        - VOC
+        - BRUSH_TO_NUMPY
+        - BRUSH_TO_PNG
+        - ASR_MANIFEST
+        - YOLO
+        - YOLO_OBB
+        - CSV_OLD
+        - YOLO_WITH_IMAGES
+        - COCO_WITH_IMAGES
+        - YOLO_OBB_WITH_IMAGES
