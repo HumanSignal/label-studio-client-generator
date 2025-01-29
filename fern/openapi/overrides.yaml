@@ -1,8 +1,8 @@
-paths:
+
   /api/version:
     get:
-      $ref: "./resources/version.yaml#/paths/~1api~1version/get"
-      x-fern-sdk-group-name: version
+      $ref: "./resources/versions.yaml#/paths/~1api~1version/get"
+      x-fern-sdk-group-name: versions
       x-fern-sdk-method-name: get
       x-fern-audiences:
         - public
