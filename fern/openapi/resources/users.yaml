@@ -1,0 +1,107 @@
+paths:
+  /api/current-user/product-tour:
+    get:
+      summary: Retrieve product tour state
+      description: Retrieve the state of a product tour for the current user. Creates a new tour if it doesn't exist.
+      operationId: retrieveProductTour
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: name
+          in: query
+          required: true
+          schema:
+            type: string
+          description: Name of the product tour to retrieve.
+      responses:
+        '200':
+          description: Successfully retrieved product tour
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductTour'
+    patch:
+      summary: Update product tour state
+      operationId: updateProductTour
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: name
+          in: query
+          required: true
+          schema:
+            type: string
+          description: Name of the product tour to update
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/requestBodies/api_users_product_tour_update'
+      responses:
+        '200':
+          description: Successfully updated product tour
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductTour'
+
+components:
+  schemas:
+    InteractionData:
+      type: object
+      properties:
+        index:
+          type: integer
+          nullable: true
+        action:
+          type: string
+          nullable: true
+        type:
+          type: string
+          nullable: true
+        status:
+          type: string
+          nullable: true
+        additional_data:
+          type: object
+          nullable: true
+
+    ProductTour:
+      type: object
+      properties:
+        id:
+          type: integer
+        user:
+          type: integer
+        name:
+          type: string
+        state:
+          type: string
+          enum: [ready, completed, skipped]
+        interaction_data:
+          $ref: '#/components/schemas/InteractionData'
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        steps:
+          type: array
+          items:
+            type: object
+          description: Tour steps
+  
+  requestBodies:
+    api_users_product_tour_update:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              state:
+                type: string
+                enum: [ready, completed, skipped]
+              interaction_data:
+                $ref: '#/components/schemas/InteractionData'
