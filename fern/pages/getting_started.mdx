@@ -252,6 +252,12 @@ for task in tasks:
     print(task.drafts)
 ```
 
+### Export in bulk
+
+```python
+data = ls.projects.exports.as_json(project.id)
+```
+
 Read more about export formats in the [Label Studio SDK documentation](https://labelstud.io/guide/export).
 
 ## SDK versions and compatibility
