@@ -656,6 +656,9 @@ components:
           enum:
             - OpenAI
             - AzureOpenAI
+            - VertexAI
+            - Gemini
+            - Custom
           nullable: true
         provider_model_id:
           title: Provider Model ID
@@ -759,6 +762,8 @@ components:
           enum:
             - OpenAI
             - AzureOpenAI
+            - VertexAI
+            - Gemini
             - Custom
         api_key:
           title: API Key

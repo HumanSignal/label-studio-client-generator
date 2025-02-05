@@ -42,6 +42,13 @@ paths:
       x-fern-sdk-method-name: delete
       x-fern-audiences:
         - public
+  /api/version:
+    get:
+      $ref: "./resources/versions.yaml#/paths/~1api~1version/get"
+      x-fern-sdk-group-name: versions
+      x-fern-sdk-method-name: get
+      x-fern-audiences:
+        - public
   /api/current-user/product-tour:
     get:
       $ref: "./resources/users.yaml#/paths/~1api~1current-user~1product-tour/get"
@@ -594,126 +601,79 @@ paths:
 
   "/api/projects/{id}/export":
     get:
-      summary: Easy export of tasks and annotations
-      description: >
-        
-        <Note>If you have a large project it's recommended to use export snapshots, this easy export endpoint might have timeouts.</Note>
-
-        Export annotated tasks as a file in a specific format.
-
-        For example, to export JSON annotations for a project to a file called `annotations.json`,
-
-        run the following from the command line:
-
-        ```bash
-
-        curl -X GET https://localhost:8080/api/projects/{id}/export?exportType=JSON -H 'Authorization: Token abc123' --output 'annotations.json'
-
-        ```
-
-        To export all tasks, including skipped tasks and others without annotations, run the following from the command line:
-
-        ```bash
-
-        curl -X GET https://localhost:8080/api/projects/{id}/export?exportType=JSON&download_all_tasks=true -H 'Authorization: Token abc123' --output 'annotations.json'
-
-        ```
-
-        To export specific tasks with IDs of 123 and 345, run the following from the command line:
-
-        ```bash
-
-        curl -X GET https://localhost:8080/api/projects/{id}/export?ids[]=123\&ids[]=345 -H 'Authorization: Token abc123' --output 'annotations.json'
-
-        ```
-
-
-        You must provide a project ID. The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list). 
-
+      $ref: "./resources/exports.yaml#/paths/~1api~1projects~1{id}~1export/get"
       x-fern-sdk-group-name:
         - projects
         - exports
+      x-fern-sdk-method-name: download_sync
+      x-fern-audiences:
+        - public
 
   "/api/projects/{id}/export/formats":
     get:
-      summary: Get export formats
-      description: >
-        
-        Before exporting annotations, you can check with formats are supported by the specified project. For more information about export formats, see [Export formats supported by Label Studio](https://labelstud.io/guide/export#Export-formats-supported-by-Label-Studio). 
+      $ref: "./resources/exports.yaml#/paths/~1api~1projects~1{id}~1export~1formats/get"
+      x-fern-sdk-group-name: 
+        - projects
+        - exports
+      x-fern-sdk-method-name: list_formats
+      x-fern-audiences:
+        - public
 
-
-        You must provide a project ID. The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list). 
-
-  "/api/projects/{id}/exports/":
+  /api/projects/{project_id}/exports:
     get:
-      summary: List all export snapshots
-      description: >
-        
-        Returns a list of export file (snapshots) for a specific project by ID. The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list). 
-
-
-        Included in the response is information about each snapshot, such as who created it and what format it is in. 
+      $ref: "./resources/exports.yaml#/paths/~1api~1projects~1{project_id}~1exports/get"
+      x-fern-sdk-group-name: 
+        - projects
+        - exports
+      x-fern-sdk-method-name: list
+      x-fern-audiences:
+        - public
     post:
-      summary: Create new export snapshot
-      description: >
+      $ref: "./resources/exports.yaml#/paths/~1api~1projects~1{project_id}~1exports/post"
+      x-fern-sdk-group-name: 
+        - projects
+        - exports
+      x-fern-sdk-method-name: create
+      x-fern-audiences:
+        - public
 
-        Create a new export request to start a background task and generate an export file (snapshot) for a specific project by ID. The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list). 
-        
-        
-        A snapshot is a static export of your project's data and annotations at a specific point in time. It captures the current state of your tasks, annotations, and other relevant data, allowing you to download and review them later. Snapshots are particularly useful for large projects as they help avoid timeouts during export operations by processing the data asynchronously.
-
-
-        For more information, see the [Label Studio documentation on exporting annotations](https://labelstud.io/guide/export.html).
-
-  "/api/projects/{id}/exports/{export_pk}":
+  /api/projects/{project_id}/exports/{export_pk}/download:
     get:
-      summary: Get export snapshot by ID
-      description: >
-        
-        Retrieve information about a specific export file (snapshot). 
-        
-        
-        You will need the export ID. You can find this in the response when you [create the snapshot via the API](create) or using [List all export snapshots](list).   
+      $ref: "./resources/exports.yaml#/paths/~1api~1projects~1{project_id}~1exports~1{export_pk}~1download/get"
+      x-fern-sdk-group-name: 
+        - projects
+        - exports
+      x-fern-sdk-method-name: download
+      x-fern-audiences:
+        - public
 
-
-        You will also need the project ID. This can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list). 
+  /api/projects/{project_id}/exports/{export_pk}:
+    get:
+      $ref: "./resources/exports.yaml#/paths/~1api~1projects~1{project_id}~1exports~1{export_pk}/get"
+      x-fern-sdk-group-name: 
+        - projects
+        - exports
+      x-fern-sdk-method-name: get
+      x-fern-audiences:
+        - public
     delete:
-      summary: Delete export snapshot
-      description: >
-        
-        Delete an export file by specified export ID.
+      $ref: "./resources/exports.yaml#/paths/~1api~1projects~1{project_id}~1exports~1{export_pk}/delete"
+      x-fern-sdk-group-name: 
+        - projects
+        - exports
+      x-fern-sdk-method-name: delete
+      x-fern-audiences:
+        - public
 
-
-        You will need the export ID. You can find this in the response when you [create the snapshot via the API](create) or using [List all export snapshots](list). 
-
-  "/api/projects/{id}/exports/{export_pk}/download":
-    get:
-      summary: Download export snapshot
-      description: >
-        
-        Download an export snapshot as a file in a specified format. To see what formats are supported, you can use [Get export formats](list-formats) or see [Export formats supported by Label Studio](https://labelstud.io/guide/export#Export-formats-supported-by-Label-Studio). 
-
-
-        You will need to provide the project ID and export ID (`export_pk`). The export ID is returned when you create the export or you can use [List all export snapshots](list).
-
-
-        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list). 
-
-  "/api/projects/{id}/exports/{export_pk}/convert":
+  /api/projects/{project_id}/exports/{export_pk}/convert:
     post:
-      summary: Export conversion
-      description: >
-        
-        You can use this to convert an export snapshot into the selected format. 
-
-
-        To see what formats are supported, you can use [Get export formats](list-formats) or see [Export formats supported by Label Studio](https://labelstud.io/guide/export#Export-formats-supported-by-Label-Studio). 
-
-
-        You will need to provide the project ID and export ID (`export_pk`). The export ID is returned when you create the export or you can use [List all export snapshots](list).
-
-
-        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list). 
+      $ref: "./resources/exports.yaml#/paths/~1api~1projects~1{project_id}~1exports~1{export_pk}~1convert/post"
+      x-fern-sdk-group-name: 
+        - projects
+        - exports
+      x-fern-sdk-method-name: convert
+      x-fern-audiences:
+        - public
 
   /api/ml/:
     get:
@@ -3073,3 +3033,5 @@ components:
                 description: Is workspace archived
                 type: boolean
       required: true
+
+
