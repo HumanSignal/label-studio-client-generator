@@ -656,6 +656,7 @@ components:
           enum:
             - OpenAI
             - AzureOpenAI
+            - AzureAIFoundry
             - VertexAI
             - Gemini
             - Anthropic
@@ -763,6 +764,7 @@ components:
           enum:
             - OpenAI
             - AzureOpenAI
+            - AzureAIFoundry
             - VertexAI
             - Gemini
             - Anthropic
