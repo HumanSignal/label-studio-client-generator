@@ -164,7 +164,12 @@ components:
           type: integer
         paused_by:
           title: Paused By
-          type: integer
+          description: User who created the pause
+          anyOf:
+            - type: integer
+            - type: object
+          nullable: true
+          readOnly: true
         reason:
           title: Reason
           type: string
@@ -206,4 +211,3 @@ components:
                 nullable: true
             required:
               - reason
-
