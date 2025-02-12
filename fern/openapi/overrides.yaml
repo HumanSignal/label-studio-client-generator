@@ -3034,4 +3034,46 @@ components:
                 type: boolean
       required: true
 
+  /api/token:
+    get:
+      $ref: "./resources/tokens.yaml#/paths/~1api~1token/get"
+      x-fern-sdk-group-name: tokens
+      x-fern-sdk-method-name: list
+      x-fern-audiences:
+        - public
+    post:
+      $ref: "./resources/tokens.yaml#/paths/~1api~1token/post"
+      x-fern-sdk-group-name: tokens
+      x-fern-sdk-method-name: create
+      x-fern-audiences:
+        - public
 
+  /api/token/refresh:
+    post:
+      $ref: "./resources/tokens.yaml#/paths/~1api~1token~1refresh/post"
+      x-fern-sdk-group-name: tokens
+      x-fern-sdk-method-name: refresh
+      x-fern-audiences:
+        - public
+
+  /api/token/blacklist:
+    post:
+      $ref: "./resources/tokens.yaml#/paths/~1api~1token~1blacklist/post"
+      x-fern-sdk-group-name: tokens
+      x-fern-sdk-method-name: blacklist
+      x-fern-audiences:
+        - public
+
+  /api/jwt/settings:
+    get:
+      $ref: "./resources/tokens.yaml#/paths/~1api~1jwt~1settings/get"
+      x-fern-sdk-group-name: tokens
+      x-fern-sdk-method-name: get_settings
+      x-fern-audiences:
+        - public
+    post:
+      $ref: "./resources/tokens.yaml#/paths/~1api~1jwt~1settings/post"
+      x-fern-sdk-group-name: tokens
+      x-fern-sdk-method-name: update_settings
+      x-fern-audiences:
+        - public
