@@ -293,58 +293,74 @@ paths:
   "/api/annotations/{id}/":
     get:
       summary: Get annotation by its ID
-      description: >
-        
-        Tasks can have multiple annotations. Use this call to retrieve a specific annotation using its ID. 
-        
-        
-        You can find the ID in the Label Studio UI listed at the top of the annotation in its tab. It is also listed in the History panel when viewing the annotation. Or you can use [Get all task annotations](list) to find all annotation IDs.  
+      description: >2
+
+        Tasks can have multiple annotations. Use this call to retrieve a specific
+        annotation using its ID. 
+
+
+        You can find the ID in the Label Studio UI listed at the top of the annotation
+        in its tab. It is also listed in the History panel when viewing the annotation.
+        Or you can use [Get all task annotations](list) to find all annotation IDs.
     patch:
       summary: Update an annotation
-      description: >
-        
+      description: >2
+
         Update attributes for an existing annotation. 
-        
-        
-        You will need to supply the annotation's unique ID. You can find the ID in the Label Studio UI listed at the top of the annotation in its tab. It is also listed in the History panel when viewing the annotation. Or you can use [Get all task annotations](list) to find all annotation IDs.  
 
 
-        For information about the JSON format used in the result, see [Label Studio JSON format of annotated tasks](https://labelstud.io/guide/export#Label-Studio-JSON-format-of-annotated-tasks).
+        You will need to supply the annotation's unique ID. You can find the ID in
+        the Label Studio UI listed at the top of the annotation in its tab. It is
+        also listed in the History panel when viewing the annotation. Or you can use
+        [Get all task annotations](list) to find all annotation IDs.  
+
+
+        For information about the JSON format used in the result, see [Label Studio
+        JSON format of annotated tasks](https://labelstud.io/guide/export#Label-Studio-JSON-format-of-annotated-tasks).
     delete:
       summary: Delete annotation
-      description: >
-        
+      description: >2
+
         Delete an annotation. 
-        
-        
+
+
         <Warning>This action can't be undone!</Warning>
 
 
-        You will need to supply the annotation's unique ID. You can find the ID in the Label Studio UI listed at the top of the annotation in its tab. It is also listed in the History panel when viewing the annotation. Or you can use [Get all task annotations](list) to find all annotation IDs.  
+        You will need to supply the annotation's unique ID. You can find the ID in
+        the Label Studio UI listed at the top of the annotation in its tab. It is
+        also listed in the History panel when viewing the annotation. Or you can use
+        [Get all task annotations](list) to find all annotation IDs.
 
   "/api/tasks/{id}/annotations/":
     get:
       summary: Get all task annotations
-      description: >
-        
+      description: >2
+
         List all annotations for a task.
 
 
-        You will need to supply the task ID. You can find this in Label Studio by opening a task and checking the URL. It is also listed at the top of the labeling interface. Or you can use [Get tasks list](../tasks/list). 
+        You will need to supply the task ID. You can find this in Label Studio by
+        opening a task and checking the URL. It is also listed at the top of the labeling
+        interface. Or you can use [Get tasks list](../tasks/list).
     post:
       summary: Create annotation
-      description: >
-        
+      description: >2
+
         Add annotations to a task like an annotator does. 
 
 
-        You will need to supply the task ID. You can find this in Label Studio by opening a task and checking the URL. It is also listed at the top of the labeling interface. Or you can use [Get tasks list](../tasks/list). 
-        
-        
-        
-        The content of the result field depends on your labeling configuration. For example, send the following data as part of your POST 
+        You will need to supply the task ID. You can find this in Label Studio by
+        opening a task and checking the URL. It is also listed at the top of the labeling
+        interface. Or you can use [Get tasks list](../tasks/list). 
 
-        request to send an empty annotation with the ID of the user who completed the task:
+
+
+        The content of the result field depends on your labeling configuration. For
+        example, send the following data as part of your POST 
+
+        request to send an empty annotation with the ID of the user who completed
+        the task:
 
 
         ```json
@@ -370,127 +386,160 @@ paths:
   /api/users/:
     get:
       summary: List users
-      description: >
-        
-        List all users in your Label Studio organization. 
+      description: >2
+
+        List all users in your Label Studio organization.
     post:
       operationId: api_users_create
       summary: Create a user
-      description: >
-        
+      description: >2
+
         Create a user in Label Studio.
 
   "/api/users/{id}/":
     get:
       summary: Get user info
-      description: >
-        
+      description: >2
+
         Get info about a specific Label Studio user. 
-        
-        You will need to provide their user ID. You can find a list of all user IDs using [List users](list). 
+
+        You will need to provide their user ID. You can find a list of all user IDs
+        using [List users](list).
     patch:
       summary: Update user details
-      description: >
-        
-        Update details for a specific Label Studio user, such as their name or contact information. 
+      description: >2
+
+        Update details for a specific Label Studio user, such as their name or contact
+        information. 
 
 
-        You will need to provide their user ID. You can find a list of all user IDs using [List users](list). 
+        You will need to provide their user ID. You can find a list of all user IDs
+        using [List users](list).
     delete:
       summary: Delete user
-      description: >
-        
+      description: >2
+
         Delete a specific Label Studio user.
 
 
-        You will need to provide their user ID. You can find a list of all user IDs using [List users](list).
+        You will need to provide their user ID. You can find a list of all user IDs
+        using [List users](list).
 
 
-        <Warning>Use caution when deleting a user, as this can cause issues such as breaking the "Annotated by" filter or leaving orphaned records.</Warning>
+        <Warning>Use caution when deleting a user, as this can cause issues such as
+        breaking the "Annotated by" filter or leaving orphaned records.</Warning>
 
   /api/current-user/reset-token/:
     post:
       summary: Reset user token
-      description: Reset your access token or API key. When reset, any scripts or automations you have in place will need to be updated with the new key.
+      description:
+        Reset your access token or API key. When reset, any scripts or
+        automations you have in place will need to be updated with the new key.
 
   /api/current-user/token:
     get:
       summary: Get user token
-      description: Get a access token to authenticate to the API as the current user. To find this in the Label Studio interface, click **Account & Settings** in the upper right. For more information, see [Access Token](https://labelstud.io/guide/user_account#Access-token).
+      description:
+        Get a access token to authenticate to the API as the current user.
+        To find this in the Label Studio interface, click **Account & Settings** in
+        the upper right. For more information, see [Access Token](https://labelstud.io/guide/user_account#Access-token).
 
   /api/current-user/whoami:
     get:
       summary: Retrieve my user
-      description: Get information about your user account, such as your username, email, and user ID.
+      description:
+        Get information about your user account, such as your username,
+        email, and user ID.
 
   /api/dm/views/:
     get:
       summary: List views
-      description: >
-        
-        List all views for a specific project. A view is a tab in the Data Manager where you can set filters and customize which tasks and information appears. 
-        
-        
-        You will need to provide the project ID. You can find this in the URL when viewing the project in Label Studio, or you can use [List all projects](../projects/list). 
+      description: >2
+
+        List all views for a specific project. A view is a tab in the Data Manager
+        where you can set filters and customize which tasks and information appears.
+
+
+
+        You will need to provide the project ID. You can find this in the URL when
+        viewing the project in Label Studio, or you can use [List all projects](../projects/list).
+
     post:
       summary: Create view
-      description: >
-        
-        Create a new Data Manager view for a specific project. A view is a tab in the Data Manager where you can set filters and customize what tasks and information appears. 
-        
-        
-        You will need to provide the project ID. You can find this in the URL when viewing the project in Label Studio, or you can use [List all projects](../projects/list). 
+      description: >2
+
+        Create a new Data Manager view for a specific project. A view is a tab in
+        the Data Manager where you can set filters and customize what tasks and information
+        appears. 
+
+
+        You will need to provide the project ID. You can find this in the URL when
+        viewing the project in Label Studio, or you can use [List all projects](../projects/list).
 
   /api/dm/views/reset/:
     delete:
       summary: Delete all project views
-      description: >
-        
-        Delete all views for a specific project. A view is a tab in the Data Manager where you can set filters and customize what tasks appear. 
-        
-        
-        You will need to provide the project ID. You can find this in the URL when viewing the project in Label Studio, or you can use [List all projects](../projects/list).
+      description: >2
+
+        Delete all views for a specific project. A view is a tab in the Data Manager
+        where you can set filters and customize what tasks appear. 
+
+
+        You will need to provide the project ID. You can find this in the URL when
+        viewing the project in Label Studio, or you can use [List all projects](../projects/list).
 
   "/api/dm/views/{id}/":
     get:
       summary: Get view details
-      description: >
-        
-        Get the details about a specific Data Manager view (tab). You will need to supply the view ID. You can find this using [List views](list).  
+      description: >2
+
+        Get the details about a specific Data Manager view (tab). You will need to
+        supply the view ID. You can find this using [List views](list).
     patch:
       summary: Update view
-      description: >
-        
-        You can update a specific Data Manager view (tab) with additional filters and other customizations. You will need to supply the view ID. You can find this using [List views](list).  
+      description: >2
+
+        You can update a specific Data Manager view (tab) with additional filters
+        and other customizations. You will need to supply the view ID. You can find
+        this using [List views](list).
     delete:
       summary: Delete view
-      description: Delete a specific Data Manager view (tab) by ID. You can find the view using [List views](list).
+      description:
+        Delete a specific Data Manager view (tab) by ID. You can find the
+        view using [List views](list).
 
   /api/projects/:
     get:
       summary: List all projects
-      description: >
-        
+      description: >2
+
         Return a list of the projects within your organization.
 
 
-        To perform most tasks with the Label Studio API, you must specify the project ID, sometimes referred to as the `pk`. The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using this API call. 
+        To perform most tasks with the Label Studio API, you must specify the project
+        ID, sometimes referred to as the `pk`. The project ID can be found in the
+        URL when viewing the project in Label Studio, or you can retrieve all project
+        IDs using this API call. 
 
 
-        To retrieve a list of your Label Studio projects, update the following command to match your own environment.
+        To retrieve a list of your Label Studio projects, update the following command
+        to match your own environment.
 
-        Replace the domain name, port, and authorization token, then run the following from the command line:
+        Replace the domain name, port, and authorization token, then run the following
+        from the command line:
 
         ```bash
 
-        curl -X GET https://localhost:8080/api/projects/ -H 'Authorization: Token abc123'
+        curl -X GET https://localhost:8080/api/projects/ -H 'Authorization: Token
+        abc123'
 
         ```
     post:
       summary: Create new project
-      description: >
-        
-        Create a project and set up the labeling interface. For more information about setting up projects, see the following:
+      description: >2
+
+        Create a project and set up the labeling interface. For more information about
+        setting up projects, see the following:
 
         * [Create and configure projects](https://labelstud.io/guide/setup_project)
 
@@ -501,27 +550,34 @@ paths:
 
         ```bash
 
-        curl -H Content-Type:application/json -H 'Authorization: Token abc123' -X POST 'https://localhost:8080/api/projects'     --data '{"label_config": "<View>[...]</View>"}'
+        curl -H Content-Type:application/json -H 'Authorization: Token abc123' -X
+        POST 'https://localhost:8080/api/projects'     --data '{"label_config": "<View>[...]</View>"}'
 
         ```
 
   "/api/projects/{id}/":
     get:
       summary: Get project by ID
-      description: Retrieve information about a specific project by project ID. The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](list).
+      description:
+        Retrieve information about a specific project by project ID. The
+        project ID can be found in the URL when viewing the project in Label Studio,
+        or you can retrieve all project IDs using [List all projects](list).
     delete:
       summary: Delete project
-      description: >
-        
-        Delete a project by specified project ID. Deleting a project permanently removes all tasks, annotations, and project data from Label Studio.
-        
-        
-        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](list). 
+      description: >2
+
+        Delete a project by specified project ID. Deleting a project permanently removes
+        all tasks, annotations, and project data from Label Studio.
+
+
+        The project ID can be found in the URL when viewing the project in Label Studio,
+        or you can retrieve all project IDs using [List all projects](list).
     patch:
       summary: Update a project
-      description: >
-        
-        Update the project settings for a specific project. For more information, see the following:
+      description: >2
+
+        Update the project settings for a specific project. For more information,
+        see the following:
 
         * [Create and configure projects](https://labelstud.io/guide/setup_project)
 
@@ -530,41 +586,53 @@ paths:
         * [Project settings](https://labelstud.io/guide/project_settings)
 
 
-        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](list). 
+        The project ID can be found in the URL when viewing the project in Label Studio,
+        or you can retrieve all project IDs using [List all projects](list). 
 
 
         <Warning>
-        
-        If you are modifying the labeling config for project that has in-progress work, note the following:
-        
-        * You cannot remove labels or change the type of labeling being performed unless you delete any existing annotations that are using those labels. 
-        
-        * If you make changes to the labeling configuration, any tabs that you might have created in the Data Manager are removed.
-        
+
+        If you are modifying the labeling config for project that has in-progress
+        work, note the following:
+
+        * You cannot remove labels or change the type of labeling being performed
+        unless you delete any existing annotations that are using those labels. 
+
+        * If you make changes to the labeling configuration, any tabs that you might
+        have created in the Data Manager are removed.
+
         </Warning>
 
   "/api/projects/{id}/validate/":
     post:
       summary: Validate project labeling config
-      description: >
-        
-        Determine whether the label configuration for a specific project is valid. For more information about setting up labeling configs, see [Configure labeling interface](https://labelstud.io/guide/setup) and our [Tags reference](https://labelstud.io/tags/).
+      description: >2
+
+        Determine whether the label configuration for a specific project is valid.
+        For more information about setting up labeling configs, see [Configure labeling
+        interface](https://labelstud.io/guide/setup) and our [Tags reference](https://labelstud.io/tags/).
 
 
-        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](list). 
+        The project ID can be found in the URL when viewing the project in Label Studio,
+        or you can retrieve all project IDs using [List all projects](list).
 
   "/api/import/file-upload/{id}":
     get:
       summary: Get file upload
-      description: Retrieve details about a specific uploaded file. To get the file upload ID, use [Get files list](list).
+      description:
+        Retrieve details about a specific uploaded file. To get the file
+        upload ID, use [Get files list](list).
     delete:
       summary: Delete file upload
-      description: Delete a specific uploaded file. To get the file upload ID, use [Get files list](list).
+      description:
+        Delete a specific uploaded file. To get the file upload ID, use
+        [Get files list](list).
     patch:
       summary: Update file upload
-      description: >
-        
-        Update a specific uploaded file. To get the file upload ID, use [Get files list](list). 
+      description: >2
+
+        Update a specific uploaded file. To get the file upload ID, use [Get files
+        list](list). 
 
 
         You will need to include the file data in the request body. For example:
@@ -575,29 +643,38 @@ paths:
         -X POST 'https://localhost:8080/api/import/file-upload/245' -F ‘file=@path/to/my_file.csv’
 
         ```
-  
+
   "/api/projects/{id}/file-uploads":
     get:
       summary: Get files list
-      description: >
-        
-        Retrieve the list of uploaded files used to create labeling tasks for a specific project. These are files that have been uploaded directly to Label Studio. 
+      description: >2
+
+        Retrieve the list of uploaded files used to create labeling tasks for a specific
+        project. These are files that have been uploaded directly to Label Studio.
 
 
-        You must provide a project ID. The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list). 
+
+        You must provide a project ID. The project ID can be found in the URL when
+        viewing the project in Label Studio, or you can retrieve all project IDs using
+        [List all projects](../list).
     delete:
       summary: Delete files
-      description: >
-        
-        Delete uploaded files for a specific project. These are files that have been uploaded directly to Label Studio. 
+      description: >2
+
+        Delete uploaded files for a specific project. These are files that have been
+        uploaded directly to Label Studio. 
 
 
-        You must provide a project ID. The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list). 
+        You must provide a project ID. The project ID can be found in the URL when
+        viewing the project in Label Studio, or you can retrieve all project IDs using
+        [List all projects](../list).
 
   "/data/upload/{filename}":
     get:
       summary: Download file
-      description: Download a specific uploaded file. If you aren't sure of the file name, try [Get files list](list) first.
+      description:
+        Download a specific uploaded file. If you aren't sure of the file
+        name, try [Get files list](list) first.
 
   "/api/projects/{id}/export":
     get:
@@ -612,7 +689,7 @@ paths:
   "/api/projects/{id}/export/formats":
     get:
       $ref: "./resources/exports.yaml#/paths/~1api~1projects~1{id}~1export~1formats/get"
-      x-fern-sdk-group-name: 
+      x-fern-sdk-group-name:
         - projects
         - exports
       x-fern-sdk-method-name: list_formats
@@ -622,7 +699,7 @@ paths:
   /api/projects/{project_id}/exports:
     get:
       $ref: "./resources/exports.yaml#/paths/~1api~1projects~1{project_id}~1exports/get"
-      x-fern-sdk-group-name: 
+      x-fern-sdk-group-name:
         - projects
         - exports
       x-fern-sdk-method-name: list
@@ -630,7 +707,7 @@ paths:
         - public
     post:
       $ref: "./resources/exports.yaml#/paths/~1api~1projects~1{project_id}~1exports/post"
-      x-fern-sdk-group-name: 
+      x-fern-sdk-group-name:
         - projects
         - exports
       x-fern-sdk-method-name: create
@@ -640,7 +717,7 @@ paths:
   /api/projects/{project_id}/exports/{export_pk}/download:
     get:
       $ref: "./resources/exports.yaml#/paths/~1api~1projects~1{project_id}~1exports~1{export_pk}~1download/get"
-      x-fern-sdk-group-name: 
+      x-fern-sdk-group-name:
         - projects
         - exports
       x-fern-sdk-method-name: download
@@ -650,7 +727,7 @@ paths:
   /api/projects/{project_id}/exports/{export_pk}:
     get:
       $ref: "./resources/exports.yaml#/paths/~1api~1projects~1{project_id}~1exports~1{export_pk}/get"
-      x-fern-sdk-group-name: 
+      x-fern-sdk-group-name:
         - projects
         - exports
       x-fern-sdk-method-name: get
@@ -658,7 +735,7 @@ paths:
         - public
     delete:
       $ref: "./resources/exports.yaml#/paths/~1api~1projects~1{project_id}~1exports~1{export_pk}/delete"
-      x-fern-sdk-group-name: 
+      x-fern-sdk-group-name:
         - projects
         - exports
       x-fern-sdk-method-name: delete
@@ -668,7 +745,7 @@ paths:
   /api/projects/{project_id}/exports/{export_pk}/convert:
     post:
       $ref: "./resources/exports.yaml#/paths/~1api~1projects~1{project_id}~1exports~1{export_pk}~1convert/post"
-      x-fern-sdk-group-name: 
+      x-fern-sdk-group-name:
         - projects
         - exports
       x-fern-sdk-method-name: convert
@@ -678,47 +755,60 @@ paths:
   /api/ml/:
     get:
       summary: List ML backends
-      description: >
-        
-        List all configured Machine Learning (ML) backends for a specific project by ID. For more information about ML backends, see [Machine learning integration](https://labelstud.io/guide/ml). 
+      description: >2
+
+        List all configured Machine Learning (ML) backends for a specific project
+        by ID. For more information about ML backends, see [Machine learning integration](https://labelstud.io/guide/ml).
 
 
 
-        You will need to provide the project ID. This can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
+
+        You will need to provide the project ID. This can be found in the URL when
+        viewing the project in Label Studio, or you can retrieve all project IDs using
+        [List all projects](../projects/list).
     post:
       summary: Add ML backend
-      description: >
-        
-        Add an ML backend to a project. For more information about what you need to configure when adding an ML backend, see [Connect the model to Label studio](https://labelstud.io/guide/ml#Connect-the-model-to-Label-Studio).
-        
-        
-        <Note>If you are using Docker Compose, you may need to adjust your ML backend URL. See [localhost and Docker containers](https://labelstud.io/guide/ml#localhost-and-Docker-containers).</Note>
+      description: >2
+
+        Add an ML backend to a project. For more information about what you need to
+        configure when adding an ML backend, see [Connect the model to Label studio](https://labelstud.io/guide/ml#Connect-the-model-to-Label-Studio).
 
 
-        <Note>If you are using files that are located in the cloud, local storage, or uploaded to Label Studio, you must configure your environment variables to allow the ML backend to interact with those files. See [Allow the ML backend to access Label Studio](https://labelstud.io/guide/ml#Allow-the-ML-backend-to-access-Label-Studio-data).</Note>
+        <Note>If you are using Docker Compose, you may need to adjust your ML backend
+        URL. See [localhost and Docker containers](https://labelstud.io/guide/ml#localhost-and-Docker-containers).</Note>
+
+
+        <Note>If you are using files that are located in the cloud, local storage,
+        or uploaded to Label Studio, you must configure your environment variables
+        to allow the ML backend to interact with those files. See [Allow the ML backend
+        to access Label Studio](https://labelstud.io/guide/ml#Allow-the-ML-backend-to-access-Label-Studio-data).</Note>
 
   "/api/ml/{id}":
     get:
       summary: Get ML backend
-      description: >
-        
-        Get details about a specific ML backend. You will need to specify an ID for the backend connection. You can find this using [List ML backends](list). 
+      description: >2
+
+        Get details about a specific ML backend. You will need to specify an ID for
+        the backend connection. You can find this using [List ML backends](list).
+
 
 
         For more information, see [Machine learning integration](https://labelstud.io/guide/ml).
     patch:
       summary: Update ML backend
-      description: >
-        
-        Update the ML backend parameters. You will need to specify an ID for the backend connection. You can find this using [List ML backends](list).
+      description: >2
+
+        Update the ML backend parameters. You will need to specify an ID for the backend
+        connection. You can find this using [List ML backends](list).
 
 
         For more information, see [Machine learning integration](https://labelstud.io/guide/ml).
     delete:
       summary: Remove ML backend
-      description: >
-        
-        Remove an existing ML backend connection. You will need to specify an ID for the backend connection. You can find this using [List ML backends](list).
+      description: >2
+
+        Remove an existing ML backend connection. You will need to specify an ID for
+        the backend connection. You can find this using [List ML backends](list).
 
 
         For more information, see [Machine learning integration](https://labelstud.io/guide/ml).
@@ -726,114 +816,151 @@ paths:
   "/api/ml/{id}/interactive-annotating":
     post:
       summary: Request interactive annotations
-      description: >
+      description: >2
 
         Enable interactive pre-annotations for a specific task. 
 
 
-        ML-assisted labeling with interactive pre-annotations works with image segmentation and object detection tasks using rectangles, ellipses, polygons, brush masks, and keypoints, as well as with HTML and text named entity recognition tasks. Your ML backend must support the type of labeling that you’re performing, recognize the input that you create, and be able to respond with the relevant output for a prediction. For more information, see [Interactive pre-annotations](https://labelstud.io/guide/ml.html#Interactive-pre-annotations).
+        ML-assisted labeling with interactive pre-annotations works with image segmentation
+        and object detection tasks using rectangles, ellipses, polygons, brush masks,
+        and keypoints, as well as with HTML and text named entity recognition tasks.
+        Your ML backend must support the type of labeling that you’re performing,
+        recognize the input that you create, and be able to respond with the relevant
+        output for a prediction. For more information, see [Interactive pre-annotations](https://labelstud.io/guide/ml.html#Interactive-pre-annotations).
 
 
-        Before you can use interactive annotations, it must be enabled for you ML backend connection (`"is_interactive": true`). 
-        
-        
-        You will need the task ID and the ML backend connection ID. The task ID is available from the Label Studio URL when viewing the task, or you can retrieve it programmatically with [Get task list](../tasks/list). The ML backend connection ID is available via [List ML backends](list).
+        Before you can use interactive annotations, it must be enabled for you ML
+        backend connection (`"is_interactive": true`). 
+
+
+        You will need the task ID and the ML backend connection ID. The task ID is
+        available from the Label Studio URL when viewing the task, or you can retrieve
+        it programmatically with [Get task list](../tasks/list). The ML backend connection
+        ID is available via [List ML backends](list).
 
   "/api/ml/{id}/train":
     post:
       summary: Start training
-      description: >
-        
-        After you connect a model to Label Studio as a machine learning backend and annotate at least one task, you can start training the model. Training logs appear in stdout and the console.
+      description: >2
+
+        After you connect a model to Label Studio as a machine learning backend and
+        annotate at least one task, you can start training the model. Training logs
+        appear in stdout and the console.
 
 
         For more information, see [Model training](https://labelstud.io/guide/ml.html#Model-training).
 
 
-        You will need to specify an ID for the backend connection. You can find this using [List ML backends](list).
+        You will need to specify an ID for the backend connection. You can find this
+        using [List ML backends](list).
 
   "/api/ml/{id}/versions":
     get:
       summary: Get model versions
-      description: >
-        
-        Get available versions of the model. You will need to specify an ID for the backend connection. You can find this using [List ML backends](list).
+      description: >2
+
+        Get available versions of the model. You will need to specify an ID for the
+        backend connection. You can find this using [List ML backends](list).
 
   /api/predictions/:
     get:
       summary: List predictions
-      description: >
+      description: >2
 
-        Get a list of all predictions. You can optionally filter these by task or by project. If you want to filter, you will need the project ID and/or task ID. Both of these can be found in the Label Studio URL when viewing a task, or you can use [List all projects](../projects/list) and [Get tasks list](../tasks/list).
+        Get a list of all predictions. You can optionally filter these by task or
+        by project. If you want to filter, you will need the project ID and/or task
+        ID. Both of these can be found in the Label Studio URL when viewing a task,
+        or you can use [List all projects](../projects/list) and [Get tasks list](../tasks/list).
 
 
         <Note>The terms "predictions" and pre-annotations" are used interchangeably.</Note>
 
 
-        Predictions can be [imported directly into Label Studio](https://labelstud.io/guide/predictions) or [generated by a connected ML backend](https://labelstud.io/guide/ml.html#Pre-annotations-predictions). 
-        
-        
+        Predictions can be [imported directly into Label Studio](https://labelstud.io/guide/predictions)
+        or [generated by a connected ML backend](https://labelstud.io/guide/ml.html#Pre-annotations-predictions).
+
+
+
         To import predictions via the API, see [Create prediction](create).
     post:
       summary: Create prediction
-      description: >
+      description: >2
 
-        If you have predictions generated for your dataset from a model, either as pre-annotated tasks or pre-labeled tasks, you can import the predictions with your dataset into Label Studio for review and correction.
+        If you have predictions generated for your dataset from a model, either as
+        pre-annotated tasks or pre-labeled tasks, you can import the predictions with
+        your dataset into Label Studio for review and correction.
 
 
-        To import predicted labels into Label Studio, you must use the [Basic Label Studio JSON format](https://labelstud.io/guide/tasks#Basic-Label-Studio-JSON-format) and set up your tasks with the predictions JSON key. The Label Studio ML backend also outputs tasks in this format. 
+        To import predicted labels into Label Studio, you must use the [Basic Label
+        Studio JSON format](https://labelstud.io/guide/tasks#Basic-Label-Studio-JSON-format)
+        and set up your tasks with the predictions JSON key. The Label Studio ML backend
+        also outputs tasks in this format. 
 
 
         #### JSON format for predictions
-        
+
         Label Studio JSON format for pre-annotations must contain two sections:
-        
-        * A data object which references the source of the data that the pre-annotations apply to. This can be a URL to an audio file, a pre-signed cloud storage link to an image, plain text, a reference to a CSV file stored in Label Studio, or something else. 
-        
-        * A predictions array that contains the pre-annotation results for the different types of labeling. See how to add results to the predictions array.
-        
-        
+
+        * A data object which references the source of the data that the pre-annotations
+        apply to. This can be a URL to an audio file, a pre-signed cloud storage link
+        to an image, plain text, a reference to a CSV file stored in Label Studio,
+        or something else. 
+
+        * A predictions array that contains the pre-annotation results for the different
+        types of labeling. See how to add results to the predictions array.
+
+
         For more information, see [the JSON format reference in the Label Studio documentation](https://labelstud.io/guide/predictions#JSON-format-for-pre-annotations)
 
   "/api/predictions/{id}/":
     get:
       summary: Get prediction details
-      description: >
-        
-        Get details about a specific prediction by its ID. To find the prediction ID, use [List predictions](list).
+      description: >2
+
+        Get details about a specific prediction by its ID. To find the prediction
+        ID, use [List predictions](list).
 
 
-        For information about the prediction format, see [the JSON format reference in the Label Studio documentation](https://labelstud.io/guide/predictions#JSON-format-for-pre-annotations). 
+        For information about the prediction format, see [the JSON format reference
+        in the Label Studio documentation](https://labelstud.io/guide/predictions#JSON-format-for-pre-annotations).
+
     patch:
       summary: Update prediction
-      description: >
-        
+      description: >2
+
         Update a prediction. To find the prediction ID, use [List predictions](list).
 
 
-        For information about the prediction format, see [the JSON format reference in the Label Studio documentation](https://labelstud.io/guide/predictions#JSON-format-for-pre-annotations). 
+        For information about the prediction format, see [the JSON format reference
+        in the Label Studio documentation](https://labelstud.io/guide/predictions#JSON-format-for-pre-annotations).
+
     delete:
       summary: Delete prediction
-      description: >
-        
+      description: >2
+
         Delete a prediction. To find the prediction ID, use [List predictions](list).
 
   "/api/projects/{id}/import":
     post:
       summary: Import tasks
-      description: >
-        
-        Use this API endpoint to import labeling tasks in bulk. Note that each POST request is limited at 250K tasks and 200 MB.
+      description: >2
 
-        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list). 
+        Use this API endpoint to import labeling tasks in bulk. Note that each POST
+        request is limited at 250K tasks and 200 MB.
+
+        The project ID can be found in the URL when viewing the project in Label Studio,
+        or you can retrieve all project IDs using [List all projects](../projects/list).
+
 
 
         <Note>
-        
-        Imported data is verified against a project *label_config* and must include all variables that were used in the *label_config*. 
-        
-        
-        For example, if the label configuration has a *$text* variable, then each item in a data object must include a `text` field.
+
+        Imported data is verified against a project *label_config* and must include
+        all variables that were used in the *label_config*. 
+
+
+        For example, if the label configuration has a *$text* variable, then each
+        item in a data object must include a `text` field.
 
         </Note>
 
@@ -846,16 +973,19 @@ paths:
         Send JSON tasks as POST data. Only JSON is supported for POSTing files directly.
 
 
-        Update this example to specify your authorization token and Label Studio instance host, then run the following from
+        Update this example to specify your authorization token and Label Studio instance
+        host, then run the following from
 
         the command line:
 
 
         ```bash
 
-        curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' \
+        curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123'
+        \
 
-        -X POST 'https://localhost:8080/api/projects/1/import' --data '[{"text": "Some text 1"}, {"text": "Some text 2"}]'
+        -X POST 'https://localhost:8080/api/projects/1/import' --data '[{"text": "Some
+        text 1"}, {"text": "Some text 2"}]'
 
         ```
 
@@ -871,10 +1001,12 @@ paths:
 
         - **TSV**: text files with tables in Tab Separated Value format
 
-        - **TXT**: simple text files are similar to CSV with one column and no header, supported for projects with one source only
+        - **TXT**: simple text files are similar to CSV with one column and no header,
+        supported for projects with one source only
 
 
-        Update this example to specify your authorization token, Label Studio instance host, and file name and path,
+        Update this example to specify your authorization token, Label Studio instance
+        host, and file name and path,
 
         then run the following from the command line:
 
@@ -890,12 +1022,14 @@ paths:
 
         #### 3\. **POST with URL**
 
-        You can also provide a URL to a file with labeling tasks. Supported file formats are the same as in option 2.
+        You can also provide a URL to a file with labeling tasks. Supported file formats
+        are the same as in option 2.
 
 
         ```bash
 
-        curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' \
+        curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123'
+        \
 
         -X POST 'https://localhost:8080/api/projects/1/import' \
 
@@ -909,18 +1043,21 @@ paths:
   "/api/projects/{id}/imports/{import_pk}/":
     get:
       summary: Get project import info
-      description: >
-        
-        Get information about an async project import operation. This can be especially useful to monitor status, as large import jobs can take time. 
+      description: >2
+
+        Get information about an async project import operation. This can be especially
+        useful to monitor status, as large import jobs can take time. 
 
 
         You will need the project ID and the unique ID of the import operation. 
-        
-        
-        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list). 
 
 
-        The import ID is returned as part of the response when you call [Import tasks](import-tasks). 
+        The project ID can be found in the URL when viewing the project in Label Studio,
+        or you can retrieve all project IDs using [List all projects](../projects/list).
+
+
+
+        The import ID is returned as part of the response when you call [Import tasks](import-tasks).
 
       parameters:
         - name: id
@@ -930,27 +1067,32 @@ paths:
   "/api/projects/{id}/tasks/":
     delete:
       summary: Delete all tasks
-      description: >
-        
+      description: >2
+
         Delete all tasks from a specific project.
 
 
-        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list). 
+        The project ID can be found in the URL when viewing the project in Label Studio,
+        or you can retrieve all project IDs using [List all projects](../projects/list).
 
       x-fern-sdk-group-name: tasks
 
   /api/tasks/:
     get:
       summary: Get task list
-      description: >
-        
+      description: >2
+
         Retrieve a list of tasks. 
-        
-        
-        You can use the query parameters to filter the list by project and/or view (a tab within the Data Manager). You can also optionally add pagination to make the response easier to parse. 
-        
-        
-        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list). The view ID can be found using [List views](../views/list).
+
+
+        You can use the query parameters to filter the list by project and/or view
+        (a tab within the Data Manager). You can also optionally add pagination to
+        make the response easier to parse. 
+
+
+        The project ID can be found in the URL when viewing the project in Label Studio,
+        or you can retrieve all project IDs using [List all projects](../projects/list).
+        The view ID can be found using [List views](../views/list).
 
       responses:
         200:
@@ -961,7 +1103,9 @@ paths:
                 type: object
                 properties:
                   tasks:
-                    description: List of tasks, each task contains predictions and annotations if `fields` query parameter is set to `all`
+                    description:
+                      List of tasks, each task contains predictions and
+                      annotations if `fields` query parameter is set to `all`
                     type: array
                     items:
                       $ref: "#/components/schemas/Task"
@@ -970,14 +1114,32 @@ paths:
                   value:
                     tasks:
                       - predictions:
-                          - result: [ { "from_name": "sentiment", "to_name": "text", "type": "choices", "value": { "value": { "choices": [ "POSITIVE" ] } } } ]
+                          - result:
+                              [
+                                {
+                                  "from_name": "sentiment",
+                                  "to_name": "text",
+                                  "type": "choices",
+                                  "value":
+                                    { "value": { "choices": ["POSITIVE"] } },
+                                },
+                              ]
                             score: 0.9
                             model_version: "1.0"
                             task: 1
                             created_at: "2021-01-01T00:00:00Z"
                             updated_at: "2021-01-01T00:00:00Z"
                         annotations:
-                          - result: [ { "from_name": "sentiment", "to_name": "text", "type": "choices", "value": { "value": { "choices": [ "POSITIVE" ] } } } ]
+                          - result:
+                              [
+                                {
+                                  "from_name": "sentiment",
+                                  "to_name": "text",
+                                  "type": "choices",
+                                  "value":
+                                    { "value": { "choices": ["POSITIVE"] } },
+                                },
+                              ]
                             created_at: "2021-01-01T00:00:00Z"
                             updated_at: "2021-01-01T00:00:00Z"
                             completed_by: 1
@@ -987,430 +1149,598 @@ paths:
                             lead_time: 12.34
     post:
       summary: Create task
-      description: >
-        
+      description: >2
+
         Create a new labeling task in Label Studio.
 
 
         The data you provide depends on your labeling config and data type. 
-        
-        
-        You will also need to provide a project ID. The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list). 
+
+
+        You will also need to provide a project ID. The project ID can be found in
+        the URL when viewing the project in Label Studio, or you can retrieve all
+        project IDs using [List all projects](../projects/list).
 
   "/api/tasks/{id}/":
     get:
       summary: Get task
-      description: >
-        
-        Get task data, metadata, annotations and other attributes for a specific labeling task by task ID.
+      description: >2
 
-        The task ID is available from the Label Studio URL when viewing the task, or you can retrieve it programmatically with [Get task list](list). 
+        Get task data, metadata, annotations and other attributes for a specific labeling
+        task by task ID.
+
+        The task ID is available from the Label Studio URL when viewing the task,
+        or you can retrieve it programmatically with [Get task list](list).
     delete:
       summary: Delete task
-      description: >
-        
+      description: >2
+
         Delete a task in Label Studio. 
-        
-        
-        You will need the task ID. This is available from the Label Studio URL when viewing the task, or you can retrieve it programmatically with [Get task list](list). 
+
+
+        You will need the task ID. This is available from the Label Studio URL when
+        viewing the task, or you can retrieve it programmatically with [Get task list](list).
+
 
 
         <Warning>This action cannot be undone.</Warning>
     patch:
       summary: Update task
-      description: >
-        
+      description: >2
+
         Update the attributes of an existing labeling task.
 
 
-        You will need the task ID. This is available from the Label Studio URL when viewing the task, or you can retrieve it programmatically with [Get task list](list). 
+        You will need the task ID. This is available from the Label Studio URL when
+        viewing the task, or you can retrieve it programmatically with [Get task list](list).
 
   /api/storages/azure/:
     get:
       summary: List import storages
-      description: >
-        
-        You can connect your Microsoft Azure Blob storage container to Label Studio as a source storage or target storage. Use this API request to get a list of all Azure import (source) storage connections for a specific project. 
+      description: >2
+
+        You can connect your Microsoft Azure Blob storage container to Label Studio
+        as a source storage or target storage. Use this API request to get a list
+        of all Azure import (source) storage connections for a specific project. 
 
 
-        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list). 
+        The project ID can be found in the URL when viewing the project in Label Studio,
+        or you can retrieve all project IDs using [List all projects](../projects/list).
 
 
-        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+
+        For more information about working with external storage, see [Sync data from
+        external storage](https://labelstud.io/guide/storage).
     post:
       summary: Create new storage
-      description: >
-        
+      description: >2
+
         Create a new source storage connection to Microsoft Azure Blob storage. 
-        
-        
-        For information about the required fields and prerequisites, see [Microsoft Azure Blob storage](https://labelstud.io/guide/storage#Microsoft-Azure-Blob-storage) in the Label Studio documentation. 
 
 
-        <Info>Ensure you configure CORS before adding cloud storage. This ensures you will be able to see the content of the data rather than just a link.</Info>
+        For information about the required fields and prerequisites, see [Microsoft
+        Azure Blob storage](https://labelstud.io/guide/storage#Microsoft-Azure-Blob-storage)
+        in the Label Studio documentation. 
 
 
-        <Tip>After you add the storage, you should validate the connection before attempting to sync your data. Your data will not be imported until you [sync your connection](sync).</Tip>
+        <Info>Ensure you configure CORS before adding cloud storage. This ensures
+        you will be able to see the content of the data rather than just a link.</Info>
+
+
+        <Tip>After you add the storage, you should validate the connection before
+        attempting to sync your data. Your data will not be imported until you [sync
+        your connection](sync).</Tip>
 
   /api/storages/azure/validate:
     post:
       summary: Validate import storage
-      description: >
-        
-        Validate a specific Azure import storage connection. This is useful to ensure that the storage configuration settings are correct and operational before attempting to import data.
+      description: >2
+
+        Validate a specific Azure import storage connection. This is useful to ensure
+        that the storage configuration settings are correct and operational before
+        attempting to import data.
 
   "/api/storages/azure/{id}":
     get:
       summary: Get import storage
-      description: >
-        
-        Get a specific Azure import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list). 
+      description: >2
+
+        Get a specific Azure import storage connection. You will need to provide the
+        import storage ID. You can find this using [List import storages](list). 
 
 
-        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+        For more information about working with external storage, see [Sync data from
+        external storage](https://labelstud.io/guide/storage).
     delete:
       summary: Delete import storage
-      description: >
-        
-        Delete a specific Azure import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list). 
+      description: >2
+
+        Delete a specific Azure import storage connection. You will need to provide
+        the import storage ID. You can find this using [List import storages](list).
 
 
-        Deleting a source storage connection does not affect tasks with synced data in Label Studio. The sync process is designed to import new or updated tasks from the connected storage into the project, but it does not track deletions of files from the storage. Therefore, if you remove the external storage connection, the tasks that were created from that storage will remain in the project.
-        
-        
-        If you want to remove the tasks that were synced from the external storage, you will need to delete them manually from within the Label Studio UI or use the [Delete tasks](../../tasks/delete-all-tasks) API. 
+
+        Deleting a source storage connection does not affect tasks with synced data
+        in Label Studio. The sync process is designed to import new or updated tasks
+        from the connected storage into the project, but it does not track deletions
+        of files from the storage. Therefore, if you remove the external storage connection,
+        the tasks that were created from that storage will remain in the project.
+
+
+        If you want to remove the tasks that were synced from the external storage,
+        you will need to delete them manually from within the Label Studio UI or use
+        the [Delete tasks](../../tasks/delete-all-tasks) API.
     patch:
       summary: Update import storage
-      description: >
-        
-        Update a specific Azure import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list). 
+      description: >2
+
+        Update a specific Azure import storage connection. You will need to provide
+        the import storage ID. You can find this using [List import storages](list).
 
 
-        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+
+        For more information about working with external storage, see [Sync data from
+        external storage](https://labelstud.io/guide/storage).
 
   "/api/storages/azure/{id}/sync":
     post:
       summary: Sync import storage
-      description: >
-        
-        Sync tasks from an Azure import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list). 
+      description: >2
+
+        Sync tasks from an Azure import storage connection. You will need to provide
+        the import storage ID. You can find this using [List import storages](list).
 
 
-        Sync operations with external containers only go one way. They either create tasks from objects in the container (source/import storage) or push annotations to the output container (export/target storage). Changing something on the Microsoft side doesn’t guarantee consistency in results.
+
+        Sync operations with external containers only go one way. They either create
+        tasks from objects in the container (source/import storage) or push annotations
+        to the output container (export/target storage). Changing something on the
+        Microsoft side doesn’t guarantee consistency in results.
 
 
-        <Note>Before proceeding, you should review [How sync operations work - Source storage](https://labelstud.io/guide/storage#Source-storage) to ensure that your data remains secure and private.</Note> 
+        <Note>Before proceeding, you should review [How sync operations work - Source
+        storage](https://labelstud.io/guide/storage#Source-storage) to ensure that
+        your data remains secure and private.</Note>
 
   /api/storages/gcs/:
     get:
       summary: List import storages
-      description: >
-        
-        You can connect your Google Cloud Storage bucket to Label Studio as a source storage or target storage. Use this API request to get a list of all Google import (source) storage connections for a specific project. 
+      description: >2
+
+        You can connect your Google Cloud Storage bucket to Label Studio as a source
+        storage or target storage. Use this API request to get a list of all Google
+        import (source) storage connections for a specific project. 
 
 
-        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list). 
+        The project ID can be found in the URL when viewing the project in Label Studio,
+        or you can retrieve all project IDs using [List all projects](../projects/list).
 
 
-        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+
+        For more information about working with external storage, see [Sync data from
+        external storage](https://labelstud.io/guide/storage).
     post:
       summary: Create import storage
-      description: >
-        
+      description: >2
+
         Create a new source storage connection to a Google Cloud Storage bucket. 
-        
-        
-        For information about the required fields and prerequisites, see [Google Cloud Storage](https://labelstud.io/guide/storage#Google-Cloud-Storage) in the Label Studio documentation. 
 
 
-        <Info>Ensure you configure CORS before adding cloud storage. This ensures you will be able to see the content of the data rather than just a link.</Info>
+        For information about the required fields and prerequisites, see [Google Cloud
+        Storage](https://labelstud.io/guide/storage#Google-Cloud-Storage) in the Label
+        Studio documentation. 
 
 
-        <Tip>After you add the storage, you should validate the connection before attempting to sync your data. Your data will not be imported until you [sync your connection](sync).</Tip>
+        <Info>Ensure you configure CORS before adding cloud storage. This ensures
+        you will be able to see the content of the data rather than just a link.</Info>
+
+
+        <Tip>After you add the storage, you should validate the connection before
+        attempting to sync your data. Your data will not be imported until you [sync
+        your connection](sync).</Tip>
 
   /api/storages/gcs/validate:
     post:
       summary: Validate import storage
-      description: >
-        
-        Validate a specific GCS import storage connection. This is useful to ensure that the storage configuration settings are correct and operational before attempting to import data.
+      description: >2
+
+        Validate a specific GCS import storage connection. This is useful to ensure
+        that the storage configuration settings are correct and operational before
+        attempting to import data.
 
   "/api/storages/gcs/{id}":
     get:
       summary: Get import storage
-      description: >
-        
-        Get a specific GCS import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list). 
+      description: >2
+
+        Get a specific GCS import storage connection. You will need to provide the
+        import storage ID. You can find this using [List import storages](list). 
 
 
-        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+        For more information about working with external storage, see [Sync data from
+        external storage](https://labelstud.io/guide/storage).
     patch:
       summary: Update import storage
-      description: >
-        
-        Update a specific GCS import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list). 
+      description: >2
+
+        Update a specific GCS import storage connection. You will need to provide
+        the import storage ID. You can find this using [List import storages](list).
 
 
-        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+
+        For more information about working with external storage, see [Sync data from
+        external storage](https://labelstud.io/guide/storage).
     delete:
       summary: Delete import storage
-      description: >
-        
-        Delete a specific GCS import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list). 
+      description: >2
+
+        Delete a specific GCS import storage connection. You will need to provide
+        the import storage ID. You can find this using [List import storages](list).
 
 
-        Deleting a source storage connection does not affect tasks with synced data in Label Studio. The sync process is designed to import new or updated tasks from the connected storage into the project, but it does not track deletions of files from the storage. Therefore, if you remove the external storage connection, the tasks that were created from that storage will remain in the project.
-        
-        
-        If you want to remove the tasks that were synced from the external storage, you will need to delete them manually from within the Label Studio UI or use the [Delete tasks](../../tasks/delete-all-tasks) API. 
+
+        Deleting a source storage connection does not affect tasks with synced data
+        in Label Studio. The sync process is designed to import new or updated tasks
+        from the connected storage into the project, but it does not track deletions
+        of files from the storage. Therefore, if you remove the external storage connection,
+        the tasks that were created from that storage will remain in the project.
+
+
+        If you want to remove the tasks that were synced from the external storage,
+        you will need to delete them manually from within the Label Studio UI or use
+        the [Delete tasks](../../tasks/delete-all-tasks) API.
 
   "/api/storages/gcs/{id}/sync":
     post:
       summary: Sync import storage
-      description: >
-        
-        Sync tasks from a GCS import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list). 
+      description: >2
+
+        Sync tasks from a GCS import storage connection. You will need to provide
+        the import storage ID. You can find this using [List import storages](list).
 
 
-        Sync operations with external buckets only go one way. They either create tasks from objects in the bucket (source/import storage) or push annotations to the output bucket (export/target storage). Changing something on the bucket side doesn’t guarantee consistency in results.
+
+        Sync operations with external buckets only go one way. They either create
+        tasks from objects in the bucket (source/import storage) or push annotations
+        to the output bucket (export/target storage). Changing something on the bucket
+        side doesn’t guarantee consistency in results.
 
 
-        <Note>Before proceeding, you should review [How sync operations work - Source storage](https://labelstud.io/guide/storage#Source-storage) to ensure that your data remains secure and private.</Note> 
+        <Note>Before proceeding, you should review [How sync operations work - Source
+        storage](https://labelstud.io/guide/storage#Source-storage) to ensure that
+        your data remains secure and private.</Note>
 
   /api/storages/localfiles/:
     get:
       summary: List import storages
-      description: >
-        
-        If you have local files that you want to add to Label Studio from a specific directory, you can set up a specific local directory on the machine where LS is running as source or target storage. Use this API request to get a list of all local file import (source) storage connections for a specific project. 
+      description: >2
+
+        If you have local files that you want to add to Label Studio from a specific
+        directory, you can set up a specific local directory on the machine where
+        LS is running as source or target storage. Use this API request to get a list
+        of all local file import (source) storage connections for a specific project.
 
 
-        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list). 
+
+        The project ID can be found in the URL when viewing the project in Label Studio,
+        or you can retrieve all project IDs using [List all projects](../projects/list).
 
 
-        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+
+        For more information about working with external storage, see [Sync data from
+        external storage](https://labelstud.io/guide/storage).
     post:
       summary: Create import storage
-      description: >
-        
+      description: >2
+
         Create a new source storage connection to a local file directory. 
-        
-        
-        For information about the required fields and prerequisites, see [Local storage](https://labelstud.io/guide/storage#Local-storage) in the Label Studio documentation. 
 
 
-        <Tip>After you add the storage, you should validate the connection before attempting to sync your data. Your data will not be imported until you [sync your connection](sync).</Tip>
+        For information about the required fields and prerequisites, see [Local storage](https://labelstud.io/guide/storage#Local-storage)
+        in the Label Studio documentation. 
+
+
+        <Tip>After you add the storage, you should validate the connection before
+        attempting to sync your data. Your data will not be imported until you [sync
+        your connection](sync).</Tip>
 
   /api/storages/localfiles/validate:
     post:
       summary: Validate import storage
-      description: >
-        
-        Validate a specific local file import storage connection. This is useful to ensure that the storage configuration settings are correct and operational before attempting to import data.
+      description: >2
+
+        Validate a specific local file import storage connection. This is useful to
+        ensure that the storage configuration settings are correct and operational
+        before attempting to import data.
 
   "/api/storages/localfiles/{id}":
     get:
       summary: Get import storage
-      description: >
-        
-        Get a specific local file import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list). 
+      description: >2
+
+        Get a specific local file import storage connection. You will need to provide
+        the import storage ID. You can find this using [List import storages](list).
 
 
-        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+
+        For more information about working with external storage, see [Sync data from
+        external storage](https://labelstud.io/guide/storage).
     patch:
       summary: Update import storage
-      description: >
-        
-        Update a specific local import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list). 
+      description: >2
+
+        Update a specific local import storage connection. You will need to provide
+        the import storage ID. You can find this using [List import storages](list).
 
 
-        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+
+        For more information about working with external storage, see [Sync data from
+        external storage](https://labelstud.io/guide/storage).
     delete:
       summary: Delete import storage
-      description: >
-        
-        Delete a specific local import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list). 
+      description: >2
+
+        Delete a specific local import storage connection. You will need to provide
+        the import storage ID. You can find this using [List import storages](list).
 
 
-        Deleting a source storage connection does not affect tasks with synced data in Label Studio. The sync process is designed to import new or updated tasks from the connected storage into the project, but it does not track deletions of files from the storage. Therefore, if you remove the external storage connection, the tasks that were created from that storage will remain in the project.
-        
-        
-        If you want to remove the tasks that were synced from the external storage, you will need to delete them manually from within the Label Studio UI or use the [Delete tasks](../../tasks/delete-all-tasks) API. 
+
+        Deleting a source storage connection does not affect tasks with synced data
+        in Label Studio. The sync process is designed to import new or updated tasks
+        from the connected storage into the project, but it does not track deletions
+        of files from the storage. Therefore, if you remove the external storage connection,
+        the tasks that were created from that storage will remain in the project.
+
+
+        If you want to remove the tasks that were synced from the external storage,
+        you will need to delete them manually from within the Label Studio UI or use
+        the [Delete tasks](../../tasks/delete-all-tasks) API.
 
   "/api/storages/localfiles/{id}/sync":
     post:
       summary: Sync import storage
-      description: >
-        
-        Sync tasks from a local import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list). 
+      description: >2
+
+        Sync tasks from a local import storage connection. You will need to provide
+        the import storage ID. You can find this using [List import storages](list).
 
 
-        Sync operations with external sources only go one way. They either create tasks from objects in the source directory (source/import storage) or push annotations to the output directory (export/target storage). Changing something on the local file side doesn’t guarantee consistency in results.
+
+        Sync operations with external sources only go one way. They either create
+        tasks from objects in the source directory (source/import storage) or push
+        annotations to the output directory (export/target storage). Changing something
+        on the local file side doesn’t guarantee consistency in results.
 
 
-        <Note>Before proceeding, you should review [How sync operations work - Source storage](https://labelstud.io/guide/storage#Source-storage) to ensure that your data remains secure and private.</Note> 
+        <Note>Before proceeding, you should review [How sync operations work - Source
+        storage](https://labelstud.io/guide/storage#Source-storage) to ensure that
+        your data remains secure and private.</Note>
 
   /api/storages/redis/:
     get:
       summary: List import storages
-      description: >
-        
-        You can connect your Redis database to Label Studio as a source storage or target storage. Use this API request to get a list of all Redis import (source) storage connections for a specific project. 
+      description: >2
+
+        You can connect your Redis database to Label Studio as a source storage or
+        target storage. Use this API request to get a list of all Redis import (source)
+        storage connections for a specific project. 
 
 
-        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list). 
+        The project ID can be found in the URL when viewing the project in Label Studio,
+        or you can retrieve all project IDs using [List all projects](../projects/list).
 
 
-        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+
+        For more information about working with external storage, see [Sync data from
+        external storage](https://labelstud.io/guide/storage).
     post:
       summary: Create import storage
-      description: >
-        
+      description: >2
+
         Create a new source storage connection to a Redis database. 
-        
-        
-        For information about the required fields and prerequisites, see [Redis database](https://labelstud.io/guide/storage#Redis-database) in the Label Studio documentation. 
 
 
-        <Tip>After you add the storage, you should validate the connection before attempting to sync your data. Your data will not be imported until you [sync your connection](sync).</Tip>
+        For information about the required fields and prerequisites, see [Redis database](https://labelstud.io/guide/storage#Redis-database)
+        in the Label Studio documentation. 
+
+
+        <Tip>After you add the storage, you should validate the connection before
+        attempting to sync your data. Your data will not be imported until you [sync
+        your connection](sync).</Tip>
 
   /api/storages/redis/validate:
     post:
       summary: Validate import storage
-      description: >
-        
-        Validate a specific Redis import storage connection. This is useful to ensure that the storage configuration settings are correct and operational before attempting to import data.
+      description: >2
+
+        Validate a specific Redis import storage connection. This is useful to ensure
+        that the storage configuration settings are correct and operational before
+        attempting to import data.
 
   "/api/storages/redis/{id}":
     get:
       summary: Get import storage
-      description: >
-        
-        Get a specific Redis import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list). 
+      description: >2
+
+        Get a specific Redis import storage connection. You will need to provide the
+        import storage ID. You can find this using [List import storages](list). 
 
 
-        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+        For more information about working with external storage, see [Sync data from
+        external storage](https://labelstud.io/guide/storage).
     patch:
       summary: Update import storage
-      description: >
-        
-        Update a specific Redis import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list). 
+      description: >2
+
+        Update a specific Redis import storage connection. You will need to provide
+        the import storage ID. You can find this using [List import storages](list).
 
 
-        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+
+        For more information about working with external storage, see [Sync data from
+        external storage](https://labelstud.io/guide/storage).
     delete:
       summary: Delete import storage
-      description: >
-        
-        Delete a specific Redis import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list). 
+      description: >2
+
+        Delete a specific Redis import storage connection. You will need to provide
+        the import storage ID. You can find this using [List import storages](list).
 
 
-        Deleting a source storage connection does not affect tasks with synced data in Label Studio. The sync process is designed to import new or updated tasks from the connected storage into the project, but it does not track deletions of files from the storage. Therefore, if you remove the external storage connection, the tasks that were created from that storage will remain in the project.
-        
-        
-        If you want to remove the tasks that were synced from the external storage, you will need to delete them manually from within the Label Studio UI or use the [Delete tasks](../../tasks/delete-all-tasks) API. 
+
+        Deleting a source storage connection does not affect tasks with synced data
+        in Label Studio. The sync process is designed to import new or updated tasks
+        from the connected storage into the project, but it does not track deletions
+        of files from the storage. Therefore, if you remove the external storage connection,
+        the tasks that were created from that storage will remain in the project.
+
+
+        If you want to remove the tasks that were synced from the external storage,
+        you will need to delete them manually from within the Label Studio UI or use
+        the [Delete tasks](../../tasks/delete-all-tasks) API.
 
   "/api/storages/redis/{id}/sync":
     post:
       summary: Sync import storage
-      description: >
-        
-        Sync tasks from a Redis import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list). 
+      description: >2
+
+        Sync tasks from a Redis import storage connection. You will need to provide
+        the import storage ID. You can find this using [List import storages](list).
 
 
-        Sync operations with external databases only go one way. They either create tasks from objects in the database (source/import storage) or push annotations to the output database (export/target storage). Changing something on the database side doesn’t guarantee consistency in results.
+
+        Sync operations with external databases only go one way. They either create
+        tasks from objects in the database (source/import storage) or push annotations
+        to the output database (export/target storage). Changing something on the
+        database side doesn’t guarantee consistency in results.
 
 
-        <Note>Before proceeding, you should review [How sync operations work - Source storage](https://labelstud.io/guide/storage#Source-storage) to ensure that your data remains secure and private.</Note> 
+        <Note>Before proceeding, you should review [How sync operations work - Source
+        storage](https://labelstud.io/guide/storage#Source-storage) to ensure that
+        your data remains secure and private.</Note>
 
   /api/storages/s3/:
     get:
       summary: List import storages
-      description: >
-        
-        You can connect your S3 bucket to Label Studio as a source storage or target storage. Use this API request to get a list of all Google import (source) storage connections for a specific project. 
+      description: >2
+
+        You can connect your S3 bucket to Label Studio as a source storage or target
+        storage. Use this API request to get a list of all Google import (source)
+        storage connections for a specific project. 
 
 
-        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list). 
+        The project ID can be found in the URL when viewing the project in Label Studio,
+        or you can retrieve all project IDs using [List all projects](../projects/list).
 
 
-        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+
+        For more information about working with external storage, see [Sync data from
+        external storage](https://labelstud.io/guide/storage).
     post:
       summary: Create import storage
-      description: >
-        
+      description: >2
+
         Create a new source storage connection to a S3 bucket. 
-        
-        
-        For information about the required fields and prerequisites, see [Amazon S3](https://labelstud.io/guide/storage#Amazon-S3) in the Label Studio documentation. 
 
 
-        <Info>Ensure you configure CORS before adding cloud storage. This ensures you will be able to see the content of the data rather than just a link.</Info>
+        For information about the required fields and prerequisites, see [Amazon S3](https://labelstud.io/guide/storage#Amazon-S3)
+        in the Label Studio documentation. 
 
 
-        <Tip>After you add the storage, you should validate the connection before attempting to sync your data. Your data will not be imported until you [sync your connection](sync).</Tip>
+        <Info>Ensure you configure CORS before adding cloud storage. This ensures
+        you will be able to see the content of the data rather than just a link.</Info>
+
+
+        <Tip>After you add the storage, you should validate the connection before
+        attempting to sync your data. Your data will not be imported until you [sync
+        your connection](sync).</Tip>
 
   /api/storages/s3/validate:
     post:
       summary: Validate import storage
-      description: >
-        
-        Validate a specific S3 import storage connection. This is useful to ensure that the storage configuration settings are correct and operational before attempting to import data.
+      description: >2
+
+        Validate a specific S3 import storage connection. This is useful to ensure
+        that the storage configuration settings are correct and operational before
+        attempting to import data.
 
   "/api/storages/s3/{id}":
     get:
       summary: Get import storage
-      description: >
-        
-        Get a specific S3 import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list). 
+      description: >2
+
+        Get a specific S3 import storage connection. You will need to provide the
+        import storage ID. You can find this using [List import storages](list). 
 
 
-        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+        For more information about working with external storage, see [Sync data from
+        external storage](https://labelstud.io/guide/storage).
     patch:
       summary: Update import storage
-      description: >
-        
-        Update a specific S3 import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list). 
+      description: >2
+
+        Update a specific S3 import storage connection. You will need to provide the
+        import storage ID. You can find this using [List import storages](list). 
 
 
-        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+        For more information about working with external storage, see [Sync data from
+        external storage](https://labelstud.io/guide/storage).
     delete:
       summary: Delete import storage
-      description: >
-        
-        Delete a specific S3 import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list). 
+      description: >2
+
+        Delete a specific S3 import storage connection. You will need to provide the
+        import storage ID. You can find this using [List import storages](list). 
 
 
-        Deleting a source storage connection does not affect tasks with synced data in Label Studio. The sync process is designed to import new or updated tasks from the connected storage into the project, but it does not track deletions of files from the storage. Therefore, if you remove the external storage connection, the tasks that were created from that storage will remain in the project.
-        
-        
-        If you want to remove the tasks that were synced from the external storage, you will need to delete them manually from within the Label Studio UI or use the [Delete tasks](../../tasks/delete-all-tasks) API. 
+        Deleting a source storage connection does not affect tasks with synced data
+        in Label Studio. The sync process is designed to import new or updated tasks
+        from the connected storage into the project, but it does not track deletions
+        of files from the storage. Therefore, if you remove the external storage connection,
+        the tasks that were created from that storage will remain in the project.
+
+
+        If you want to remove the tasks that were synced from the external storage,
+        you will need to delete them manually from within the Label Studio UI or use
+        the [Delete tasks](../../tasks/delete-all-tasks) API.
 
   "/api/storages/s3/{id}/sync":
     post:
       summary: Sync import storage
-      description: >
-        
-        Sync tasks from an S3 import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list). 
+      description: >2
+
+        Sync tasks from an S3 import storage connection. You will need to provide
+        the import storage ID. You can find this using [List import storages](list).
 
 
-        Sync operations with external buckets only go one way. They either create tasks from objects in the bucket (source/import storage) or push annotations to the output bucket (export/target storage). Changing something on the bucket side doesn’t guarantee consistency in results.
+
+        Sync operations with external buckets only go one way. They either create
+        tasks from objects in the bucket (source/import storage) or push annotations
+        to the output bucket (export/target storage). Changing something on the bucket
+        side doesn’t guarantee consistency in results.
 
 
-        <Note>Before proceeding, you should review [How sync operations work - Source storage](https://labelstud.io/guide/storage#Source-storage) to ensure that your data remains secure and private.</Note>
+        <Note>Before proceeding, you should review [How sync operations work - Source
+        storage](https://labelstud.io/guide/storage#Source-storage) to ensure that
+        your data remains secure and private.</Note>
 
   /api/storages/s3s:
     get:
       summary: List import storages
-      description: >
-        
-        You can connect your S3 bucket to Label Studio as a source storage or target storage. Use this API request to get a list of all Google import (source) storage connections for a specific project. 
+      description: >2
+
+        You can connect your S3 bucket to Label Studio as a source storage or target
+        storage. Use this API request to get a list of all Google import (source)
+        storage connections for a specific project. 
 
 
-        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list). 
+        The project ID can be found in the URL when viewing the project in Label Studio,
+        or you can retrieve all project IDs using [List all projects](../projects/list).
 
 
-        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+
+        For more information about working with external storage, see [Sync data from
+        external storage](https://labelstud.io/guide/storage).
       parameters:
         - name: project
           in: query
@@ -1434,18 +1764,22 @@ paths:
         - public
     post:
       summary: Create import storage
-      description: >
+      description: >2
 
         Create a new source storage connection to a S3 bucket.
 
 
-        For information about the required fields and prerequisites, see [Amazon S3](https://labelstud.io/guide/storage#Amazon-S3) in the Label Studio documentation.
+        For information about the required fields and prerequisites, see [Amazon S3](https://labelstud.io/guide/storage#Amazon-S3)
+        in the Label Studio documentation.
 
 
-        <Info>Ensure you configure CORS before adding cloud storage. This ensures you will be able to see the content of the data rather than just a link.</Info>
+        <Info>Ensure you configure CORS before adding cloud storage. This ensures
+        you will be able to see the content of the data rather than just a link.</Info>
 
 
-        <Tip>After you add the storage, you should validate the connection before attempting to sync your data. Your data will not be imported until you [sync your connection](sync).</Tip>
+        <Tip>After you add the storage, you should validate the connection before
+        attempting to sync your data. Your data will not be imported until you [sync
+        your connection](sync).</Tip>
       requestBody:
         $ref: "#/components/requestBodies/api_storages_s3s_createData"
       responses:
@@ -1464,9 +1798,10 @@ paths:
   /api/storages/s3s/{id}:
     get:
       summary: Get import storage
-      description: >
-        
-        Get a specific S3 import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
+      description: >2
+
+        Get a specific S3 import storage connection. You will need to provide the
+        import storage ID. You can find this using [List import storages](list).
       parameters:
         - name: id
           in: path
@@ -1489,12 +1824,14 @@ paths:
         - public
     patch:
       summary: Update import storage
-      description: >
+      description: >2
 
-        Update a specific S3 import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
+        Update a specific S3 import storage connection. You will need to provide the
+        import storage ID. You can find this using [List import storages](list).
 
 
-        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+        For more information about working with external storage, see [Sync data from
+        external storage](https://labelstud.io/guide/storage).
       parameters:
         - name: id
           in: path
@@ -1519,15 +1856,22 @@ paths:
         - public
     delete:
       summary: Delete import storage
-      description: >
+      description: >2
 
-        Delete a specific S3 import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
-
-
-        Deleting a source storage connection does not affect tasks with synced data in Label Studio. The sync process is designed to import new or updated tasks from the connected storage into the project, but it does not track deletions of files from the storage. Therefore, if you remove the external storage connection, the tasks that were created from that storage will remain in the project.
+        Delete a specific S3 import storage connection. You will need to provide the
+        import storage ID. You can find this using [List import storages](list).
 
 
-        If you want to remove the tasks that were synced from the external storage, you will need to delete them manually from within the Label Studio UI or use the [Delete tasks](../../tasks/delete-all-tasks) API.
+        Deleting a source storage connection does not affect tasks with synced data
+        in Label Studio. The sync process is designed to import new or updated tasks
+        from the connected storage into the project, but it does not track deletions
+        of files from the storage. Therefore, if you remove the external storage connection,
+        the tasks that were created from that storage will remain in the project.
+
+
+        If you want to remove the tasks that were synced from the external storage,
+        you will need to delete them manually from within the Label Studio UI or use
+        the [Delete tasks](../../tasks/delete-all-tasks) API.
       parameters:
         - name: id
           in: path
@@ -1547,9 +1891,11 @@ paths:
   /api/storages/s3s/validate:
     post:
       summary: Validate import storage
-      description: >
+      description: >2
 
-        Validate a specific S3 import storage connection. This is useful to ensure that the storage configuration settings are correct and operational before attempting to import data.
+        Validate a specific S3 import storage connection. This is useful to ensure
+        that the storage configuration settings are correct and operational before
+        attempting to import data.
       requestBody:
         $ref: "#/components/requestBodies/api_storages_s3s_createData"
       responses:
@@ -1564,9 +1910,10 @@ paths:
   /api/storages/s3s/{id}/sync:
     post:
       summary: Sync import storage
-      description: >
+      description: >2
 
-        Sync tasks from an S3 import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
+        Sync tasks from an S3 import storage connection. You will need to provide
+        the import storage ID. You can find this using [List import storages](list).
       parameters:
         - name: id
           in: path
@@ -1588,19 +1935,23 @@ paths:
       x-fern-audiences:
         - public
 
-
   /api/storages/export/s3s:
     get:
       summary: List export storages
-      description: >
-        
-        You can connect your S3 bucket to Label Studio as a source storage or target storage. Use this API request to get a list of all S3 export (target) storage connections for a specific project. 
+      description: >2
+
+        You can connect your S3 bucket to Label Studio as a source storage or target
+        storage. Use this API request to get a list of all S3 export (target) storage
+        connections for a specific project. 
 
 
-        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list). 
+        The project ID can be found in the URL when viewing the project in Label Studio,
+        or you can retrieve all project IDs using [List all projects](../projects/list).
 
 
-        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+
+        For more information about working with external storage, see [Sync data from
+        external storage](https://labelstud.io/guide/storage).
       parameters:
         - name: project
           in: query
@@ -1625,12 +1976,13 @@ paths:
 
     post:
       summary: Create export storage
-      description: >
-        
+      description: >2
+
         Create a new target storage connection to a S3 bucket with IAM role access.
-        
-        
-        For information about the required fields and prerequisites, see [Amazon S3](https://docs.humansignal.com/guide/storage#Set-up-an-S3-connection-with-IAM-role-access) in the Label Studio documentation.
+
+
+        For information about the required fields and prerequisites, see [Amazon S3](https://docs.humansignal.com/guide/storage#Set-up-an-S3-connection-with-IAM-role-access)
+        in the Label Studio documentation.
       requestBody:
         $ref: "#/components/requestBodies/api_storages_export_s3s_createData"
       responses:
@@ -1649,9 +2001,10 @@ paths:
   /api/storages/export/s3s/{id}:
     get:
       summary: Get export storage
-      description: >
-        
-        Get a specific S3 export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
+      description: >2
+
+        Get a specific S3 export storage connection. You will need to provide the
+        export storage ID. You can find this using [List export storages](list).
       parameters:
         - name: id
           in: path
@@ -1674,9 +2027,10 @@ paths:
         - public
     patch:
       summary: Update export storage
-      description: >
-        
-        Update a specific S3 export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
+      description: >2
+
+        Update a specific S3 export storage connection. You will need to provide the
+        export storage ID. You can find this using [List export storages](list).
       parameters:
         - name: id
           in: path
@@ -1701,9 +2055,10 @@ paths:
         - public
     delete:
       summary: Delete export storage
-      description: >
-        
-        Delete a specific S3 export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
+      description: >2
+
+        Delete a specific S3 export storage connection. You will need to provide the
+        export storage ID. You can find this using [List export storages](list).
       parameters:
         - name: id
           in: path
@@ -1724,9 +2079,11 @@ paths:
   /api/storages/export/s3s/validate:
     post:
       summary: Validate export storage
-      description: >
+      description: >2
 
-        Validate a specific S3 export storage connection. This is useful to ensure that the storage configuration settings are correct and operational before attempting to export data.
+        Validate a specific S3 export storage connection. This is useful to ensure
+        that the storage configuration settings are correct and operational before
+        attempting to export data.
       requestBody:
         $ref: "#/components/requestBodies/api_storages_export_s3s_createData"
       responses:
@@ -1742,424 +2099,582 @@ paths:
   /api/storages/export/azure:
     get:
       summary: List export storages
-      description: >
-        
-        You can connect your Microsoft Azure Blob storage container to Label Studio as a source storage or target storage. Use this API request to get a list of all Azure export (target) storage connections for a specific project. 
+      description: >2
+
+        You can connect your Microsoft Azure Blob storage container to Label Studio
+        as a source storage or target storage. Use this API request to get a list
+        of all Azure export (target) storage connections for a specific project. 
 
 
-        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list). 
+        The project ID can be found in the URL when viewing the project in Label Studio,
+        or you can retrieve all project IDs using [List all projects](../projects/list).
 
 
-        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+
+        For more information about working with external storage, see [Sync data from
+        external storage](https://labelstud.io/guide/storage).
     post:
       summary: Create new storage
-      description: >
-        
+      description: >2
+
         Create a new target storage connection to Microsoft Azure Blob storage. 
-        
-        
-        For information about the required fields and prerequisites, see [Microsoft Azure Blob storage](https://labelstud.io/guide/storage#Microsoft-Azure-Blob-storage) in the Label Studio documentation. 
 
 
-        <Tip>After you add the storage, you should validate the connection before attempting to sync your data. Your data will not be exported until you [sync your connection](sync).</Tip>
+        For information about the required fields and prerequisites, see [Microsoft
+        Azure Blob storage](https://labelstud.io/guide/storage#Microsoft-Azure-Blob-storage)
+        in the Label Studio documentation. 
+
+
+        <Tip>After you add the storage, you should validate the connection before
+        attempting to sync your data. Your data will not be exported until you [sync
+        your connection](sync).</Tip>
 
   /api/storages/export/azure/validate:
     post:
       summary: Validate export storage
-      description: >
-        
-        Validate a specific Azure export storage connection. This is useful to ensure that the storage configuration settings are correct and operational before attempting to export data.
+      description: >2
+
+        Validate a specific Azure export storage connection. This is useful to ensure
+        that the storage configuration settings are correct and operational before
+        attempting to export data.
 
   "/api/storages/export/azure/{id}":
     get:
       summary: Get export storage
-      description: >
-        
-        Get a specific Azure export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list). 
+      description: >2
+
+        Get a specific Azure export storage connection. You will need to provide the
+        export storage ID. You can find this using [List export storages](list). 
 
 
-        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+        For more information about working with external storage, see [Sync data from
+        external storage](https://labelstud.io/guide/storage).
     delete:
       summary: Delete export storage
-      description: >
-        
-        Delete a specific Azure export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list). 
+      description: >2
+
+        Delete a specific Azure export storage connection. You will need to provide
+        the export storage ID. You can find this using [List export storages](list).
 
 
-        Deleting an export/target storage connection does not affect tasks with synced data in Label Studio. If you want to remove the tasks that were synced from the external storage, you will need to delete them manually from within the Label Studio UI or use the [Delete tasks](../../tasks/delete-all-tasks) API. 
+
+        Deleting an export/target storage connection does not affect tasks with synced
+        data in Label Studio. If you want to remove the tasks that were synced from
+        the external storage, you will need to delete them manually from within the
+        Label Studio UI or use the [Delete tasks](../../tasks/delete-all-tasks) API.
+
     patch:
       summary: Update export storage
-      description: >
-        
-        Update a specific Azure export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list). 
+      description: >2
+
+        Update a specific Azure export storage connection. You will need to provide
+        the export storage ID. You can find this using [List export storages](list).
 
 
-        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+
+        For more information about working with external storage, see [Sync data from
+        external storage](https://labelstud.io/guide/storage).
 
   "/api/storages/export/azure/{id}/sync":
     post:
       summary: Sync export storage
-      description: >
-        
-        Sync tasks to an Azure export/target storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list). 
+      description: >2
+
+        Sync tasks to an Azure export/target storage connection. You will need to
+        provide the export storage ID. You can find this using [List export storages](list).
 
 
-        Sync operations with external containers only go one way. They either create tasks from objects in the container (source/import storage) or push annotations to the output container (export/target storage). Changing something on the Microsoft side doesn’t guarantee consistency in results.
+
+        Sync operations with external containers only go one way. They either create
+        tasks from objects in the container (source/import storage) or push annotations
+        to the output container (export/target storage). Changing something on the
+        Microsoft side doesn’t guarantee consistency in results.
 
 
-        <Note>Before proceeding, you should review [How sync operations work - Source storage](https://labelstud.io/guide/storage#Source-storage) to ensure that your data remains secure and private.</Note> 
+        <Note>Before proceeding, you should review [How sync operations work - Source
+        storage](https://labelstud.io/guide/storage#Source-storage) to ensure that
+        your data remains secure and private.</Note>
 
   /api/storages/export/gcs:
     get:
       summary: List export storages
-      description: >
-        
-        You can connect your Google Cloud Storage bucket to Label Studio as a source storage or target storage. Use this API request to get a list of all GCS export (target) storage connections for a specific project. 
+      description: >2
+
+        You can connect your Google Cloud Storage bucket to Label Studio as a source
+        storage or target storage. Use this API request to get a list of all GCS export
+        (target) storage connections for a specific project. 
 
 
-        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list). 
+        The project ID can be found in the URL when viewing the project in Label Studio,
+        or you can retrieve all project IDs using [List all projects](../projects/list).
 
 
-        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+
+        For more information about working with external storage, see [Sync data from
+        external storage](https://labelstud.io/guide/storage).
     post:
       summary: Create new storage
-      description: >
-        
+      description: >2
+
         Create a new target storage connection to Google Cloud Storage. 
-        
-        
-        For information about the required fields and prerequisites, see [Google Cloud Storage](https://labelstud.io/guide/storage#Google-Cloud-Storage) in the Label Studio documentation. 
 
 
-        <Tip>After you add the storage, you should validate the connection before attempting to sync your data. Your data will not be exported until you [sync your connection](sync).</Tip>
+        For information about the required fields and prerequisites, see [Google Cloud
+        Storage](https://labelstud.io/guide/storage#Google-Cloud-Storage) in the Label
+        Studio documentation. 
+
+
+        <Tip>After you add the storage, you should validate the connection before
+        attempting to sync your data. Your data will not be exported until you [sync
+        your connection](sync).</Tip>
 
   /api/storages/export/gcs/validate:
     post:
       summary: Validate export storage
-      description: >
-        
-        Validate a specific GCS export storage connection. This is useful to ensure that the storage configuration settings are correct and operational before attempting to export data.
+      description: >2
+
+        Validate a specific GCS export storage connection. This is useful to ensure
+        that the storage configuration settings are correct and operational before
+        attempting to export data.
 
   "/api/storages/export/gcs/{id}":
     get:
       summary: Get export storage
-      description: >
-        
-        Get a specific GCS export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list). 
+      description: >2
+
+        Get a specific GCS export storage connection. You will need to provide the
+        export storage ID. You can find this using [List export storages](list). 
 
 
-        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+        For more information about working with external storage, see [Sync data from
+        external storage](https://labelstud.io/guide/storage).
     delete:
       summary: Delete export storage
-      description: >
-        
-        Delete a specific GCS export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list). 
+      description: >2
+
+        Delete a specific GCS export storage connection. You will need to provide
+        the export storage ID. You can find this using [List export storages](list).
 
 
-        Deleting an export/target storage connection does not affect tasks with synced data in Label Studio. If you want to remove the tasks that were synced from the external storage, you will need to delete them manually from within the Label Studio UI or use the [Delete tasks](../../tasks/delete-all-tasks) API. 
+
+        Deleting an export/target storage connection does not affect tasks with synced
+        data in Label Studio. If you want to remove the tasks that were synced from
+        the external storage, you will need to delete them manually from within the
+        Label Studio UI or use the [Delete tasks](../../tasks/delete-all-tasks) API.
+
     patch:
       summary: Update export storage
-      description: >
-        
-        Update a specific GCS export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list). 
+      description: >2
+
+        Update a specific GCS export storage connection. You will need to provide
+        the export storage ID. You can find this using [List export storages](list).
 
 
-        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+
+        For more information about working with external storage, see [Sync data from
+        external storage](https://labelstud.io/guide/storage).
 
   "/api/storages/export/gcs/{id}/sync":
     post:
       summary: Sync export storage
-      description: >
-        
-        Sync tasks to a GCS export/target storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list). 
+      description: >2
+
+        Sync tasks to a GCS export/target storage connection. You will need to provide
+        the export storage ID. You can find this using [List export storages](list).
 
 
-        Sync operations with external buckets only go one way. They either create tasks from objects in the bucket (source/import storage) or push annotations to the output bucket (export/target storage). Changing something on the bucket side doesn’t guarantee consistency in results.
+
+        Sync operations with external buckets only go one way. They either create
+        tasks from objects in the bucket (source/import storage) or push annotations
+        to the output bucket (export/target storage). Changing something on the bucket
+        side doesn’t guarantee consistency in results.
 
 
-        <Note>Before proceeding, you should review [How sync operations work - Source storage](https://labelstud.io/guide/storage#Source-storage) to ensure that your data remains secure and private.</Note> 
+        <Note>Before proceeding, you should review [How sync operations work - Source
+        storage](https://labelstud.io/guide/storage#Source-storage) to ensure that
+        your data remains secure and private.</Note>
 
   /api/storages/export/s3:
     get:
       summary: List export storages
-      description: >
-        
-        You can connect your S3 bucket to Label Studio as a source storage or target storage. Use this API request to get a list of all S3 export (target) storage connections for a specific project. 
+      description: >2
+
+        You can connect your S3 bucket to Label Studio as a source storage or target
+        storage. Use this API request to get a list of all S3 export (target) storage
+        connections for a specific project. 
 
 
-        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list). 
+        The project ID can be found in the URL when viewing the project in Label Studio,
+        or you can retrieve all project IDs using [List all projects](../projects/list).
 
 
-        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+
+        For more information about working with external storage, see [Sync data from
+        external storage](https://labelstud.io/guide/storage).
     post:
       summary: Create new storage
-      description: >
-        
+      description: >2
+
         Create a new target storage connection to S3 storage. 
-        
-        
-        For information about the required fields and prerequisites, see [Amazon S3](https://labelstud.io/guide/storage#Amazon-S3) in the Label Studio documentation. 
 
 
-        <Tip>After you add the storage, you should validate the connection before attempting to sync your data. Your data will not be exported until you [sync your connection](sync).</Tip>
+        For information about the required fields and prerequisites, see [Amazon S3](https://labelstud.io/guide/storage#Amazon-S3)
+        in the Label Studio documentation. 
+
+
+        <Tip>After you add the storage, you should validate the connection before
+        attempting to sync your data. Your data will not be exported until you [sync
+        your connection](sync).</Tip>
 
   /api/storages/export/s3/validate:
     post:
       summary: Validate export storage
-      description: >
-        
-        Validate a specific S3 export storage connection. This is useful to ensure that the storage configuration settings are correct and operational before attempting to export data.
+      description: >2
+
+        Validate a specific S3 export storage connection. This is useful to ensure
+        that the storage configuration settings are correct and operational before
+        attempting to export data.
 
   "/api/storages/export/s3/{id}":
     get:
       summary: Get export storage
-      description: >
-        
-        Get a specific S3 export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list). 
+      description: >2
+
+        Get a specific S3 export storage connection. You will need to provide the
+        export storage ID. You can find this using [List export storages](list). 
 
 
-        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+        For more information about working with external storage, see [Sync data from
+        external storage](https://labelstud.io/guide/storage).
     delete:
       summary: Delete export storage
-      description: >
-        
-        Delete a specific S3 export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list). 
+      description: >2
+
+        Delete a specific S3 export storage connection. You will need to provide the
+        export storage ID. You can find this using [List export storages](list). 
 
 
-        Deleting an export/target storage connection does not affect tasks with synced data in Label Studio. If you want to remove the tasks that were synced from the external storage, you will need to delete them manually from within the Label Studio UI or use the [Delete tasks](../../tasks/delete-all-tasks) API. 
+        Deleting an export/target storage connection does not affect tasks with synced
+        data in Label Studio. If you want to remove the tasks that were synced from
+        the external storage, you will need to delete them manually from within the
+        Label Studio UI or use the [Delete tasks](../../tasks/delete-all-tasks) API.
+
     patch:
       summary: Update export storage
-      description: >
-        
-        Update a specific S3 export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list). 
+      description: >2
+
+        Update a specific S3 export storage connection. You will need to provide the
+        export storage ID. You can find this using [List export storages](list). 
 
 
-        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+        For more information about working with external storage, see [Sync data from
+        external storage](https://labelstud.io/guide/storage).
 
   "/api/storages/export/s3/{id}/sync":
     post:
       summary: Sync export storage
-      description: >
-        
-        Sync tasks to an S3 export/target storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list). 
+      description: >2
+
+        Sync tasks to an S3 export/target storage connection. You will need to provide
+        the export storage ID. You can find this using [List export storages](list).
 
 
-        Sync operations with external buckets only go one way. They either create tasks from objects in the bucket (source/import storage) or push annotations to the output bucket (export/target storage). Changing something on the bucket side doesn’t guarantee consistency in results.
+
+        Sync operations with external buckets only go one way. They either create
+        tasks from objects in the bucket (source/import storage) or push annotations
+        to the output bucket (export/target storage). Changing something on the bucket
+        side doesn’t guarantee consistency in results.
 
 
-        <Note>Before proceeding, you should review [How sync operations work - Source storage](https://labelstud.io/guide/storage#Source-storage) to ensure that your data remains secure and private.</Note> 
+        <Note>Before proceeding, you should review [How sync operations work - Source
+        storage](https://labelstud.io/guide/storage#Source-storage) to ensure that
+        your data remains secure and private.</Note>
 
   /api/storages/export/redis:
     get:
       summary: List export storages
-      description: >
-        
-        You can connect your Redis database to Label Studio as a source storage or target storage. Use this API request to get a list of all Redis export (target) storage connections for a specific project. 
+      description: >2
+
+        You can connect your Redis database to Label Studio as a source storage or
+        target storage. Use this API request to get a list of all Redis export (target)
+        storage connections for a specific project. 
 
 
-        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list). 
+        The project ID can be found in the URL when viewing the project in Label Studio,
+        or you can retrieve all project IDs using [List all projects](../projects/list).
 
 
-        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+
+        For more information about working with external storage, see [Sync data from
+        external storage](https://labelstud.io/guide/storage).
     post:
       summary: Create new storage
-      description: >
-        
+      description: >2
+
         Create a new target storage connection to Redis. 
-        
-        
-        For information about the required fields and prerequisites, see [Redis database](https://labelstud.io/guide/storage#Redis-database) in the Label Studio documentation. 
 
 
-        <Tip>After you add the storage, you should validate the connection before attempting to sync your data. Your data will not be exported until you [sync your connection](sync).</Tip>
+        For information about the required fields and prerequisites, see [Redis database](https://labelstud.io/guide/storage#Redis-database)
+        in the Label Studio documentation. 
+
+
+        <Tip>After you add the storage, you should validate the connection before
+        attempting to sync your data. Your data will not be exported until you [sync
+        your connection](sync).</Tip>
 
   /api/storages/export/redis/validate:
     post:
       summary: Validate export storage
-      description: >
-        
-        Validate a specific Redis export storage connection. This is useful to ensure that the storage configuration settings are correct and operational before attempting to export data.
+      description: >2
+
+        Validate a specific Redis export storage connection. This is useful to ensure
+        that the storage configuration settings are correct and operational before
+        attempting to export data.
 
   "/api/storages/export/redis/{id}":
     get:
       summary: Get export storage
-      description: >
-        
-        Get a specific Redis export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list). 
+      description: >2
+
+        Get a specific Redis export storage connection. You will need to provide the
+        export storage ID. You can find this using [List export storages](list). 
 
 
-        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+        For more information about working with external storage, see [Sync data from
+        external storage](https://labelstud.io/guide/storage).
     delete:
       summary: Delete export storage
-      description: >
-        
-        Delete a specific Redis export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list). 
+      description: >2
+
+        Delete a specific Redis export storage connection. You will need to provide
+        the export storage ID. You can find this using [List export storages](list).
 
 
-        Deleting an export/target storage connection does not affect tasks with synced data in Label Studio. If you want to remove the tasks that were synced from the external storage, you will need to delete them manually from within the Label Studio UI or use the [Delete tasks](../../tasks/delete-all-tasks) API. 
+
+        Deleting an export/target storage connection does not affect tasks with synced
+        data in Label Studio. If you want to remove the tasks that were synced from
+        the external storage, you will need to delete them manually from within the
+        Label Studio UI or use the [Delete tasks](../../tasks/delete-all-tasks) API.
+
     patch:
       summary: Update export storage
-      description: >
-        
-        Update a specific Redis export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list). 
+      description: >2
+
+        Update a specific Redis export storage connection. You will need to provide
+        the export storage ID. You can find this using [List export storages](list).
 
 
-        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+
+        For more information about working with external storage, see [Sync data from
+        external storage](https://labelstud.io/guide/storage).
 
   "/api/storages/export/redis/{id}/sync":
     post:
       summary: Sync export storage
-      description: >
-        
-        Sync tasks to an Redis export/target storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list). 
+      description: >2
+
+        Sync tasks to an Redis export/target storage connection. You will need to
+        provide the export storage ID. You can find this using [List export storages](list).
 
 
-        Sync operations with external databases only go one way. They either create tasks from objects in the database (source/import storage) or push annotations to the output database (export/target storage). Changing something on the database side doesn’t guarantee consistency in results.
+
+        Sync operations with external databases only go one way. They either create
+        tasks from objects in the database (source/import storage) or push annotations
+        to the output database (export/target storage). Changing something on the
+        database side doesn’t guarantee consistency in results.
 
 
-        <Note>Before proceeding, you should review [How sync operations work - Source storage](https://labelstud.io/guide/storage#Source-storage) to ensure that your data remains secure and private.</Note> 
+        <Note>Before proceeding, you should review [How sync operations work - Source
+        storage](https://labelstud.io/guide/storage#Source-storage) to ensure that
+        your data remains secure and private.</Note>
 
   /api/storages/export/localfiles:
     get:
       summary: List export storages
-      description: >
-        
-        You can connect a local file directory to Label Studio as a source storage or target storage. Use this API request to get a list of all local file export (target) storage connections for a specific project. 
+      description: >2
+
+        You can connect a local file directory to Label Studio as a source storage
+        or target storage. Use this API request to get a list of all local file export
+        (target) storage connections for a specific project. 
 
 
-        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list). 
+        The project ID can be found in the URL when viewing the project in Label Studio,
+        or you can retrieve all project IDs using [List all projects](../projects/list).
 
 
-        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+
+        For more information about working with external storage, see [Sync data from
+        external storage](https://labelstud.io/guide/storage).
     post:
       summary: Create new storage
-      description: >
-        
+      description: >2
+
         Create a new target storage connection to a local file directory. 
-        
-        
-        For information about the required fields and prerequisites, see [Local storage](https://labelstud.io/guide/storage#Local-storage) in the Label Studio documentation. 
 
 
-        <Tip>After you add the storage, you should validate the connection before attempting to sync your data. Your data will not be exported until you [sync your connection](sync).</Tip>
+        For information about the required fields and prerequisites, see [Local storage](https://labelstud.io/guide/storage#Local-storage)
+        in the Label Studio documentation. 
+
+
+        <Tip>After you add the storage, you should validate the connection before
+        attempting to sync your data. Your data will not be exported until you [sync
+        your connection](sync).</Tip>
 
   /api/storages/export/localfiles/validate:
     post:
       summary: Validate export storage
-      description: >
-        
-        Validate a specific local file export storage connection. This is useful to ensure that the storage configuration settings are correct and operational before attempting to export data.
+      description: >2
+
+        Validate a specific local file export storage connection. This is useful to
+        ensure that the storage configuration settings are correct and operational
+        before attempting to export data.
 
   "/api/storages/export/localfiles/{id}":
     get:
       summary: Get export storage
-      description: >
-        
-        Get a specific local file export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list). 
+      description: >2
+
+        Get a specific local file export storage connection. You will need to provide
+        the export storage ID. You can find this using [List export storages](list).
 
 
-        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+
+        For more information about working with external storage, see [Sync data from
+        external storage](https://labelstud.io/guide/storage).
     delete:
       summary: Delete export storage
-      description: >
-        
-        Delete a specific local file export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list). 
+      description: >2
+
+        Delete a specific local file export storage connection. You will need to provide
+        the export storage ID. You can find this using [List export storages](list).
 
 
-        Deleting an export/target storage connection does not affect tasks with synced data in Label Studio. If you want to remove the tasks that were synced from the external storage, you will need to delete them manually from within the Label Studio UI or use the [Delete tasks](../../tasks/delete-all-tasks) API. 
+
+        Deleting an export/target storage connection does not affect tasks with synced
+        data in Label Studio. If you want to remove the tasks that were synced from
+        the external storage, you will need to delete them manually from within the
+        Label Studio UI or use the [Delete tasks](../../tasks/delete-all-tasks) API.
+
     patch:
       summary: Update export storage
-      description: >
-        
-        Update a specific local file export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list). 
+      description: >2
+
+        Update a specific local file export storage connection. You will need to provide
+        the export storage ID. You can find this using [List export storages](list).
 
 
-        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+
+        For more information about working with external storage, see [Sync data from
+        external storage](https://labelstud.io/guide/storage).
 
   "/api/storages/export/localfiles/{id}/sync":
     post:
       summary: Sync export storage
-      description: >
-        
-        Sync tasks to an local file export/target storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list). 
+      description: >2
+
+        Sync tasks to an local file export/target storage connection. You will need
+        to provide the export storage ID. You can find this using [List export storages](list).
 
 
-        Sync operations with external local file directories only go one way. They either create tasks from objects in the directory (source/import storage) or push annotations to the output directory (export/target storage). Changing something on the local file side doesn’t guarantee consistency in results.
+
+        Sync operations with external local file directories only go one way. They
+        either create tasks from objects in the directory (source/import storage)
+        or push annotations to the output directory (export/target storage). Changing
+        something on the local file side doesn’t guarantee consistency in results.
 
 
-        <Note>Before proceeding, you should review [How sync operations work - Source storage](https://labelstud.io/guide/storage#Source-storage) to ensure that your data remains secure and private.</Note> 
+        <Note>Before proceeding, you should review [How sync operations work - Source
+        storage](https://labelstud.io/guide/storage#Source-storage) to ensure that
+        your data remains secure and private.</Note>
 
   /api/webhooks/:
     get:
       summary: List all webhooks
-      description: >
-        
+      description: >2
+
         List all webhooks set up for your organization. 
-        
-        
-        Webhooks in Label Studio let you set up integrations that subscribe to certain events that occur inside Label Studio. When an event is triggered, Label Studio sends an HTTP POST request to the configured webhook URL. 
-        
-        
-        For more information, see [Set up webhooks in Label Studio](https://labelstud.io/guide/webhooks). 
+
+
+        Webhooks in Label Studio let you set up integrations that subscribe to certain
+        events that occur inside Label Studio. When an event is triggered, Label Studio
+        sends an HTTP POST request to the configured webhook URL. 
+
+
+        For more information, see [Set up webhooks in Label Studio](https://labelstud.io/guide/webhooks).
+
     post:
       summary: Create a webhook
-      description: >
-        
+      description: >2
+
         Create a webhook. 
-        
-        Label Studio provides several out-of-the box webhook events, which you can find listed here: [Available Label Studio webhooks](https://labelstud.io/guide/webhooks#Available-Label-Studio-webhooks). 
+
+        Label Studio provides several out-of-the box webhook events, which you can
+        find listed here: [Available Label Studio webhooks](https://labelstud.io/guide/webhooks#Available-Label-Studio-webhooks).
 
 
-        If you want to create your own custom webhook, refer to [Create custom events for webhooks in Label Studio](https://labelstud.io/guide/webhook_create).
+
+        If you want to create your own custom webhook, refer to [Create custom events
+        for webhooks in Label Studio](https://labelstud.io/guide/webhook_create).
 
 
-        <Note>Label Studio makes two main types of events available to integrate with webhooks: project-level task events and organization events. If you want to use organization-level webhook events, you will need to set `LABEL_STUDIO_ALLOW_ORGANIZATION_WEBHOOKS=true`. </Note>
+        <Note>Label Studio makes two main types of events available to integrate with
+        webhooks: project-level task events and organization events. If you want to
+        use organization-level webhook events, you will need to set `LABEL_STUDIO_ALLOW_ORGANIZATION_WEBHOOKS=true`.
+        </Note>
   /api/webhooks/info/:
     get:
       summary: Get all webhook actions
-      description: >
-        
-        Get descriptions of all available webhook actions to set up webhooks. For more information, see the [Webhook event reference](https://labelstud.io/guide/webhook_reference).
+      description: >2
+
+        Get descriptions of all available webhook actions to set up webhooks. For
+        more information, see the [Webhook event reference](https://labelstud.io/guide/webhook_reference).
 
   "/api/webhooks/{id}/":
     get:
       summary: Get webhook info
-      description: >
-        
-        Get information about a specific webhook. You will need to provide the webhook ID. You can get this from [List all webhooks](list).
+      description: >2
+
+        Get information about a specific webhook. You will need to provide the webhook
+        ID. You can get this from [List all webhooks](list).
 
 
-        For more information about webhooks, see [Set up webhooks in Label Studio](https://labelstud.io/guide/webhooks) and the [Webhook event reference](https://labelstud.io/guide/webhook_reference).
+        For more information about webhooks, see [Set up webhooks in Label Studio](https://labelstud.io/guide/webhooks)
+        and the [Webhook event reference](https://labelstud.io/guide/webhook_reference).
 
     delete:
       summary: Delete webhook
-      description: >
-        
-        Delete a webhook. You will need to provide the webhook ID. You can get this from [List all webhooks](list).
+      description: >2
+
+        Delete a webhook. You will need to provide the webhook ID. You can get this
+        from [List all webhooks](list).
 
 
-        For more information about webhooks, see [Set up webhooks in Label Studio](https://labelstud.io/guide/webhooks) and the [Webhook event reference](https://labelstud.io/guide/webhook_reference).
+        For more information about webhooks, see [Set up webhooks in Label Studio](https://labelstud.io/guide/webhooks)
+        and the [Webhook event reference](https://labelstud.io/guide/webhook_reference).
     patch:
       summary: Update webhook info
-      description: >
-        
-        Update a webhook. You will need to provide the webhook ID. You can get this from [List all webhooks](list).
+      description: >2
+
+        Update a webhook. You will need to provide the webhook ID. You can get this
+        from [List all webhooks](list).
 
 
-        For more information about webhooks, see [Set up webhooks in Label Studio](https://labelstud.io/guide/webhooks) and the [Webhook event reference](https://labelstud.io/guide/webhook_reference).
-
+        For more information about webhooks, see [Set up webhooks in Label Studio](https://labelstud.io/guide/webhooks)
+        and the [Webhook event reference](https://labelstud.io/guide/webhook_reference).
 
   /api/workspaces:
     get:
       summary: List workspaces
-      description: >
-        
+      description: >2
+
         List all workspaces for your organization. 
-        
-        
-        Workspaces in Label Studio let you organize your projects and users into separate spaces. This is useful for managing different teams, departments, or projects within your organization. 
-        
-        
+
+
+        Workspaces in Label Studio let you organize your projects and users into separate
+        spaces. This is useful for managing different teams, departments, or projects
+        within your organization. 
+
+
         For more information, see [Workspaces in Label Studio](https://docs.humansignal.com/guide/workspaces).
       responses:
         "200":
@@ -2176,17 +2691,19 @@ paths:
         - public
     post:
       summary: Create workspace
-      description: >
-        
+      description: >2
+
         Create a new workspace.
-        
-        
-        Workspaces in Label Studio let you organize your projects and users into separate spaces. This is useful for managing different teams, departments, or projects within your organization.
-        
-        
+
+
+        Workspaces in Label Studio let you organize your projects and users into separate
+        spaces. This is useful for managing different teams, departments, or projects
+        within your organization.
+
+
         For more information, see [Workspaces in Label Studio](https://docs.humansignal.com/guide/workspaces).
       requestBody:
-        $ref: '#/components/requestBodies/api_workspaces_createData'
+        $ref: "#/components/requestBodies/api_workspaces_createData"
       responses:
         "201":
           description: ""
@@ -2202,9 +2719,10 @@ paths:
   /api/workspaces/{id}:
     get:
       summary: Get workspace
-      description: >
-        
-        Get information about a specific workspace. You will need to provide the workspace ID. You can find this using [List workspaces](list).
+      description: >2
+
+        Get information about a specific workspace. You will need to provide the workspace
+        ID. You can find this using [List workspaces](list).
       parameters:
         - name: id
           in: path
@@ -2225,9 +2743,10 @@ paths:
         - public
     patch:
       summary: Update workspace
-      description: >
-        
-        Update a specific workspace. You will need to provide the workspace ID. You can find this using [List workspaces](list).
+      description: >2
+
+        Update a specific workspace. You will need to provide the workspace ID. You
+        can find this using [List workspaces](list).
       parameters:
         - name: id
           in: path
@@ -2236,7 +2755,7 @@ paths:
           schema:
             type: integer
       requestBody:
-        $ref: '#/components/requestBodies/api_workspaces_createData'
+        $ref: "#/components/requestBodies/api_workspaces_createData"
       responses:
         "200":
           description: ""
@@ -2250,9 +2769,10 @@ paths:
         - public
     delete:
       summary: Delete workspace
-      description: >
-        
-        Delete a specific workspace. You will need to provide the workspace ID. You can find this using [List workspaces](list).
+      description: >2
+
+        Delete a specific workspace. You will need to provide the workspace ID. You
+        can find this using [List workspaces](list).
       parameters:
         - name: id
           in: path
@@ -2271,9 +2791,10 @@ paths:
   /api/workspaces/{id}/memberships:
     get:
       summary: List workspace memberships
-      description: >
-        
-        List all workspace memberships for a specific workspace. You will need to provide the workspace ID. You can find this using [List workspaces](list).
+      description: >2
+
+        List all workspace memberships for a specific workspace. You will need to
+        provide the workspace ID. You can find this using [List workspaces](list).
       parameters:
         - name: id
           in: path
@@ -2302,9 +2823,10 @@ paths:
         - public
     post:
       summary: Create workspace membership
-      description: >
-        
-        Create a new workspace membership. You will need to provide the workspace ID. You can find this using [List workspaces](list).
+      description: >2
+
+        Create a new workspace membership. You will need to provide the workspace
+        ID. You can find this using [List workspaces](list).
       parameters:
         - name: id
           in: path
@@ -2340,9 +2862,10 @@ paths:
         - public
     delete:
       summary: Delete workspace membership
-      description: >
-        
-        Delete a specific workspace membership. You will need to provide the workspace ID and the user ID. You can find this using [List workspace memberships](list).
+      description: >2
+
+        Delete a specific workspace membership. You will need to provide the workspace
+        ID and the user ID. You can find this using [List workspace memberships](list).
       parameters:
         - name: id
           in: path
@@ -2383,7 +2906,9 @@ paths:
       parameters:
         - name: user_pk
           in: path
-          description: A unique integer value identifying the user to get organization details for.
+          description:
+            A unique integer value identifying the user to get organization
+            details for.
           required: true
           schema:
             type: integer
@@ -2411,6 +2936,58 @@ paths:
         required: true
         schema:
           type: string
+  /api/comments:
+    get:
+      $ref: ./resources/comments.yaml#/paths/~1api~1comments/get
+      x-fern-sdk-group-name: comments
+      x-fern-sdk-method-name: get
+      x-fern-audiences:
+        - public
+    post:
+      $ref: ./resources/comments.yaml#/paths/~1api~1comments/post
+      x-fern-sdk-group-name: comments
+      x-fern-sdk-method-name: create
+      x-fern-audiences:
+        - public
+  /api/model-provider-connections:
+    get:
+      $ref: ./resources/prompts.yaml#/paths/~1api~1model-provider-connections/get
+      x-fern-sdk-group-name: prompts
+      x-fern-sdk-method-name: get
+      x-fern-audiences:
+        - public
+    post:
+      $ref: ./resources/prompts.yaml#/paths/~1api~1model-provider-connections/post
+      x-fern-sdk-group-name: prompts
+      x-fern-sdk-method-name: create
+      x-fern-audiences:
+        - public
+  /api/prompts:
+    get:
+      $ref: ./resources/prompts.yaml#/paths/~1api~1prompts/get
+      x-fern-sdk-group-name: prompts
+      x-fern-sdk-method-name: get
+      x-fern-audiences:
+        - public
+    post:
+      $ref: ./resources/prompts.yaml#/paths/~1api~1prompts/post
+      x-fern-sdk-group-name: prompts
+      x-fern-sdk-method-name: create
+      x-fern-audiences:
+        - public
+  /api/storages/s3s/:
+    get:
+      $ref: ./resources/s3s.yaml#/paths/~1api~1storages~1s3s~1/get
+      x-fern-sdk-group-name: s3s
+      x-fern-sdk-method-name: list
+      x-fern-audiences:
+        - public
+    post:
+      $ref: ./resources/s3s.yaml#/paths/~1api~1storages~1s3s~1/post
+      x-fern-sdk-group-name: s3s
+      x-fern-sdk-method-name: create
+      x-fern-audiences:
+        - public
 components:
   securitySchemes:
     Token:
@@ -2816,14 +3393,16 @@ components:
             type: object
             properties:
               regex_filter:
-                description: Cloud storage regex for filtering objects. You must specify it
-                  otherwise no objects will be imported.
+                description:
+                  Cloud storage regex for filtering objects. You must specify
+                  it otherwise no objects will be imported.
                 type: string
               use_blob_urls:
-                description: Interpret objects as BLOBs and generate URLs. For example, if your
-                  bucket contains images, you can use this option to generate
-                  URLs for these images. If set to False, it will read the
-                  content of the file and load it into Label Studio.
+                description:
+                  Interpret objects as BLOBs and generate URLs. For example,
+                  if your bucket contains images, you can use this option to generate
+                  URLs for these images. If set to False, it will read the content
+                  of the file and load it into Label Studio.
                 type: boolean
                 default: false
               presign:
@@ -2950,9 +3529,10 @@ components:
                 type: boolean
               reveal_preannotations_interactively:
                 title: reveal_preannotations_interactively
-                description: Reveal preannotations interactively. If set to True, predictions
-                  will be shown to the user only after selecting the area of
-                  interest
+                description:
+                  Reveal preannotations interactively. If set to True,
+                  predictions will be shown to the user only after selecting the area
+                  of interest
                 type: boolean
               show_collab_predictions:
                 title: show_collab_predictions
@@ -2969,15 +3549,15 @@ components:
                 default: "#FFFFFF"
               control_weights:
                 title: control_weights
-                description: "Dict of weights for each control tag in metric calculation. Each
-                  control tag (e.g. label or choice) will have its own key in
-                  control weight dict with weight for each label and overall
-                  weight. For example, if a bounding box annotation with a
-                  control tag named my_bbox should be included with 0.33 weight
-                  in agreement calculation, and the first label Car should be
-                  twice as important as Airplane, then you need to specify:
-                  {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0,
-                  'Airplane': 0.5}, 'overall': 0.33}"
+                description:
+                  "Dict of weights for each control tag in metric calculation.
+                  Each control tag (e.g. label or choice) will have its own key in
+                  control weight dict with weight for each label and overall weight.
+                  For example, if a bounding box annotation with a control tag named
+                  my_bbox should be included with 0.33 weight in agreement calculation,
+                  and the first label Car should be twice as important as Airplane,
+                  then you need to specify: {'my_bbox': {'type': 'RectangleLabels',
+                  'labels': {'Car': 1.0, 'Airplane': 0.5}, 'overall': 0.33}"
                 type: object
                 example:
                   my_bbox:
@@ -3033,5 +3613,3 @@ components:
                 description: Is workspace archived
                 type: boolean
       required: true
-
-
