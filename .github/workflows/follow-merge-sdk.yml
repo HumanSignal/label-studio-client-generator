@@ -20,7 +20,7 @@ env:
 jobs:
   sync:
     name: "Sync"
-    if: startsWith(github.head_ref, 'fb-')
+    if: startsWith(github.head_ref, 'fb-') || (startsWith(github.head_ref, 'revert-') && contains(github.head_ref, '-fb-') )
     runs-on: ubuntu-latest
     steps:
       - uses: hmarr/debug-action@v3.0.0
