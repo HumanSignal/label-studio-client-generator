@@ -1,4 +1,4 @@
-name: 'Follow Merge: Sync PR SDK'
+name: 'Follow Merge: Dispatch'
 
 on:
   pull_request_target:
@@ -13,9 +13,6 @@ on:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref }}
-
-env:
-  DOWNSTREAM_REPOSITORY: "label-studio-sdk"
 
 jobs:
   sync:
@@ -67,8 +64,8 @@ jobs:
           repository: HumanSignal/actions-hub
           path: ./.github/actions-hub
 
-      - name: Dispatch Follow Merge Event
+      - name: Dispatch label-studio-sdk Follow Merge
         uses: ./.github/actions-hub/actions/follow-merge-dispatch
         with:
           github_token: ${{ secrets.GIT_PAT }}
-          downstream_repository: "${{ env.DOWNSTREAM_REPOSITORY }}"
+          downstream_repository: "label-studio-sdk"
