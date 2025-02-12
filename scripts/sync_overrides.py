@@ -22,42 +22,42 @@ YAML_CLIENT.indent(mapping=2, sequence=4, offset=2)
 REPO_ROOT_PATH = Path(__file__).parent.parent
 
 
-def get_urls_from_spec(entry: dict) -> Set[str]:
-    """Extract all paths from a resource YAML file."""
-    urls = entry.get('paths', {}).keys()
+def get_urls_from_spec(spec: dict) -> Set[str]:
+    """Extract all urls from an openapi spec."""
+    urls = spec.get('paths', {}).keys()
     return set(urls)
 
 
-def get_all_resource_urls_by_filename() -> Dict[str, Set[str]]:
-    """Get all paths from all resource YAML files."""
+def get_all_urls_by_filename() -> Dict[str, Set[str]]:
+    """Get all urls from openapi spec YAML files."""
     base_dir = REPO_ROOT_PATH / 'fern' / 'openapi' / 'resources'
-    resource_urls_by_filename = {}
+    urls_by_filename = {}
     
     for file in base_dir.glob('*.yaml'):
         with open(str(file), 'r') as f:
             spec = YAML_CLIENT.load(f) or {}
         urls = get_urls_from_spec(spec)
         if urls:
-            resource_urls_by_filename[file.name] = urls
+            urls_by_filename[file.name] = urls
     
-    return resource_urls_by_filename
+    return urls_by_filename
 
 
-def create_override_entries(path: str, resource_filename: str) -> Dict:
-    """Create a new override entry for a path."""
-    ref_path = path.replace('/', '~1')
-    group_name = resource_filename.replace('.yaml', '')
+def create_override_entries(url: str, openapi_spec_filename: str) -> Dict:
+    """Create a new set of override entries from the openapi spec for the given url."""
+    ref_path = url.replace('/', '~1')
+    group_name = openapi_spec_filename.replace('.yaml', '')
 
-    resource_path = str(REPO_ROOT_PATH / 'fern' / 'openapi' / 'resources' / resource_filename)
-    with open(resource_path, 'r') as f:
-        resource_content = YAML_CLIENT.load(f)
-    methods = resource_content['paths'][path].keys()
+    spec_path = str(REPO_ROOT_PATH / 'fern' / 'openapi' / 'resources' / openapi_spec_filename)
+    with open(spec_path, 'r') as f:
+        spec = YAML_CLIENT.load(f)
+    methods = spec['paths'][url].keys()
     
     return {
         method: {
-            '$ref': f'./resources/{resource_filename}#/paths/{ref_path}/{method}',
+            '$ref': f'./resources/{openapi_spec_filename}#/paths/{ref_path}/{method}',
             'x-fern-sdk-group-name': group_name,
-            'x-fern-sdk-method-name': get_method_name(method, path),
+            'x-fern-sdk-method-name': get_method_name(method, url),
             'x-fern-audiences': ['public']
         }
         for method in methods
@@ -84,12 +84,12 @@ def main():
         overrides = YAML_CLIENT.load(f) or {}
     existing_urls = get_urls_from_spec(overrides)
 
-    resource_urls_by_filename = get_all_resource_urls_by_filename()
+    urls_by_filename = get_all_urls_by_filename()
     new_entries = {}
-    for resource_filename, urls in resource_urls_by_filename.items():
+    for filename, urls in urls_by_filename.items():
         for url in urls:
             if url not in existing_urls:
-                new_entries[url] = create_override_entries(url, resource_filename)
+                new_entries[url] = create_override_entries(url, filename)
     
     if new_entries:
         print(f"Adding {len(new_entries)} new entries to overrides.yaml...")
