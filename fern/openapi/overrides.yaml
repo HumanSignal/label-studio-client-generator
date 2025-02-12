@@ -3034,7 +3034,7 @@ components:
                 type: boolean
       required: true
 
-  /api/token:
+  /api/token/:
     get:
       $ref: "./resources/tokens.yaml#/paths/~1api~1token/get"
       x-fern-sdk-group-name: tokens
