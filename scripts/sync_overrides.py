@@ -22,13 +22,10 @@ YAML_CLIENT.indent(mapping=2, sequence=4, offset=2)
 REPO_ROOT_PATH = Path(__file__).parent.parent
 
 
-def get_paths_from_resource(resource_file: str) -> Set[str]:
+def get_urls_from_spec(entry: dict) -> Set[str]:
     """Extract all paths from a resource YAML file."""
-    with open(resource_file, 'r') as f:
-        content = YAML_CLIENT.load(f)
-    if not content or 'paths' not in content:
-        return set()
-    return set(content['paths'].keys())
+    urls = entry.get('paths', {}).keys()
+    return set(urls)
 
 
 def get_all_resource_urls_by_filename() -> Dict[str, Set[str]]:
@@ -37,20 +34,13 @@ def get_all_resource_urls_by_filename() -> Dict[str, Set[str]]:
     resource_urls_by_filename = {}
     
     for file in base_dir.glob('*.yaml'):
-        paths = get_paths_from_resource(str(file))
-        if paths:
-            resource_paths[file.name] = paths
+        with open(str(file), 'r') as f:
+            spec = YAML_CLIENT.load(f) or {}
+        urls = get_urls_from_spec(spec)
+        if urls:
+            resource_urls_by_filename[file.name] = urls
     
     return resource_urls_by_filename
-
-
-def get_existing_override_urls(overrides_file: str) -> Set[str]:
-    """Get all paths already defined in overrides.yaml."""
-    with open(overrides_file, 'r') as f:
-        content = YAML_CLIENT.load(f)
-    if not content or 'paths' not in content:
-        return set()
-    return set(content['paths'].keys())
 
 
 def create_override_entries(path: str, resource_filename: str) -> Dict:
@@ -88,23 +78,12 @@ def get_method_name(http_method: str, path: str) -> str:
     return http_method
 
 
-def update_overrides(overrides_path: str, new_entries: Dict[str, Dict]) -> None:
-    with open(overrides_path, 'r') as f:
-        content = f.read()
-    
-    data = YAML_CLIENT.load(content) or {}
-    data['paths'] = data.get('paths', {})
-    for path, entry in new_entries.items():
-        if path not in data['paths']:
-            data['paths'][path] = entry
-    
-    with open(overrides_path, 'w') as f:
-        YAML_CLIENT.dump(data, f)
-
-
 def main():
     overrides_path = str(REPO_ROOT_PATH / 'fern' / 'openapi' / 'overrides.yaml')
-    existing_urls = get_existing_override_urls(overrides_path)
+    with open(overrides_path, 'r') as f:
+        overrides = YAML_CLIENT.load(f) or {}
+    existing_urls = get_urls_from_spec(overrides)
+
     resource_urls_by_filename = get_all_resource_urls_by_filename()
     new_entries = {}
     for resource_filename, urls in resource_urls_by_filename.items():
@@ -114,7 +93,15 @@ def main():
     
     if new_entries:
         print(f"Adding {len(new_entries)} new entries to overrides.yaml...")
-        update_overrides(overrides_path, new_entries)
+
+        overrides['paths'] = overrides.get('paths', {})
+        for path, entry in new_entries.items():
+            if path not in overrides['paths']:
+                overrides['paths'][path] = entry
+
+        with open(overrides_path, 'w') as f:
+            YAML_CLIENT.dump(overrides, f)
+
         print("Done!")
     else:
         print("No new entries to add.")
