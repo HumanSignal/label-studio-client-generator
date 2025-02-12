@@ -19,6 +19,7 @@ navigation:
       - api: API Reference
         audiences:
           - public
+        paginated: true
         snippets:
           python: label-studio-sdk
   - tab: tutorials
