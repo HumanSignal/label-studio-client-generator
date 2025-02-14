@@ -175,6 +175,109 @@ paths:
       x-fern-audiences:
         - public
     parameters: []
+  /api/token:
+    get:
+      summary: List API tokens
+      description: >
+        List all API tokens for the current user.
+      responses:
+        "200":
+          description: "List of API tokens retrieved successfully"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/APIToken"
+    post:
+      summary: Create API token
+      description: >
+        Create a new API token for the current user.
+      responses:
+        "200":
+          description: "Token created successfully"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/APIToken"
+
+  /api/token/refresh:
+    post:
+      summary: Refresh token
+      description: >
+        Get a new access token using a refresh token.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - refresh
+              properties:
+                refresh:
+                  type: string
+                  description: JWT refresh token
+      responses:
+        "200":
+          description: "New access token created successfully"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AccessToken"
+        "401":
+          description: "Invalid refresh token"
+
+  /api/token/blacklist:
+    post:
+      summary: Blacklist token
+      description: >
+        Blacklist a refresh token to prevent its future use.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - refresh
+              properties:
+                refresh:
+                  type: string
+                  description: JWT refresh token
+      responses:
+        "204":
+          description: "Token was successfully blacklisted"
+        "404":
+          description: "Token is already blacklisted"
+
+  /api/jwt/settings:
+    get:
+      summary: Retrieve JWT Settings
+      description: >
+        Retrieve JWT settings for the currently active organization.
+      responses:
+        "200":
+          description: "JWT settings retrieved successfully"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/JWTSettings"
+    post:
+      summary: Update JWT Settings
+      description: >
+        Update JWT settings for the currently active organization.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/JWTSettings"
+      responses:
+        "200":
+          description: "JWT settings updated successfully"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/JWTSettings"
+
   /api/current-user/whoami:
     get:
       operationId: api_current-user_whoami_read
@@ -10593,3 +10696,45 @@ components:
           type: string
           format: date-time
           readOnly: true
+    APIToken:
+      type: object
+      required:
+        - token
+        - created_at
+        - expires_at
+      properties:
+        token:
+          type: string
+          description: JWT token
+        created_at:
+          type: string
+          description: Token creation timestamp
+        expires_at:
+          type: string
+          description: Token expiration timestamp
+
+    AccessToken:
+      type: object
+      required:
+        - access
+      properties:
+        access:
+          type: string
+          description: New JWT access token
+
+    JWTSettings:
+      type: object
+      required:
+        - api_tokens_enabled
+        - legacy_api_tokens_enabled
+        - api_token_ttl_days
+      properties:
+        api_tokens_enabled:
+          type: boolean
+          description: Whether JWT API tokens are enabled
+        legacy_api_tokens_enabled:
+          type: boolean
+          description: Whether legacy API tokens are enabled
+        api_token_ttl_days:
+          type: integer
+          description: Number of days before API tokens expire
