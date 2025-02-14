@@ -12,7 +12,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/APIToken"
+                  $ref: "#/components/schemas/APITokenResponse"
     post:
       summary: Create API token
       description: >
@@ -23,7 +23,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/APIToken"
+                $ref: "#/components/schemas/APITokenResponse"
 
   /api/token/refresh:
     post:
@@ -47,7 +47,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/AccessToken"
+                $ref: "#/components/schemas/AccessTokenResponse"
         "401":
           description: "Invalid refresh token"
 
@@ -84,7 +84,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/JWTSettings"
+                $ref: "#/components/schemas/JWTSettingsResponse"
     post:
       summary: Update JWT Settings
       description: >
@@ -93,18 +93,18 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/JWTSettings"
+              $ref: "#/components/schemas/JWTSettingsResponse"
       responses:
         "200":
           description: "JWT settings updated successfully"
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/JWTSettings"
+                $ref: "#/components/schemas/JWTSettingsResponse"
 
 components:
   schemas:
-    APIToken:
+    APITokenResponse:
       type: object
       required:
         - token
@@ -121,7 +121,7 @@ components:
           type: string
           description: Token expiration timestamp
 
-    AccessToken:
+    AccessTokenResponse:
       type: object
       required:
         - access
@@ -130,7 +130,7 @@ components:
           type: string
           description: New JWT access token
 
-    JWTSettings:
+    JWTSettingsResponse:
       type: object
       required:
         - api_tokens_enabled
