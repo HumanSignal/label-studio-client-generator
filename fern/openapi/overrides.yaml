@@ -2415,7 +2415,7 @@ paths:
     post:
       $ref: ./resources/tokens.yaml#/paths/~1api~1token~1blacklist/post
       x-fern-sdk-group-name: tokens
-      x-fern-sdk-method-name: create
+      x-fern-sdk-method-name: blacklist
       x-fern-audiences:
         - public
   /api/token:
@@ -2434,13 +2434,13 @@ paths:
   /api/jwt/settings:
     get:
       $ref: ./resources/tokens.yaml#/paths/~1api~1jwt~1settings/get
-      x-fern-sdk-group-name: tokens
+      x-fern-sdk-group-name: jwt_settings
       x-fern-sdk-method-name: get
       x-fern-audiences:
         - public
     post:
       $ref: ./resources/tokens.yaml#/paths/~1api~1jwt~1settings/post
-      x-fern-sdk-group-name: tokens
+      x-fern-sdk-group-name: jwt_settings
       x-fern-sdk-method-name: create
       x-fern-audiences:
         - public
@@ -2448,7 +2448,7 @@ paths:
     post:
       $ref: ./resources/tokens.yaml#/paths/~1api~1token~1refresh/post
       x-fern-sdk-group-name: tokens
-      x-fern-sdk-method-name: create
+      x-fern-sdk-method-name: refresh
       x-fern-audiences:
         - public
 components:
