@@ -8526,7 +8526,7 @@ components:
           type: integer
         annotation_limit_count:
           title: Annotation limit count
-          description: Maximum number of annotations per annotator
+          description: Maximum number of tasks that can be annotated by a single annotator in this project
             pause
           type: integer
         annotation_limit_percent:
