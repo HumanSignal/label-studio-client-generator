@@ -33,6 +33,6 @@ jobs:
 
       - name: Compile
         run: | 
-          cd fern/apis/api/.preview/fern-python-sdk
+          cd fern/.preview/fern-python-sdk
           poetry install          
           poetry run mypy .
