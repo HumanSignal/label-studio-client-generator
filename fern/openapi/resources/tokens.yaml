@@ -29,7 +29,7 @@ paths:
     post:
       summary: Refresh token
       description: >
-        Get a new access token using a refresh token.
+        Get a new access token, using a refresh token.
       requestBody:
         content:
           application/json:
