@@ -3,7 +3,7 @@ name: preview-docs
 on:
   pull_request:
     branches:
-      - main
+      - master
 
 jobs:
   run:
