@@ -49,6 +49,7 @@ groups:
             numpy: '>=1.26.4,<2.0.0'
             datamodel-code-generator: '0.26.1'
             jsf: '^0.11.2'
+            pyjwt: '^2.10.1'
         #            scikit-learn: '1.5.1'
         smart-casing: true
   python-sdk-local:
