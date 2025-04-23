@@ -77,7 +77,7 @@ paths:
     get:
       summary: Retrieve JWT Settings
       description: >
-        Retrieve JWT settings for the currently active organization.
+        Retrieve JWT settings for the currently-active organization.
       responses:
         "200":
           description: "JWT settings retrieved successfully"
