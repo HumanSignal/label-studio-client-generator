@@ -2451,6 +2451,13 @@ paths:
       x-fern-sdk-method-name: refresh
       x-fern-audiences:
         - public
+  /api/token/rotate:
+    post:
+      $ref: ./resources/tokens.yaml#/paths/~1api~1token~1rotate/post
+      x-fern-sdk-group-name: tokens
+      x-fern-sdk-method-name: rotate
+      x-fern-audiences:
+        - public
 components:
   securitySchemes:
     Token:

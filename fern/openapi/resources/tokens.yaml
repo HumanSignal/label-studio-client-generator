@@ -51,6 +51,33 @@ paths:
         "401":
           description: "Invalid refresh token"
 
+  /api/token/rotate:
+    post:
+      summary: Rotate token
+      description: >
+        Blacklist existing refresh token, and get a new refresh token.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - refresh
+              properties:
+                refresh:
+                  type: string
+                  description: JWT refresh token
+      responses:
+        "200":
+          description: "Refresh token successfully rotated"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RotateTokenResponse"
+        "400":
+          description: "Invalid refresh token"
+
+
   /api/token/blacklist:
     post:
       summary: Blacklist token
@@ -129,6 +156,15 @@ components:
         access:
           type: string
           description: New JWT access token
+
+    RotateTokenResponse:
+      type: object
+      required:
+        - refresh
+      properties:
+        refresh:
+          type: string
+          description: New JWT refresh token
 
     JWTSettingsResponse:
       type: object
