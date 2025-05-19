@@ -1,3 +1,4 @@
+# ci: Test
 # label-studio-client-generator
 
 ## How to Contribute
