@@ -11,7 +11,7 @@ groups:
       - public
     generators:
       - name: fernapi/fern-python-sdk
-        version: 4.20.3
+        version: 4.5.0
         output:
           location: pypi
           package-name: label-studio-sdk
@@ -61,7 +61,7 @@ groups:
       - public
     generators:
       - name: fernapi/fern-python-sdk
-        version: 4.20.3
+        version: 4.5.0
         output:
           location: local-file-system
           path: ../label_studio_sdk
