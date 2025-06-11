@@ -522,6 +522,13 @@ paths:
       summary: Create batch predictions
       description: >
         Create a new batch prediction.
+      parameters:
+        - name: num_predictions
+          in: query
+          description: Number of predictions being sent
+          required: false
+          schema:
+            type: integer
       requestBody:
         $ref: "#/components/requestBodies/api_prompts_batch_predictions_create"
       responses:
@@ -540,6 +547,13 @@ paths:
       summary: Create batch of failed predictions
       description: >
         Create a new batch of failed predictions.
+      parameters:
+        - name: num_failed_predictions
+          in: query
+          description: Number of failed predictions being sent
+          required: false
+          schema:
+            type: integer
       requestBody:
         $ref: "#/components/requestBodies/api_prompts_batch_failed_predictions_create"
       responses:
