@@ -239,7 +239,7 @@ paths:
 
         ```bash
 
-        curl -X GET https://localhost:8080/api/projects/{id}/export?ids[]=123\&ids[]=345 -H 'Authorization: Token abc123' --output 'annotations.json'
+        curl -X GET "https://localhost:8080/api/projects/{id}/export?ids[]=123&ids[]=345" -H 'Authorization: Token abc123' --output 'annotations.json'
 
         ```
 
