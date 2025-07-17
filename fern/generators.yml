@@ -21,6 +21,8 @@ groups:
           # mode: push
           mode: pull-request
         config:
+          pydantic_config:
+            skip_validation: true
           inline_request_params: true
           package_name: label_studio_sdk
           client:
@@ -69,6 +71,8 @@ groups:
         config:
           inline_request_params: true
           package_name: label_studio_sdk
+          pydantic_config:
+            skip_validation: true
           client:
             class_name: LabelStudioBase
             filename: base_client.py
