@@ -544,15 +544,6 @@ paths:
             type: string
             enum: [all, pinned_only, exclude_pinned]
             default: all
-      tags:
-        - Projects
-      x-fern-sdk-group-name: projects
-      x-fern-sdk-method-name: list
-      x-fern-audiences:
-        - public
-      x-fern-pagination:
-        offset: $request.page
-        results: $response.results
     post:
       summary: Create new project
       description: >
