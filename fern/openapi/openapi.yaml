@@ -650,7 +650,9 @@ paths:
       - in: query
         name: annotators
         schema:
-          type: string
+          type: array
+          items:
+            type: integer
       - in: query
         name: draft
         schema:
@@ -669,7 +671,9 @@ paths:
       - in: query
         name: projects
         schema:
-          type: string
+          type: array
+          items:
+            type: integer
       tags:
       - Comments
       security:
@@ -867,26 +871,20 @@ paths:
       summary: Export comments to CSV
       parameters:
       - in: query
-        name: annotation
-        schema:
-          type: integer
-      - in: query
         name: annotators
         schema:
           type: string
-      - in: query
-        name: draft
-        schema:
-          type: integer
+        description: Comma-separated list of annotator user IDs
       - in: query
         name: expand_created_by
         schema:
           type: boolean
-          default: false
+        description: Expand the created_by field
       - in: query
         name: projects
         schema:
           type: string
+        description: Comma-separated list of project IDs
       - in: query
         name: tz
         schema:
@@ -2455,83 +2453,13 @@ paths:
       description: Retrieve all the registered actions with descriptions that data
         manager can use.
       summary: Get actions
-      parameters:
-      - in: query
-        name: project
-        schema:
-          type: integer
-        description: Project ID
-        required: true
       tags:
       - Data Manager
       security:
       - Token: []
       responses:
         '200':
-          content:
-            application/json:
-              schema:
-                type: array
-                title: Action list
-                description: List of available actions
-                items:
-                  type: object
-                  title: Action
-                  properties:
-                    id:
-                      type: string
-                      title: Action ID
-                    title:
-                      type: string
-                      title: Title
-                    order:
-                      type: integer
-                      title: Order
-                    permission:
-                      type: string
-                      title: Permission
-                    experimental:
-                      type: boolean
-                      title: Experimental
-                    dialog:
-                      type: object
-                      title: Dialog
-                      properties:
-                        title:
-                          type: string
-                          title: Title
-                          nullable: true
-                        text:
-                          type: string
-                          title: Text
-                          nullable: true
-                        type:
-                          type: string
-                          title: Type
-                          nullable: true
-                        form:
-                          type: array
-                          title: Form
-                          items:
-                            type: object
-                          nullable: true
-              examples:
-                Response:
-                  value:
-                  - id: predictions_to_annotations
-                    title: Create Annotations From Predictions
-                    order: 91
-                    permission: tasks.change
-                    experimental: false
-                    dialog:
-                      title: Create Annotations From Predictions
-                      text: Create annotations from predictions using selected predictions
-                        set for each selected task. Your account will be assigned
-                        as an owner to those annotations.
-                      type: confirm
-                      form: null
-                  summary: response
-          description: Actions retrieved successfully
+          description: No response body
       x-fern-sdk-group-name: actions
       x-fern-sdk-method-name: list
       x-fern-audiences:
@@ -3686,7 +3614,11 @@ paths:
       - Token: []
       responses:
         '200':
-          description: View order updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/View'
+          description: ''
       x-fern-sdk-group-name: views
       x-fern-sdk-method-name: update_order
       x-fern-audiences:
@@ -3694,15 +3626,9 @@ paths:
   /api/dm/views/reset/:
     delete:
       operationId: api_dm_views_reset_destroy
-      description: Delete all views for a specific project.
+      description: 'Delete all views for a specific project. Request body example:
+        `{"project": 1}`.'
       summary: Delete all project views
-      parameters:
-      - in: query
-        name: project
-        schema:
-          type: integer
-        description: Project ID
-        required: true
       tags:
       - Data Manager
       security:
@@ -4349,7 +4275,7 @@ paths:
     get:
       operationId: api_ml_list
       description: "\n    List all configured ML backends for a specific project by\
-        \ ID.\n    Use the following cURL command:\n    ```bash\n    curl http://localhost:8000/api/ml?project={project_id}\
+        \ ID.\n    Use the following cURL command:\n    ```bash\n    curl https://localhost:8080/api/ml?project={project_id}\
         \ -H 'Authorization: Token abc123'\n    "
       summary: List ML backends
       parameters:
@@ -4379,7 +4305,7 @@ paths:
       operationId: api_ml_create
       description: "\n    Add an ML backend to a project using the Label Studio UI\
         \ or by sending a POST request using the following cURL \n    command:\n \
-        \   ```bash\n    curl -X POST -H 'Content-type: application/json' http://localhost:8000/api/ml\
+        \   ```bash\n    curl -X POST -H 'Content-type: application/json' https://localhost:8080/api/ml\
         \ -H 'Authorization: Token abc123'\\\n    --data '{\"url\": \"http://localhost:9090\"\
         , \"project\": {project_id}}' \n    "
       summary: Add ML Backend
@@ -4443,7 +4369,7 @@ paths:
       operationId: api_ml_retrieve
       description: "\n    Get details about a specific ML backend connection by ID.\
         \ For example, make a GET request using the\n    following cURL command:\n\
-        \    ```bash\n    curl http://localhost:8000/api/ml/{ml_backend_ID} -H 'Authorization:\
+        \    ```bash\n    curl https://localhost:8080/api/ml/{ml_backend_ID} -H 'Authorization:\
         \ Token abc123'\n    "
       summary: Get ML Backend
       parameters:
@@ -4471,7 +4397,7 @@ paths:
       operationId: api_ml_partial_update
       description: "\n    Update ML backend parameters using the Label Studio UI or\
         \ by sending a PATCH request using the following cURL command:\n    ```bash\n\
-        \    curl -X PATCH -H 'Content-type: application/json' http://localhost:8000/api/ml/{ml_backend_ID}\
+        \    curl -X PATCH -H 'Content-type: application/json' https://localhost:8080/api/ml/{ml_backend_ID}\
         \ -H 'Authorization: Token abc123'\\\n    --data '{\"url\": \"http://localhost:9091\"\
         }' \n    "
       summary: Update ML Backend
@@ -4539,7 +4465,7 @@ paths:
     delete:
       operationId: api_ml_destroy
       description: "\n    Remove an existing ML backend connection by ID. For example,\
-        \ use the\n    following cURL command:\n    ```bash\n    curl -X DELETE http://localhost:8000/api/ml/{ml_backend_ID}\
+        \ use the\n    following cURL command:\n    ```bash\n    curl -X DELETE https://localhost:8080/api/ml/{ml_backend_ID}\
         \ -H 'Authorization: Token abc123'\n    "
       summary: Remove ML Backend
       parameters:
@@ -6575,14 +6501,14 @@ paths:
         \        Export annotated tasks as a file in a specific format.\n        For\
         \ example, to export JSON annotations for a project to a file called `annotations.json`,\n\
         \        run the following from the command line:\n        ```bash\n     \
-        \   curl -X GET http://localhost:8000/api/projects/{id}/export?exportType=JSON\
+        \   curl -X GET https://localhost:8080/api/projects/{id}/export?exportType=JSON\
         \ -H 'Authorization: Token abc123' --output 'annotations.json'\n        ```\n\
         \        To export all tasks, including skipped tasks and others without annotations,\
         \ run the following from the command line:\n        ```bash\n        curl\
-        \ -X GET http://localhost:8000/api/projects/{id}/export?exportType=JSON&download_all_tasks=true\
+        \ -X GET https://localhost:8080/api/projects/{id}/export?exportType=JSON&download_all_tasks=true\
         \ -H 'Authorization: Token abc123' --output 'annotations.json'\n        ```\n\
         \        To export specific tasks with IDs of 123 and 345, run the following\
-        \ from the command line:\n        ```bash\n        curl -X GET 'http://localhost:8000/api/projects/{id}/export?ids[]=123&ids[]=345'\
+        \ from the command line:\n        ```bash\n        curl -X GET 'https://localhost:8080/api/projects/{id}/export?ids[]=123&ids[]=345'\
         \ -H 'Authorization: Token abc123' --output 'annotations.json'\n        ```\n\
         \        "
       summary: Easy export of tasks and annotations
@@ -7004,7 +6930,7 @@ paths:
         \ token and Label Studio instance host, then run the following from\n    \
         \        the command line.\n\n            ```bash\n            curl -H 'Content-Type:\
         \ application/json' -H 'Authorization: Token abc123' \\\n            -X POST\
-        \ 'http://localhost:8000/api/projects/1/import' --data '[{\"text\": \"Some\
+        \ 'https://localhost:8080/api/projects/1/import' --data '[{\"text\": \"Some\
         \ text 1\"}, {\"text\": \"Some text 2\"}]'\n            ```\n\n          \
         \  ### 2. **POST with files**\n            Send tasks as files. You can attach\
         \ multiple files with different names.\n\n            - **JSON**: text files\
@@ -7016,14 +6942,14 @@ paths:
         \ specify your authorization token, Label Studio instance host, and file name\
         \ and path,\n            then run the following from the command line:\n\n\
         \            ```bash\n            curl -H 'Authorization: Token abc123' \\\
-        \n            -X POST 'http://localhost:8000/api/projects/1/import' -F 'file=@path/to/my_file.csv'\n\
+        \n            -X POST 'https://localhost:8080/api/projects/1/import' -F 'file=@path/to/my_file.csv'\n\
         \            ```\n\n            ### 3. **POST with URL**\n            You\
         \ can also provide a URL to a file with labeling tasks. Supported file formats\
         \ are the same as in option 2.\n\n            ```bash\n            curl -H\
         \ 'Content-Type: application/json' -H 'Authorization: Token abc123' \\\n \
-        \           -X POST 'http://localhost:8000/api/projects/1/import' \\\n   \
-        \         --data '[{\"url\": \"http://example.com/test1.csv\"}, {\"url\":\
-        \ \"http://example.com/test2.csv\"}]'\n            ```\n\n            <br>\n\
+        \           -X POST 'https://localhost:8080/api/projects/1/import' \\\n  \
+        \          --data '[{\"url\": \"http://example.com/test1.csv\"}, {\"url\"\
+        : \"http://example.com/test2.csv\"}]'\n            ```\n\n            <br>\n\
         \        "
       summary: Import tasks
       parameters:
@@ -7585,7 +7511,7 @@ paths:
       operationId: api_projects_tasks_list
       description: "\n            Retrieve a paginated list of tasks for a specific\
         \ project. For example, use the following cURL command:\n            ```bash\n\
-        \            curl -X GET http://localhost:8000/api/projects/{id}/tasks/?page=1&page_size=10\
+        \            curl -X GET https://localhost:8080/api/projects/{id}/tasks/?page=1&page_size=10\
         \ -H 'Authorization: Token abc123'\n            ```\n        "
       summary: List project tasks
       parameters:
@@ -11977,8 +11903,12 @@ paths:
       security:
       - Token: []
       responses:
-        '200':
-          description: Validation successful
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LseS3ExportStorage'
+          description: ''
       x-fern-sdk-group-name:
       - export_storage
       - s3s
@@ -13710,8 +13640,12 @@ paths:
       security:
       - Token: []
       responses:
-        '200':
-          description: Validation successful
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LseS3ImportStorage'
+          description: ''
       x-fern-sdk-group-name:
       - import_storage
       - s3s
@@ -15472,39 +15406,65 @@ components:
         Serializer get numbers from project queryset annotation,
         make sure, that you use correct one(Project.objects.with_counts())
       properties:
-        is_draft:
+        config_has_control_tags:
           type: boolean
-          description: Whether or not the project is in the middle of being created
-        skipped_annotations_number:
+          readOnly: true
+          description: Flag to detect is project ready for labeling
+        description_short:
           type: string
           readOnly: true
-        title:
+        reviewer_queue_total:
           type: string
-          nullable: true
-          description: Project name. Must be between 3 and 50 characters long.
-          maxLength: 50
-          minLength: 3
-        review_settings:
-          $ref: '#/components/schemas/ReviewSettings'
-        custom_task_lock_ttl:
+          readOnly: true
+        workspace:
+          type: string
+          readOnly: true
+        finished_task_number:
           type: integer
-          maximum: 86400
-          minimum: 1
-          nullable: true
-          description: TTL in seconds for task reservations, on new and existing tasks
-        workspace_title:
-          type: string
-          readOnly: true
-        parsed_label_config:
-          readOnly: true
-          description: JSON-formatted labeling configuration
-        members:
-          type: string
           readOnly: true
         custom_script:
           type: string
-        finished_task_number:
+        annotator_evaluation_minimum_tasks:
           type: integer
+          minimum: 0
+          nullable: true
+          default: 10
+        review_settings:
+          $ref: '#/components/schemas/ReviewSettings'
+        ground_truth_number:
+          type: integer
+          readOnly: true
+          description: Honeypot annotation number in project
+        annotation_limit_count:
+          type: integer
+          minimum: 1
+          nullable: true
+        has_blueprints:
+          type: string
+          readOnly: true
+        task_number:
+          type: integer
+          readOnly: true
+          description: Total task number in project
+        data_types:
+          readOnly: true
+          nullable: true
+        reveal_preannotations_interactively:
+          type: boolean
+          description: Reveal pre-annotations interactively
+        label_config:
+          type: string
+          nullable: true
+          description: Label config in XML format. See more about it in documentation
+        show_skip_button:
+          type: boolean
+          description: Show a skip button in interface and allow annotators to skip
+            the task
+        evaluate_predictions_automatically:
+          type: boolean
+          description: Retrieve and display predictions when loading a task
+        queue_done:
+          type: string
           readOnly: true
         maximum_annotations:
           type: integer
@@ -15514,11 +15474,44 @@ components:
           description: Maximum number of annotations for one task. If the number of
             annotations per task is equal or greater to this value, the task is completed
             (is_labeled=True)
-        show_ground_truth_first:
+        id:
+          type: integer
+          readOnly: true
+        workspace_title:
+          type: string
+          readOnly: true
+        show_overlap_first:
           type: boolean
-        show_instruction:
+        require_comment_on_skip:
           type: boolean
-          description: Show instructions to the annotator before they start
+          default: false
+        custom_task_lock_ttl:
+          type: integer
+          maximum: 86400
+          minimum: 1
+          nullable: true
+          description: TTL in seconds for task reservations, on new and existing tasks
+        ready:
+          type: string
+          readOnly: true
+        blueprints:
+          type: array
+          items:
+            $ref: '#/components/schemas/BlueprintList'
+          readOnly: true
+        skipped_annotations_number:
+          type: string
+          readOnly: true
+        pinned_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: Pinned date and time
+        num_tasks_with_annotations:
+          type: string
+          readOnly: true
+        duplication_status:
+          type: string
         control_weights:
           nullable: true
           description: 'Dict of weights for each control tag in metric calculation.
@@ -15529,123 +15522,66 @@ components:
             be twice more important than Airplaine, then you have to need the specify:
             {''my_bbox'': {''type'': ''RectangleLabels'', ''labels'': {''Car'': 1.0,
             ''Airplaine'': 0.5}, ''overall'': 0.33}'
-        id:
-          type: integer
-          readOnly: true
         annotation_limit_percent:
           type: string
           format: decimal
           pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
           nullable: true
-        reviewed_number:
+        rejected:
           type: string
           readOnly: true
-        queue_done:
+        review_total_tasks:
           type: string
           readOnly: true
+        total_annotations_number:
+          type: string
+          readOnly: true
+        title:
+          type: string
+          nullable: true
+          description: Project name. Must be between 3 and 50 characters long.
+          maxLength: 50
+          minLength: 3
         model_version:
           type: string
           nullable: true
           description: Machine learning model version
-        prompts:
-          type: string
+        parsed_label_config:
           readOnly: true
-        show_collab_predictions:
-          type: boolean
-          title: Show predictions to annotator
-          description: If set, the annotator can view model predictions
-        queue_left:
-          type: string
-          readOnly: true
-        rejected:
-          type: string
-          readOnly: true
-        color:
-          type: string
-          nullable: true
-          maxLength: 16
-        skip_queue:
+          description: JSON-formatted labeling configuration
+        sampling:
           nullable: true
           oneOf:
-          - $ref: '#/components/schemas/SkipQueueEnum'
+          - $ref: '#/components/schemas/SamplingEnum'
           - $ref: '#/components/schemas/NullEnum'
-        description_short:
+        useful_annotation_number:
           type: string
           readOnly: true
-        annotation_limit_count:
-          type: integer
-          minimum: 1
+        expert_instruction:
+          type: string
           nullable: true
-        data_types:
-          readOnly: true
-          nullable: true
-        blueprints:
-          type: array
-          items:
-            $ref: '#/components/schemas/BlueprintList'
-          readOnly: true
-        workspace:
-          type: string
-          readOnly: true
-        duplication_status:
-          type: string
-        num_tasks_with_annotations:
-          type: string
-          readOnly: true
+          description: Labeling instructions in HTML format
+        created_by:
+          allOf:
+          - $ref: '#/components/schemas/UserSimple'
+          description: Project owner
         start_training_on_annotation_update:
           type: boolean
           readOnly: true
           description: Start model training after any annotations are submitted or
             updated
-        created_by:
-          allOf:
-          - $ref: '#/components/schemas/UserSimple'
-          description: Project owner
-        task_number:
+        overlap_cohort_percentage:
           type: integer
-          readOnly: true
-          description: Total task number in project
-        reviewer_queue_total:
-          type: string
-          readOnly: true
-        annotator_evaluation_minimum_score:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
-          nullable: true
-          default: '95.00'
-        allow_stream:
-          type: string
-          readOnly: true
-        total_predictions_number:
-          type: integer
-          readOnly: true
-        description:
-          type: string
-          nullable: true
-          description: Project description
-        queue_total:
-          type: string
-          readOnly: true
-        comment_classification_config:
-          type: string
-        annotator_evaluation_minimum_tasks:
-          type: integer
-          minimum: 0
-          nullable: true
-          default: 10
-        is_published:
+          maximum: 2147483647
+          minimum: -2147483648
+        config_suitable_for_bulk_annotation:
           type: boolean
-          title: Published
-          description: Whether or not the project is published to annotators
-        total_annotations_number:
-          type: string
           readOnly: true
-        label_config:
-          type: string
-          nullable: true
-          description: Label config in XML format. See more about it in documentation
-        members_count:
+          description: Flag to detect is project ready for bulk annotation
+        show_instruction:
+          type: boolean
+          description: Show instructions to the annotator before they start
+        prompts:
           type: string
           readOnly: true
         min_annotations_to_start_training:
@@ -15654,85 +15590,83 @@ components:
           minimum: -2147483648
           description: Minimum number of completed tasks after which model training
             is started
-        reveal_preannotations_interactively:
-          type: boolean
-          description: Reveal pre-annotations interactively
-        sampling:
+        skip_queue:
           nullable: true
           oneOf:
-          - $ref: '#/components/schemas/SamplingEnum'
+          - $ref: '#/components/schemas/SkipQueueEnum'
           - $ref: '#/components/schemas/NullEnum'
-        overlap_cohort_percentage:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-        pause_on_failed_annotator_evaluation:
-          type: boolean
-          nullable: true
-          default: false
-        duplication_done:
-          type: boolean
-          default: false
         created_at:
           type: string
           format: date-time
           readOnly: true
-        useful_annotation_number:
+        show_collab_predictions:
+          type: boolean
+          title: Show predictions to annotator
+          description: If set, the annotator can view model predictions
+        assignment_settings:
+          $ref: '#/components/schemas/AssignmentSettings'
+        description:
           type: string
-          readOnly: true
-        pinned_at:
-          type: string
-          format: date-time
           nullable: true
-          description: Pinned date and time
-        organization:
-          type: integer
-          nullable: true
-        ready:
-          type: string
-          readOnly: true
+          description: Project description
         enable_empty_annotation:
           type: boolean
           description: Allow annotators to submit empty annotations
-        show_overlap_first:
-          type: boolean
-        expert_instruction:
-          type: string
+        organization:
+          type: integer
           nullable: true
-          description: Labeling instructions in HTML format
-        show_skip_button:
+        is_draft:
           type: boolean
-          description: Show a skip button in interface and allow annotators to skip
-            the task
-        has_blueprints:
-          type: string
+          description: Whether or not the project is in the middle of being created
+        total_predictions_number:
+          type: integer
           readOnly: true
-        config_suitable_for_bulk_annotation:
+        duplication_done:
           type: boolean
-          readOnly: true
-          description: Flag to detect is project ready for bulk annotation
-        review_total_tasks:
+          default: false
+        pause_on_failed_annotator_evaluation:
+          type: boolean
+          nullable: true
+          default: false
+        allow_stream:
           type: string
           readOnly: true
         show_annotation_history:
           type: boolean
           description: Show annotation history to annotator
-        config_has_control_tags:
+        show_ground_truth_first:
           type: boolean
+        queue_total:
+          type: string
           readOnly: true
-          description: Flag to detect is project ready for labeling
-        ground_truth_number:
-          type: integer
+        members:
+          type: string
           readOnly: true
-          description: Honeypot annotation number in project
-        require_comment_on_skip:
+        queue_left:
+          type: string
+          readOnly: true
+        is_published:
           type: boolean
-          default: false
-        assignment_settings:
-          $ref: '#/components/schemas/AssignmentSettings'
-        evaluate_predictions_automatically:
-          type: boolean
-          description: Retrieve and display predictions when loading a task
+          title: Published
+          description: Whether or not the project is published to annotators
+        color:
+          type: string
+          nullable: true
+          maxLength: 16
+        reviewed_number:
+          type: string
+          readOnly: true
+        comment_classification_config:
+          type: string
+        annotator_evaluation_minimum_score:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
+          nullable: true
+          default: '95.00'
+        members_count:
+          type: string
+          readOnly: true
       required:
       - allow_stream
       - assignment_settings
@@ -16368,7 +16302,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -16458,7 +16392,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -16549,7 +16483,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -16647,7 +16581,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -16746,7 +16680,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -16838,7 +16772,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -16932,7 +16866,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -17028,7 +16962,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -17975,7 +17909,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -18073,7 +18007,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -18160,7 +18094,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -18250,7 +18184,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -18355,7 +18289,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -18452,7 +18386,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -18551,7 +18485,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -18652,7 +18586,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -19175,7 +19109,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -19250,7 +19184,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -20618,7 +20552,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -20726,7 +20660,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -20837,7 +20771,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -20952,7 +20886,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -21165,19 +21099,13 @@ components:
             title: User IDs
           readOnly: true
         reviewers:
-          type: array
-          items:
-            type: object
-            additionalProperties: {}
+          type: string
           readOnly: true
         comments:
           type: string
           readOnly: true
         comment_authors:
-          type: array
-          items:
-            type: object
-            additionalProperties: {}
+          type: string
           readOnly: true
         reviewed:
           type: boolean
@@ -21188,16 +21116,13 @@ components:
         ground_truth:
           type: boolean
         annotators_count:
-          type: integer
-          description: The annotators_count is calculated as the number of users with
-            annotations (can be repeated, so same as the number of annotations) +
-            the number of assignees without annotations.
+          type: string
           readOnly: true
         reviewers_count:
-          type: integer
+          type: string
           readOnly: true
         comment_authors_count:
-          type: integer
+          type: string
           readOnly: true
         data:
           description: User imported or uploaded data for a task. Data is formatted
@@ -21709,19 +21634,13 @@ components:
             title: User IDs
           readOnly: true
         reviewers:
-          type: array
-          items:
-            type: object
-            additionalProperties: {}
+          type: string
           readOnly: true
         comments:
           type: string
           readOnly: true
         comment_authors:
-          type: array
-          items:
-            type: object
-            additionalProperties: {}
+          type: string
           readOnly: true
         reviewed:
           type: boolean
@@ -21732,16 +21651,13 @@ components:
         ground_truth:
           type: boolean
         annotators_count:
-          type: integer
-          description: The annotators_count is calculated as the number of users with
-            annotations (can be repeated, so same as the number of annotations) +
-            the number of assignees without annotations.
+          type: string
           readOnly: true
         reviewers_count:
-          type: integer
+          type: string
           readOnly: true
         comment_authors_count:
-          type: integer
+          type: string
           readOnly: true
         data:
           description: User imported or uploaded data for a task. Data is formatted
@@ -22977,7 +22893,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -23067,7 +22983,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -23152,7 +23068,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -23392,7 +23308,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -23487,7 +23403,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -23577,7 +23493,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -23896,7 +23812,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -23997,7 +23913,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -24368,7 +24284,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -25558,7 +25474,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -25651,7 +25567,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -25949,7 +25865,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -26066,7 +25982,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -26172,7 +26088,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -26278,7 +26194,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -26647,13 +26563,14 @@ components:
         * `in_progress` - In progress
         * `failed` - Failed
         * `completed` - Completed
-    StatusD14Enum:
+    StatusC5aEnum:
       enum:
       - initialized
       - queued
       - in_progress
       - failed
       - completed
+      - completed_with_errors
       type: string
       description: |-
         * `initialized` - Initialized
@@ -26661,6 +26578,7 @@ components:
         * `in_progress` - In progress
         * `failed` - Failed
         * `completed` - Completed
+        * `completed_with_errors` - Completed with errors
     TaskAssignment:
       type: object
       properties:
