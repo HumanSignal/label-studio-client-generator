@@ -1,11 +1,9 @@
 name: "Publish Docs"
 
 on:
-  # TODO(jo): uncomment when we are ready to resume publishing docs on push
-  # push:
-  #   branches:
-  #     - master
-  workflow_dispatch:
+  push:
+    branches:
+      - master
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.sha }}

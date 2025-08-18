@@ -1,4 +1,4 @@
-<Warning> Version 2.0.0 of the Label Studio SDK is coming soon, and will contain breaking changes. If you use the Label Studio SDK package in any automated pipelines, we strongly recommend pinning your SDK version to `<2.0.0`. </Warning>
+<Warning> Version 2.0.0 of the Label Studio SDK is out now, and contains breaking changes. If you are currently using the Label Studio SDK package in any automated pipelines, we strongly recommend pinning your SDK version to `<2.0.0`. </Warning>
 
 You can use the Label Studio Python SDK to make annotating data a more integrated part of your data science and machine learning pipelines. This software development kit (SDK) lets you call the Label Studio API directly from scripts using predefined classes and methods.
 
@@ -264,9 +264,9 @@ Read more about export formats in the [Label Studio SDK documentation](https://l
 
 ## SDK versions and compatibility
 
-In June 2024, we released SDK 1.0. The previous SDK (version &lt; 1) is deprecated and no longer supported. We recommend upgrading to [the latest version](https://github.com/HumanSignal/label-studio-sdk). 
+In June 2024, we released SDK 1.0. The previous SDK (version &lt; 1) is deprecated and no longer supported. We recommend upgrading to [the latest version](https://github.com/HumanSignal/label-studio-sdk).
 
-If you still want to use the older version, you can install it using `pip install "label-studio-sdk<1"`. 
+If you still want to use the older version, you can install it using `pip install "label-studio-sdk<1"`.
 
 You can also check out an older branch version in the GitHub repository:
 
@@ -306,7 +306,7 @@ except ApiError as e:
 Annotations are exported in the format specified in the [Label Studio JSON format](tasks.html#Basic-Label-Studio-JSON-format).
 
 ### Timeouts
-By default, requests time out after 60 seconds. You can configure this with a 
+By default, requests time out after 60 seconds. You can configure this with a
 timeout option at the client or request level.
 
 ```python
@@ -324,7 +324,7 @@ ls.projects.create(..., {
 ```
 
 ### Custom HTTP client
-You can override the httpx client to customize it for your use-case. Some common use-cases 
+You can override the httpx client to customize it for your use-case. Some common use-cases
 include support for proxies and transports.
 
 ```python
@@ -339,4 +339,3 @@ ls = LabelStudio(
     ),
 )
 ```
-
