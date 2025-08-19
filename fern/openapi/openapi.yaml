@@ -563,238 +563,6 @@ paths:
       x-fern-sdk-method-name: create_bulk
       x-fern-audiences:
       - public
-  /api/billing/info:
-    get:
-      operationId: api_billing_info_retrieve
-      description: Retrieve billing checks and feature flags for the active organization.
-      summary: Get billing info
-      tags:
-      - Billing
-      security:
-      - Token: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BillingInfoResponse'
-              examples:
-                Real-sample:
-                  value:
-                    billing_checks:
-                      users:
-                        count: 110
-                        total: 221
-                        limit: 1000
-                        reached: false
-                      trial_days: 0
-                      projects:
-                        count: 2044
-                        limit: 1000000
-                        reached: false
-                      organization_is_active: true
-                      license_issued: '2000-01-01'
-                      license_warning: '2030-01-01'
-                      is_license_warning: false
-                      license_expires: '2030-01-02'
-                      is_license_expired: false
-                      prompts_enabled: true
-                      prompts_status: Enabled
-                      prompts_warning: null
-                      is_prompts_warning: false
-                      prompts_expire: null
-                      is_prompts_expire: false
-                      prompts_api_keys_enabled: true
-                      import_storages:
-                        count: 0
-                        limit: 0
-                        reached: false
-                      export_storages:
-                        count: 0
-                        limit: 0
-                        reached: false
-                      results:
-                        count: 42949
-                        limit: 1000000000
-                        reached: false
-                    billing_flags:
-                      cloud_instance: true
-                      allow_activity_log: true
-                      allow_invite_project_experts: true
-                      allow_sso: true
-                      white_label_id: null
-                      allow_data_credentials: false
-                      allow_organization_webhooks: false
-                      disable_members_page: false
-                      secure_mode: false
-                      manual_workspace_management: true
-                      manual_role_management: true
-                      hide_storage_settings_for_manager: false
-                      disable_project_imports: false
-                      automax_token_exists: true
-                      automax_enabled: true
-                      storage_persistence: true
-                      allow_ai: true
-                      early_adopter: true
-                      allow_ask_ai: true
-                      allow_invite_people: true
-                      allow_storage_proxy: true
-                      embed_enabled: true
-                      embed_domains:
-                      - domain: http://localhost:3000
-                      - domain: https://purple-zoos-flash.loca.lt
-                      embed_settings:
-                        public_verify_alg:
-                        - RS256
-                        public_verify_key: '....'
-                      activated_at: null
-                  summary: real-sample
-                Cloud:
-                  value:
-                    billing_checks:
-                      users:
-                        count: 5
-                        total: 6
-                        limit: 10
-                        reached: false
-                      projects:
-                        count: 3
-                        limit: 50
-                        reached: false
-                      results:
-                        count: 100
-                        limit: 1000
-                        reached: false
-                      trial_days: 14
-                      organization_is_active: true
-                      license_issued: '2023-01-01'
-                      license_warning: '2024-12-01'
-                      is_license_warning: false
-                      license_expires: '2025-01-01'
-                      is_license_expired: false
-                      prompts_enabled: true
-                      prompts_status: Enabled
-                      prompts_warning: null
-                      is_prompts_warning: false
-                      prompts_expire: '2024-12-31'
-                      is_prompts_expire: false
-                      prompts_api_keys_enabled: true
-                      import_storages:
-                        count: 0
-                        limit: 0
-                        reached: false
-                      export_storages:
-                        count: 0
-                        limit: 0
-                        reached: false
-                    billing_flags:
-                      activated_at: '2023-01-01T00:00:00Z'
-                      cloud_instance: true
-                      allow_activity_log: true
-                      allow_invite_project_experts: true
-                      allow_sso: false
-                      white_label_id: null
-                      allow_data_credentials: true
-                      allow_organization_webhooks: true
-                      disable_members_page: false
-                      secure_mode: false
-                      manual_workspace_management: false
-                      manual_role_management: false
-                      hide_storage_settings_for_manager: false
-                      disable_project_imports: false
-                      automax_token_exists: false
-                      automax_enabled: true
-                      storage_persistence: true
-                      allow_ai: true
-                      early_adopter: false
-                      allow_ask_ai: true
-                      allow_invite_people: true
-                      allow_storage_proxy: true
-                      embed_enabled: false
-                      embed_domains:
-                      - domain: http://localhost:3000
-                      - domain: https://example.com
-                      embed_settings:
-                        public_verify_alg:
-                        - RS256
-                        public_verify_key: '....'
-                  summary: cloud
-                Enterprise:
-                  value:
-                    billing_checks:
-                      users:
-                        count: 20
-                        total: 22
-                        limit: 100
-                        reached: false
-                      projects:
-                        count: 15
-                        limit: 200
-                        reached: false
-                      results:
-                        count: 25000
-                        limit: 100000
-                        reached: false
-                      trial_days: 0
-                      organization_is_active: true
-                      license_issued: '2023-01-01'
-                      license_warning: '2024-12-01'
-                      is_license_warning: false
-                      license_expires: '2025-01-01'
-                      is_license_expired: false
-                      prompts_enabled: true
-                      prompts_status: Enabled
-                      prompts_warning: null
-                      is_prompts_warning: false
-                      prompts_expire: null
-                      is_prompts_expire: false
-                      prompts_api_keys_enabled: true
-                      import_storages:
-                        count: 0
-                        limit: 0
-                        reached: false
-                      export_storages:
-                        count: 0
-                        limit: 0
-                        reached: false
-                    billing_flags:
-                      activated_at: null
-                      cloud_instance: false
-                      allow_activity_log: true
-                      allow_invite_project_experts: true
-                      allow_sso: true
-                      white_label_id: wl-1
-                      allow_data_credentials: true
-                      allow_organization_webhooks: true
-                      disable_members_page: false
-                      secure_mode: false
-                      manual_workspace_management: false
-                      manual_role_management: false
-                      hide_storage_settings_for_manager: false
-                      disable_project_imports: false
-                      automax_token_exists: true
-                      automax_enabled: true
-                      storage_persistence: true
-                      allow_ai: false
-                      early_adopter: true
-                      allow_ask_ai: true
-                      allow_invite_people: true
-                      allow_storage_proxy: true
-                      embed_enabled: false
-                      embed_domains:
-                      - domain: http://localhost:3000
-                      - domain: https://example.com
-                      embed_settings:
-                        public_verify_alg:
-                        - RS256
-                        public_verify_key: '....'
-                  summary: enterprise
-          description: Billing information for the active organization
-      x-fern-sdk-group-name:
-      - billing
-      x-fern-sdk-method-name: info
-      x-fern-audiences:
-      - public
   /api/blueprints/:
     post:
       operationId: api_blueprints_create
@@ -5416,29 +5184,72 @@ paths:
               schema:
                 $ref: '#/components/schemas/PaginatedLseOrganizationMemberListList'
           description: ''
-      x-fern-sdk-group-name:
-      - organizations
-      - members
-      x-fern-sdk-method-name: list
-      x-fern-audiences:
-      - public
+    post:
+      operationId: api_organizations_memberships_create
+      description: "\n    Assign a role to a user in an organization. To do so, make\
+        \ the following cURL request:\n\n    ```bash\n    curl -H 'Content-Type: application/json'\
+        \ -H 'Authorization: Token abc123' \\\n    -X POST 'https://label-studio-host/api/organizations/{{id}}/memberships'\
+        \ --data '[{{\"user_id\": Int, \"role\": \"NO|DI|OW|AD|MA|AN|RE\" }}]'\n \
+        \   ```\n    \n    Enumerate a role with one of the following abbreviations:\n\
+        \n    | Role | Full Role Name |\n    | --- | --- |\n    | NO | Not Activated\
+        \ |\n    | DI | Deactivated |\n    | OW | Owner |\n    | AD | Administrator\
+        \ |\n    | MA | Manager |\n    | AN | Annotator |\n    | RE | Reviewer |\n\
+        \n    For example, to set a user with an ID of 9 as an annotator, make the\
+        \ following cURL request:\n    ```bash\n    curl -H 'Content-Type: application/json'\
+        \ -H 'Authorization: Token abc123' \\\n    -X POST 'https://label-studio-host/api/organizations/{{id}}/memberships'\
+        \ --data '[{{\"user_id\": 9, \"role\": \"AN\" }}]'\n    ```\n    "
+      summary: Create organization member/role
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this organization.
+        required: true
+      tags:
+      - Organizations
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrganizationMemberCreateUpdateRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/OrganizationMemberCreateUpdateRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/OrganizationMemberCreateUpdateRequest'
+        required: true
+      security:
+      - Token: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LseOrganizationMemberList'
+          description: ''
     patch:
       operationId: api_organizations_memberships_partial_update
-      description: |+
-        Update organization membership or role for a specific user ID.
-
-        **User Rotation Best Practices for API Usage**
-
-        To maintain compliance with our licensing terms and ensure optimal performance of HumanSignal's APIs, please consider the following guidelines when managing user assignments:
-
-        * **Maintain a 7-Day Minimum Assignment**: Once a licensed seat is assigned to a user, maintain that assignment for at least seven consecutive days before rotating it to another user.
-
-        * **Automate, Monitor, and Log Rotations**: Implement automated scheduling and logging mechanisms to track the timing of user rotations. This helps ensure that rotations adhere to the seven-day minimum period.
-
-        * **Adhere to API Update Frequency and Wait Periods**: When updating user assignments via our APIs, follow the recommended frequency and wait period guidelines provided in the HumanSignal API documentation. Avoid sending rapid, successive requests that might overload the endpoint. Instead, incorporate appropriate delays between calls as specified in the documentation.
-
-        * **Avoid Overloading the API Endpoint**: Design your integration to batch or schedule updates where possible, and implement backoff strategies if the API indicates rate limiting. This helps prevent service disruptions and ensures a smooth operation.
-
+      description: "\n    Update organization membership or role for a specific user\
+        \ ID.\n\n    **User Rotation Best Practices for API Usage**\n    \n    To\
+        \ maintain compliance with our licensing terms and ensure optimal performance\
+        \ of HumanSignal's APIs, please consider the following guidelines when managing\
+        \ user assignments:\n    \n    * **Maintain a 7-Day Minimum Assignment**:\
+        \ Once a licensed seat is assigned to a user, maintain that assignment for\
+        \ at least seven consecutive days before rotating it to another user.\n\n\
+        \    * **Automate, Monitor, and Log Rotations**: Implement automated scheduling\
+        \ and logging mechanisms to track the timing of user rotations. This helps\
+        \ ensure that rotations adhere to the seven-day minimum period.\n\n    * **Adhere\
+        \ to API Update Frequency and Wait Periods**: When updating user assignments\
+        \ via our APIs, follow the recommended frequency and wait period guidelines\
+        \ provided in the HumanSignal API documentation. Avoid sending rapid, successive\
+        \ requests that might overload the endpoint. Instead, incorporate appropriate\
+        \ delays between calls as specified in the documentation.\n    \n    * **Avoid\
+        \ Overloading the API Endpoint**: Design your integration to batch or schedule\
+        \ updates where possible, and implement backoff strategies if the API indicates\
+        \ rate limiting. This helps prevent service disruptions and ensures a smooth\
+        \ operation.\n    "
       summary: Update organization member/role
       parameters:
       - in: path
@@ -5469,12 +5280,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/LseOrganizationMemberList'
           description: ''
-      x-fern-sdk-group-name:
-      - organizations
-      - members
-      x-fern-sdk-method-name: update
-      x-fern-audiences:
-      - public
   /api/organizations/{id}/memberships/{user_pk}/:
     get:
       operationId: api_organizations_memberships_retrieve
@@ -6509,6 +6314,79 @@ paths:
               schema:
                 $ref: '#/components/schemas/PaginatedAnnotationHistoryList'
           description: ''
+  /api/projects/{id}/aws-custom-function:
+    get:
+      operationId: api_projects_aws_custom_function_retrieve
+      description: Get the AWS Lambda code for the custom metric configured for this
+        project.
+      summary: Get AWS custom metric code
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - Projects
+      security:
+      - Token: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: string
+                required:
+                - code
+          description: Lambda code
+      x-fern-audiences:
+      - internal
+    post:
+      operationId: api_projects_aws_custom_function_create
+      description: Create or update the AWS Lambda function used for custom metrics
+        in this project.
+      summary: Update AWS custom metric Lambda
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - Projects
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AWSCustomFunctionUpdateRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AWSCustomFunctionUpdateRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AWSCustomFunctionUpdateRequest'
+        required: true
+      security:
+      - Token: []
+      responses:
+        '200':
+          description: Updated successfully
+        '202':
+          description: Accepted, activation pending
+        '204':
+          description: No changes applied
+        '500':
+          description: Error updating function
+      x-fern-sdk-group-name:
+      - projects
+      - metrics
+      - custom
+      x-fern-sdk-method-name: update_lambda
+      x-fern-audiences:
+      - public
   /api/projects/{id}/aws-custom-function-logs:
     get:
       operationId: api_projects_aws_custom_function_logs_retrieve
@@ -6550,6 +6428,87 @@ paths:
                 description: List of AWS lambda logs
                 type: object
           description: Successful response returns list of AWS lambda logs
+      x-fern-sdk-group-name:
+      - projects
+      - metrics
+      - custom
+      x-fern-sdk-method-name: logs
+      x-fern-audiences:
+      - public
+  /api/projects/{id}/check-function:
+    post:
+      operationId: api_projects_check_function_create
+      description: Validate custom matching function code for the project.
+      summary: Check custom matching function code
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - Projects
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CheckMatchingFunctionRequestRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CheckMatchingFunctionRequestRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CheckMatchingFunctionRequestRequest'
+        required: true
+      security:
+      - Token: []
+      responses:
+        '200':
+          description: Code is valid
+      x-fern-sdk-group-name:
+      - projects
+      - metrics
+      - custom
+      x-fern-sdk-method-name: check_function
+      x-fern-audiences:
+      - public
+  /api/projects/{id}/code-editor:
+    post:
+      operationId: api_projects_code_editor_create
+      description: Validate custom matching function code for the project.
+      summary: Check custom matching function code
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - Projects
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CheckMatchingFunctionRequestRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CheckMatchingFunctionRequestRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CheckMatchingFunctionRequestRequest'
+        required: true
+      security:
+      - Token: []
+      responses:
+        '200':
+          description: Code is valid
+      x-fern-sdk-group-name:
+      - projects
+      - metrics
+      - custom
+      x-fern-sdk-method-name: check_function
+      x-fern-audiences:
+      - public
   /api/projects/{id}/dashboard:
     get:
       operationId: api_projects_dashboard_retrieve
@@ -7451,6 +7410,74 @@ paths:
       responses:
         '204':
           description: No response body
+  /api/projects/{id}/metricparam/:
+    get:
+      operationId: api_projects_metricparam_retrieve
+      description: Get the current metrics configuration for a project.
+      summary: Get project metrics configuration
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - Projects
+      security:
+      - Token: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MetricParam'
+          description: Current metrics configuration
+      x-fern-sdk-group-name:
+      - projects
+      - metrics
+      x-fern-sdk-method-name: get
+      x-fern-audiences:
+      - public
+    post:
+      operationId: api_projects_metricparam_create
+      description: Update metrics strategy and parameters for a project.
+      summary: Update project metrics configuration
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - Projects
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectMetricParamUpdateRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ProjectMetricParamUpdateRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ProjectMetricParamUpdateRequest'
+      security:
+      - Token: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MetricParam'
+          description: Updated metrics configuration
+        '204':
+          description: No params provided to update
+      x-fern-sdk-group-name:
+      - projects
+      - metrics
+      x-fern-sdk-method-name: update
+      x-fern-audiences:
+      - public
   /api/projects/{id}/project-extra-params/:
     get:
       operationId: api_projects_project_extra_params_retrieve
@@ -7879,6 +7906,51 @@ paths:
                     description: Lead time statistics including mean, median, and
                       distribution
           description: Lead time statistics
+  /api/projects/{id}/stats/total_agreement:
+    get:
+      operationId: api_projects_stats_total_agreement_retrieve
+      description: Overall or per-label total agreement across the project.
+      summary: Get total agreement for project
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      - in: query
+        name: per_label
+        schema:
+          type: boolean
+        description: Return agreement per label
+      tags:
+      - Stats
+      security:
+      - Token: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - type: object
+                  properties:
+                    total_agreement:
+                      type: number
+                - type: object
+                  properties:
+                    total_agreement:
+                      type: object
+                      additionalProperties:
+                        type: number
+          description: Total agreement
+        '204':
+          description: No data to compute agreement
+      x-fern-sdk-group-name:
+      - projects
+      - stats
+      x-fern-sdk-method-name: total_agreement
+      x-fern-audiences:
+      - public
   /api/projects/{id}/tasks/:
     get:
       operationId: api_projects_tasks_list
@@ -15618,6 +15690,18 @@ paths:
       - public
 components:
   schemas:
+    AWSCustomFunctionUpdateRequest:
+      type: object
+      properties:
+        code:
+          type: string
+          minLength: 1
+        role:
+          type: string
+        region:
+          type: string
+      required:
+      - code
     ActionEnum:
       enum:
       - prediction
@@ -15771,20 +15855,257 @@ components:
         Serializer get numbers from project queryset annotation,
         make sure, that you use correct one(Project.objects.with_counts())
       properties:
+        skipped_annotations_number:
+          type: string
+          readOnly: true
+        parsed_label_config:
+          readOnly: true
+          description: JSON-formatted labeling configuration
+        expert_instruction:
+          type: string
+          nullable: true
+          description: Labeling instructions in HTML format
+        config_has_control_tags:
+          type: boolean
+          readOnly: true
+          description: Flag to detect is project ready for labeling
+        review_settings:
+          $ref: '#/components/schemas/ReviewSettings'
+        total_annotations_number:
+          type: string
+          readOnly: true
+        has_blueprints:
+          type: string
+          readOnly: true
+        model_version:
+          type: string
+          nullable: true
+          description: Machine learning model version
+        overlap_cohort_percentage:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        show_instruction:
+          type: boolean
+          description: Show instructions to the annotator before they start
+        start_training_on_annotation_update:
+          type: boolean
+          readOnly: true
+          description: Start model training after any annotations are submitted or
+            updated
+        queue_total:
+          type: string
+          readOnly: true
+        useful_annotation_number:
+          type: string
+          readOnly: true
+        duplication_done:
+          type: boolean
+          default: false
+        ground_truth_number:
+          type: integer
+          readOnly: true
+          description: Honeypot annotation number in project
+        show_annotation_history:
+          type: boolean
+          description: Show annotation history to annotator
         show_ground_truth_first:
           type: boolean
+        created_by:
+          allOf:
+          - $ref: '#/components/schemas/UserSimple'
+          description: Project owner
+        annotation_limit_count:
+          type: integer
+          minimum: 1
+          nullable: true
+        id:
+          type: integer
+          readOnly: true
+        show_collab_predictions:
+          type: boolean
+          title: Show predictions to annotator
+          description: If set, the annotator can view model predictions
+        queue_done:
+          type: string
+          readOnly: true
+        duplication_status:
+          type: string
+        require_comment_on_skip:
+          type: boolean
+          default: false
+        members_count:
+          type: string
+          readOnly: true
+        reviewer_queue_total:
+          type: string
+          readOnly: true
+        organization:
+          type: integer
+          nullable: true
+        reveal_preannotations_interactively:
+          type: boolean
+          description: Reveal pre-annotations interactively
         rejected:
+          type: string
+          readOnly: true
+        min_annotations_to_start_training:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          description: Minimum number of completed tasks after which model training
+            is started
+        maximum_annotations:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          title: Maximum annotation number
+          description: Maximum number of annotations for one task. If the number of
+            annotations per task is equal or greater to this value, the task is completed
+            (is_labeled=True)
+        color:
+          type: string
+          nullable: true
+          maxLength: 16
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        reviewed_number:
+          type: string
+          readOnly: true
+        members:
+          type: string
+          readOnly: true
+        pause_on_failed_annotator_evaluation:
+          type: boolean
+          nullable: true
+          default: false
+        title:
+          type: string
+          nullable: true
+          description: Project name. Must be between 3 and 50 characters long.
+          maxLength: 50
+          minLength: 3
+        blueprints:
+          type: array
+          items:
+            $ref: '#/components/schemas/BlueprintList'
+          readOnly: true
+        total_predictions_number:
+          type: integer
+          readOnly: true
+        is_draft:
+          type: boolean
+          description: Whether or not the project is in the middle of being created
+        ready:
+          type: string
+          readOnly: true
+        enable_empty_annotation:
+          type: boolean
+          description: Allow annotators to submit empty annotations
+        data_types:
+          readOnly: true
+          nullable: true
+        annotator_evaluation_minimum_score:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
+          nullable: true
+          default: '95.00'
+        queue_left:
+          type: string
+          readOnly: true
+        finished_task_number:
+          type: integer
+          readOnly: true
+        assignment_settings:
+          $ref: '#/components/schemas/AssignmentSettings'
+        annotation_limit_percent:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
+          nullable: true
+        comment_classification_config:
+          type: string
+        num_tasks_with_annotations:
+          type: string
+          readOnly: true
+        custom_script:
+          type: string
+        config_suitable_for_bulk_annotation:
+          type: boolean
+          readOnly: true
+          description: Flag to detect is project ready for bulk annotation
+        description_short:
+          type: string
+          readOnly: true
+        description:
+          type: string
+          nullable: true
+          description: Project description
+        allow_stream:
+          type: string
+          readOnly: true
+        skip_queue:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/SkipQueueEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        annotator_evaluation_minimum_tasks:
+          type: integer
+          minimum: 0
+          nullable: true
+          default: 10
+        sampling:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/SamplingEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        custom_task_lock_ttl:
+          type: integer
+          maximum: 86400
+          minimum: 1
+          nullable: true
+          description: TTL in seconds for task reservations, on new and existing tasks
+        task_number:
+          type: integer
+          readOnly: true
+          description: Total task number in project
+        pinned_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: Pinned date and time
+        show_overlap_first:
+          type: boolean
+        show_skip_button:
+          type: boolean
+          description: Show a skip button in interface and allow annotators to skip
+            the task
+        evaluate_predictions_automatically:
+          type: boolean
+          description: Retrieve and display predictions when loading a task
+        workspace:
+          type: string
+          readOnly: true
+        workspace_title:
+          type: string
+          readOnly: true
+        review_total_tasks:
+          type: string
+          readOnly: true
+        is_published:
+          type: boolean
+          title: Published
+          description: Whether or not the project is published to annotators
+        prompts:
           type: string
           readOnly: true
         label_config:
           type: string
           nullable: true
           description: Label config in XML format. See more about it in documentation
-        show_instruction:
-          type: boolean
-          description: Show instructions to the annotator before they start
-        duplication_status:
-          type: string
         control_weights:
           nullable: true
           description: 'Dict of weights for each control tag in metric calculation.
@@ -15795,243 +16116,6 @@ components:
             be twice more important than Airplaine, then you have to need the specify:
             {''my_bbox'': {''type'': ''RectangleLabels'', ''labels'': {''Car'': 1.0,
             ''Airplaine'': 0.5}, ''overall'': 0.33}'
-        workspace:
-          type: string
-          readOnly: true
-        finished_task_number:
-          type: integer
-          readOnly: true
-        show_skip_button:
-          type: boolean
-          description: Show a skip button in interface and allow annotators to skip
-            the task
-        created_by:
-          allOf:
-          - $ref: '#/components/schemas/UserSimple'
-          description: Project owner
-        assignment_settings:
-          $ref: '#/components/schemas/AssignmentSettings'
-        reviewed_number:
-          type: string
-          readOnly: true
-        model_version:
-          type: string
-          nullable: true
-          description: Machine learning model version
-        data_types:
-          readOnly: true
-          nullable: true
-        description_short:
-          type: string
-          readOnly: true
-        queue_left:
-          type: string
-          readOnly: true
-        annotation_limit_percent:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
-          nullable: true
-        config_has_control_tags:
-          type: boolean
-          readOnly: true
-          description: Flag to detect is project ready for labeling
-        total_predictions_number:
-          type: integer
-          readOnly: true
-        useful_annotation_number:
-          type: string
-          readOnly: true
-        custom_script:
-          type: string
-        reviewer_queue_total:
-          type: string
-          readOnly: true
-        start_training_on_annotation_update:
-          type: boolean
-          readOnly: true
-          description: Start model training after any annotations are submitted or
-            updated
-        skipped_annotations_number:
-          type: string
-          readOnly: true
-        custom_task_lock_ttl:
-          type: integer
-          maximum: 86400
-          minimum: 1
-          nullable: true
-          description: TTL in seconds for task reservations, on new and existing tasks
-        workspace_title:
-          type: string
-          readOnly: true
-        sampling:
-          nullable: true
-          oneOf:
-          - $ref: '#/components/schemas/SamplingEnum'
-          - $ref: '#/components/schemas/NullEnum'
-        reveal_preannotations_interactively:
-          type: boolean
-          description: Reveal pre-annotations interactively
-        id:
-          type: integer
-          readOnly: true
-        has_blueprints:
-          type: string
-          readOnly: true
-        queue_done:
-          type: string
-          readOnly: true
-        total_annotations_number:
-          type: string
-          readOnly: true
-        members_count:
-          type: string
-          readOnly: true
-        maximum_annotations:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          title: Maximum annotation number
-          description: Maximum number of annotations for one task. If the number of
-            annotations per task is equal or greater to this value, the task is completed
-            (is_labeled=True)
-        comment_classification_config:
-          type: string
-        prompts:
-          type: string
-          readOnly: true
-        created_at:
-          type: string
-          format: date-time
-          readOnly: true
-        ready:
-          type: string
-          readOnly: true
-        annotator_evaluation_minimum_tasks:
-          type: integer
-          minimum: 0
-          nullable: true
-          default: 10
-        config_suitable_for_bulk_annotation:
-          type: boolean
-          readOnly: true
-          description: Flag to detect is project ready for bulk annotation
-        skip_queue:
-          nullable: true
-          oneOf:
-          - $ref: '#/components/schemas/SkipQueueEnum'
-          - $ref: '#/components/schemas/NullEnum'
-        title:
-          type: string
-          nullable: true
-          description: Project name. Must be between 3 and 50 characters long.
-          maxLength: 50
-          minLength: 3
-        show_overlap_first:
-          type: boolean
-        queue_total:
-          type: string
-          readOnly: true
-        organization:
-          type: integer
-          nullable: true
-        duplication_done:
-          type: boolean
-          default: false
-        ground_truth_number:
-          type: integer
-          readOnly: true
-          description: Honeypot annotation number in project
-        annotation_limit_count:
-          type: integer
-          minimum: 1
-          nullable: true
-        evaluate_predictions_automatically:
-          type: boolean
-          description: Retrieve and display predictions when loading a task
-        blueprints:
-          type: array
-          items:
-            $ref: '#/components/schemas/BlueprintList'
-          readOnly: true
-        color:
-          type: string
-          nullable: true
-          maxLength: 16
-        review_settings:
-          $ref: '#/components/schemas/ReviewSettings'
-        pinned_at:
-          type: string
-          format: date-time
-          nullable: true
-          description: Pinned date and time
-        members:
-          type: string
-          readOnly: true
-        require_comment_on_skip:
-          type: boolean
-          default: false
-        show_annotation_history:
-          type: boolean
-          description: Show annotation history to annotator
-        task_number:
-          type: integer
-          readOnly: true
-          description: Total task number in project
-        is_published:
-          type: boolean
-          title: Published
-          description: Whether or not the project is published to annotators
-        show_collab_predictions:
-          type: boolean
-          title: Show predictions to annotator
-          description: If set, the annotator can view model predictions
-        review_total_tasks:
-          type: string
-          readOnly: true
-        num_tasks_with_annotations:
-          type: string
-          readOnly: true
-        expert_instruction:
-          type: string
-          nullable: true
-          description: Labeling instructions in HTML format
-        overlap_cohort_percentage:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-        is_draft:
-          type: boolean
-          description: Whether or not the project is in the middle of being created
-        min_annotations_to_start_training:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          description: Minimum number of completed tasks after which model training
-            is started
-        enable_empty_annotation:
-          type: boolean
-          description: Allow annotators to submit empty annotations
-        annotator_evaluation_minimum_score:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
-          nullable: true
-          default: '95.00'
-        description:
-          type: string
-          nullable: true
-          description: Project description
-        pause_on_failed_annotator_evaluation:
-          type: boolean
-          nullable: true
-          default: false
-        allow_stream:
-          type: string
-          readOnly: true
-        parsed_label_config:
-          readOnly: true
-          description: JSON-formatted labeling configuration
       required:
       - allow_stream
       - assignment_settings
@@ -17408,169 +17492,6 @@ components:
       required:
       - modelrun_id
       - results
-    BillingChecks:
-      type: object
-      properties:
-        users:
-          $ref: '#/components/schemas/CountLimit'
-        projects:
-          $ref: '#/components/schemas/CountLimit'
-        results:
-          $ref: '#/components/schemas/CountLimit'
-        trial_days:
-          type: integer
-        organization_is_active:
-          type: boolean
-        license_issued:
-          type: string
-          format: date
-          nullable: true
-        license_warning:
-          type: string
-          format: date
-          nullable: true
-        is_license_warning:
-          type: boolean
-        license_expires:
-          type: string
-          format: date
-          nullable: true
-        is_license_expired:
-          type: boolean
-        prompts_enabled:
-          type: boolean
-        prompts_status:
-          $ref: '#/components/schemas/PromptsStatusEnum'
-        prompts_warning:
-          type: string
-          nullable: true
-        is_prompts_warning:
-          type: boolean
-        prompts_expire:
-          type: string
-          nullable: true
-        is_prompts_expire:
-          type: boolean
-        prompts_api_keys_enabled:
-          type: boolean
-        import_storages:
-          $ref: '#/components/schemas/CountLimit'
-        export_storages:
-          $ref: '#/components/schemas/CountLimit'
-      required:
-      - export_storages
-      - import_storages
-      - is_license_expired
-      - is_license_warning
-      - is_prompts_expire
-      - is_prompts_warning
-      - license_expires
-      - license_issued
-      - license_warning
-      - organization_is_active
-      - projects
-      - prompts_api_keys_enabled
-      - prompts_enabled
-      - prompts_expire
-      - prompts_status
-      - prompts_warning
-      - results
-      - trial_days
-      - users
-    BillingFlags:
-      type: object
-      properties:
-        activated_at:
-          type: string
-          format: date-time
-          nullable: true
-        cloud_instance:
-          type: boolean
-        allow_activity_log:
-          type: boolean
-        allow_invite_project_experts:
-          type: boolean
-        allow_sso:
-          type: boolean
-        white_label_id:
-          type: string
-          nullable: true
-        allow_data_credentials:
-          type: boolean
-        allow_organization_webhooks:
-          type: boolean
-        disable_members_page:
-          type: boolean
-        secure_mode:
-          type: boolean
-        manual_workspace_management:
-          type: boolean
-        manual_role_management:
-          type: boolean
-        hide_storage_settings_for_manager:
-          type: boolean
-        disable_project_imports:
-          type: boolean
-        automax_token_exists:
-          type: boolean
-        automax_enabled:
-          type: boolean
-        storage_persistence:
-          type: boolean
-        allow_ai:
-          type: boolean
-        early_adopter:
-          type: boolean
-        allow_ask_ai:
-          type: boolean
-        allow_invite_people:
-          type: boolean
-        allow_storage_proxy:
-          type: boolean
-        embed_enabled:
-          type: boolean
-        embed_domains:
-          type: array
-          items:
-            type: object
-            additionalProperties: {}
-        embed_settings:
-          type: object
-          additionalProperties: {}
-      required:
-      - activated_at
-      - allow_activity_log
-      - allow_ai
-      - allow_ask_ai
-      - allow_data_credentials
-      - allow_invite_people
-      - allow_invite_project_experts
-      - allow_organization_webhooks
-      - allow_sso
-      - allow_storage_proxy
-      - automax_enabled
-      - automax_token_exists
-      - cloud_instance
-      - disable_members_page
-      - disable_project_imports
-      - early_adopter
-      - embed_enabled
-      - hide_storage_settings_for_manager
-      - manual_role_management
-      - manual_workspace_management
-      - secure_mode
-      - storage_persistence
-      - white_label_id
-    BillingInfoResponse:
-      type: object
-      properties:
-        billing_checks:
-          $ref: '#/components/schemas/BillingChecks'
-        billing_flags:
-          $ref: '#/components/schemas/BillingFlags'
-      required:
-      - billing_checks
-      - billing_flags
     BlankEnum:
       enum:
       - ''
@@ -17677,6 +17598,14 @@ components:
       description: |-
         * `Monthly` - Monthly
         * `Yearly` - Yearly
+    CheckMatchingFunctionRequestRequest:
+      type: object
+      properties:
+        code:
+          type: string
+          minLength: 1
+      required:
+      - code
     ChildFilter:
       type: object
       properties:
@@ -17928,21 +17857,6 @@ components:
           description: Traceback report in case of errors
       required:
       - export_type
-    CountLimit:
-      type: object
-      properties:
-        count:
-          type: integer
-        limit:
-          type: integer
-        reached:
-          type: boolean
-        total:
-          type: integer
-      required:
-      - count
-      - limit
-      - reached
     CustomScriptsEditableByEnum:
       enum:
       - AD
@@ -22657,6 +22571,32 @@ components:
       oneOf:
       - $ref: '#/components/schemas/Comment'
       - $ref: '#/components/schemas/CommentSerializerWithExpandedUser'
+    MetricParam:
+      type: object
+      properties:
+        metric_name:
+          type: string
+          nullable: true
+          description: Evaluation metric chosen for this project
+        metric_params:
+          nullable: true
+        agreement_threshold:
+          type: string
+          readOnly: true
+        max_additional_annotators_assignable:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          title: Maximum new annotators added
+          description: Maximum number of additional annotators that can be assigned
+            to a low agreement task
+        allowed:
+          type: string
+          readOnly: true
+      required:
+      - agreement_threshold
+      - allowed
     ModeEnum:
       enum:
       - settings
@@ -23155,6 +23095,16 @@ components:
       - created_at
       - organization
       - user
+    OrganizationMemberCreateUpdateRequest:
+      type: object
+      properties:
+        user_id:
+          type: integer
+        role:
+          $ref: '#/components/schemas/Role9e7Enum'
+      required:
+      - role
+      - user_id
     OrganizationMembership:
       type: object
       properties:
@@ -25635,6 +25585,19 @@ components:
           type: integer
       required:
       - user
+    ProjectMetricParamUpdateRequest:
+      type: object
+      properties:
+        metric_name:
+          type: string
+          minLength: 1
+        agreement_threshold:
+          type: integer
+          maximum: 100
+          minimum: 0
+        max_additional_annotators_assignable:
+          type: integer
+          minimum: 0
     ProjectReimport:
       type: object
       properties:
@@ -25939,24 +25902,6 @@ components:
           nullable: true
       required:
       - name
-    PromptsStatusEnum:
-      enum:
-      - Enabled
-      - Cloud license per organization disabled
-      - On-premise global license disabled
-      - Expired
-      - Adala not connected
-      - Disabled for this organization [FF]
-      - unknown
-      type: string
-      description: |-
-        * `Enabled` - Enabled
-        * `Cloud license per organization disabled` - Cloud license per organization disabled
-        * `On-premise global license disabled` - On-premise global license disabled
-        * `Expired` - Expired
-        * `Adala not connected` - Adala not connected
-        * `Disabled for this organization [FF]` - Disabled for this organization [FF]
-        * `unknown` - unknown
     ProviderEnum:
       enum:
       - OpenAI
