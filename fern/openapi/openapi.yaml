@@ -2663,12 +2663,6 @@ paths:
       description: Retrieve all the registered actions with descriptions that data manager can use.
       operationId: api_dm_actions_retrieve
       parameters:
-        - description: Organization ID
-          in: query
-          name: organization
-          required: true
-          schema:
-            type: integer
         - description: Project ID
           in: query
           name: project
