@@ -7946,9 +7946,9 @@ paths:
               schema:
                 properties:
                   assignments:
-                    items:
-                      type: object
-                    type: array
+                    type: integer
+                  async:
+                    type: boolean
                 type: object
           description: Success
         '400':
