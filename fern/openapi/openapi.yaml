@@ -2663,12 +2663,6 @@ paths:
       description: Retrieve all the registered actions with descriptions that data manager can use.
       operationId: api_dm_actions_retrieve
       parameters:
-        - description: Organization ID
-          in: query
-          name: organization
-          required: true
-          schema:
-            type: integer
         - description: Project ID
           in: query
           name: project
@@ -7699,6 +7693,11 @@ paths:
       summary: Bulk assign tasks
       tags:
         - Tasks
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+      x-fern-sdk-method-name: task_assign
   /api/projects/{id}/tasks/{task_pk}/assignees:
     delete:
       description: Remove the assignee for a task for a specific project.
@@ -7724,6 +7723,11 @@ paths:
       summary: Delete task assignee
       tags:
         - Tasks
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+      x-fern-sdk-method-name: task_assign
     get:
       description: Retrieve a list of tasks and assignees for those tasks for a specific project.
       operationId: api_projects_tasks_assignees_retrieve
@@ -7752,6 +7756,11 @@ paths:
       summary: Get assigned tasks and assignees
       tags:
         - Tasks
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+      x-fern-sdk-method-name: task_assign
     patch:
       description: Update the assignee for a task in a specific project.
       operationId: api_projects_tasks_assignees_partial_update
@@ -7791,6 +7800,11 @@ paths:
       summary: Update task assignee
       tags:
         - Tasks
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+      x-fern-sdk-method-name: task_assign
     post:
       description: Assign a user to a task in a specific project.
       operationId: api_projects_tasks_assignees_create_2
@@ -7831,6 +7845,11 @@ paths:
       summary: Create task assignee
       tags:
         - Tasks
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+      x-fern-sdk-method-name: task_assign
   /api/projects/{id}/update-stats:
     get:
       description: Start stats recalculation for given project
