@@ -77,3 +77,14 @@ paths:
     get:
       description: and another update in description `/get` endpoint.
 ```
+
+## Generate SDK locally
+1. Ensure `label-studio-sdk` is at the same level as this generator directory, for example:
+  ```
+  parent/
+  ├── label-studio-client-generator/
+  └── label-studio-sdk/
+  ```
+2. Ensure you have a local Label Studio instance running in docker container with name `label-studio-enterprise-app-1`.
+3. Run `./localgen.sh` to generate SDK locally. The package will be generated in `label-studio-client-generator/label_studio_sdk/` directory.
+4. Test the generated SDK by running `python -c "from label_studio_sdk import LabelStudio"`.
