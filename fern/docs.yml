@@ -34,6 +34,10 @@ navigation:
             path: ./pages/tutorials/interactive_ocr_with_tesseract.mdx
           - page: Logging ML Server Predictions
             path: ./pages/tutorials/logging_ml_server_predictions.mdx
+          - page: Assign Users to Tasks
+            path: ./pages/tutorials/assign_users_to_tasks.mdx
+          - page: Export and Convert Snapshots
+            path: ./pages/tutorials/export_snapshots.mdx
 
 css: ./styles.css
 
