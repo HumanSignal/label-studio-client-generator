@@ -6452,43 +6452,6 @@ paths:
         - metrics
         - custom
       x-fern-sdk-method-name: check_function
-  /api/projects/{id}/code-editor:
-    post:
-      description: Validate custom matching function code for the project.
-      operationId: api_projects_code_editor_create
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CheckMatchingFunctionRequestRequest'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/CheckMatchingFunctionRequestRequest'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/CheckMatchingFunctionRequestRequest'
-        required: true
-      responses:
-        '200':
-          description: Code is valid
-      security:
-        - Token: []
-      summary: Check custom matching function code
-      tags:
-        - Projects
-      x-fern-audiences:
-        - public
-      x-fern-sdk-group-name:
-        - projects
-        - metrics
-        - custom
-      x-fern-sdk-method-name: check_function
   /api/projects/{id}/dashboard:
     get:
       deprecated: true
