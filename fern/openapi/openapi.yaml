@@ -127,7 +127,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: List all annotation history items for annotation
+      summary: List all annotation history items for annotation test
       tags:
         - Annotation History
   /api/annotation-reviews/:
