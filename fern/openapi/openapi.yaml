@@ -556,7 +556,7 @@ paths:
         - internal
   /api/billing/info:
     get:
-      description: Retrieve billing checks and feature flags for the active organization.
+      description: Retrieve billing checks and feature flags for the active organization. /fm sdk test
       operationId: api_billing_info_retrieve
       responses:
         '200':
