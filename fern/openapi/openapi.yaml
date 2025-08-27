@@ -22527,12 +22527,11 @@ components:
     MetricParam:
       properties:
         agreement_threshold:
-          nullable: true
           readOnly: true
-          type: integer
+          type: string
         allowed:
           readOnly: true
-          type: boolean
+          type: string
         max_additional_annotators_assignable:
           description: Maximum number of additional annotators that can be assigned to a low agreement task
           maximum: 2147483647
