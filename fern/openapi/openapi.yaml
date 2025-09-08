@@ -16477,6 +16477,9 @@ components:
         show_skip_button:
           description: Show a skip button in interface and allow annotators to skip the task
           type: boolean
+        show_unused_data_columns_to_annotators:
+          nullable: true
+          type: boolean
         skip_queue:
           nullable: true
           oneOf:
@@ -20749,6 +20752,9 @@ components:
         show_skip_button:
           description: Show a skip button in interface and allow annotators to skip the task
           type: boolean
+        show_unused_data_columns_to_annotators:
+          nullable: true
+          type: boolean
         skip_queue:
           nullable: true
           oneOf:
@@ -21389,6 +21395,9 @@ components:
           type: boolean
         show_skip_button:
           description: Show a skip button in interface and allow annotators to skip the task
+          type: boolean
+        show_unused_data_columns_to_annotators:
+          nullable: true
           type: boolean
         skip_queue:
           nullable: true
@@ -24810,6 +24819,9 @@ components:
         show_skip_button:
           description: Show a skip button in interface and allow annotators to skip the task
           type: boolean
+        show_unused_data_columns_to_annotators:
+          nullable: true
+          type: boolean
         skip_queue:
           nullable: true
           oneOf:
@@ -25294,6 +25306,9 @@ components:
           type: boolean
         review_settings:
           description: general dict serialized review settings
+        show_unused_data_columns_to_annotators:
+          nullable: true
+          type: boolean
         tags: {}
       type: object
     PatchedS3DatasetStorageRequest:
@@ -26378,6 +26393,9 @@ components:
           type: boolean
         review_settings:
           description: general dict serialized review settings
+        show_unused_data_columns_to_annotators:
+          nullable: true
+          type: boolean
         tags: {}
         updated_at:
           format: date-time
@@ -26419,6 +26437,9 @@ components:
           type: boolean
         review_settings:
           description: general dict serialized review settings
+        show_unused_data_columns_to_annotators:
+          nullable: true
+          type: boolean
         tags: {}
       required:
         - name
@@ -26787,6 +26808,10 @@ components:
         show_instruction:
           description: Show instructions to the reviewers before they start
           type: boolean
+        show_unused_data_columns_to_reviewers:
+          description: If true, Data Manager shows all task.data columns to reviewers; if false, hides columns not referenced by the label interface
+          nullable: true
+          type: boolean
       required:
         - id
         - requeue_rejected_tasks_to_annotator
@@ -26842,6 +26867,10 @@ components:
           type: boolean
         show_instruction:
           description: Show instructions to the reviewers before they start
+          type: boolean
+        show_unused_data_columns_to_reviewers:
+          description: If true, Data Manager shows all task.data columns to reviewers; if false, hides columns not referenced by the label interface
+          nullable: true
           type: boolean
       type: object
     ReviewedEnum:
