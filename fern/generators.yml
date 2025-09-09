@@ -35,7 +35,7 @@ groups:
             - from: _legacy
               imports:
                 - Client
-          pyproject_python_version: '>=3.11,<4'
+          pyproject_python_version: '>=3.9,<4'
           extra_dependencies:
             pandas: '>=0.24.0'
             requests: '>=2.22.0'
@@ -48,7 +48,7 @@ groups:
             xmljson: '0.2.1'
             jsonschema: '>=4.23.0'
             requests-mock: '1.12.1'
-            numpy: '>=2.3.2,<3.0.0'
+            numpy: '>=1.26.4,<3.0.0'
             opencv-python: '^4.9.0'
             datamodel-code-generator: '0.26.1'
             jsf: '^0.11.2'
