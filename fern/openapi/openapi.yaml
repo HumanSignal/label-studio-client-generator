@@ -923,9 +923,7 @@ paths:
       tags:
         - Blueprints
       x-fern-audiences:
-        - public
-      x-fern-sdk-group-name: blueprints
-      x-fern-sdk-method-name: create_project_from_blueprint
+        - internal
   /api/comments/:
     get:
       description: List all comments for a specific annotation ID.
@@ -16412,6 +16410,9 @@ components:
           description: Honeypot annotation number in project
           readOnly: true
           type: integer
+        has_blueprints:
+          readOnly: true
+          type: string
         id:
           readOnly: true
           type: integer
@@ -16577,6 +16578,7 @@ components:
         - description_short
         - finished_task_number
         - ground_truth_number
+        - has_blueprints
         - id
         - members
         - members_count
