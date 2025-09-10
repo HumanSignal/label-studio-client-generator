@@ -16466,9 +16466,6 @@ components:
           description: Honeypot annotation number in project
           readOnly: true
           type: integer
-        has_blueprints:
-          readOnly: true
-          type: string
         id:
           readOnly: true
           type: integer
@@ -16634,7 +16631,6 @@ components:
         - description_short
         - finished_task_number
         - ground_truth_number
-        - has_blueprints
         - id
         - members
         - members_count
