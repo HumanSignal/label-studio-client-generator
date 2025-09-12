@@ -1,9 +1,10 @@
 name: "Publish Docs"
 
 on:
-  push:
-    branches:
-      - master
+  # TODO(jo): uncomment when we no longer worried about bad docs deployments
+  #   branches:
+  #     - master
+  workflow_dispatch:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.sha }}
