@@ -43,7 +43,7 @@ In your Python scripts, you will need to do the following:
 # Define the URL where Label Studio is accessible and the API key for your user account
 LABEL_STUDIO_URL = 'http://localhost:8080'
 # API key is available at the Account & Settings page in Label Studio UI
-LABEL_STUDIO_API_KEY = 'd6f8a2622d39e9d89ff0dfef1a80ad877f4ee9e3'
+LABEL_STUDIO_API_KEY = 'YOUR_API_KEY'
 
 # Import the SDK and the client module
 from label_studio_sdk.client import LabelStudio
@@ -55,8 +55,8 @@ ls = LabelStudio(base_url=LABEL_STUDIO_URL, api_key=LABEL_STUDIO_API_KEY)
 You can set `LABEL_STUDIO_URL` and `LABEL_STUDIO_API_KEY` as environment variables: 
 
 ```bash
-export LABEL_STUDIO_API_KEY="YOUR_TOKEN"
-export LABEL_STUDIO_URL="URL"
+export LABEL_STUDIO_API_KEY="YOUR_API_KEY"
+export LABEL_STUDIO_URL="YOUR_BASE_URL"
 ```
 </Tip>
 
