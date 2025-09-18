@@ -8,6 +8,7 @@ Note the following:
 
 * You must know your project ID. You can find this in the URL when viewing a Label Studio project (e.g. `https://app.humansignal.com/projects/<PROJECT_ID>`) or you can [use the API](../../api-reference/api-reference/projects/list).
 * This example imports data using JSON format. The key for the data field should match the variable you used in your labeling config. 
+* For information on finding your API key and base URL, see [Authenticate and Connect to the API](../../api-reference/introduction/getting-started#authenticate-and-connect-to-the-api).
 
 For example, when we [created the project](create-a-project), we specified the following labeling config:
 
@@ -33,7 +34,7 @@ So our imported data must use `text` so that the `value=$text` variable can find
     from label_studio_sdk.client import LabelStudio
 
     ls = LabelStudio(
-        base_url="YOUR_LS_URL",
+        base_url="YOUR_BASE_URL",
         api_key="YOUR_API_KEY",
     )
     project_id="YOUR_PROJECT_ID"
@@ -53,7 +54,7 @@ So our imported data must use `text` so that the `value=$text` variable can find
     from label_studio_sdk.client import LabelStudio
 
     ls = LabelStudio(
-        base_url="YOUR_LS_URL",
+        base_url="YOUR_BASE_URL",
         api_key="YOUR_API_KEY",
     )
     project_id="YOUR_PROJECT_ID"
@@ -86,7 +87,7 @@ So our imported data must use `text` so that the `value=$text` variable can find
     from label_studio_sdk.client import LabelStudio
 
     ls = LabelStudio(
-        base_url="YOUR_LS_URL",
+        base_url="YOUR_BASE_URL",
         api_key="YOUR_API_KEY",
     )
     project_id="YOUR_PROJECT_ID"

@@ -22,30 +22,34 @@ poetry add label-studio-sdk
 ```
 
 
-## Authentication
+## Authenticate and Connect to the API
 
-For more information about API keys, see [Access tokens](https://labelstud.io/guide/access_tokens) in our documentation. 
-
-In your Python script, do the following:
+In your Python scripts, you will need to do the following:
 
 - Import the SDK.
-- Define your Label Studio URL. For example, `http://localhost:8080` or `https://app.humansignal.com`
+- **Define your Label Studio URL.** 
+
+    For example, `http://localhost:8080` or `https://app.humansignal.com`
 
     Note that `LABEL_STUDIO_URL` should start with `https://` or `http://`
-- Define your API key. This should be available on the **Account & Settings** page, but you may need to enable it at the organization level first. See [Access tokens](https://labelstud.io/guide/access_tokens).
+- **Define your API key.** 
+
+    This should be available on the **Account & Settings** page, but you may need to enable it at the organization level first. See [Access tokens](https://labelstud.io/guide/access_tokens).
+
+    You can use either the Legacy Token or the Personal Access Token, but for the SDK we recommend the Personal Access Token. 
 - Connect to the API.
 
 ```python
 # Define the URL where Label Studio is accessible and the API key for your user account
 LABEL_STUDIO_URL = 'http://localhost:8080'
 # API key is available at the Account & Settings page in Label Studio UI
-API_KEY = 'd6f8a2622d39e9d89ff0dfef1a80ad877f4ee9e3'
+LABEL_STUDIO_API_KEY = 'd6f8a2622d39e9d89ff0dfef1a80ad877f4ee9e3'
 
 # Import the SDK and the client module
 from label_studio_sdk.client import LabelStudio
 
 # Connect to the Label Studio API and check the connection
-ls = LabelStudio(base_url=LABEL_STUDIO_URL, api_key=API_KEY)
+ls = LabelStudio(base_url=LABEL_STUDIO_URL, api_key=LABEL_STUDIO_API_KEY)
 ```
 <Tip>
 You can set `LABEL_STUDIO_URL` and `LABEL_STUDIO_API_KEY` as environment variables: 

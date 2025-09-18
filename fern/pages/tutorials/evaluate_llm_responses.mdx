@@ -8,12 +8,17 @@ image: https://github.com/fern-api/fern/blob/main/fern/images/logo-green.png
 
 ## Connect to Label Studio
 
-Let's connect to the running Label Studio instance. You need `API_KEY` that can be found in `Account & Settings` -> `API Key` section.
+Let's connect to the running Label Studio instance. 
+
+For information on finding your base URL and API key, see [Authenticate and Connect to the API](../../api-reference/introduction/getting-started#authenticate-and-connect-to-the-api).
 
 ```python
 from label_studio_sdk.client import LabelStudio
 
-ls = LabelStudio(api_key='your-api-key')
+ls = LabelStudio(
+    base_url='YOUR_BASE_URL',
+    api_key='YOUR_API_KEY'
+)
 ```
 
 ## Different LLM Evaluation Strategies

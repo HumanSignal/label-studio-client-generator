@@ -25,13 +25,13 @@ For this example, we will use the following basic labeling config to perform sen
 </View>
 ```
 
-Your Python will look like this:
+Your Python will look like this. For information on finding your API key and base URL, see [Authenticate and Connect to the API](../../api-reference/introduction/getting-started#authenticate-and-connect-to-the-api).
 
 ```python
 from label_studio_sdk.client import LabelStudio 
 
 ls = LabelStudio(
-    base_url="YOUR_URL",
+    base_url="YOUR_BASE_URL",
     api_key="YOUR_API_KEY",
 )
 

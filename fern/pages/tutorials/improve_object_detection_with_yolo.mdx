@@ -2,9 +2,6 @@
 title: Improve Object Detection with YOLOv8
 ---
 
-
-## Introduction
-
 In this tutorial, you will learn how to improve object detection predictions from YOLOv8 using Label Studio. You will create a project in Label Studio, import images, and annotate them with bounding boxes. You will then use the annotations to fine-tune the YOLOv8 model.
 
 First install the required packages:
@@ -41,8 +38,10 @@ Now use this `label_config` to create a project.
 ```python
 from label_studio_sdk.client import LabelStudio
 
-API_KEY = 'YOUR_API_KEY'
-client = LabelStudio(api_key=API_KEY)
+client = LabelStudio(
+    base_url="YOUR_BASE_URL",
+    api_key="YOUR_API_KEY",
+)
 
 project = client.projects.create(
     title='Object detection',
@@ -186,7 +185,3 @@ annotated_tasks = client.tasks.list(view=tab.id, fields='all')
 for annotated_task in annotated_tasks:
     print(annotated_task.annotations)
 ```
-
-### Convert Annotations to YOLO format
-
-Coming soon! :)

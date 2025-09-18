@@ -16,13 +16,13 @@ It will start the server listening on `http://localhost:9090`.
 
 ## Connect to Label Studio
 
-Let's connect to the running Label Studio instance. You need `API_KEY` that can be found in `Account & Settings` -> `API Key` section.
+For information on finding your base URL and API key, see [Authenticate and Connect to the API](../../api-reference/introduction/getting-started#authenticate-and-connect-to-the-api).
 
 ```python
 from label_studio_sdk.client import LabelStudio
 
 ls = LabelStudio(
-    base_url='http://localhost:8080',
+    base_url='YOUR-BASE-URL',
     api_key='YOUR-API-KEY'
 )
 ```
@@ -67,7 +67,7 @@ To connect your running OCR model to the project, you need to specify the model 
 ls.ml.create(
     title='Tesseract OCR',
     description='A model to perform OCR using Tesseract',
-    url='http://localhost:9090',
+    url='http://localhost:9090', # if LS runs in Docker, prefer http://host.docker.internal:9090
     project=project.id,
     is_interactive=True
 )
