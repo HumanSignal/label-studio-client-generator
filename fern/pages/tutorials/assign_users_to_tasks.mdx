@@ -2,31 +2,31 @@
 title: Assign Users to Tasks
 ---
 
-In this tutorial, you will assign a user to portion of tasks in a project filtered by Inner ID (0..100).
+In this tutorial, you will assign a user to portion of tasks in a project filtered by Inner ID (0..100). 
+
+<Note>
+This example only applies to Label Studio Enterprise and Starter Cloud. Label Studio Community does not have task assignments. 
+</Note>
 
 ## From the Label Studio UI
 
+1. Go to your project, select **Settings > Annotation > Distribute Labeling Tasks** and ensure your project is in **Manual** mode. 
 
-1. In the upper right, click your user icon and select **Account & Settings**. 
+2. From the **Members** page of your project or workspace, ensure that your user is added as a member. 
 
-2. Select **Personal Access Token** and generate your API key. 
+3. Run the script: `python assign_users_to_tasks.py <PROJECT_ID> <USER_EMAIL> [AN|RE]`
 
-3. Set the `LABEL_STUDIO_URL` and `LABEL_STUDIO_API_KEY` environment variables: 
-
-    ```bash
-    export LABEL_STUDIO_API_KEY="YOUR_TOKEN"
-    export LABEL_STUDIO_URL="URL"
-    ```
-
-    Note that `LABEL_STUDIO_URL` should start with `https://` or `http://`
-3. Go to your project, select **Settings > Annotation > Distribute Labeling Tasks** and ensure your project is in **Manual** mode. 
-
-4. From the **Members** page of your project or workspace, ensure that your user is added as a member. 
-
-5. Run the script: `python assign_users_to_tasks.py <PROJECT_ID> <USER_EMAIL> [AN|RE]`
-
-    * You can find the project ID from the URL, e.g. `https://app.humansignal.com/projects/<PROJECT_ID>`
+    * You can find your project ID in the URL when viewing a Label Studio project (e.g. `https://app.humansignal.com/projects/<PROJECT_ID>`) or you can [use the API](../../api-reference/api-reference/projects/list).
     * `AN` - annotator, `RE` - reviewer
+
+In this example, you begin by setting your API key and Label Studio URL as environment variables:
+
+```bash
+export LABEL_STUDIO_API_KEY="YOUR_TOKEN"
+export LABEL_STUDIO_URL="URL"
+```
+
+If you would prefer to set them directly in the script, see [Create a Project](create-a-project) for an example. 
 
 ## Script
 

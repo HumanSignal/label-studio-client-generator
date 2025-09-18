@@ -1,0 +1,107 @@
+---
+title: Import Tasks
+---
+
+You can import tasks in [Label Studio JSON format](tasks.html#Basic-Label-Studio-JSON-format) or [connect to cloud storage providers](https://github.com/heartexlabs/label-studio-sdk/blob/master/examples/annotate_data_from_gcs/annotate_data_from_gcs.ipynb) and import image, audio, or video files directly.
+
+Note the following:
+
+* You must know your project ID. You can find this in the URL when viewing a Label Studio project (e.g. `https://app.humansignal.com/projects/<PROJECT_ID>`) or you can [use the API](../../api-reference/api-reference/projects/list).
+* This example imports data using JSON format. The key for the data field should match the variable you used in your labeling config. 
+
+For example, when we [created the project](create-a-project), we specified the following labeling config:
+
+```xml
+<View>
+  <Header value="Choose text sentiment:"/>
+  <Text name="text" value="$text"/>
+  <Choices name="sentiment" toName="text" choice="single">
+    <Choice value="Positive"/>
+    <Choice value="Negative"/>
+    <Choice value="Neutral"/>
+  </Choices>
+</View>
+```
+
+So our imported data must use `text` so that the `value=$text` variable can find it. 
+
+<AccordionGroup>
+  <Accordion title="Create a single task">
+    You can import a single labeling task into your project:
+
+    ```python
+    from label_studio_sdk.client import LabelStudio
+
+    ls = LabelStudio(
+        base_url="YOUR_LS_URL",
+        api_key="YOUR_API_KEY",
+    )
+    project_id="YOUR_PROJECT_ID"
+
+    task = ls.tasks.create(
+        project=project_id,
+        data={"text": "I absolutely love this!"}  # key 'text' matches value="$text" in your config
+    )
+    print("New task ID:", task.id)
+    ```
+  </Accordion>
+
+  <Accordion title="Create multiple tasks">
+    To create multiple tasks at once in a project, use the `import_tasks` method:
+
+    ```python
+    from label_studio_sdk.client import LabelStudio
+
+    ls = LabelStudio(
+        base_url="YOUR_LS_URL",
+        api_key="YOUR_API_KEY",
+    )
+    project_id="YOUR_PROJECT_ID"
+
+    # Tasks to import — each item must match variables used in your labeling config (e.g., $text)
+    tasks = [
+        {"text": "Hello world"},
+        {"text": "Hello Label Studio"},
+        {"text": "What a beautiful day"},
+    ]
+
+    # Import tasks
+    resp = ls.projects.import_tasks(
+        id=project_id,
+        request=tasks,
+        return_task_ids=True,  # optional: ask API to return created task IDs (requires a check, maybe this flag isn't implemented in your SDK build)
+    )
+    print(resp)
+    ```
+  </Accordion>
+  <Accordion title="Create multiple tasks with preannotations">
+
+    You can also import predictions together with tasks as pre-annotated tasks. The SDK offers several ways that you can import pre-annotations into Label Studio.
+
+    One way is to import tasks in a simple JSON format, where one key in the JSON identifies the data object being labeled, and the other is the key containing the prediction.
+
+    For example:
+
+    ```python
+    from label_studio_sdk.client import LabelStudio
+
+    ls = LabelStudio(
+        base_url="YOUR_LS_URL",
+        api_key="YOUR_API_KEY",
+    )
+    project_id="YOUR_PROJECT_ID"
+
+    ls.projects.import_tasks(
+        id=project_id,
+        request=[
+            {"text": "Hello world", "sentiment": "Positive"},
+            {"text": "Goodbye Label Studio", "sentiment": "Negative"},
+            ],
+        preannotated_from_fields=["sentiment"]
+    )
+    ```
+    See also [Add model predictions](add-model-predictions). 
+
+    Read more about importing pre-annotations in the [Label Studio documentation](https://labelstud.io/guide/predictions).
+  </Accordion>
+</AccordionGroup>

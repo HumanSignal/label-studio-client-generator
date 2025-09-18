@@ -1,0 +1,77 @@
+---
+title: Managing Labeling Jobs
+---
+
+You can also use the SDK to control how tasks appear in the data manager to annotators or reviewers. You can create custom filters and ordering for the tasks based on parameters that you specify with the SDK. This lets you have more granular control over which tasks in your dataset get labeled or reviewed, and in which order.
+
+In this example, you begin by setting your API key and Label Studio URL as environment variables:
+
+```bash
+export LABEL_STUDIO_API_KEY="YOUR_TOKEN"
+export LABEL_STUDIO_URL="URL"
+```
+
+If you would prefer to set them directly in the script, see [Create a Project](create-a-project) for an example.
+
+## Create a batch of tasks to annotate using filters
+
+For example, you can create a filter to prepare tasks to be annotated. If you want annotators to focus on tasks in the first 1000 tasks in a dataset that contain the word "hello" in the field "text" in the task data, you could use the following:
+
+```python
+import os
+import sys
+from label_studio_sdk.client import LabelStudio
+from label_studio_sdk.data_manager import Filters, Column, Operator, Type
+
+base_url = os.getenv("LABEL_STUDIO_URL")
+api_key = os.getenv("LABEL_STUDIO_API_KEY")
+if not api_key or not base_url:
+    print("ERROR: set LABEL_STUDIO_API_KEY and LABEL_STUDIO_URL env var")
+    sys.exit(1)
+
+ls = LabelStudio(base_url=base_url, api_key=api_key)
+
+project_id = 1  # <- replace with your project ID
+
+# Build the filter with the helper
+filters = Filters.create(Filters.AND, [
+    Filters.item(
+        Column.id,
+        Operator.GREATER_OR_EQUAL,
+        Type.Number,
+        Filters.value(1)
+    ),
+    Filters.item(
+        Column.id,
+        Operator.LESS_OR_EQUAL,
+        Type.Number,
+        Filters.value(1000)
+    ),
+    Filters.item(
+        Column.data("text"),
+        Operator.CONTAINS,
+        Type.String,
+        Filters.value("Hello")
+    )
+])
+
+# Create a view with filters
+view = ls.views.create(
+    project=project_id,
+    data={
+        'title': 'My demo view',
+        'filters': filters
+    }
+)
+
+# Fetch tasks from that view
+tasks = ls.tasks.list(view=view.id, fields='all')
+for task in tasks:
+    print(task.id, task.data.get('text'))
+```
+
+<Note>
+The task ID filter only works if your project task IDs are from 1 to 1000. 
+
+Check the ID column in your project, and adjust the numbers as needed.
+</Note>

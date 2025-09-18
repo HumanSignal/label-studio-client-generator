@@ -1,0 +1,58 @@
+---
+title: Add Model Predictions
+---
+
+You can add predictions to existing tasks in Label Studio in your Python script.
+
+In this example, you begin by setting your API key and Label Studio URL as environment variables:
+
+```bash
+export LABEL_STUDIO_API_KEY="YOUR_TOKEN"
+export LABEL_STUDIO_URL="URL"
+```
+
+If you would prefer to set them directly in the script, see [Create a Project](create-a-project) for an example. 
+
+<Note>
+This demo uses the example project from [Create a Project](create-a-project). You would need to adjust this to match your labeling configuration. 
+
+For example, `sentiment` maps to `<Choices name="sentiment" toName="text" choice="single">` in the labeling configuration we used earlier. 
+
+</Note>
+
+```python
+import os
+import sys
+from label_studio_sdk.client import LabelStudio
+from label_studio_sdk.label_interface.objects import PredictionValue
+
+base_url = os.getenv("LABEL_STUDIO_URL")
+api_key = os.getenv("LABEL_STUDIO_API_KEY")
+if not api_key or not base_url:
+    print("ERROR: set LABEL_STUDIO_API_KEY and LABEL_STUDIO_URL env var")
+    sys.exit(1)
+
+ls = LabelStudio(base_url=base_url, api_key=api_key)
+
+PROJECT_ID = 123  # <- replace with your project ID
+
+project = ls.projects.get(id=PROJECT_ID)
+
+# Get the parsed labeling interface to build valid prediction payloads
+li = project.get_label_interface()
+
+# Iterate tasks and attach predictions
+for task in ls.tasks.list(project=project.id, include=["id"]):
+    # 'label' must match the control tag name in your labeling config
+    predicted_label = li.get_control('sentiment').label(['Positive'])
+
+    prediction = PredictionValue(
+        model_version="my-super-ai",
+        score=0.99,  # optional
+        result=[predicted_label]
+    )
+
+    ls.predictions.create(task=task.id, **prediction.model_dump())
+```
+
+For another example, see the [Jupyter notebook example of importing pre-annotated data](https://github.com/heartexlabs/label-studio-sdk/blob/master/examples/import_preannotations/import_preannotations.ipynb).

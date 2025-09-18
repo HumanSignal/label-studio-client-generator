@@ -26,18 +26,27 @@ navigation:
     layout:
       - section: Tutorials
         contents:
+          - page: Create a Project
+            path: ./pages/tutorials/create_project.mdx
+          - page: Import Tasks
+            path: ./pages/tutorials/import_tasks.mdx
+          - page: Assign Users to Tasks
+            path: ./pages/tutorials/assign_users_to_tasks.mdx
+          - page: Manage Labeling Jobs
+            path: ./pages/tutorials/manage_labeling_jobs.mdx
+          - page: Add Model Predictions
+            path: ./pages/tutorials/add_model_predictions.mdx
+          - page: Export and Convert Snapshots
+            path: ./pages/tutorials/export_snapshots.mdx
+          - page: Logging ML Server Predictions
+            path: ./pages/tutorials/logging_ml_server_predictions.mdx
           - page: Evaluate LLM Responses
             path: ./pages/tutorials/evaluate_llm_responses.mdx
           - page: Improve Object Detection with YOLO
             path: ./pages/tutorials/improve_object_detection_with_yolo.mdx
           - page: Interactive OCR with Tesseract
             path: ./pages/tutorials/interactive_ocr_with_tesseract.mdx
-          - page: Logging ML Server Predictions
-            path: ./pages/tutorials/logging_ml_server_predictions.mdx
-          - page: Assign Users to Tasks
-            path: ./pages/tutorials/assign_users_to_tasks.mdx
-          - page: Export and Convert Snapshots
-            path: ./pages/tutorials/export_snapshots.mdx
+          
 
 css: ./styles.css
 
