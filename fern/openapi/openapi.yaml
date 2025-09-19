@@ -5449,10 +5449,10 @@ paths:
         - organizations
         - members
       x-fern-sdk-method-name: get
-  /api/organizations/{id}/organization-permissions:
+  /api/organizations/{id}/permissions:
     get:
       description: List all organization-level permission overrides for a given organization.
-      operationId: api_organizations_organization_permissions_list
+      operationId: api_organizations_permissions_list
       parameters:
         - in: path
           name: id
@@ -5488,7 +5488,7 @@ paths:
       x-fern-sdk-method-name: list
     post:
       description: Create a new organization-level permission override for a given organization.
-      operationId: api_organizations_organization_permissions_create
+      operationId: api_organizations_permissions_create
       parameters:
         - in: path
           name: id
@@ -5530,9 +5530,34 @@ paths:
         - organizations
         - permissions
       x-fern-sdk-method-name: create
-  /api/organizations/{id}/organization-permissions/{permission}:
+  /api/organizations/{id}/permissions/options:
+    get:
+      description: Retrieve the list of configurable permission options (label, tooltip, default role and allowed roles).
+      operationId: api_organizations_permissions_options_retrieve
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: No response body
+      security:
+        - Token: []
+      summary: Get configurable permissions options
+      tags:
+        - Organizations
+        - Permissions
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - organizations
+        - permissions
+      x-fern-sdk-method-name: get_options
+  /api/organizations/{id}/permissions/{permission}:
     delete:
-      operationId: api_organizations_organization_permissions_destroy
+      operationId: api_organizations_permissions_destroy
       parameters:
         - in: path
           name: id
@@ -5564,7 +5589,7 @@ paths:
         - permissions
       x-fern-sdk-method-name: delete
     get:
-      operationId: api_organizations_organization_permissions_retrieve
+      operationId: api_organizations_permissions_retrieve
       parameters:
         - in: path
           name: id
@@ -5601,7 +5626,7 @@ paths:
       x-fern-sdk-method-name: get
     patch:
       description: Partially update the organization-level permission override for a given permission key.
-      operationId: api_organizations_organization_permissions_partial_update
+      operationId: api_organizations_permissions_partial_update
       parameters:
         - in: path
           name: id
@@ -5651,7 +5676,7 @@ paths:
       x-fern-sdk-method-name: update
     put:
       description: Replace the organization-level permission override for a given permission key.
-      operationId: api_organizations_organization_permissions_update
+      operationId: api_organizations_permissions_update
       parameters:
         - description: A unique integer value identifying this organization.
           in: path
