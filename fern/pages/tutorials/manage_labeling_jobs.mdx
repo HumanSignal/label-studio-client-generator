@@ -4,74 +4,52 @@ title: Managing Labeling Jobs
 
 You can also use the SDK to control how tasks appear in the data manager to annotators or reviewers. You can create custom filters and ordering for the tasks based on parameters that you specify with the SDK. This lets you have more granular control over which tasks in your dataset get labeled or reviewed, and in which order.
 
-In this example, you begin by setting your API key and Label Studio URL as environment variables:
-
-```bash
-export LABEL_STUDIO_API_KEY="YOUR_TOKEN"
-export LABEL_STUDIO_URL="URL"
-```
-
-If you would prefer to set them directly in the script, see [Create a Project](create-a-project) for an example.
-
 ## Create a batch of tasks to annotate using filters
 
-For example, you can create a filter to prepare tasks to be annotated. If you want annotators to focus on tasks in the first 1000 tasks in a dataset that contain the word "hello" in the field "text" in the task data, you could use the following:
+For example, you can create a filter to prepare tasks to be annotated. If you want annotators to focus on tasks in the first 10 tasks in a dataset that contain the word "hello" in the field "text" in the task data, you could use the following:
 
 ```python
-import os
-import sys
-from label_studio_sdk.client import LabelStudio
-from label_studio_sdk.data_manager import Filters, Column, Operator, Type
+LABEL_STUDIO_URL = 'YOUR_BASE_URL'
+LABEL_STUDIO_API_KEY = 'YOUR_API_KEY'
+PROJECT_ID=1    # replace with your project ID 
 
-base_url = os.getenv("LABEL_STUDIO_URL")
-api_key = os.getenv("LABEL_STUDIO_API_KEY")
-if not api_key or not base_url:
-    print("ERROR: set LABEL_STUDIO_API_KEY and LABEL_STUDIO_URL env var")
-    sys.exit(1)
+from label_studio_sdk import LabelStudio
 
-ls = LabelStudio(base_url=base_url, api_key=api_key)
+client = LabelStudio(base_url=LABEL_STUDIO_URL, api_key=LABEL_STUDIO_API_KEY)
 
-project_id = 1  # <- replace with your project ID
+# Build filters JSON per API schema:
+# https://api.labelstud.io/api-reference/api-reference/views/create#request.body.data.filters
+filters = {
+    "conjunction": "and",
+    "items": [
+        {
+            # If your task data field is "text", use data.text; otherwise change the field name accordingly
+            "filter": "filter:tasks:data.text",
+            "operator": "contains",
+            "type": "String",
+            "value": "hello",
+        },
+        {
+            "filter": "filter:tasks:inner_id",
+            "operator": "less",
+            "value": 10,
+            "child_filter": None,
+            "type": "Number",
+        }
+    ],
+}
 
-# Build the filter with the helper
-filters = Filters.create(Filters.AND, [
-    Filters.item(
-        Column.id,
-        Operator.GREATER_OR_EQUAL,
-        Type.Number,
-        Filters.value(1)
-    ),
-    Filters.item(
-        Column.id,
-        Operator.LESS_OR_EQUAL,
-        Type.Number,
-        Filters.value(1000)
-    ),
-    Filters.item(
-        Column.data("text"),
-        Operator.CONTAINS,
-        Type.String,
-        Filters.value("Hello")
-    )
-])
+view_payload = {
+    "title": 'Text contains "hello"',
+    "type": "list",
+    "target": "tasks",
+    "filters": filters,
+}
 
-# Create a view with filters
-view = ls.views.create(
-    project=project_id,
-    data={
-        'title': 'My demo view',
-        'filters': filters
-    }
-)
+view = client.views.create(project=PROJECT_ID, data=view_payload)
 
-# Fetch tasks from that view
-tasks = ls.tasks.list(view=view.id, fields='all')
-for task in tasks:
-    print(task.id, task.data.get('text'))
+print(f"Created view (tab) id={view.id}, title={view.data.get('title')}")
+# Optional: list task IDs shown by this tab
+for task in client.tasks.list(view=view.id, fields=["id"]):
+    print(task.id)
 ```
-
-<Note>
-The task ID filter only works if your project task IDs are from 1 to 1000. 
-
-Check the ID column in your project, and adjust the numbers as needed.
-</Note>

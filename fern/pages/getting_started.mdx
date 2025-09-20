@@ -31,7 +31,9 @@ In your Python scripts, you will need to do the following:
 
     For example, `http://localhost:8080` or `https://app.humansignal.com`
 
-    Note that `LABEL_STUDIO_URL` should start with `https://` or `http://`
+    Note:
+     - Do not including a trailing slash in your URL
+     - `LABEL_STUDIO_URL` should start with `https://` or `http://`
 - **Define your API key.** 
 
     This should be available on the **Account & Settings** page, but you may need to enable it at the organization level first. See [Access tokens](https://labelstud.io/guide/access_tokens).
@@ -39,17 +41,25 @@ In your Python scripts, you will need to do the following:
     You can use either the Legacy Token or the Personal Access Token, but for the SDK we recommend the Personal Access Token. 
 - Connect to the API.
 
+Try this example:
+
 ```python
-# Define the URL where Label Studio is accessible and the API key for your user account
-LABEL_STUDIO_URL = 'http://localhost:8080'
+# Define the URL where Label Studio is accessible
+LABEL_STUDIO_URL = 'YOUR_BASE_URL'
 # API key is available at the Account & Settings page in Label Studio UI
 LABEL_STUDIO_API_KEY = 'YOUR_API_KEY'
 
 # Import the SDK and the client module
-from label_studio_sdk.client import LabelStudio
+from label_studio_sdk import LabelStudio
 
-# Connect to the Label Studio API and check the connection
-ls = LabelStudio(base_url=LABEL_STUDIO_URL, api_key=LABEL_STUDIO_API_KEY)
+# Connect to the Label Studio API 
+client = LabelStudio(base_url=LABEL_STUDIO_URL, api_key=LABEL_STUDIO_API_KEY)
+
+# A basic request to verify connection is working
+me = client.users.whoami()
+
+print("username:", me.username)
+print("email:", me.email)
 ```
 <Tip>
 You can set `LABEL_STUDIO_URL` and `LABEL_STUDIO_API_KEY` as environment variables: 
@@ -126,14 +136,14 @@ By default, requests time out after 60 seconds. You can configure this with a
 timeout option at the client or request level.
 
 ```python
-from label_studio_sdk.client import LabelStudio
+from label_studio_sdk import LabelStudio
 
-ls = LabelStudio(
+client = LabelStudio(
     # All timeouts set to 20 seconds
     timeout=20.0
 )
 
-ls.projects.create(..., {
+client.projects.create(..., {
     # Override timeout for a specific method
     timeout=20.0
 })
@@ -146,9 +156,9 @@ include support for proxies and transports.
 ```python
 import httpx
 
-from label_studio_sdk.client import LabelStudio
+from label_studio_sdk import LabelStudio
 
-ls = LabelStudio(
+client = LabelStudio(
     http_client=httpx.Client(
         proxies="http://my.test.proxy.example.com",
         transport=httpx.HTTPTransport(local_address="0.0.0.0"),

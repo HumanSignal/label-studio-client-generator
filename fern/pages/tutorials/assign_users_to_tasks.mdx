@@ -26,14 +26,16 @@ export LABEL_STUDIO_API_KEY="YOUR_TOKEN"
 export LABEL_STUDIO_URL="URL"
 ```
 
-If you would prefer to set them directly in the script, see [Create a Project](create-a-project) for an example. 
+For information on finding your API key and base URL, see [Authenticate and Connect to the API](../../api-reference/introduction/getting-started#authenticate-and-connect-to-the-api).
+
+If you would prefer to set them directly in the script, see the other tutorials for an example. 
 
 ## Script
 
 ```py
 import os
 import sys
-from label_studio_sdk.client import LabelStudio
+from label_studio_sdk import LabelStudio
 
 
 def main():
@@ -54,14 +56,14 @@ def main():
         sys.argv[3].strip().upper() if len(sys.argv) > 3 else "AN"
     )  # AN=annotate, RE=review
 
-    ls = LabelStudio(base_url=base_url, api_key=api_key)
+    client = LabelStudio(base_url=base_url, api_key=api_key)
 
     # 1) Get project by ID
-    project = ls.projects.get(id=project_id)
+    project = client.projects.get(id=project_id)
     print(f"Project: {project.title} (id={project.id})")
 
     # 2) Get user by email
-    users = list(ls.users.list())
+    users = list(client.users.list())
     user = next(
         (u for u in users if (u.email or "").lower() == user_email.lower()), None
     )
@@ -93,7 +95,7 @@ def main():
     }
     selected_items = {"all": True}
 
-    resp = ls.projects.assignments.bulk_assign(
+    resp = client.projects.assignments.bulk_assign(
         id=project_id,
         type=assignment_type,  # 'AN' or 'RE'
         users=[user.id],  # list of user IDs
