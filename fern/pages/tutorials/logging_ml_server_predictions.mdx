@@ -11,14 +11,14 @@ The request to this endpoint automatically logged in Label Studio instance with 
 Let's create a project in Label Studio to collect the predictions' requests and responses from the ML model, and aim to task human reviewers to assess the correctness of the predictions.
 
 ```python
-from label_studio_sdk.client import LabelStudio
+LABEL_STUDIO_URL = 'YOUR_BASE_URL'
+LABEL_STUDIO_API_KEY = 'YOUR_API_KEY' 
 
-ls = LabelStudio(
-    base_url='http://localhost:8080',
-    api_key='YOUR-API-KEY'
-)
+from label_studio_sdk import LabelStudio
 
-project = ls.projects.create(
+client = LabelStudio(base_url=LABEL_STUDIO_URL, api_key=LABEL_STUDIO_API_KEY)
+
+project = client.projects.create(
     title='ML Observability Project',
     label_config='''
         <View>
