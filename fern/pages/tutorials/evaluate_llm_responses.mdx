@@ -12,13 +12,18 @@ Let's connect to the running Label Studio instance.
 
 For information on finding your base URL and API key, see [Authenticate and Connect to the API](../../api-reference/introduction/getting-started#authenticate-and-connect-to-the-api).
 
-```python
-from label_studio_sdk.client import LabelStudio
+<Tip>
+Label Studio Enterprise Users can now generate chats with an LLM directly from the Label Studio interface. For more information, see [the Chat tag](https://docs.humansignal.com/tags/chat). 
+</Tip>
 
-ls = LabelStudio(
-    base_url='YOUR_BASE_URL',
-    api_key='YOUR_API_KEY'
-)
+```python
+LABEL_STUDIO_URL = 'YOUR_BASE_URL'
+LABEL_STUDIO_API_KEY = 'YOUR_API_KEY'
+
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(base_url=LABEL_STUDIO_URL, api_key=LABEL_STUDIO_API_KEY)
+
 ```
 
 ## Different LLM Evaluation Strategies
@@ -78,7 +83,7 @@ There are several strategies to evaluate LLM responses, depending on the complex
 
     After config is defined, create a new project with:
     ```python
-    project = ls.projects.create(
+    project = client.projects.create(
     title='LLM evaluation',
     description='Project to evaluate LLM responses for AI safety',
     label_config='<View>...</View>'
@@ -200,7 +205,7 @@ There are several strategies to evaluate LLM responses, depending on the complex
     Use this configuration to create a new project:
 
     ```python
-    project = ls.projects.create(
+    project = client.projects.create(
       title='LLM grading',
       description='Project to grade LLM summarization capabilities',
       label_config='<View>...</View>'
@@ -312,7 +317,7 @@ There are several strategies to evaluate LLM responses, depending on the complex
     Use this configuration to create a new project:
 
     ```python
-    project = ls.projects.create(
+    project = client.projects.create(
       title='LLM comparison',
       description='Pairwise comparison of LLM responses',
       label_config='<View>...</View>'
@@ -438,7 +443,7 @@ There are several strategies to evaluate LLM responses, depending on the complex
 
     Copy the configuration and create a new project replacing `label_config` with the provided configuration:
     ```python
-    project = ls.projects.create(
+    project = client.projects.create(
     title='RAG pipeline evaluation',
     description='Project to evaluate RAG pipeline responses',
     label_config='<View>...</View>'
@@ -523,7 +528,7 @@ There are several strategies to evaluate LLM responses, depending on the complex
 Picking one of [the provided evaluation strategies](#different-llm-evaluation-strategies), you can now upload your `task` to created Label Studio `project`:
 
 ```python
-ls.tasks.create(
+client.tasks.create(
     data=task,
     project=project.id
 )
@@ -539,7 +544,7 @@ The final step is to collect the annotated data from the Label Studio project. Y
 You can also use a Python SDK to retrieve the annotations. For example, to collect and display all user choices from the project:
 
 ```python
-annotated_tasks = ls.tasks.list(project=project.id, fields='all')
+annotated_tasks = client.tasks.list(project=project.id, fields='all')
 evals = []
 for annotated_task in annotated_tasks:
     evals.append(str(annotated_task.annotations[0].result[0]['value']['choices']))

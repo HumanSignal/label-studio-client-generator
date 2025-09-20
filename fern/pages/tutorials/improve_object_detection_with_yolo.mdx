@@ -36,12 +36,12 @@ label_config = f'''
 Now use this `label_config` to create a project.
 
 ```python
-from label_studio_sdk.client import LabelStudio
+LABEL_STUDIO_URL = 'YOUR_BASE_URL'
+LABEL_STUDIO_API_KEY = 'YOUR_API_KEY'
 
-client = LabelStudio(
-    base_url="YOUR_BASE_URL",
-    api_key="YOUR_API_KEY",
-)
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(base_url=LABEL_STUDIO_URL, api_key=LABEL_STUDIO_API_KEY)
 
 project = client.projects.create(
     title='Object detection',
@@ -120,7 +120,8 @@ from PIL import Image
 import requests
 from tqdm import tqdm
 
-project = client.projects.get(28)
+PROJECT_ID=1    # replace with your project ID
+project = client.projects.get(PROJECT_ID)
 tasks = client.tasks.list(project=project.id)
 images = []
 for i, task in enumerate(tqdm(tasks)):
