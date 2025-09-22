@@ -34,8 +34,6 @@ import logging
 from label_studio_sdk import LabelStudio
 from label_studio_sdk.core.api_error import ApiError
 
-client = LabelStudio(base_url=LABEL_STUDIO_URL, api_key=LABEL_STUDIO_API_KEY)
-
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("export_snapshots")
 
