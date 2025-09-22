@@ -18885,6 +18885,10 @@ components:
         project:
           description: A unique integer value identifying this project.
           type: integer
+        recursive_scan:
+          description: Perform recursive scan
+          nullable: true
+          type: boolean
         regex_filter:
           description: Cloud storage regex for filtering objects
           nullable: true
@@ -18980,6 +18984,10 @@ components:
         project:
           description: A unique integer value identifying this project.
           type: integer
+        recursive_scan:
+          description: Perform recursive scan
+          nullable: true
+          type: boolean
         regex_filter:
           description: Cloud storage regex for filtering objects
           nullable: true
@@ -25793,6 +25801,10 @@ components:
         project:
           description: A unique integer value identifying this project.
           type: integer
+        recursive_scan:
+          description: Perform recursive scan
+          nullable: true
+          type: boolean
         regex_filter:
           description: Cloud storage regex for filtering objects
           nullable: true
