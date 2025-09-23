@@ -6753,6 +6753,7 @@ paths:
       x-fern-sdk-group-name: projects
       x-fern-sdk-method-name: delete
     get:
+      description: Retrieve information about a project by project ID.
       operationId: api_projects_retrieve
       parameters:
         - in: path
@@ -6775,8 +6776,13 @@ paths:
           description: Project information
       security:
         - Token: []
+      summary: Get project by ID
       tags:
         - Projects
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: projects
+      x-fern-sdk-method-name: get
     patch:
       description: Update the details of a specific project.
       operationId: api_projects_partial_update
