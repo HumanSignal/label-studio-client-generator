@@ -1,0 +1,100 @@
+---
+title: Create a Project
+---
+
+You can create a project in Label Studio using the SDK. 
+
+To start, you just need to specify:
+
+* Project title
+* Labeling configuration
+
+Choose your labeling configuration based on the type of labeling that you wish to perform. See the available [templates for Label Studio projects](https://labelstud.io/templates), or set a blank configuration with `<View></View>`.
+
+For this example, we will use the following basic labeling config to perform sentiment analysis on text:
+
+```xml
+<View>
+  <Header value="Choose text sentiment:"/>
+  <Text name="text" value="$text"/>
+  <Choices name="sentiment" toName="text" choice="single">
+    <Choice value="Positive"/>
+    <Choice value="Negative"/>
+    <Choice value="Neutral"/>
+  </Choices>
+</View>
+```
+
+Your Python will look like this. For information on finding your API key and base URL, see [Authenticate and Connect to the API](../../api-reference/introduction/getting-started#authenticate-and-connect-to-the-api).
+
+```python
+# Define the URL where Label Studio is accessible
+LABEL_STUDIO_URL = 'YOUR_BASE_URL'
+# API key is available at the Account & Settings page in Label Studio UI
+LABEL_STUDIO_API_KEY = 'YOUR_API_KEY'
+
+# Import the SDK and the client module
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(base_url=LABEL_STUDIO_URL, api_key=LABEL_STUDIO_API_KEY)
+
+label_config = """
+<View>
+  <Header value="Choose text sentiment:"/>
+  <Text name="text" value="$text"/>
+  <Choices name="sentiment" toName="text" choice="single">
+    <Choice value="Positive"/>
+    <Choice value="Negative"/>
+    <Choice value="Neutral"/>
+  </Choices>
+</View>
+"""
+
+project = client.projects.create(
+    title="Sentiment Classification",
+    label_config=label_config
+)
+
+print("Project ID:", project.id)
+```
+
+<Tip>Take note of the project ID, as you will need it in several for other tutorials. You can also find the project ID in the URL when viewing the project in Label Studio.</Tip>
+
+## Setting workspace in Label Studio Enterprise
+
+The example above creates the project in your Sandbox workspace. 
+
+You can specify a different workspace using the workspace ID, which you can find in the URL when viewing the workspace in Label Studio or by [using the API](../../api-reference/api-reference/workspaces/list). 
+
+```python
+# Define the URL where Label Studio is accessible
+LABEL_STUDIO_URL = 'YOUR_BASE_URL'
+# API key is available at the Account & Settings page in Label Studio UI
+LABEL_STUDIO_API_KEY = 'YOUR_API_KEY'
+
+# Import the SDK and the client module
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(base_url=LABEL_STUDIO_URL, api_key=LABEL_STUDIO_API_KEY)
+
+label_config = """
+<View>
+  <Header value="Choose text sentiment:"/>
+  <Text name="text" value="$text"/>
+  <Choices name="sentiment" toName="text" choice="single">
+    <Choice value="Positive"/>
+    <Choice value="Negative"/>
+    <Choice value="Neutral"/>
+  </Choices>
+</View>
+"""
+
+WORKSPACE_ID = 1  # replace with your workspace ID
+
+project = client.projects.create(
+    title="Sentiment Classification",
+    label_config=label_config,
+    workspace=WORKSPACE_ID,
+)
+print("Project ID:", project.id)
+```

@@ -16,15 +16,15 @@ It will start the server listening on `http://localhost:9090`.
 
 ## Connect to Label Studio
 
-Let's connect to the running Label Studio instance. You need `API_KEY` that can be found in `Account & Settings` -> `API Key` section.
+For information on finding your base URL and API key, see [Authenticate and Connect to the API](../../api-reference/introduction/getting-started#authenticate-and-connect-to-the-api).
 
 ```python
-from label_studio_sdk.client import LabelStudio
+LABEL_STUDIO_URL = 'YOUR_BASE_URL'
+LABEL_STUDIO_API_KEY = 'YOUR_API_KEY' 
 
-ls = LabelStudio(
-    base_url='http://localhost:8080',
-    api_key='YOUR-API-KEY'
-)
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(base_url=LABEL_STUDIO_URL, api_key=LABEL_STUDIO_API_KEY)
 ```
 
 ## Create a project
@@ -32,7 +32,7 @@ ls = LabelStudio(
 To create a project, you need to specify the `label_config` that defines the labeling interface and the labels ontology.
 
 ```python
-project = ls.projects.create(
+project = client.projects.create(
     title='Live OCR',
     description='A project to demonstrate live OCR with connected Tesseract model',
     label_config='''
@@ -64,11 +64,13 @@ project = ls.projects.create(
 To connect your running OCR model to the project, you need to specify the model URL and the project ID:
 
 ```python
-ls.ml.create(
+client.ml.create(
     title='Tesseract OCR',
     description='A model to perform OCR using Tesseract',
-    url='http://localhost:9090',
+    url='http://localhost:9090', # if LS runs in Docker, prefer http://host.docker.internal:9090
     project=project.id,
     is_interactive=True
 )
 ```
+
+Also see this [example notebook](https://github.com/HumanSignal/label-studio-sdk/blob/master/tutorials/connect_to_ml_backend.ipynb). 
