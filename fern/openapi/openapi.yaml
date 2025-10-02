@@ -5446,14 +5446,7 @@ paths:
       x-fern-sdk-group-name: organizations
       x-fern-sdk-method-name: get
     patch:
-      description: |-
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
-        Update organization details including title, embed domains, and custom scripts settings.
+      description: Update organization details including title, embed domains, and Plugins settings.
       operationId: api_organizations_partial_update
       parameters:
         - in: path
@@ -21538,7 +21531,7 @@ components:
           type: string
         custom_scripts_editable_by:
           description: |-
-            Set the minimum user role that can edit custom scripts in the UI.
+            Set the minimum user role that can edit custom scripts (Plugins) in the UI.
 
             * `AD` - Administrator
             * `MA` - Manager
@@ -21547,7 +21540,7 @@ components:
             - $ref: '#/components/schemas/CustomScriptsEditableByEnum'
             - $ref: '#/components/schemas/NullEnum'
         custom_scripts_enabled_at:
-          description: Set to current time to enabled custom scripts for this organization. Can only be enabled if no organization members are active members of any other organizations; otherwise an error will be raised. If this occurs, contact the LEAP team for assistance with enabling custom scripts.
+          description: Set to current time to enable custom scripts (Plugins) for this organization. Can only be enabled if no organization members are active members of any other organizations; otherwise an error will be raised. If this occurs, contact the LEAP team for assistance with enabling custom scripts (Plugins).
           format: date-time
           nullable: true
           type: string
@@ -23425,7 +23418,7 @@ components:
           type: string
         custom_scripts_editable_by:
           description: |-
-            Set the minimum user role that can edit custom scripts in the UI.
+            Set the minimum user role that can edit custom scripts (Plugins) in the UI.
 
             * `AD` - Administrator
             * `MA` - Manager
@@ -27823,7 +27816,7 @@ components:
           type: string
         custom_scripts_editable_by:
           description: |-
-            Set the minimum user role that can edit custom scripts in the UI.
+            Set the minimum user role that can edit custom scripts (Plugins) in the UI.
 
             * `AD` - Administrator
             * `MA` - Manager
@@ -27832,7 +27825,7 @@ components:
             - $ref: '#/components/schemas/CustomScriptsEditableByEnum'
             - $ref: '#/components/schemas/NullEnum'
         custom_scripts_enabled_at:
-          description: Set to current time to enabled custom scripts for this organization. Can only be enabled if no organization members are active members of any other organizations; otherwise an error will be raised. If this occurs, contact the LEAP team for assistance with enabling custom scripts.
+          description: Set to current time to enable custom scripts (Plugins) for this organization. Can only be enabled if no organization members are active members of any other organizations; otherwise an error will be raised. If this occurs, contact the LEAP team for assistance with enabling custom scripts (Plugins).
           format: date-time
           nullable: true
           type: string
@@ -28864,7 +28857,7 @@ components:
           nullable: true
           type: integer
         custom_script:
-          description: custom script for projects created from this template
+          description: custom script (Plugin) for projects created from this template
           minLength: 1
           nullable: true
           type: string
@@ -30010,7 +30003,7 @@ components:
           nullable: true
           type: integer
         custom_script:
-          description: custom script for projects created from this template
+          description: custom script (Plugin) for projects created from this template
           nullable: true
           type: string
         description:
@@ -30054,7 +30047,7 @@ components:
           nullable: true
           type: integer
         custom_script:
-          description: custom script for projects created from this template
+          description: custom script (Plugin) for projects created from this template
           minLength: 1
           nullable: true
           type: string
