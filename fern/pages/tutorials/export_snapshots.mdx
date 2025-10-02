@@ -2,6 +2,29 @@
 title: Export and Convert Snapshots
 ---
 
+## Bulk export as JSON
+
+For a quick JSON export, you can use the following example to bulk export from a project without creating a snapshot first. 
+
+```python
+
+# Define the URL where Label Studio is accessible
+LABEL_STUDIO_URL = 'YOUR_BASE_URL'
+# API key is available at the Account & Settings page in Label Studio UI
+LABEL_STUDIO_API_KEY = 'YOUR_ACCESS_TOKEN'
+PROJECT_ID=1    # replace with your project ID  
+
+from label_studio_sdk import LabelStudio 
+
+client = LabelStudio(base_url=LABEL_STUDIO_URL, api_key=LABEL_STUDIO_API_KEY)
+
+
+data = client.projects.exports.as_json(PROJECT_ID)
+
+```
+
+## Use snapshots
+
 In this example, you will: 
 
 1. Create an export snapshot
@@ -19,15 +42,15 @@ Read more about supported export formats in the [Label Studio documentation](htt
 
 For information on finding your API key and base URL, see [Authenticate and Connect to the API](../../api-reference/introduction/getting-started#authenticate-and-connect-to-the-api).
 
-## Snapshot example
+### Example script
 
-You can also find this as a [Python script in the SDK repo](https://github.com/HumanSignal/label-studio-sdk/blob/master/tutorials/export_snapshots.py). Note that in that example, you must first set the URL, API key, and project ID as environment variables. 
+You can also find this as a [Python script in the SDK repo](https://github.com/HumanSignal/label-studio-sdk/blob/master/tutorials/export_snapshots.py). Note that in that example, you must first set the URL, API key (access token), and project ID as environment variables. 
 
 ```py
 # Define the URL where Label Studio is accessible
 LABEL_STUDIO_URL = 'YOUR_BASE_URL'
 # API key is available at the Account & Settings page in Label Studio UI
-LABEL_STUDIO_API_KEY = 'YOUR_API_KEY'
+LABEL_STUDIO_API_KEY = 'YOUR_ACCESS_TOKEN'
 PROJECT_ID=1    # replace with your project ID 
 
 import sys
@@ -206,20 +229,3 @@ if __name__ == "__main__":
         convert_snapshot(export_type, export_id)
 ```
 
-## Bulk export as JSON
-
-You can also use the following example to bulk export from a project without creating an snapshot first. 
-
-```python
-
-# Set your variables in the script as above 
-# Or as environment variables. Must include a project ID. 
-
-from label_studio_sdk import LabelStudio 
-
-client = LabelStudio(base_url=LABEL_STUDIO_URL, api_key=LABEL_STUDIO_API_KEY)
-
-
-data = client.projects.exports.as_json(PROJECT_ID)
-
-```
