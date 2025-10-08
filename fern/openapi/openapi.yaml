@@ -9090,6 +9090,55 @@ paths:
         - projects
         - stats
       x-fern-sdk-method-name: agreement_annotator
+  /api/projects/{id}/stats/agreement_annotators:
+    get:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get agreement statistics for multiple annotators within a project.
+      operationId: api_projects_stats_agreement_annotators_retrieve
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - description: Comma-separated list of annotator user IDs to get agreement scores for
+          in: query
+          name: ids
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  agreement:
+                    additionalProperties:
+                      type: number
+                    description: Mapping of annotator ID to their agreement score (0-1) or null if no data
+                    type: object
+                required:
+                  - agreement
+                type: object
+          description: Multiple annotator agreement statistics
+      security:
+        - Token: []
+      summary: Get agreement statistics for multiple annotators
+      tags:
+        - Stats
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - stats
+      x-fern-sdk-method-name: agreement_annotators
   /api/projects/{id}/stats/data_filter:
     get:
       description: Get statistics about user data filters and their usage within a project.
@@ -18986,6 +19035,7 @@ components:
           title: Show predictions to annotator
           type: boolean
         show_ground_truth_first:
+          description: 'Onboarding mode (true): show ground truth tasks first in the labeling stream'
           type: boolean
         show_instruction:
           description: Show instructions to the annotator before they start
@@ -23751,6 +23801,7 @@ components:
           title: Show predictions to annotator
           type: boolean
         show_ground_truth_first:
+          description: 'Onboarding mode (true): show ground truth tasks first in the labeling stream'
           type: boolean
         show_instruction:
           description: Show instructions to the annotator before they start
@@ -24032,6 +24083,7 @@ components:
           title: Show predictions to annotator
           type: boolean
         show_ground_truth_first:
+          description: 'Onboarding mode (true): show ground truth tasks first in the labeling stream'
           type: boolean
         show_instruction:
           description: Show instructions to the annotator before they start
@@ -24190,6 +24242,7 @@ components:
           title: Show predictions to annotator
           type: boolean
         show_ground_truth_first:
+          description: 'Onboarding mode (true): show ground truth tasks first in the labeling stream'
           type: boolean
         show_instruction:
           description: Show instructions to the annotator before they start
@@ -24437,6 +24490,7 @@ components:
           title: Show predictions to annotator
           type: boolean
         show_ground_truth_first:
+          description: 'Onboarding mode (true): show ground truth tasks first in the labeling stream'
           type: boolean
         show_instruction:
           description: Show instructions to the annotator before they start
@@ -24695,6 +24749,7 @@ components:
           title: Show predictions to annotator
           type: boolean
         show_ground_truth_first:
+          description: 'Onboarding mode (true): show ground truth tasks first in the labeling stream'
           type: boolean
         show_instruction:
           description: Show instructions to the annotator before they start
@@ -28452,6 +28507,7 @@ components:
           title: Show predictions to annotator
           type: boolean
         show_ground_truth_first:
+          description: 'Onboarding mode (true): show ground truth tasks first in the labeling stream'
           type: boolean
         show_instruction:
           description: Show instructions to the annotator before they start
@@ -29517,6 +29573,7 @@ components:
           title: Show predictions to annotator
           type: boolean
         show_ground_truth_first:
+          description: 'Onboarding mode (true): show ground truth tasks first in the labeling stream'
           type: boolean
         show_instruction:
           description: Show instructions to the annotator before they start
@@ -29923,6 +29980,7 @@ components:
           title: Show predictions to annotator
           type: boolean
         show_ground_truth_first:
+          description: 'Onboarding mode (true): show ground truth tasks first in the labeling stream'
           type: boolean
         show_instruction:
           description: Show instructions to the annotator before they start
