@@ -26,6 +26,15 @@ poetry add label-studio-sdk
 
 ## Authenticate and Connect to the API
 
+### “API keys” vs. “Access tokens”
+
+In Label Studio, “access tokens” and “API keys” mean the same thing and are used interchangeably.
+
+For example, if you set the `LABEL_STUDIO_API_KEY` environment variable, you will set it to your access token.
+
+
+### Python SDK
+
 In your Python scripts, you will need to do the following:
 
 - Import the SDK.
@@ -36,7 +45,7 @@ In your Python scripts, you will need to do the following:
     Note:
      - Do not including a trailing slash in your URL
      - `LABEL_STUDIO_URL` should start with `https://` or `http://`
-- **Define your API key.** 
+- **Define your access token/API key.** 
 
     This should be available on the **Account & Settings** page, but you may need to enable it at the organization level first. See [Access tokens](https://labelstud.io/guide/access_tokens).
 
@@ -71,6 +80,24 @@ export LABEL_STUDIO_API_KEY="YOUR_API_KEY"
 export LABEL_STUDIO_URL="YOUR_BASE_URL"
 ```
 </Tip>
+
+### HTTP API
+
+If you are calling endpoints using HTTP (such as with cUrl commands), you will need to adjust your authorization header depending on which type of access token you are using. 
+
+Personal access tokens:
+
+```bash
+curl -X <method> <Label Studio URL>/api/<endpoint> \
+-H 'Authorization: Bearer <token>'
+```
+
+Legacy tokens:
+
+```bash
+curl -X <method> <Label Studio URL>/api/<endpoint> \
+-H 'Authorization: Token <token>'
+```
 
 ## Tutorials
 
