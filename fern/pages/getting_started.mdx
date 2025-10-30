@@ -88,13 +88,15 @@ If you are calling endpoints using HTTP (such as with cUrl commands), you will n
 Personal access tokens:
 
 ```bash
-curl -X <method> <Label Studio URL>/api/<endpoint> -H 'Authorization: Bearer <token>'
+curl -X <method> <Label Studio URL>/api/<endpoint> \
+-H 'Authorization: Bearer <token>'
 ```
 
 Legacy tokens:
 
 ```bash
-curl -X <method> <Label Studio URL>/api/<endpoint> -H 'Authorization: Token <token>'
+curl -X <method> <Label Studio URL>/api/<endpoint> \
+-H 'Authorization: Token <token>'
 ```
 
 ## Tutorials
