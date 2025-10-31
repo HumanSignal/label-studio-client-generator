@@ -986,7 +986,7 @@ paths:
                       white_label_id: null
               schema:
                 $ref: '#/components/schemas/BillingInfoResponse'
-          description: Billing info for the active organization
+          description: Billing information for the active organization
       security:
         - Token: []
       summary: ✨ Get billing info
