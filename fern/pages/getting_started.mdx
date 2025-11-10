@@ -6,16 +6,11 @@ If you're using an older version, please review the [breaking changes](https://g
 
 You can use the Label Studio Python SDK to make annotating data a more integrated part of your data science and machine learning pipelines. This software development kit (SDK) lets you call the Label Studio API directly from scripts using predefined classes and methods.
 
-With the Label Studio Python SDK, you can perform the following tasks in a Python script:
-- [Authenticate to the Label Studio API](#authentication)
-- [Create a Label Studio project](#create-a-project), including setting up a labeling configuration.
-- [Import tasks](#import-tasks).
-- [Manage pre-annotated tasks and model predictions](#add-model-predictions).
-- [Connect to a cloud storage provider](https://github.com/heartexlabs/label-studio-sdk/blob/master/examples/annotate_data_from_gcs/annotate_data_from_gcs.ipynb), such as Amazon S3, Microsoft Azure, or Google Cloud Services (GCS), to retrieve unlabeled tasks and store annotated tasks.
-- [Manage labeling jobs](#managing-labeling-jobs) by creating custom filters and ordering for tasks based on parameters that you specify.
-- [Export annotations](#export-annotations) from Label Studio.
-
 <Tip>For additional guidance on using our SDK, see [5 Tips and Tricks for Label Studio’s API and SDK](https://labelstud.io/blog/5-tips-and-tricks-for-label-studio-s-api-and-sdk/)</Tip>
+
+<Tip>If you are using our SDK with an LLM, you can use this: https://api.labelstud.io/llms.txt</Tip>
+
+The following are basic examples. For more advanced examples, see [Tutorials](/tutorials).
 
 ## Install
 
@@ -29,246 +24,102 @@ poetry add label-studio-sdk
 ```
 
 
-## Authentication
-In your Python script, do the following:
+## Authenticate and Connect to the API
+
+### “API keys” vs. “Access tokens”
+
+In Label Studio, “access tokens” and “API keys” mean the same thing and are used interchangeably.
+
+For example, if you set the `LABEL_STUDIO_API_KEY` environment variable, you will set it to your access token.
+
+
+### Python SDK
+
+In your Python scripts, you will need to do the following:
 
 - Import the SDK.
-- Define your API key and Label Studio URL (API key is available at _Account_ page).
+- **Define your Label Studio URL.** 
+
+    For example, `http://localhost:8080` or `https://app.humansignal.com`
+
+    Note:
+     - Do not including a trailing slash in your URL
+     - `LABEL_STUDIO_URL` should start with `https://` or `http://`
+- **Define your access token/API key.** 
+
+    This should be available on the **Account & Settings** page, but you may need to enable it at the organization level first. See [Access tokens](https://labelstud.io/guide/access_tokens).
+
+    You can use either the Legacy Token or the Personal Access Token, but for the SDK we recommend the Personal Access Token. 
 - Connect to the API.
 
+Try this example:
+
 ```python
-# Define the URL where Label Studio is accessible and the API key for your user account
-LABEL_STUDIO_URL = 'http://localhost:8080'
-# API key is available at the Account & Settings > Access Tokens page in Label Studio UI
-API_KEY = 'd6f8a2622d39e9d89ff0dfef1a80ad877f4ee9e3'
+# Define the URL where Label Studio is accessible
+LABEL_STUDIO_URL = 'YOUR_BASE_URL'
+# API key is available at the Account & Settings page in Label Studio UI
+LABEL_STUDIO_API_KEY = 'YOUR_API_KEY'
 
 # Import the SDK and the client module
-from label_studio_sdk.client import LabelStudio
+from label_studio_sdk import LabelStudio
 
-# Connect to the Label Studio API and check the connection
-ls = LabelStudio(base_url=LABEL_STUDIO_URL, api_key=API_KEY)
+# Connect to the Label Studio API 
+client = LabelStudio(base_url=LABEL_STUDIO_URL, api_key=LABEL_STUDIO_API_KEY)
+
+# A basic request to verify connection is working
+me = client.users.whoami()
+
+print("username:", me.username)
+print("email:", me.email)
+```
+<Tip>
+You can set `LABEL_STUDIO_URL` and `LABEL_STUDIO_API_KEY` as environment variables: 
+
+```bash
+export LABEL_STUDIO_API_KEY="YOUR_API_KEY"
+export LABEL_STUDIO_URL="YOUR_BASE_URL"
+```
+</Tip>
+
+### HTTP API
+
+If you are calling endpoints using HTTP (such as with cUrl commands), you will need to adjust your authorization header depending on which type of access token you are using. 
+
+Personal access tokens:
+
+```bash
+curl -X <method> <Label Studio URL>/api/<endpoint> \
+-H 'Authorization: Bearer <token>'
 ```
 
-## Create a Project
+Legacy tokens:
 
-After you [connect to the Label Studio API](#Connect-to-the-Label-Studio-API), you can create a project in Label Studio using the SDK.
-Specify the project title and the labeling configuration. Choose your labeling configuration based on the type of labeling that you wish to perform. See the available [templates for Label Studio projects](https://labelstud.io/templates), or set a blank configuration with `<View></View>`.
-
-For example, create a text classification project in your Python code:
-```python
-from label_studio_sdk.label_interface import LabelInterface
-from label_studio_sdk.label_interface.create import choices
-
-# Define labeling interface
-label_config = LabelInterface.create({
-    'text': 'Text',
-    'label': choices(['Positive', 'Negative'])
-})
-
-# Create a project with the specified title and labeling configuration
-project = ls.projects.create(
-    title='Text Classification',
-    label_config=label_config
-)
+```bash
+curl -X <method> <Label Studio URL>/api/<endpoint> \
+-H 'Authorization: Token <token>'
 ```
 
-`label_config` is XML string that represents [the labeling interface with object and control tags](https://labelstud.io/tags).
+## Tutorials
 
-For more about what you can do with the project module of the SDK, see the [project module SDK reference](https://labelstud.io/sdk/project.html).
+For examples of getting started using SDK, see the following tutorials:
 
-## Import Tasks
+* [Create a Project](/tutorials/tutorials/create-a-project)
+* [Import Tasks](/tutorials/tutorials/import-tasks)
+* [Assign Users to Tasks](/tutorials/tutorials/assign-users-to-tasks)
+* [Add Model Predictions](/tutorials/tutorials/add-model-predictions)
+* [Export and Convert Snapshots](/tutorials/tutorials/export-and-convert-snapshots)
 
-You can import tasks from your script using the [Label Studio Python SDK client](#Connect-to-the-Label-Studio-API).
+Advanced tutorials focused on [ML backends](https://github.com/HumanSignal/label-studio-ml-backend):
 
-[For a specific project created](#Create-a-project), you can import tasks in [Label Studio JSON format](tasks.html#Basic-Label-Studio-JSON-format) or [connect to cloud storage providers](https://github.com/heartexlabs/label-studio-sdk/blob/master/examples/annotate_data_from_gcs/annotate_data_from_gcs.ipynb) and import image, audio, or video files directly.
+* [Logging ML Server Predictions](/tutorials/tutorials/logging-ml-server-predictions)
+* [Evaluate LLM Responses](/tutorials/tutorials/evaluate-llm-responses)
+* [Improve Object Detection with YOLO](/tutorials/tutorials/improve-object-detection-with-yolo)
+* [Interactive OCR with Tesseract](/tutorials/tutorials/interactive-ocr-with-tesseract)
 
-<AccordionGroup>
-  <Accordion title="Create a single task">
-    You can import a single labeling task into [Label Studio project](#Create-a-project):
-
-    ```python
-    ls.tasks.create(
-        project=project.id,
-        data={'text': 'Hello world'}
-    )
-    ```
-  </Accordion>
-
-  <Accordion title="Create multiple tasks">
-    To create multiple tasks at once in a project, use the method:
-
-  ```python
-  ls.projects.import_tasks(
-      id=project.id,
-      request=[
-          {"text": "Hello world"},
-          {"text": "Hello Label Studio"},
-          {"text": "What a beautiful day"},
-      ]
-  )
-  ```
-  </Accordion>
-  <Accordion title="Create multiple tasks with preannotations">
-
-    You can also import predictions together with tasks as pre-annotated tasks. The SDK offers several ways that you can import pre-annotations into Label Studio.
-
-    One way is to import tasks in a simple JSON format, where one key in the JSON identifies the data object being labeled, and the other is the key containing the prediction.
-
-    In this example, import predictions for an image classification task:
-    ```python
-    ls.projects.import_tasks(
-        id=project.id,
-        request=[
-            {"text": "Hello world", "sentiment": "Positive"},
-            {"text": "Goodbye Label Studio", "sentiment": "Negative"},
-            {"text": "What a beautiful day", "sentiment": "Positive"},
-        ],
-        preannotated_from_fields=['sentiment']
-    )
-    ```
-
-    More customizable way to import preannotations:
-
-    ```python
-    from label_studio_sdk.label_interface.objects import PredictionValue
-
-    # this returns the same `LabelInterface` object as above
-    li = ls.projects.get(id=project.id).get_label_interface()
-
-    # by specifying what fields to `include` we can speed up task loading
-    for task in ls.tasks.list(project=project.id, include=["id"]):
-        task_id = task.id
-        prediction = PredictionValue(
-            # tag predictions with specific model version string
-            # it can help managing multiple models in Label Studio UI
-            model_version='my_model_v1',
-            # define your labels here
-            result=[
-                li.get_control('label').label(['Positive']),
-                # ... add more labels if needed
-            ]
-        )
-        ls.predictions.create(task=task_id, **prediction.model_dump())
-    ```
-
-    Read more about importing pre-annotations in the [Label Studio SDK documentation](https://labelstud.io/guide/predictions).
-  </Accordion>
-</AccordionGroup>
-
-## Add Model Predictions
-
-You can add predictions to existing tasks in Label Studio in your Python script.
-
-For an existing simple image classification project, you can do the following to add predictions of "Dog" for image tasks that you retrieve:
-```python
-from label_studio_sdk.label_interface import LabelInterface
-from label_studio_sdk.label_interface.objects import PredictionValue
-
-project = ls.projects.get(id=123)
-
-# LabelInterface provides a handy way to validate Label Studio JSON format for annotations and predictions
-li = project.get_label_interface()
-
-tasks = ls.tasks.list(project=project.id, include='id')
-for task in tasks:
-    # create predicted label per task, using `label` control tag name
-    predicted_label = li.get_control('label').label(choices=['Positive'])
-    prediction = PredictionValue(
-        model_version='my-super-ai',
-        score=0.99,
-        result=[predicted_label]
-    )
-    ls.predictions.create(task=task.id, **prediction.model_dump())
-```
-
-For another example, see the [Jupyter notebook example of importing pre-annotated data](https://github.com/heartexlabs/label-studio-sdk/blob/master/examples/import_preannotations/import_preannotations.ipynb).
-
-## Managing Labeling Jobs
-
-You can also use the SDK to control how tasks appear in the data manager to annotators or reviewers. You can create custom filters and ordering for the tasks based on parameters that you specify with the SDK. This lets you have more granular control over which tasks in your dataset get labeled or reviewed, and in which order.
-
-### Create a batch of tasks to annotate
-
-For example, you can create a filter to prepare tasks to be annotated. For example, if you want annotators to focus on tasks in the first 1000 tasks in a dataset that contain the word "possum" in the field "text" in the task data, do the following:
-```python
-from label_studio_sdk.data_manager import Filters, Column, Type, Operator
-
-filters = Filters.create(Filters.AND, [
-    Filters.item(
-        Column.id,
-        Operator.GREATER_OR_EQUAL,
-        Type.Number,
-        Filters.value(1)
-    ),
-        Filters.item(
-        Column.id,
-        Operator.LESS_OR_EQUAL,
-        Type.Number,
-        Filters.value(1000)
-    ),
-    Filters.item(
-        Column.data("text"),
-        Operator.CONTAINS,
-        Type.String,
-        Filters.value("Hello")
-    )
-])
-```
-
-Most often it is very useful to create a view with annotated tasks to review:
-
-```python
-from label_studio_sdk.data_manager import Filters, Column, Type, Operator
-
-filters = Filters.create(Filters.AND, [
-    Filters.item(
-        Column.completed_at,
-        Operator.EMPTY,
-        Type.Boolean,
-        Filters.value(False)
-    )
-])
-```
-
-To create a filtered tasks view, use the following code:
-
-```python
-view = ls.views.create(
-    project=project.id,
-    data={
-        'title': 'Tasks Sample',
-        'filters': filters
-    }
-)
-tab = ls.views.get(id=view.id)
-```
-If will be displayed in the data manager as tab with `Tasks Sample` name.
-
-## Export Annotations
-
-Run the following code to export annotations from project's [`tab` you created in the previous step](#create-batch-of-tasks-to-annotate):
-
-```python
-tasks = ls.tasks.list(view=tab.id, fields='all')
-for task in tasks:
-    # You can access annotations in Label Studio JSON format
-    print(task.annotations)
-    # And also annotation drafts and predictions
-    print(task.predictions)
-    print(task.drafts)
-```
-
-### Export in bulk
-
-```python
-data = ls.projects.exports.as_json(project.id)
-```
-
-Read more about export formats in the [Label Studio SDK documentation](https://labelstud.io/guide/export).
 
 ## SDK versions and compatibility
 
-In June 2024, we released SDK 1.0. The previous SDK (version &lt; 1) is deprecated and no longer supported. We recommend upgrading to [the latest version](https://github.com/HumanSignal/label-studio-sdk).
+ SDK version &lt; 1 is deprecated and no longer supported. We recommend upgrading to [the latest version](https://github.com/HumanSignal/label-studio-sdk).
 
 If you still want to use the older version, you can install it using `pip install "label-studio-sdk<1"`.
 
@@ -310,36 +161,37 @@ except ApiError as e:
 Annotations are exported in the format specified in the [Label Studio JSON format](tasks.html#Basic-Label-Studio-JSON-format).
 
 ### Timeouts
-By default, requests time out after 60 seconds. You can configure this with a
-timeout option at the client or request level.
+By default, requests time out after 5 seconds. You can configure this with a timeout option at the client or request level.
 
 ```python
-from label_studio_sdk.client import LabelStudio
+from label_studio_sdk import LabelStudio
 
-ls = LabelStudio(
+client = LabelStudio(
     # All timeouts set to 20 seconds
-    timeout=20.0
+    timeout=20
 )
 
-ls.projects.create(..., {
+ls.projects.create(..., request_options={
     # Override timeout for a specific method
-    timeout=20.0
+    'timeout_in_seconds': 20
 })
 ```
 
 ### Custom HTTP client
-You can override the httpx client to customize it for your use-case. Some common use-cases
+
+You can override the httpx client to customize it for your use case. Some common use cases
 include support for proxies and transports.
 
 ```python
-import httpx
-
-from label_studio_sdk.client import LabelStudio
-
-ls = LabelStudio(
-    http_client=httpx.Client(
-        proxies="http://my.test.proxy.example.com",
-        transport=httpx.HTTPTransport(local_address="0.0.0.0"),
-    ),
+custom_httpx_client = httpx.Client(
+    transport=httpx.HTTPTransport(
+        proxy="http://my.test.proxy.example.com",
+        local_address="0.0.0.0"
+    )
+)
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+    base_url="YOUR_LABEL_STUDIO_URL",
+    httpx_client=custom_httpx_client,
 )
 ```

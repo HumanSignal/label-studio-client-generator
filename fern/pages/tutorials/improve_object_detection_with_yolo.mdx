@@ -2,10 +2,9 @@
 title: Improve Object Detection with YOLOv8
 ---
 
-
-## Introduction
-
 In this tutorial, you will learn how to improve object detection predictions from YOLOv8 using Label Studio. You will create a project in Label Studio, import images, and annotate them with bounding boxes. You will then use the annotations to fine-tune the YOLOv8 model.
+
+Also see this [example notebook](https://github.com/HumanSignal/label-studio-sdk/blob/master/tutorials/yolo_predictions.ipynb).
 
 First install the required packages:
 
@@ -39,10 +38,12 @@ label_config = f'''
 Now use this `label_config` to create a project.
 
 ```python
-from label_studio_sdk.client import LabelStudio
+LABEL_STUDIO_URL = 'YOUR_BASE_URL'
+LABEL_STUDIO_API_KEY = 'YOUR_API_KEY'
 
-API_KEY = 'YOUR_API_KEY'
-client = LabelStudio(api_key=API_KEY)
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(base_url=LABEL_STUDIO_URL, api_key=LABEL_STUDIO_API_KEY)
 
 project = client.projects.create(
     title='Object detection',
@@ -121,7 +122,8 @@ from PIL import Image
 import requests
 from tqdm import tqdm
 
-project = client.projects.get(28)
+PROJECT_ID=1    # replace with your project ID
+project = client.projects.get(PROJECT_ID)
 tasks = client.tasks.list(project=project.id)
 images = []
 for i, task in enumerate(tqdm(tasks)):
@@ -186,7 +188,3 @@ annotated_tasks = client.tasks.list(view=tab.id, fields='all')
 for annotated_task in annotated_tasks:
     print(annotated_task.annotations)
 ```
-
-### Convert Annotations to YOLO format
-
-Coming soon! :)

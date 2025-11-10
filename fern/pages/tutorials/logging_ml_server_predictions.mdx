@@ -5,20 +5,21 @@ title: Logging ML Server Predictions
 This code demonstrates FastAPI server with a single endpoint, assuming it serves for ML model predictions.
 The request to this endpoint automatically logged in Label Studio instance with `await client.tasks.create()` method.
 
+You can also find this as a [Python script in the SDK repo](https://github.com/HumanSignal/label-studio-sdk/blob/master/tutorials/fastapi_server.py) for setting up the FastAPI server. 
 
 ## Create a project in Label Studio
 
 Let's create a project in Label Studio to collect the predictions' requests and responses from the ML model, and aim to task human reviewers to assess the correctness of the predictions.
 
 ```python
-from label_studio_sdk.client import LabelStudio
+LABEL_STUDIO_URL = 'YOUR_BASE_URL'
+LABEL_STUDIO_API_KEY = 'YOUR_API_KEY' 
 
-ls = LabelStudio(
-    base_url='http://localhost:8080',
-    api_key='YOUR-API-KEY'
-)
+from label_studio_sdk import LabelStudio
 
-project = ls.projects.create(
+client = LabelStudio(base_url=LABEL_STUDIO_URL, api_key=LABEL_STUDIO_API_KEY)
+
+project = client.projects.create(
     title='ML Observability Project',
     label_config='''
         <View>
@@ -47,7 +48,6 @@ pip install fastapi uvicorn
 Let's create a simple FastAPI server with a single endpoint `/predict` that accepts POST requests with JSON payload.
 
 ```python
-import os
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from label_studio_sdk.client import AsyncLabelStudio
@@ -55,12 +55,12 @@ from label_studio_sdk.client import AsyncLabelStudio
 app = FastAPI()
 
 # Initialize the async client with the API key and project ID from running Label Studio app
-# Remember to set LABEL_STUDIO_API_KEY and LABEL_STUDIO_PROJECT_ID environment variables
+
 client = AsyncLabelStudio(
     base_url="http://localhost:8080",
-    api_key=os.getenv("LABEL_STUDIO_API_KEY"),
+    api_key='YOUR_API_KEY',
 )
-project_id = int(os.getenv("LABEL_STUDIO_PROJECT_ID"))
+project_id = 1 # <- replace with your key
 
 
 # Some dummy input data
