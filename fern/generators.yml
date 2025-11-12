@@ -1,8 +1,9 @@
 api:
-  path: ./openapi/openapi.yaml
-  overrides: ./openapi/overrides.yaml
-  settings:
-    use-title: false
+  specs:
+    - openapi: ./openapi/openapi.yaml
+      overrides: ./openapi/overrides.yaml
+      settings:
+        title-as-schema-name: false
 default-group: python-sdk-staging
 groups:
   python-sdk-staging:
@@ -10,7 +11,7 @@ groups:
       - public
     generators:
       - name: fernapi/fern-python-sdk
-        version: 4.3.11
+        version: 4.25.6
         output:
           location: pypi
           package-name: label-studio-sdk
@@ -63,7 +64,7 @@ groups:
       - public
     generators:
       - name: fernapi/fern-python-sdk
-        version: 4.3.11
+        version: 4.25.6
         output:
           location: local-file-system
           path: ../label_studio_sdk
