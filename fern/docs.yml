@@ -73,3 +73,7 @@ logo:
     href: https://labelstud.io/guide/
 
 favicon: ./images/favicon.ico
+
+analytics:
+  ga4:
+    measurement-id: G-326708547
