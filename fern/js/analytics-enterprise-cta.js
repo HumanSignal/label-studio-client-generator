@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
     link.addEventListener('click', function() {
       if (typeof gtag === 'function') {
         gtag('event', 'enterprise_cta_click', {
-          button_index: index + 1,
+          button_index: index,
           button_text: link.innerText || '', 
           target_url: link.href,
           page_path: window.location.pathname
