@@ -5750,21 +5750,7 @@ paths:
           required: false
           schema:
             type: integer
-        - description: |
-            Filter members by organization role. Accepts single role or comma-separated list of roles.
-
-            **Format:**
-            - Single role: `?role=RE`
-            - Multiple roles: `?role=AN,RE` (users with ANY of these roles)
-
-            **Role Codes:**
-            - `OW` = Owner
-            - `AD` = Administrator
-            - `MA` = Manager
-            - `RE` = Reviewer
-            - `AN` = Annotator
-            - `NO` = Not Activated
-            - `DI` = Disabled
+        - description: "Filter members by organization role. Accepts single role or comma-separated list of roles. \n\n**Format:**\n- Single role: `?role=RE`\n- Multiple roles: `?role=AN,RE` (users with ANY of these roles)\n\n**Role Codes:**\n- `OW` = Owner\n- `AD` = Administrator\n- `MA` = Manager\n- `RE` = Reviewer\n- `AN` = Annotator\n- `NO` = Not Activated\n- `DI` = Disabled\n"
           in: query
           name: role
           schema:
