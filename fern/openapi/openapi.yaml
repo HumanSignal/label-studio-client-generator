@@ -5750,6 +5750,25 @@ paths:
           required: false
           schema:
             type: integer
+        - description: |
+            Filter members by organization role. Accepts single role or comma-separated list of roles.
+
+            **Format:**
+            - Single role: `?role=RE`
+            - Multiple roles: `?role=AN,RE` (users with ANY of these roles)
+
+            **Role Codes:**
+            - `OW` = Owner
+            - `AD` = Administrator
+            - `MA` = Manager
+            - `RE` = Reviewer
+            - `AN` = Annotator
+            - `NO` = Not Activated
+            - `DI` = Disabled
+          in: query
+          name: role
+          schema:
+            type: string
         - description: A search term.
           in: query
           name: search
@@ -7057,6 +7076,11 @@ paths:
           name: search
           schema:
             type: string
+        - description: Filter current_state by exact match
+          in: query
+          name: state
+          schema:
+            type: string
         - description: Filter title by contains (case-insensitive)
           in: query
           name: title
@@ -7158,6 +7182,11 @@ paths:
         - description: Search term for project title and description
           in: query
           name: search
+          schema:
+            type: string
+        - description: Filter current_state by exact match
+          in: query
+          name: state
           schema:
             type: string
         - description: Filter title by contains (case-insensitive)
@@ -8582,6 +8611,14 @@ paths:
                 </p>
             </Card>
         Retrieve the members for a specific project.
+
+        **Response Fields:**
+        - `implicit_member` (boolean): Indicates if the user is an implicit member.
+          - `true`: User has access via workspace membership or organization role (Administrator/Owner)
+          - `false`: User is an explicit project member (added directly to the project)
+        - `project_role` (string|null): Project-specific role override if assigned, null otherwise
+
+        **Note:** Users can have both explicit membership AND implicit access. The `implicit_member` field is `false` if the user has an explicit ProjectMember entry, regardless of whether they also have implicit access via workspace or org role.
       operationId: api_projects_members_paginated_list
       parameters:
         - in: path
@@ -8599,11 +8636,30 @@ paths:
           name: implicit
           schema:
             type: boolean
+        - description: Filter by last activity time (ISO 8601 datetime). Returns users with last activity greater than or equal to this time.
+          in: query
+          name: last_activity__gte
+          schema:
+            format: date-time
+            type: string
         - description: Exclude annotators from the results
           in: query
           name: no_annotators
           schema:
             type: boolean
+        - description: |-
+            Ordering field. Prefix with "-" for descending order. Allowed fields: id, email, first_name, last_name, username, last_activity, role, date_joined
+
+            **Note on role ordering:**
+            When ordering by "role", the system uses the effective role:
+            - Project-specific role if assigned (takes precedence)
+            - Organization role if no project role is assigned
+
+            Roles are sorted alphabetically by their code: AD (Administrator), AN (Annotator), DI (Disabled), MA (Manager), NO (Not Activated), OW (Owner), RE (Reviewer)
+          in: query
+          name: ordering
+          schema:
+            type: string
         - description: A page number within the paginated result set.
           in: query
           name: page
@@ -8616,6 +8672,30 @@ paths:
           required: false
           schema:
             type: integer
+        - description: |-
+            Filter members by role. Accepts single role or comma-separated list of roles.
+
+            **Format:**
+            - Single role: `?role=RE`
+            - Multiple roles: `?role=AN,RE` (users with ANY of these roles)
+
+            **Role Codes:**
+            - `OW` = Owner
+            - `AD` = Administrator
+            - `MA` = Manager
+            - `RE` = Reviewer
+            - `AN` = Annotator
+
+            **Matching Logic:**
+            Returns users who have any of the specified roles either:
+            1. As their **project-specific role** (from project role assignments), OR
+            2. As their **organization role** (if they have no project-specific role override)
+
+            **Note:** Project-specific roles take precedence. If a user has a project role assigned, their organization role is ignored for filtering purposes.
+          in: query
+          name: role
+          schema:
+            type: string
         - description: Search term for filtering members by name, email, or username
           in: query
           name: search
@@ -19453,6 +19533,9 @@ components:
           description: Start model training after any annotations are submitted or updated
           readOnly: true
           type: boolean
+        state:
+          readOnly: true
+          type: string
         task_number:
           description: Total task number in project
           readOnly: true
@@ -19507,6 +19590,7 @@ components:
         - reviewer_queue_total
         - skipped_annotations_number
         - start_training_on_annotation_update
+        - state
         - task_number
         - total_annotations_number
         - total_predictions_number
@@ -24505,6 +24589,9 @@ components:
           description: Start model training after any annotations are submitted or updated
           readOnly: true
           type: boolean
+        state:
+          readOnly: true
+          type: string
         task_data_login:
           description: 'Task data credentials: login'
           maxLength: 256
@@ -24564,6 +24651,7 @@ components:
         - reviewer_queue_total
         - skipped_annotations_number
         - start_training_on_annotation_update
+        - state
         - task_number
         - total_annotations_number
         - total_predictions_number
@@ -24785,6 +24873,9 @@ components:
           description: Start model training after any annotations are submitted or updated
           readOnly: true
           type: boolean
+        state:
+          readOnly: true
+          type: string
         task_data_login:
           description: 'Task data credentials: login'
           maxLength: 256
@@ -24832,6 +24923,7 @@ components:
         - queue_total
         - skipped_annotations_number
         - start_training_on_annotation_update
+        - state
         - task_number
         - total_annotations_number
         - total_predictions_number
@@ -25204,6 +25296,9 @@ components:
           description: Start model training after any annotations are submitted or updated
           readOnly: true
           type: boolean
+        state:
+          readOnly: true
+          type: string
         task_data_login:
           description: 'Task data credentials: login'
           maxLength: 256
@@ -25267,6 +25362,7 @@ components:
         - reviewer_queue_total
         - skipped_annotations_number
         - start_training_on_annotation_update
+        - state
         - task_number
         - total_annotations_number
         - total_predictions_number
@@ -25474,6 +25570,9 @@ components:
           description: Start model training after any annotations are submitted or updated
           readOnly: true
           type: boolean
+        state:
+          readOnly: true
+          type: string
         task_data_login:
           description: 'Task data credentials: login'
           maxLength: 256
@@ -25527,6 +25626,7 @@ components:
         - review_settings
         - skipped_annotations_number
         - start_training_on_annotation_update
+        - state
         - task_number
         - total_annotations_number
         - total_predictions_number
@@ -28031,6 +28131,9 @@ components:
         id:
           readOnly: true
           type: integer
+        implicit_member:
+          readOnly: true
+          type: boolean
         initials:
           default: '?'
           readOnly: true
@@ -28072,6 +28175,7 @@ components:
         - active_organization_meta
         - avatar
         - id
+        - implicit_member
         - initials
         - last_activity
         - lse_fields
@@ -30370,6 +30474,9 @@ components:
           description: Start model training after any annotations are submitted or updated
           readOnly: true
           type: boolean
+        state:
+          readOnly: true
+          type: string
         task_data_login:
           description: 'Task data credentials: login'
           maxLength: 256
@@ -30415,6 +30522,7 @@ components:
         - queue_total
         - skipped_annotations_number
         - start_training_on_annotation_update
+        - state
         - task_number
         - total_annotations_number
         - total_predictions_number
