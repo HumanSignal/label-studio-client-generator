@@ -1,3 +1,7 @@
+console.log('[enterprise-cta] custom JS loaded', window.location.href);
+window.__ENTERPRISE_CTA_LOADED__ = true;
+
+
 (function() {
   
   // help fern load GA library
