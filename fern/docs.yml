@@ -76,7 +76,7 @@ favicon: ./images/favicon.ico
 
 analytics:
   ga4:
-    measurement-id: G-326708547
+    measurement-id: G-5MGM6QQVFS
 
 js:
   - path: ./js/analytics-enterprise-cta.js
