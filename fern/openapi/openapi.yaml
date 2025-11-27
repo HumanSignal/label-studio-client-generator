@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   contact:
     url: https://labelstud.io
-  description: Label Studio API for data annotation and labeling
+  description: Label Studio API for data annotation and labeling CI TEST
   title: Label Studio API
   version: ''
 paths:
