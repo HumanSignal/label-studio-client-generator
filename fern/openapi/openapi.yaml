@@ -3966,6 +3966,155 @@ paths:
         - Data Manager
       x-fern-audiences:
         - internal
+  /api/fsm/backfill/:
+    post:
+      description: Trigger FSM state backfill for the authenticated user's active organization. Creates initial state records for entities without FSM states. Requires administrator or owner role and both FSM feature flags (fflag_feat_fit_568_finite_state_management and fflag_feat_fit_710_fsm_state_fields).
+      operationId: api_fsm_backfill_create
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                content:
+                  application/json:
+                    example:
+                      job_id: 123
+                      message: FSM backfill job started successfully
+                      organization_id: 456
+                      rq_job_id: abc-123
+                      status: QUEUED
+                description: Job created successfully
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                description: Validation error (job already running, feature flag disabled, etc.)
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                description: Permission denied
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                description: Organization not found
+          description: ''
+      security:
+        - Token: []
+      summary: Trigger FSM backfill for organization
+      tags:
+        - Organizations
+      x-fern-audiences:
+        - internal
+  /api/fsm/backfill/jobs/:
+    get:
+      description: Retrieve the latest 10 FSM backfill jobs for the authenticated user's active organization. Shows job history with status, progress, and timing information. Requires administrator or owner role and both FSM feature flags (fflag_feat_fit_568_finite_state_management and fflag_feat_fit_710_fsm_state_fields).
+      operationId: api_fsm_backfill_jobs_retrieve
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                content:
+                  application/json:
+                    example:
+                      jobs:
+                        - completed_at: '2024-01-01T12:30:00Z'
+                          created_at: '2024-01-01T11:59:00Z'
+                          error_message: ''
+                          job_id: 123
+                          progress_data:
+                            failed_projects: 0
+                            successful_projects: 10
+                            total_entities_processed: 5000
+                            total_projects: 10
+                          rq_job_id: abc-123
+                          started_at: '2024-01-01T12:00:00Z'
+                          status: COMPLETED
+                          triggered_by:
+                            email: user@example.com
+                            id: 1
+                description: Job list retrieved successfully
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                description: FSM feature is not enabled
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                description: Permission denied
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                description: Organization not found
+          description: ''
+      security:
+        - Token: []
+      summary: List FSM backfill jobs
+      tags:
+        - Organizations
+      x-fern-audiences:
+        - internal
+  /api/fsm/backfill/status/:
+    get:
+      description: Retrieve the status of an FSM backfill job for the authenticated user's active organization. By default returns the latest job, or specify job_id to get a specific job. Shows progress, completion time, and any errors. Requires administrator or owner role and both FSM feature flags (fflag_feat_fit_568_finite_state_management and fflag_feat_fit_710_fsm_state_fields).
+      operationId: api_fsm_backfill_status_retrieve
+      parameters:
+        - description: Optional job ID to retrieve specific job status
+          in: query
+          name: job_id
+          schema:
+            type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                content:
+                  application/json:
+                    example:
+                      completed_at: null
+                      error_message: ''
+                      job_id: 123
+                      progress:
+                        failed_projects: 0
+                        successful_projects: 7
+                        total_entities_processed: 1234
+                        total_projects: 10
+                      rq_job_id: abc-123
+                      started_at: '2024-01-01T12:00:00Z'
+                      status: RUNNING
+                description: Job status retrieved successfully
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                description: Permission denied
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                description: No backfill job found or organization not found
+          description: ''
+      security:
+        - Token: []
+      summary: Get FSM backfill status
+      tags:
+        - Organizations
+      x-fern-audiences:
+        - internal
   /api/fsm/entities/{entity_name}/{entity_id}/history:
     get:
       description: Get the state history of an entity
