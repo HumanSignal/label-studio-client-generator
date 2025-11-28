@@ -3966,6 +3966,155 @@ paths:
         - Data Manager
       x-fern-audiences:
         - internal
+  /api/fsm/backfill/:
+    post:
+      description: Trigger FSM state backfill for the authenticated user's active organization. Creates initial state records for entities without FSM states. Requires administrator or owner role and both FSM feature flags (fflag_feat_fit_568_finite_state_management and fflag_feat_fit_710_fsm_state_fields).
+      operationId: api_fsm_backfill_create
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                content:
+                  application/json:
+                    example:
+                      job_id: 123
+                      message: FSM backfill job started successfully
+                      organization_id: 456
+                      rq_job_id: abc-123
+                      status: QUEUED
+                description: Job created successfully
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                description: Validation error (job already running, feature flag disabled, etc.)
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                description: Permission denied
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                description: Organization not found
+          description: ''
+      security:
+        - Token: []
+      summary: Trigger FSM backfill for organization
+      tags:
+        - Organizations
+      x-fern-audiences:
+        - internal
+  /api/fsm/backfill/jobs/:
+    get:
+      description: Retrieve the latest 10 FSM backfill jobs for the authenticated user's active organization. Shows job history with status, progress, and timing information. Requires administrator or owner role and both FSM feature flags (fflag_feat_fit_568_finite_state_management and fflag_feat_fit_710_fsm_state_fields).
+      operationId: api_fsm_backfill_jobs_retrieve
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                content:
+                  application/json:
+                    example:
+                      jobs:
+                        - completed_at: '2024-01-01T12:30:00Z'
+                          created_at: '2024-01-01T11:59:00Z'
+                          error_message: ''
+                          job_id: 123
+                          progress_data:
+                            failed_projects: 0
+                            successful_projects: 10
+                            total_entities_processed: 5000
+                            total_projects: 10
+                          rq_job_id: abc-123
+                          started_at: '2024-01-01T12:00:00Z'
+                          status: COMPLETED
+                          triggered_by:
+                            email: user@example.com
+                            id: 1
+                description: Job list retrieved successfully
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                description: FSM feature is not enabled
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                description: Permission denied
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                description: Organization not found
+          description: ''
+      security:
+        - Token: []
+      summary: List FSM backfill jobs
+      tags:
+        - Organizations
+      x-fern-audiences:
+        - internal
+  /api/fsm/backfill/status/:
+    get:
+      description: Retrieve the status of an FSM backfill job for the authenticated user's active organization. By default returns the latest job, or specify job_id to get a specific job. Shows progress, completion time, and any errors. Requires administrator or owner role and both FSM feature flags (fflag_feat_fit_568_finite_state_management and fflag_feat_fit_710_fsm_state_fields).
+      operationId: api_fsm_backfill_status_retrieve
+      parameters:
+        - description: Optional job ID to retrieve specific job status
+          in: query
+          name: job_id
+          schema:
+            type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                content:
+                  application/json:
+                    example:
+                      completed_at: null
+                      error_message: ''
+                      job_id: 123
+                      progress:
+                        failed_projects: 0
+                        successful_projects: 7
+                        total_entities_processed: 1234
+                        total_projects: 10
+                      rq_job_id: abc-123
+                      started_at: '2024-01-01T12:00:00Z'
+                      status: RUNNING
+                description: Job status retrieved successfully
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                description: Permission denied
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                description: No backfill job found or organization not found
+          description: ''
+      security:
+        - Token: []
+      summary: Get FSM backfill status
+      tags:
+        - Organizations
+      x-fern-audiences:
+        - internal
   /api/fsm/entities/{entity_name}/{entity_id}/history:
     get:
       description: Get the state history of an entity
@@ -19516,10 +19665,9 @@ components:
           readOnly: true
           type: integer
         sampling:
-          nullable: true
-          oneOf:
+          allOf:
             - $ref: '#/components/schemas/SamplingDe5Enum'
-            - $ref: '#/components/schemas/NullEnum'
+          nullable: true
         show_annotation_history:
           description: Show annotation history to annotator
           type: boolean
@@ -19542,10 +19690,9 @@ components:
           nullable: true
           type: boolean
         skip_queue:
-          nullable: true
-          oneOf:
+          allOf:
             - $ref: '#/components/schemas/SkipQueueEnum'
-            - $ref: '#/components/schemas/NullEnum'
+          nullable: true
         skipped_annotations_number:
           readOnly: true
           type: string
@@ -19673,6 +19820,8 @@ components:
           nullable: true
           type: integer
         last_action:
+          allOf:
+            - $ref: '#/components/schemas/LastActionEnum'
           description: |-
             Action which was performed in the last annotation history item
 
@@ -19687,9 +19836,6 @@ components:
             * `fixed_and_accepted` - Fixed and accepted
             * `deleted_review` - Deleted review
           nullable: true
-          oneOf:
-            - $ref: '#/components/schemas/LastActionEnum'
-            - $ref: '#/components/schemas/NullEnum'
         last_created_by:
           description: User who created the last annotation history item
           nullable: true
@@ -19775,6 +19921,8 @@ components:
           nullable: true
           type: integer
         last_action:
+          allOf:
+            - $ref: '#/components/schemas/LastActionEnum'
           description: |-
             Action which was performed in the last annotation history item
 
@@ -19789,9 +19937,6 @@ components:
             * `fixed_and_accepted` - Fixed and accepted
             * `deleted_review` - Deleted review
           nullable: true
-          oneOf:
-            - $ref: '#/components/schemas/LastActionEnum'
-            - $ref: '#/components/schemas/NullEnum'
         last_created_by:
           description: User who created the last annotation history item
           nullable: true
@@ -19853,10 +19998,9 @@ components:
         values with complex, nested serializations
       properties:
         action:
-          nullable: true
-          oneOf:
+          allOf:
             - $ref: '#/components/schemas/ActionEnum'
-            - $ref: '#/components/schemas/NullEnum'
+          nullable: true
         annotation_id:
           description: Corresponding annotation for this historical annotation
           maximum: 2147483647
@@ -19963,6 +20107,8 @@ components:
           nullable: true
           type: integer
         last_action:
+          allOf:
+            - $ref: '#/components/schemas/LastActionEnum'
           description: |-
             Action which was performed in the last annotation history item
 
@@ -19977,9 +20123,6 @@ components:
             * `fixed_and_accepted` - Fixed and accepted
             * `deleted_review` - Deleted review
           nullable: true
-          oneOf:
-            - $ref: '#/components/schemas/LastActionEnum'
-            - $ref: '#/components/schemas/NullEnum'
         last_created_by:
           description: User who created the last annotation history item
           nullable: true
@@ -20131,15 +20274,14 @@ components:
           readOnly: true
           type: integer
         label_stream_task_distribution:
+          allOf:
+            - $ref: '#/components/schemas/LabelStreamTaskDistributionEnum'
           description: |-
             Modes for distributing tasks to annotators
 
             * `auto_distribution` - Label Stream distributes tasks automatically to annotators
             * `assigned_only` - Label Stream shows tasks only to assigned users
           nullable: true
-          oneOf:
-            - $ref: '#/components/schemas/LabelStreamTaskDistributionEnum'
-            - $ref: '#/components/schemas/NullEnum'
         project:
           nullable: true
           type: integer
@@ -20149,15 +20291,14 @@ components:
     AssignmentSettingsRequest:
       properties:
         label_stream_task_distribution:
+          allOf:
+            - $ref: '#/components/schemas/LabelStreamTaskDistributionEnum'
           description: |-
             Modes for distributing tasks to annotators
 
             * `auto_distribution` - Label Stream distributes tasks automatically to annotators
             * `assigned_only` - Label Stream shows tasks only to assigned users
           nullable: true
-          oneOf:
-            - $ref: '#/components/schemas/LabelStreamTaskDistributionEnum'
-            - $ref: '#/components/schemas/NullEnum'
         project:
           nullable: true
           type: integer
@@ -21168,9 +21309,6 @@ components:
         - billing_checks
         - billing_flags
       type: object
-    BlankEnum:
-      enum:
-        - ''
     Blueprint:
       properties:
         created_at:
@@ -24068,6 +24206,8 @@ components:
           nullable: true
           type: boolean
         reviewed:
+          allOf:
+            - $ref: '#/components/schemas/ReviewedEnum'
           description: |-
             `only` - include all tasks with at least one not reviewed annotation<br>`exclude` - exclude with at least one not reviewed annotation
 
@@ -24075,9 +24215,6 @@ components:
             * `exclude` - exclude
             * `None` - None
           nullable: true
-          oneOf:
-            - $ref: '#/components/schemas/ReviewedEnum'
-            - $ref: '#/components/schemas/NullEnum'
         skipped:
           description: Include skipped annotations
           nullable: true
@@ -24095,6 +24232,8 @@ components:
           nullable: true
           type: boolean
         reviewed:
+          allOf:
+            - $ref: '#/components/schemas/ReviewedEnum'
           description: |-
             `only` - include all tasks with at least one not reviewed annotation<br>`exclude` - exclude with at least one not reviewed annotation
 
@@ -24102,9 +24241,6 @@ components:
             * `exclude` - exclude
             * `None` - None
           nullable: true
-          oneOf:
-            - $ref: '#/components/schemas/ReviewedEnum'
-            - $ref: '#/components/schemas/NullEnum'
         skipped:
           description: Include skipped annotations
           nullable: true
@@ -24215,6 +24351,8 @@ components:
           nullable: true
           type: integer
         onboarding_state:
+          allOf:
+            - $ref: '#/components/schemas/OnboardingStateEnum'
           description: |-
             The current stage of user onboarding
 
@@ -24225,10 +24363,6 @@ components:
             * `in_app_guidance` - In App Guidance
             * `complete` - Complete
           nullable: true
-          oneOf:
-            - $ref: '#/components/schemas/OnboardingStateEnum'
-            - $ref: '#/components/schemas/BlankEnum'
-            - $ref: '#/components/schemas/NullEnum'
         social_auth_finished:
           description: Is user finished social authentication
           nullable: true
@@ -24249,11 +24383,9 @@ components:
           nullable: true
           type: string
         trial_role:
-          nullable: true
-          oneOf:
+          allOf:
             - $ref: '#/components/schemas/TrialRoleEnum'
-            - $ref: '#/components/schemas/BlankEnum'
-            - $ref: '#/components/schemas/NullEnum'
+          nullable: true
       required:
         - email_notification_settings
         - invite_expired
@@ -24272,6 +24404,8 @@ components:
           nullable: true
           type: integer
         onboarding_state:
+          allOf:
+            - $ref: '#/components/schemas/OnboardingStateEnum'
           description: |-
             The current stage of user onboarding
 
@@ -24282,10 +24416,6 @@ components:
             * `in_app_guidance` - In App Guidance
             * `complete` - Complete
           nullable: true
-          oneOf:
-            - $ref: '#/components/schemas/OnboardingStateEnum'
-            - $ref: '#/components/schemas/BlankEnum'
-            - $ref: '#/components/schemas/NullEnum'
         social_auth_finished:
           description: Is user finished social authentication
           nullable: true
@@ -24306,11 +24436,9 @@ components:
           nullable: true
           type: string
         trial_role:
-          nullable: true
-          oneOf:
+          allOf:
             - $ref: '#/components/schemas/TrialRoleEnum'
-            - $ref: '#/components/schemas/BlankEnum'
-            - $ref: '#/components/schemas/NullEnum'
+          nullable: true
       type: object
     LseOrganization:
       properties:
@@ -24571,10 +24699,9 @@ components:
           readOnly: true
           type: string
         sampling:
-          nullable: true
-          oneOf:
+          allOf:
             - $ref: '#/components/schemas/SamplingDe5Enum'
-            - $ref: '#/components/schemas/NullEnum'
+          nullable: true
         show_annotation_history:
           description: Show annotation history to annotator
           type: boolean
@@ -24597,10 +24724,9 @@ components:
           nullable: true
           type: boolean
         skip_queue:
-          nullable: true
-          oneOf:
+          allOf:
             - $ref: '#/components/schemas/SkipQueueEnum'
-            - $ref: '#/components/schemas/NullEnum'
+          nullable: true
         skipped_annotations_number:
           description: Skipped by collaborators annotation number in project
           readOnly: true
@@ -24858,10 +24984,9 @@ components:
           description: Reveal pre-annotations interactively
           type: boolean
         sampling:
-          nullable: true
-          oneOf:
+          allOf:
             - $ref: '#/components/schemas/SamplingDe5Enum'
-            - $ref: '#/components/schemas/NullEnum'
+          nullable: true
         show_annotation_history:
           description: Show annotation history to annotator
           type: boolean
@@ -24881,10 +25006,9 @@ components:
           description: Show a skip button in interface and allow annotators to skip the task
           type: boolean
         skip_queue:
-          nullable: true
-          oneOf:
+          allOf:
             - $ref: '#/components/schemas/SkipQueueEnum'
-            - $ref: '#/components/schemas/NullEnum'
+          nullable: true
         skipped_annotations_number:
           description: Skipped by collaborators annotation number in project
           readOnly: true
@@ -25021,10 +25145,9 @@ components:
           description: Reveal pre-annotations interactively
           type: boolean
         sampling:
-          nullable: true
-          oneOf:
+          allOf:
             - $ref: '#/components/schemas/SamplingDe5Enum'
-            - $ref: '#/components/schemas/NullEnum'
+          nullable: true
         show_annotation_history:
           description: Show annotation history to annotator
           type: boolean
@@ -25044,10 +25167,9 @@ components:
           description: Show a skip button in interface and allow annotators to skip the task
           type: boolean
         skip_queue:
-          nullable: true
-          oneOf:
+          allOf:
             - $ref: '#/components/schemas/SkipQueueEnum'
-            - $ref: '#/components/schemas/NullEnum'
+          nullable: true
         task_data_login:
           description: 'Task data credentials: login'
           maxLength: 256
@@ -25279,10 +25401,9 @@ components:
           readOnly: true
           type: integer
         sampling:
-          nullable: true
-          oneOf:
+          allOf:
             - $ref: '#/components/schemas/SamplingDe5Enum'
-            - $ref: '#/components/schemas/NullEnum'
+          nullable: true
         show_annotation_history:
           description: Show annotation history to annotator
           type: boolean
@@ -25305,10 +25426,9 @@ components:
           nullable: true
           type: boolean
         skip_queue:
-          nullable: true
-          oneOf:
+          allOf:
             - $ref: '#/components/schemas/SkipQueueEnum'
-            - $ref: '#/components/schemas/NullEnum'
+          nullable: true
         skipped_annotations_number:
           readOnly: true
           type: integer
@@ -25552,10 +25672,9 @@ components:
         review_settings:
           $ref: '#/components/schemas/ReviewSettings'
         sampling:
-          nullable: true
-          oneOf:
+          allOf:
             - $ref: '#/components/schemas/SamplingDe5Enum'
-            - $ref: '#/components/schemas/NullEnum'
+          nullable: true
         show_annotation_history:
           description: Show annotation history to annotator
           type: boolean
@@ -25578,10 +25697,9 @@ components:
           nullable: true
           type: boolean
         skip_queue:
-          nullable: true
-          oneOf:
+          allOf:
             - $ref: '#/components/schemas/SkipQueueEnum'
-            - $ref: '#/components/schemas/NullEnum'
+          nullable: true
         skipped_annotations_number:
           description: Skipped by collaborators annotation number in project
           readOnly: true
@@ -26351,6 +26469,8 @@ components:
     LseTaskFilterOptions:
       properties:
         annotated:
+          allOf:
+            - $ref: '#/components/schemas/AnnotatedEnum'
           description: |-
             `only` - include all tasks with at least one not skipped annotation<br>`exclude` - exclude all tasks with at least one not skipped annotation
 
@@ -26358,10 +26478,9 @@ components:
             * `exclude` - exclude
             * `None` - None
           nullable: true
-          oneOf:
-            - $ref: '#/components/schemas/AnnotatedEnum'
-            - $ref: '#/components/schemas/NullEnum'
         finished:
+          allOf:
+            - $ref: '#/components/schemas/FinishedEnum'
           description: |-
             `only` - include all finished tasks (is_labeled = true)<br>`exclude` - exclude all finished tasks
 
@@ -26369,13 +26488,12 @@ components:
             * `exclude` - exclude
             * `None` - None
           nullable: true
-          oneOf:
-            - $ref: '#/components/schemas/FinishedEnum'
-            - $ref: '#/components/schemas/NullEnum'
         only_with_annotations:
           default: false
           type: boolean
         reviewed:
+          allOf:
+            - $ref: '#/components/schemas/ReviewedEnum'
           description: |-
             `only` - include all reviewed tasks<br>`exclude` - exclude all reviewed tasks
 
@@ -26383,10 +26501,9 @@ components:
             * `exclude` - exclude
             * `None` - None
           nullable: true
-          oneOf:
-            - $ref: '#/components/schemas/ReviewedEnum'
-            - $ref: '#/components/schemas/NullEnum'
         skipped:
+          allOf:
+            - $ref: '#/components/schemas/SkippedEnum'
           description: |-
             `only` - include all tasks with skipped annotations<br>`exclude` - exclude all tasks with skipped annotations
 
@@ -26394,9 +26511,6 @@ components:
             * `exclude` - exclude
             * `None` - None
           nullable: true
-          oneOf:
-            - $ref: '#/components/schemas/SkippedEnum'
-            - $ref: '#/components/schemas/NullEnum'
         view:
           description: Apply filters from the view ID (a tab from the Data Manager)
           type: integer
@@ -26404,6 +26518,8 @@ components:
     LseTaskFilterOptionsRequest:
       properties:
         annotated:
+          allOf:
+            - $ref: '#/components/schemas/AnnotatedEnum'
           description: |-
             `only` - include all tasks with at least one not skipped annotation<br>`exclude` - exclude all tasks with at least one not skipped annotation
 
@@ -26411,10 +26527,9 @@ components:
             * `exclude` - exclude
             * `None` - None
           nullable: true
-          oneOf:
-            - $ref: '#/components/schemas/AnnotatedEnum'
-            - $ref: '#/components/schemas/NullEnum'
         finished:
+          allOf:
+            - $ref: '#/components/schemas/FinishedEnum'
           description: |-
             `only` - include all finished tasks (is_labeled = true)<br>`exclude` - exclude all finished tasks
 
@@ -26422,13 +26537,12 @@ components:
             * `exclude` - exclude
             * `None` - None
           nullable: true
-          oneOf:
-            - $ref: '#/components/schemas/FinishedEnum'
-            - $ref: '#/components/schemas/NullEnum'
         only_with_annotations:
           default: false
           type: boolean
         reviewed:
+          allOf:
+            - $ref: '#/components/schemas/ReviewedEnum'
           description: |-
             `only` - include all reviewed tasks<br>`exclude` - exclude all reviewed tasks
 
@@ -26436,10 +26550,9 @@ components:
             * `exclude` - exclude
             * `None` - None
           nullable: true
-          oneOf:
-            - $ref: '#/components/schemas/ReviewedEnum'
-            - $ref: '#/components/schemas/NullEnum'
         skipped:
+          allOf:
+            - $ref: '#/components/schemas/SkippedEnum'
           description: |-
             `only` - include all tasks with skipped annotations<br>`exclude` - exclude all tasks with skipped annotations
 
@@ -26447,9 +26560,6 @@ components:
             * `exclude` - exclude
             * `None` - None
           nullable: true
-          oneOf:
-            - $ref: '#/components/schemas/SkippedEnum'
-            - $ref: '#/components/schemas/NullEnum'
         view:
           description: Apply filters from the view ID (a tab from the Data Manager)
           type: integer
@@ -27464,15 +27574,14 @@ components:
           readOnly: true
           type: number
         budget_reset_period:
+          allOf:
+            - $ref: '#/components/schemas/BudgetResetPeriodEnum'
           description: |-
             Budget reset period for the model provider connection (null if not reset)
 
             * `Monthly` - Monthly
             * `Yearly` - Yearly
           nullable: true
-          oneOf:
-            - $ref: '#/components/schemas/BudgetResetPeriodEnum'
-            - $ref: '#/components/schemas/NullEnum'
           readOnly: true
         budget_total_spent:
           description: Tracked total budget spent for the given provider connection within the current budget period
@@ -27719,9 +27828,6 @@ components:
         - Failed
         - Canceled
       type: string
-    NullEnum:
-      enum:
-        - null
     OnboardingStateEnum:
       description: |-
         * `not_started` - Not Started
@@ -29388,10 +29494,9 @@ components:
         review_settings:
           $ref: '#/components/schemas/ReviewSettingsRequest'
         sampling:
-          nullable: true
-          oneOf:
+          allOf:
             - $ref: '#/components/schemas/SamplingDe5Enum'
-            - $ref: '#/components/schemas/NullEnum'
+          nullable: true
         show_annotation_history:
           description: Show annotation history to annotator
           type: boolean
@@ -29414,10 +29519,9 @@ components:
           nullable: true
           type: boolean
         skip_queue:
-          nullable: true
-          oneOf:
+          allOf:
             - $ref: '#/components/schemas/SkipQueueEnum'
-            - $ref: '#/components/schemas/NullEnum'
+          nullable: true
         task_data_login:
           description: 'Task data credentials: login'
           maxLength: 256
@@ -30459,10 +30563,9 @@ components:
           description: Reveal pre-annotations interactively
           type: boolean
         sampling:
-          nullable: true
-          oneOf:
+          allOf:
             - $ref: '#/components/schemas/SamplingDe5Enum'
-            - $ref: '#/components/schemas/NullEnum'
+          nullable: true
         show_annotation_history:
           description: Show annotation history to annotator
           type: boolean
@@ -30482,10 +30585,9 @@ components:
           description: Show a skip button in interface and allow annotators to skip the task
           type: boolean
         skip_queue:
-          nullable: true
-          oneOf:
+          allOf:
             - $ref: '#/components/schemas/SkipQueueEnum'
-            - $ref: '#/components/schemas/NullEnum'
+          nullable: true
         skipped_annotations_number:
           description: Skipped by collaborators annotation number in project
           readOnly: true
@@ -31313,6 +31415,8 @@ components:
           nullable: true
           type: integer
         requeue_rejected_tasks_mode:
+          allOf:
+            - $ref: '#/components/schemas/RequeueRejectedTasksModeEnum'
           description: |-
             Requeue mode for rejected tasks
 
@@ -31320,10 +31424,6 @@ components:
             * `remove` - Remove
             * `flexible` - Flexible
           nullable: true
-          oneOf:
-            - $ref: '#/components/schemas/RequeueRejectedTasksModeEnum'
-            - $ref: '#/components/schemas/BlankEnum'
-            - $ref: '#/components/schemas/NullEnum'
         requeue_rejected_tasks_to_annotator:
           readOnly: true
           type: boolean
@@ -31331,15 +31431,14 @@ components:
           description: If set, the reviewer must leave a comment on reject
           type: boolean
         review_criteria:
+          allOf:
+            - $ref: '#/components/schemas/ReviewCriteriaEnum'
           description: |-
             Criteria to mark task as reviewed
 
             * `all` - Task is reviewed if all annotations are reviewed
             * `one` - Task is reviewed if at least one annotation is reviewed
           nullable: true
-          oneOf:
-            - $ref: '#/components/schemas/ReviewCriteriaEnum'
-            - $ref: '#/components/schemas/NullEnum'
         review_only_manual_assignments:
           description: When set True, review queue is built only from manually assigned tasks
           type: boolean
@@ -31350,16 +31449,14 @@ components:
           pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
           type: string
         sampling:
+          allOf:
+            - $ref: '#/components/schemas/ReviewSettingsSamplingEnum'
           description: |-
             Task sampling strategy in the review stream (by task id or random)
 
             * `task_id` - By Task ID
             * `random` - Random
           nullable: true
-          oneOf:
-            - $ref: '#/components/schemas/ReviewSettingsSamplingEnum'
-            - $ref: '#/components/schemas/BlankEnum'
-            - $ref: '#/components/schemas/NullEnum'
         show_agreement_to_reviewers:
           description: Show the agreement column to reviewers
           type: boolean
@@ -31393,6 +31490,8 @@ components:
           nullable: true
           type: integer
         requeue_rejected_tasks_mode:
+          allOf:
+            - $ref: '#/components/schemas/RequeueRejectedTasksModeEnum'
           description: |-
             Requeue mode for rejected tasks
 
@@ -31400,23 +31499,18 @@ components:
             * `remove` - Remove
             * `flexible` - Flexible
           nullable: true
-          oneOf:
-            - $ref: '#/components/schemas/RequeueRejectedTasksModeEnum'
-            - $ref: '#/components/schemas/BlankEnum'
-            - $ref: '#/components/schemas/NullEnum'
         require_comment_on_reject:
           description: If set, the reviewer must leave a comment on reject
           type: boolean
         review_criteria:
+          allOf:
+            - $ref: '#/components/schemas/ReviewCriteriaEnum'
           description: |-
             Criteria to mark task as reviewed
 
             * `all` - Task is reviewed if all annotations are reviewed
             * `one` - Task is reviewed if at least one annotation is reviewed
           nullable: true
-          oneOf:
-            - $ref: '#/components/schemas/ReviewCriteriaEnum'
-            - $ref: '#/components/schemas/NullEnum'
         review_only_manual_assignments:
           description: When set True, review queue is built only from manually assigned tasks
           type: boolean
@@ -31427,16 +31521,14 @@ components:
           pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
           type: string
         sampling:
+          allOf:
+            - $ref: '#/components/schemas/ReviewSettingsSamplingEnum'
           description: |-
             Task sampling strategy in the review stream (by task id or random)
 
             * `task_id` - By Task ID
             * `random` - Random
           nullable: true
-          oneOf:
-            - $ref: '#/components/schemas/ReviewSettingsSamplingEnum'
-            - $ref: '#/components/schemas/BlankEnum'
-            - $ref: '#/components/schemas/NullEnum'
         show_agreement_to_reviewers:
           description: Show the agreement column to reviewers
           type: boolean
@@ -33061,6 +33153,8 @@ components:
           nullable: true
           type: integer
         onboarding_state:
+          allOf:
+            - $ref: '#/components/schemas/OnboardingStateEnum'
           description: |-
             The current stage of user onboarding
 
@@ -33071,10 +33165,6 @@ components:
             * `in_app_guidance` - In App Guidance
             * `complete` - Complete
           nullable: true
-          oneOf:
-            - $ref: '#/components/schemas/OnboardingStateEnum'
-            - $ref: '#/components/schemas/BlankEnum'
-            - $ref: '#/components/schemas/NullEnum'
         social_auth_finished:
           description: Is user finished social authentication
           nullable: true
@@ -33095,11 +33185,9 @@ components:
           nullable: true
           type: string
         trial_role:
-          nullable: true
-          oneOf:
+          allOf:
             - $ref: '#/components/schemas/TrialRoleEnum'
-            - $ref: '#/components/schemas/BlankEnum'
-            - $ref: '#/components/schemas/NullEnum'
+          nullable: true
       required:
         - active_organization_external_id
         - email_notification_settings
