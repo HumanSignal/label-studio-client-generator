@@ -1,14 +1,6 @@
 api:
   path: ./openapi/openapi.yaml
   overrides: ./openapi/overrides.yaml
-  settings:
-    use-title: false
-    idiomatic-request-names: false
-    respect-nullable-schemas: false
-    wrap-references-to-nullable-in-optional: true
-    coerce-optional-schemas-to-nullable: true
-    inline-path-parameters: false
-    coerce-enums-to-literals: true
 default-group: python-sdk-staging
 groups:
   python-sdk-staging:
