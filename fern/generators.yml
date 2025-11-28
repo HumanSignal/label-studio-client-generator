@@ -1,6 +1,7 @@
 api:
-  path: ./openapi/openapi.yaml
-  overrides: ./openapi/overrides.yaml
+  specs:
+    - openapi: ./openapi/openapi.yaml
+      overrides: ./openapi/overrides.yaml
 default-group: python-sdk-staging
 groups:
   python-sdk-staging:
