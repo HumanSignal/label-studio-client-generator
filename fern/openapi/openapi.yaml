@@ -33315,6 +33315,10 @@ components:
         membership:
           readOnly: true
           type: string
+        projects_count:
+          nullable: true
+          readOnly: true
+          type: integer
         title:
           description: Workspace name
           maxLength: 1000
@@ -33323,6 +33327,7 @@ components:
         - created_by
         - id
         - membership
+        - projects_count
         - title
       type: object
     WorkspaceMemberBulkAssignRequest:
