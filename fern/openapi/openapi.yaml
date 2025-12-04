@@ -142,12 +142,17 @@ paths:
           name: projects
           schema:
             type: string
+        - description: Whether to segment results by project
+          in: query
+          name: segment_by_project
+          schema:
+            type: boolean
         - description: 'Time granularity: hourly, daily, weekly, monthly, yearly'
           in: query
           name: segment_by_time
           schema:
             type: string
-        - description: Whether to segment results by user
+        - description: 'Whether to segment results by user '
           in: query
           name: segment_by_user
           schema:
@@ -17734,7 +17739,7 @@ paths:
       x-fern-sdk-group-name: annotations
       x-fern-sdk-method-name: list
     post:
-      description: "\n        Add annotations to a task like an annotator does. The content of the result field depends on your \n        labeling configuration. For example, send the following data as part of your POST \n        request to send an empty annotation with the ID of the user who completed the task:\n        \n        ```json\n        {\n        \"result\": {},\n        \"was_cancelled\": true,\n        \"ground_truth\": true,\n        \"lead_time\": 0,\n        \"task\": 0\n        \"completed_by\": 123\n        } \n        ```\n        "
+      description: "\n        Add annotations to a task like an annotator does. The content of the result field depends on your\n        labeling configuration. For example, send the following data as part of your POST\n        request to send an empty annotation with the ID of the user who completed the task:\n\n        ```json\n        {\n        \"result\": {},\n        \"was_cancelled\": true,\n        \"ground_truth\": true,\n        \"lead_time\": 0,\n        \"task\": 0\n        \"completed_by\": 123\n        }\n        ```\n        "
       operationId: api_tasks_annotations_create
       parameters:
         - description: Task ID
@@ -23394,6 +23399,10 @@ components:
     ImportApiRequest:
       description: Tasks serializer for Import API (TaskBulkCreateAPI)
       properties:
+        allow_skip:
+          description: Whether this task can be skipped. Set to False to make task unskippable.
+          nullable: true
+          type: boolean
         annotations:
           default: []
           items:
@@ -23504,6 +23513,11 @@ components:
         Response serializer for KPI detail endpoint.
         Structure varies based on segmentation parameters.
       properties:
+        by_project:
+          allOf:
+            - $ref: '#/components/schemas/KPIProjectSegment'
+          description: Project-segmented data (compact format with parallel arrays)
+          nullable: true
         by_user:
           allOf:
             - $ref: '#/components/schemas/KPIUserSegment'
@@ -23521,6 +23535,11 @@ components:
             - $ref: '#/components/schemas/KPIMatrixSegment'
           description: 2D matrix (time × user) in compact format
           nullable: true
+        project_matrix:
+          allOf:
+            - $ref: '#/components/schemas/KPIProjectMatrixSegment'
+          description: 2D matrix (time × project) in compact format
+          nullable: true
         segmentation:
           allOf:
             - $ref: '#/components/schemas/SegmentationEnum'
@@ -23530,7 +23549,9 @@ components:
             * `none` - none
             * `time` - time
             * `user` - user
+            * `project` - project
             * `matrix` - matrix
+            * `project_matrix` - project_matrix
         time_series:
           allOf:
             - $ref: '#/components/schemas/KPITimeSegment'
@@ -23633,6 +23654,79 @@ components:
         - label
         - percentage
         - unit
+      type: object
+    KPIProjectInfo:
+      description: Serializer for project information (compact format).
+      properties:
+        project_id:
+          description: Project ID
+          type: integer
+        project_name:
+          description: Project name
+          type: string
+        workspace_id:
+          description: Workspace ID
+          type: integer
+        workspace_name:
+          description: Workspace name
+          type: string
+      required:
+        - project_id
+        - project_name
+        - workspace_id
+        - workspace_name
+      type: object
+    KPIProjectMatrixSegment:
+      description: |-
+        Serializer for 2D matrix segmentation (time × project) in compact format.
+        Returns a 2D array where values[project_index][time_index] corresponds to
+        projects[project_index] at interval_start[time_index].
+      properties:
+        interval_start:
+          description: Array of time period start timestamps
+          items:
+            format: date-time
+            type: string
+          type: array
+        projects:
+          description: Array of project information
+          items:
+            $ref: '#/components/schemas/KPIProjectInfo'
+          type: array
+        values:
+          description: '2D array of values: values[project_index][time_index]'
+          items:
+            items:
+              format: double
+              nullable: true
+              type: number
+            type: array
+          type: array
+      required:
+        - interval_start
+        - projects
+        - values
+      type: object
+    KPIProjectSegment:
+      description: |-
+        Serializer for project-segmented KPI data (compact format).
+        Returns parallel arrays: projects and values.
+      properties:
+        projects:
+          description: Array of project information
+          items:
+            $ref: '#/components/schemas/KPIProjectInfo'
+          type: array
+        values:
+          description: Array of KPI values, one per project (parallel to projects array)
+          items:
+            format: double
+            nullable: true
+            type: number
+          type: array
+      required:
+        - projects
+        - values
       type: object
     KPITimeSegment:
       description: |-
@@ -24500,6 +24594,9 @@ components:
         A serializer mixin that takes an additional `fields` argument that controls
         which fields should be displayed.
       properties:
+        concurrency:
+          readOnly: true
+          type: string
         id:
           readOnly: true
           type: integer
@@ -24512,6 +24609,7 @@ components:
         user:
           $ref: '#/components/schemas/LseUserOrganizationMemberList'
       required:
+        - concurrency
         - id
         - organization
         - role
@@ -26227,6 +26325,10 @@ components:
         agreement_selected:
           readOnly: true
           type: string
+        allow_skip:
+          description: Whether this task can be skipped. Set to False to make task unskippable.
+          nullable: true
+          type: boolean
         annotations:
           readOnly: true
           type: string
@@ -26567,6 +26669,10 @@ components:
     LseTaskRequest:
       description: Task Serializer with project scheme configs validation
       properties:
+        allow_skip:
+          description: Whether this task can be skipped. Set to False to make task unskippable.
+          nullable: true
+          type: boolean
         cancelled_annotations:
           description: Number of total cancelled annotations for the current task
           maximum: 2147483647
@@ -26768,6 +26874,10 @@ components:
         agreement_selected:
           readOnly: true
           type: string
+        allow_skip:
+          description: Whether this task can be skipped. Set to False to make task unskippable.
+          nullable: true
+          type: boolean
         annotations:
           readOnly: true
           type: string
@@ -27856,15 +27966,27 @@ components:
       type: string
     OrganizationBilling:
       properties:
+        enforce_session_concurrency:
+          readOnly: true
+          type: string
         manual_role_management:
           readOnly: true
           type: string
         manual_workspace_management:
           readOnly: true
           type: string
+        max_parallel_sessions:
+          readOnly: true
+          type: string
+        session_concurrency_window_seconds:
+          readOnly: true
+          type: string
       required:
+        - enforce_session_concurrency
         - manual_role_management
         - manual_workspace_management
+        - max_parallel_sessions
+        - session_concurrency_window_seconds
       type: object
     OrganizationId:
       description: |-
@@ -29747,6 +29869,10 @@ components:
     PatchedLseTaskRequest:
       description: Data Manager Task Serializer with FSM state support.
       properties:
+        allow_skip:
+          description: Whether this task can be skipped. Set to False to make task unskippable.
+          nullable: true
+          type: boolean
         avg_lead_time:
           format: double
           type: number
@@ -32157,12 +32283,16 @@ components:
         * `none` - none
         * `time` - time
         * `user` - user
+        * `project` - project
         * `matrix` - matrix
+        * `project_matrix` - project_matrix
       enum:
         - none
         - time
         - user
+        - project
         - matrix
+        - project_matrix
       type: string
     SelectedItemsRequest:
       properties:
@@ -32537,6 +32667,10 @@ components:
       type: object
     TaskSimple:
       properties:
+        allow_skip:
+          description: Whether this task can be skipped. Set to False to make task unskippable.
+          nullable: true
+          type: boolean
         annotations:
           default: []
           items:
