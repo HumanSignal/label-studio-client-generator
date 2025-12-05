@@ -2368,7 +2368,7 @@ paths:
       operationId: api_dataset_storages_types_retrieve
       responses:
         '200':
-          description: 'A list of dataset storages types {''name'': name, ''title'': title}.'
+          description: 'A list of dataset storages types `{''name'': name, ''title'': title}`.'
       security:
         - Token: []
       summary: List all dataset storages types
@@ -19522,7 +19522,7 @@ components:
           readOnly: true
           type: boolean
         control_weights:
-          description: 'Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have it''s own key in control weight dict with weight for each label and overall weight.For example, if bounding box annotation with control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice more important than Airplaine, then you have to need the specify: {''my_bbox'': {''type'': ''RectangleLabels'', ''labels'': {''Car'': 1.0, ''Airplaine'': 0.5}, ''overall'': 0.33}'
+          description: 'Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have it''s own key in control weight dict with weight for each label and overall weight.For example, if bounding box annotation with control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice more important than Airplaine, then you have to need the specify: `{''my_bbox'': {''type'': ''RectangleLabels'', ''labels'': {''Car'': 1.0, ''Airplaine'': 0.5}, ''overall'': 0.33}}`'
           nullable: true
         created_at:
           format: date-time
@@ -22356,10 +22356,10 @@ components:
             * `DI` - Deactivated
             * `NO` - Not Activated
         email_notification_settings:
-          description: 'Email notification settings for this organization. Controls which email notifications users can receive. Structure: {"notifications_allowed": {"notification_type": bool}}'
+          description: 'Email notification settings for this organization. Controls which email notifications users can receive. Structure: `{"notifications_allowed": {"notification_type": bool}}`'
           nullable: true
         embed_domains:
-          description: 'List of objects: {"domain": "example.com"}. Used for CSP header on /embed routes.'
+          description: 'List of objects: `{"domain": "example.com"}`. Used for CSP header on /embed routes.'
           nullable: true
         embed_settings:
           description: Embed settings for this organization
@@ -23613,7 +23613,7 @@ components:
           type: string
         calculation_formula:
           additionalProperties: {}
-          description: 'Formula for calculated KPIs defining how to derive the value from component KPIs. Structure: {"type": "ratio|sum|difference|product", "numerator": "kpi_key", "denominator": "kpi_key"}'
+          description: 'Formula for calculated KPIs defining how to derive the value from component KPIs. Structure: `{"type": "ratio|sum|difference|product", "numerator": "kpi_key", "denominator": "kpi_key"}`'
           nullable: true
           type: object
         date_column:
@@ -24562,7 +24562,7 @@ components:
           readOnly: true
           type: string
         embed_domains:
-          description: 'List of objects: {"domain": "example.com"}. Used for CSP header on /embed routes.'
+          description: 'List of objects: `{"domain": "example.com"}`. Used for CSP header on /embed routes.'
           nullable: true
         embed_settings:
           description: Embed settings for this organization
@@ -24663,7 +24663,7 @@ components:
           readOnly: true
           type: boolean
         control_weights:
-          description: 'Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have it''s own key in control weight dict with weight for each label and overall weight.For example, if bounding box annotation with control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice more important than Airplaine, then you have to need the specify: {''my_bbox'': {''type'': ''RectangleLabels'', ''labels'': {''Car'': 1.0, ''Airplaine'': 0.5}, ''overall'': 0.33}'
+          description: 'Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have it''s own key in control weight dict with weight for each label and overall weight.For example, if bounding box annotation with control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice more important than Airplaine, then you have to need the specify: `{''my_bbox'': {''type'': ''RectangleLabels'', ''labels'': {''Car'': 1.0, ''Airplaine'': 0.5}, ''overall'': 0.33}}`'
           nullable: true
         created_at:
           format: date-time
@@ -24992,7 +24992,7 @@ components:
           readOnly: true
           type: boolean
         control_weights:
-          description: 'Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have it''s own key in control weight dict with weight for each label and overall weight.For example, if bounding box annotation with control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice more important than Airplaine, then you have to need the specify: {''my_bbox'': {''type'': ''RectangleLabels'', ''labels'': {''Car'': 1.0, ''Airplaine'': 0.5}, ''overall'': 0.33}'
+          description: 'Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have it''s own key in control weight dict with weight for each label and overall weight.For example, if bounding box annotation with control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice more important than Airplaine, then you have to need the specify: `{''my_bbox'': {''type'': ''RectangleLabels'', ''labels'': {''Car'': 1.0, ''Airplaine'': 0.5}, ''overall'': 0.33}}`'
           nullable: true
         created_at:
           format: date-time
@@ -25181,7 +25181,7 @@ components:
           nullable: true
           type: string
         control_weights:
-          description: 'Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have it''s own key in control weight dict with weight for each label and overall weight.For example, if bounding box annotation with control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice more important than Airplaine, then you have to need the specify: {''my_bbox'': {''type'': ''RectangleLabels'', ''labels'': {''Car'': 1.0, ''Airplaine'': 0.5}, ''overall'': 0.33}'
+          description: 'Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have it''s own key in control weight dict with weight for each label and overall weight.For example, if bounding box annotation with control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice more important than Airplaine, then you have to need the specify: `{''my_bbox'': {''type'': ''RectangleLabels'', ''labels'': {''Car'': 1.0, ''Airplaine'': 0.5}, ''overall'': 0.33}}`'
           nullable: true
         created_by:
           allOf:
@@ -25354,7 +25354,7 @@ components:
           readOnly: true
           type: boolean
         control_weights:
-          description: 'Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have it''s own key in control weight dict with weight for each label and overall weight.For example, if bounding box annotation with control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice more important than Airplaine, then you have to need the specify: {''my_bbox'': {''type'': ''RectangleLabels'', ''labels'': {''Car'': 1.0, ''Airplaine'': 0.5}, ''overall'': 0.33}'
+          description: 'Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have it''s own key in control weight dict with weight for each label and overall weight.For example, if bounding box annotation with control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice more important than Airplaine, then you have to need the specify: `{''my_bbox'': {''type'': ''RectangleLabels'', ''labels'': {''Car'': 1.0, ''Airplaine'': 0.5}, ''overall'': 0.33}}`'
           nullable: true
         created_at:
           format: date-time
@@ -25656,7 +25656,7 @@ components:
           readOnly: true
           type: boolean
         control_weights:
-          description: 'Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have it''s own key in control weight dict with weight for each label and overall weight.For example, if bounding box annotation with control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice more important than Airplaine, then you have to need the specify: {''my_bbox'': {''type'': ''RectangleLabels'', ''labels'': {''Car'': 1.0, ''Airplaine'': 0.5}, ''overall'': 0.33}'
+          description: 'Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have it''s own key in control weight dict with weight for each label and overall weight.For example, if bounding box annotation with control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice more important than Airplaine, then you have to need the specify: `{''my_bbox'': {''type'': ''RectangleLabels'', ''labels'': {''Car'': 1.0, ''Airplaine'': 0.5}, ''overall'': 0.33}}`'
           nullable: true
         created_at:
           format: date-time
@@ -29095,10 +29095,10 @@ components:
             * `DI` - Deactivated
             * `NO` - Not Activated
         email_notification_settings:
-          description: 'Email notification settings for this organization. Controls which email notifications users can receive. Structure: {"notifications_allowed": {"notification_type": bool}}'
+          description: 'Email notification settings for this organization. Controls which email notifications users can receive. Structure: `{"notifications_allowed": {"notification_type": bool}}`'
           nullable: true
         embed_domains:
-          description: 'List of objects: {"domain": "example.com"}. Used for CSP header on /embed routes.'
+          description: 'List of objects: `{"domain": "example.com"}`. Used for CSP header on /embed routes.'
           nullable: true
         embed_settings:
           description: Embed settings for this organization
@@ -29533,7 +29533,7 @@ components:
         comment_classification_config:
           type: string
         control_weights:
-          description: 'Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have it''s own key in control weight dict with weight for each label and overall weight.For example, if bounding box annotation with control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice more important than Airplaine, then you have to need the specify: {''my_bbox'': {''type'': ''RectangleLabels'', ''labels'': {''Car'': 1.0, ''Airplaine'': 0.5}, ''overall'': 0.33}'
+          description: 'Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have it''s own key in control weight dict with weight for each label and overall weight.For example, if bounding box annotation with control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice more important than Airplaine, then you have to need the specify: `{''my_bbox'': {''type'': ''RectangleLabels'', ''labels'': {''Car'': 1.0, ''Airplaine'': 0.5}, ''overall'': 0.33}}`'
           nullable: true
         created_by:
           allOf:
@@ -30599,7 +30599,7 @@ components:
           readOnly: true
           type: boolean
         control_weights:
-          description: 'Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have it''s own key in control weight dict with weight for each label and overall weight.For example, if bounding box annotation with control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice more important than Airplaine, then you have to need the specify: {''my_bbox'': {''type'': ''RectangleLabels'', ''labels'': {''Car'': 1.0, ''Airplaine'': 0.5}, ''overall'': 0.33}'
+          description: 'Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have it''s own key in control weight dict with weight for each label and overall weight.For example, if bounding box annotation with control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice more important than Airplaine, then you have to need the specify: `{''my_bbox'': {''type'': ''RectangleLabels'', ''labels'': {''Car'': 1.0, ''Airplaine'': 0.5}, ''overall'': 0.33}}`'
           nullable: true
         created_at:
           format: date-time
