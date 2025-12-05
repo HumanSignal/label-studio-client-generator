@@ -152,7 +152,7 @@ paths:
           name: segment_by_time
           schema:
             type: string
-        - description: 'Whether to segment results by user '
+        - description: Whether to segment results by user
           in: query
           name: segment_by_user
           schema:
@@ -19489,6 +19489,9 @@ components:
           nullable: true
           pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
           type: string
+        annotator_evaluation_enabled:
+          description: Enable annotator evaluation for the project
+          type: boolean
         annotator_evaluation_minimum_score:
           default: '95.00'
           format: decimal
@@ -19499,6 +19502,11 @@ components:
           default: 10
           minimum: 0
           nullable: true
+          type: integer
+        annotator_evaluation_onboarding_tasks:
+          description: Number of onboarding tasks for annotator evaluation
+          maximum: 2147483647
+          minimum: 0
           type: integer
         assignment_settings:
           $ref: '#/components/schemas/AssignmentSettings'
@@ -19679,6 +19687,9 @@ components:
         show_collab_predictions:
           description: If set, the annotator can view model predictions
           title: Show predictions to annotator
+          type: boolean
+        show_ground_truth_always:
+          description: When enabled, ground truth tasks will be shown to all annotators regardless of overlap
           type: boolean
         show_ground_truth_first:
           description: 'Onboarding mode (true): show ground truth tasks first in the labeling stream'
@@ -24635,6 +24646,9 @@ components:
           nullable: true
           pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
           type: string
+        annotator_evaluation_enabled:
+          description: Enable annotator evaluation for the project
+          type: boolean
         annotator_evaluation_minimum_score:
           default: '95.00'
           format: decimal
@@ -24645,6 +24659,11 @@ components:
           default: 10
           minimum: 0
           nullable: true
+          type: integer
+        annotator_evaluation_onboarding_tasks:
+          description: Number of onboarding tasks for annotator evaluation
+          maximum: 2147483647
+          minimum: 0
           type: integer
         assignment_settings:
           $ref: '#/components/schemas/AssignmentSettings'
@@ -24806,6 +24825,9 @@ components:
         show_collab_predictions:
           description: If set, the annotator can view model predictions
           title: Show predictions to annotator
+          type: boolean
+        show_ground_truth_always:
+          description: When enabled, ground truth tasks will be shown to all annotators regardless of overlap
           type: boolean
         show_ground_truth_first:
           description: 'Onboarding mode (true): show ground truth tasks first in the labeling stream'
@@ -24979,6 +25001,14 @@ components:
         Serializer get numbers from project queryset annotation,
         make sure, that you use correct one(Project.objects.with_counts())
       properties:
+        annotator_evaluation_enabled:
+          description: Enable annotator evaluation for the project
+          type: boolean
+        annotator_evaluation_onboarding_tasks:
+          description: Number of onboarding tasks for annotator evaluation
+          maximum: 2147483647
+          minimum: 0
+          type: integer
         color:
           maxLength: 16
           nullable: true
@@ -25092,6 +25122,9 @@ components:
           description: If set, the annotator can view model predictions
           title: Show predictions to annotator
           type: boolean
+        show_ground_truth_always:
+          description: When enabled, ground truth tasks will be shown to all annotators regardless of overlap
+          type: boolean
         show_ground_truth_first:
           description: 'Onboarding mode (true): show ground truth tasks first in the labeling stream'
           type: boolean
@@ -25176,6 +25209,14 @@ components:
         Serializer get numbers from project queryset annotation,
         make sure, that you use correct one(Project.objects.with_counts())
       properties:
+        annotator_evaluation_enabled:
+          description: Enable annotator evaluation for the project
+          type: boolean
+        annotator_evaluation_onboarding_tasks:
+          description: Number of onboarding tasks for annotator evaluation
+          maximum: 2147483647
+          minimum: 0
+          type: integer
         color:
           maxLength: 16
           nullable: true
@@ -25253,6 +25294,9 @@ components:
           description: If set, the annotator can view model predictions
           title: Show predictions to annotator
           type: boolean
+        show_ground_truth_always:
+          description: When enabled, ground truth tasks will be shown to all annotators regardless of overlap
+          type: boolean
         show_ground_truth_first:
           description: 'Onboarding mode (true): show ground truth tasks first in the labeling stream'
           type: boolean
@@ -25326,6 +25370,9 @@ components:
           nullable: true
           pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
           type: string
+        annotator_evaluation_enabled:
+          description: Enable annotator evaluation for the project
+          type: boolean
         annotator_evaluation_minimum_score:
           default: '95.00'
           format: decimal
@@ -25336,6 +25383,11 @@ components:
           default: 10
           minimum: 0
           nullable: true
+          type: integer
+        annotator_evaluation_onboarding_tasks:
+          description: Number of onboarding tasks for annotator evaluation
+          maximum: 2147483647
+          minimum: 0
           type: integer
         assignment_settings:
           $ref: '#/components/schemas/AssignmentSettings'
@@ -25509,6 +25561,9 @@ components:
           description: If set, the annotator can view model predictions
           title: Show predictions to annotator
           type: boolean
+        show_ground_truth_always:
+          description: When enabled, ground truth tasks will be shown to all annotators regardless of overlap
+          type: boolean
         show_ground_truth_first:
           description: 'Onboarding mode (true): show ground truth tasks first in the labeling stream'
           type: boolean
@@ -25628,6 +25683,9 @@ components:
           nullable: true
           pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
           type: string
+        annotator_evaluation_enabled:
+          description: Enable annotator evaluation for the project
+          type: boolean
         annotator_evaluation_minimum_score:
           default: '95.00'
           format: decimal
@@ -25638,6 +25696,11 @@ components:
           default: 10
           minimum: 0
           nullable: true
+          type: integer
+        annotator_evaluation_onboarding_tasks:
+          description: Number of onboarding tasks for annotator evaluation
+          maximum: 2147483647
+          minimum: 0
           type: integer
         assignment_settings:
           $ref: '#/components/schemas/AssignmentSettings'
@@ -25779,6 +25842,9 @@ components:
         show_collab_predictions:
           description: If set, the annotator can view model predictions
           title: Show predictions to annotator
+          type: boolean
+        show_ground_truth_always:
+          description: When enabled, ground truth tasks will be shown to all annotators regardless of overlap
           type: boolean
         show_ground_truth_first:
           description: 'Onboarding mode (true): show ground truth tasks first in the labeling stream'
@@ -29513,6 +29579,9 @@ components:
           nullable: true
           pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
           type: string
+        annotator_evaluation_enabled:
+          description: Enable annotator evaluation for the project
+          type: boolean
         annotator_evaluation_minimum_score:
           default: '95.00'
           format: decimal
@@ -29523,6 +29592,11 @@ components:
           default: 10
           minimum: 0
           nullable: true
+          type: integer
+        annotator_evaluation_onboarding_tasks:
+          description: Number of onboarding tasks for annotator evaluation
+          maximum: 2147483647
+          minimum: 0
           type: integer
         assignment_settings:
           $ref: '#/components/schemas/AssignmentSettingsRequest'
@@ -29625,6 +29699,9 @@ components:
         show_collab_predictions:
           description: If set, the annotator can view model predictions
           title: Show predictions to annotator
+          type: boolean
+        show_ground_truth_always:
+          description: When enabled, ground truth tasks will be shown to all annotators regardless of overlap
           type: boolean
         show_ground_truth_first:
           description: 'Onboarding mode (true): show ground truth tasks first in the labeling stream'
@@ -30586,6 +30663,14 @@ components:
         Serializer get numbers from project queryset annotation,
         make sure, that you use correct one(Project.objects.with_counts())
       properties:
+        annotator_evaluation_enabled:
+          description: Enable annotator evaluation for the project
+          type: boolean
+        annotator_evaluation_onboarding_tasks:
+          description: Number of onboarding tasks for annotator evaluation
+          maximum: 2147483647
+          minimum: 0
+          type: integer
         color:
           maxLength: 16
           nullable: true
@@ -30698,6 +30783,9 @@ components:
         show_collab_predictions:
           description: If set, the annotator can view model predictions
           title: Show predictions to annotator
+          type: boolean
+        show_ground_truth_always:
+          description: When enabled, ground truth tasks will be shown to all annotators regardless of overlap
           type: boolean
         show_ground_truth_first:
           description: 'Onboarding mode (true): show ground truth tasks first in the labeling stream'
