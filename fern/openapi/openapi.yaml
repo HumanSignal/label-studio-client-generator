@@ -19687,9 +19687,6 @@ components:
           description: If set, the annotator can view model predictions
           title: Show predictions to annotator
           type: boolean
-        show_ground_truth_always:
-          description: When enabled, ground truth tasks will be shown to all annotators regardless of overlap
-          type: boolean
         show_ground_truth_first:
           description: 'Onboarding mode (true): show ground truth tasks first in the labeling stream'
           type: boolean
@@ -24824,9 +24821,6 @@ components:
           description: If set, the annotator can view model predictions
           title: Show predictions to annotator
           type: boolean
-        show_ground_truth_always:
-          description: When enabled, ground truth tasks will be shown to all annotators regardless of overlap
-          type: boolean
         show_ground_truth_first:
           description: 'Onboarding mode (true): show ground truth tasks first in the labeling stream'
           type: boolean
@@ -25002,11 +24996,6 @@ components:
         annotator_evaluation_enabled:
           description: Enable annotator evaluation for the project
           type: boolean
-        annotator_evaluation_onboarding_tasks:
-          description: Number of onboarding tasks for annotator evaluation
-          maximum: 2147483647
-          minimum: 0
-          type: integer
         color:
           maxLength: 16
           nullable: true
@@ -25120,9 +25109,6 @@ components:
           description: If set, the annotator can view model predictions
           title: Show predictions to annotator
           type: boolean
-        show_ground_truth_always:
-          description: When enabled, ground truth tasks will be shown to all annotators regardless of overlap
-          type: boolean
         show_ground_truth_first:
           description: 'Onboarding mode (true): show ground truth tasks first in the labeling stream'
           type: boolean
@@ -25210,11 +25196,6 @@ components:
         annotator_evaluation_enabled:
           description: Enable annotator evaluation for the project
           type: boolean
-        annotator_evaluation_onboarding_tasks:
-          description: Number of onboarding tasks for annotator evaluation
-          maximum: 2147483647
-          minimum: 0
-          type: integer
         color:
           maxLength: 16
           nullable: true
@@ -25291,9 +25272,6 @@ components:
         show_collab_predictions:
           description: If set, the annotator can view model predictions
           title: Show predictions to annotator
-          type: boolean
-        show_ground_truth_always:
-          description: When enabled, ground truth tasks will be shown to all annotators regardless of overlap
           type: boolean
         show_ground_truth_first:
           description: 'Onboarding mode (true): show ground truth tasks first in the labeling stream'
@@ -25557,9 +25535,6 @@ components:
         show_collab_predictions:
           description: If set, the annotator can view model predictions
           title: Show predictions to annotator
-          type: boolean
-        show_ground_truth_always:
-          description: When enabled, ground truth tasks will be shown to all annotators regardless of overlap
           type: boolean
         show_ground_truth_first:
           description: 'Onboarding mode (true): show ground truth tasks first in the labeling stream'
@@ -25838,9 +25813,6 @@ components:
         show_collab_predictions:
           description: If set, the annotator can view model predictions
           title: Show predictions to annotator
-          type: boolean
-        show_ground_truth_always:
-          description: When enabled, ground truth tasks will be shown to all annotators regardless of overlap
           type: boolean
         show_ground_truth_first:
           description: 'Onboarding mode (true): show ground truth tasks first in the labeling stream'
@@ -29695,9 +29667,6 @@ components:
           description: If set, the annotator can view model predictions
           title: Show predictions to annotator
           type: boolean
-        show_ground_truth_always:
-          description: When enabled, ground truth tasks will be shown to all annotators regardless of overlap
-          type: boolean
         show_ground_truth_first:
           description: 'Onboarding mode (true): show ground truth tasks first in the labeling stream'
           type: boolean
@@ -30661,11 +30630,6 @@ components:
         annotator_evaluation_enabled:
           description: Enable annotator evaluation for the project
           type: boolean
-        annotator_evaluation_onboarding_tasks:
-          description: Number of onboarding tasks for annotator evaluation
-          maximum: 2147483647
-          minimum: 0
-          type: integer
         color:
           maxLength: 16
           nullable: true
@@ -30778,9 +30742,6 @@ components:
         show_collab_predictions:
           description: If set, the annotator can view model predictions
           title: Show predictions to annotator
-          type: boolean
-        show_ground_truth_always:
-          description: When enabled, ground truth tasks will be shown to all annotators regardless of overlap
           type: boolean
         show_ground_truth_first:
           description: 'Onboarding mode (true): show ground truth tasks first in the labeling stream'
