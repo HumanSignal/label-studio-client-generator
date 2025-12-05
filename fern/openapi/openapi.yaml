@@ -152,7 +152,7 @@ paths:
           name: segment_by_time
           schema:
             type: string
-        - description: Whether to segment results by user
+        - description: 'Whether to segment results by user '
           in: query
           name: segment_by_user
           schema:
