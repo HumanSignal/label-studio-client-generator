@@ -19504,8 +19504,7 @@ components:
           nullable: true
           type: integer
         annotator_evaluation_onboarding_tasks:
-          description: Number of onboarding tasks for annotator evaluation
-          maximum: 2147483647
+          default: 0
           minimum: 0
           type: integer
         assignment_settings:
@@ -24661,8 +24660,7 @@ components:
           nullable: true
           type: integer
         annotator_evaluation_onboarding_tasks:
-          description: Number of onboarding tasks for annotator evaluation
-          maximum: 2147483647
+          default: 0
           minimum: 0
           type: integer
         assignment_settings:
@@ -25385,8 +25383,7 @@ components:
           nullable: true
           type: integer
         annotator_evaluation_onboarding_tasks:
-          description: Number of onboarding tasks for annotator evaluation
-          maximum: 2147483647
+          default: 0
           minimum: 0
           type: integer
         assignment_settings:
@@ -25698,8 +25695,7 @@ components:
           nullable: true
           type: integer
         annotator_evaluation_onboarding_tasks:
-          description: Number of onboarding tasks for annotator evaluation
-          maximum: 2147483647
+          default: 0
           minimum: 0
           type: integer
         assignment_settings:
@@ -29594,8 +29590,7 @@ components:
           nullable: true
           type: integer
         annotator_evaluation_onboarding_tasks:
-          description: Number of onboarding tasks for annotator evaluation
-          maximum: 2147483647
+          default: 0
           minimum: 0
           type: integer
         assignment_settings:
