@@ -19688,6 +19688,7 @@ components:
           title: Show predictions to annotator
           type: boolean
         show_ground_truth_first:
+          deprecated: true
           description: 'Onboarding mode (true): show ground truth tasks first in the labeling stream'
           type: boolean
         show_instruction:
@@ -24822,6 +24823,7 @@ components:
           title: Show predictions to annotator
           type: boolean
         show_ground_truth_first:
+          deprecated: true
           description: 'Onboarding mode (true): show ground truth tasks first in the labeling stream'
           type: boolean
         show_instruction:
@@ -25110,6 +25112,7 @@ components:
           title: Show predictions to annotator
           type: boolean
         show_ground_truth_first:
+          deprecated: true
           description: 'Onboarding mode (true): show ground truth tasks first in the labeling stream'
           type: boolean
         show_instruction:
@@ -25274,6 +25277,7 @@ components:
           title: Show predictions to annotator
           type: boolean
         show_ground_truth_first:
+          deprecated: true
           description: 'Onboarding mode (true): show ground truth tasks first in the labeling stream'
           type: boolean
         show_instruction:
@@ -25537,6 +25541,7 @@ components:
           title: Show predictions to annotator
           type: boolean
         show_ground_truth_first:
+          deprecated: true
           description: 'Onboarding mode (true): show ground truth tasks first in the labeling stream'
           type: boolean
         show_instruction:
@@ -25815,6 +25820,7 @@ components:
           title: Show predictions to annotator
           type: boolean
         show_ground_truth_first:
+          deprecated: true
           description: 'Onboarding mode (true): show ground truth tasks first in the labeling stream'
           type: boolean
         show_instruction:
@@ -29668,6 +29674,7 @@ components:
           title: Show predictions to annotator
           type: boolean
         show_ground_truth_first:
+          deprecated: true
           description: 'Onboarding mode (true): show ground truth tasks first in the labeling stream'
           type: boolean
         show_instruction:
@@ -30744,6 +30751,7 @@ components:
           title: Show predictions to annotator
           type: boolean
         show_ground_truth_first:
+          deprecated: true
           description: 'Onboarding mode (true): show ground truth tasks first in the labeling stream'
           type: boolean
         show_instruction:
