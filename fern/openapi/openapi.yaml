@@ -10663,6 +10663,272 @@ paths:
         - public
       x-fern-sdk-group-name: projects
       x-fern-sdk-method-name: validate_label_config
+  /api/projects/{project_pk}/dimensions/:
+    get:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        List all dimensions for a specific project.
+      operationId: api_projects_dimensions_list
+      parameters:
+        - description: Filter by active status
+          in: query
+          name: is_active
+          schema:
+            type: boolean
+        - description: Which field to use when ordering the results.
+          in: query
+          name: ordering
+          required: false
+          schema:
+            type: string
+        - description: Project ID
+          in: path
+          name: project_pk
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/DimensionList'
+                type: array
+          description: List of dimensions
+      security:
+        - Token: []
+      summary: ✨ List dimensions
+      tags:
+        - Dimensions
+      x-fern-audiences:
+        - internal
+      x-fern-sdk-group-name: dimensions
+      x-fern-sdk-method-name: list
+    post:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Create a new dimension for a specific project.
+      operationId: api_projects_dimensions_create
+      parameters:
+        - description: Project ID
+          in: path
+          name: project_pk
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DimensionCreateRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/DimensionCreateRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/DimensionCreateRequest'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dimension'
+          description: Created dimension
+      security:
+        - Token: []
+      summary: ✨ Create dimension
+      tags:
+        - Dimensions
+      x-fern-audiences:
+        - internal
+      x-fern-sdk-group-name: dimensions
+      x-fern-sdk-method-name: create
+  /api/projects/{project_pk}/dimensions/{id}/:
+    delete:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Delete a dimension by ID.
+      operationId: api_projects_dimensions_destroy
+      parameters:
+        - description: Dimension ID
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - description: Project ID
+          in: path
+          name: project_pk
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: No response body
+      security:
+        - Token: []
+      summary: ✨ Delete dimension
+      tags:
+        - Dimensions
+      x-fern-audiences:
+        - internal
+      x-fern-sdk-group-name: dimensions
+      x-fern-sdk-method-name: delete
+    get:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Retrieve a specific dimension by ID.
+      operationId: api_projects_dimensions_retrieve
+      parameters:
+        - description: Dimension ID
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - description: Project ID
+          in: path
+          name: project_pk
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dimension'
+          description: Dimension details
+      security:
+        - Token: []
+      summary: ✨ Get dimension
+      tags:
+        - Dimensions
+      x-fern-audiences:
+        - internal
+      x-fern-sdk-group-name: dimensions
+      x-fern-sdk-method-name: get
+    patch:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Update a specific dimension by ID.
+      operationId: api_projects_dimensions_partial_update
+      parameters:
+        - description: Dimension ID
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - description: Project ID
+          in: path
+          name: project_pk
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedDimensionRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedDimensionRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedDimensionRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dimension'
+          description: Updated dimension
+      security:
+        - Token: []
+      summary: ✨ Update dimension
+      tags:
+        - Dimensions
+      x-fern-audiences:
+        - internal
+      x-fern-sdk-group-name: dimensions
+      x-fern-sdk-method-name: update
+    put:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Overwrite a specific dimension by ID.
+      operationId: api_projects_dimensions_update
+      parameters:
+        - description: Dimension ID
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - description: Project ID
+          in: path
+          name: project_pk
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DimensionRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/DimensionRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/DimensionRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dimension'
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Put dimension
+      tags:
+        - Dimensions
+      x-fern-audiences:
+        - internal
   /api/projects/{project_pk}/members/{user_pk}/pauses/:
     get:
       description: |-
@@ -22394,6 +22660,256 @@ components:
       required:
         - organization
       type: object
+    Dimension:
+      description: |-
+        Serializer for Dimension model.
+
+        Handles serialization and validation for CRUD operations on dimensions.
+        The project and created_by fields are set automatically from the request context.
+      properties:
+        allowed_metrics:
+          additionalProperties: {}
+          description: Dictionary mapping metric type names to their parameter schemas.
+          readOnly: true
+          type: object
+        control_tag:
+          description: Name of the control tag this dimension is extracted from. Set automatically for system dimensions.
+          nullable: true
+          readOnly: true
+          type: string
+        created_at:
+          format: date-time
+          readOnly: true
+          type: string
+        created_by:
+          description: User who created this dimension
+          nullable: true
+          readOnly: true
+          type: integer
+        description:
+          description: Human-readable description of what this dimension represents
+          type: string
+        extraction_method:
+          description: Method used to extract values from annotation JSON
+          maxLength: 32
+          type: string
+        extraction_method_params:
+          description: Parameters specific to the extraction method. See metrics.py for available extraction methods and their parameters.
+          title: Extraction method parameters
+        id:
+          readOnly: true
+          type: integer
+        is_active:
+          description: Whether this dimension is used in agreement calculations.
+          type: boolean
+        is_user_defined:
+          description: Whether this dimension was manually created by a user. System-generated dimensions have this set to False.
+          type: boolean
+        metric_params:
+          description: Parameters for the metric. See metrics.py for available metrics and their parameters.
+          title: Metric parameters
+        metric_type:
+          description: Strategy for comparing dimension values across annotators
+          maxLength: 32
+          type: string
+        name:
+          description: Unique identifier for this dimension within the project
+          maxLength: 255
+          minLength: 1
+          type: string
+        order:
+          description: Display order within the project
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+        project:
+          description: Project this dimension belongs to
+          readOnly: true
+          type: integer
+        updated_at:
+          format: date-time
+          readOnly: true
+          type: string
+      required:
+        - allowed_metrics
+        - control_tag
+        - created_at
+        - created_by
+        - id
+        - name
+        - project
+        - updated_at
+      type: object
+    DimensionCreateRequest:
+      description: |-
+        Serializer for creating new dimensions.
+
+        Excludes is_user_defined from user input - new dimensions are always user-defined.
+      properties:
+        description:
+          description: Human-readable description of what this dimension represents
+          type: string
+        extraction_method:
+          description: Method used to extract values from annotation JSON
+          maxLength: 32
+          minLength: 1
+          type: string
+        extraction_method_params:
+          description: Parameters specific to the extraction method. See metrics.py for available extraction methods and their parameters.
+          title: Extraction method parameters
+        is_active:
+          description: Whether this dimension is used in agreement calculations.
+          type: boolean
+        metric_params:
+          description: Parameters for the metric. See metrics.py for available metrics and their parameters.
+          title: Metric parameters
+        metric_type:
+          description: Strategy for comparing dimension values across annotators
+          maxLength: 32
+          minLength: 1
+          type: string
+        name:
+          description: Unique identifier for this dimension within the project
+          maxLength: 255
+          minLength: 1
+          type: string
+        order:
+          description: Display order within the project
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+      required:
+        - name
+      type: object
+    DimensionList:
+      description: |-
+        Lightweight serializer for listing dimensions.
+
+        Excludes detailed parameters for performance in list views.
+      properties:
+        allowed_metrics:
+          additionalProperties: {}
+          description: Dictionary mapping metric type names to their parameter schemas.
+          readOnly: true
+          type: object
+        control_tag:
+          description: Name of the control tag this dimension is extracted from. Set automatically for system dimensions.
+          nullable: true
+          readOnly: true
+          type: string
+        created_at:
+          format: date-time
+          readOnly: true
+          type: string
+        description:
+          description: Human-readable description of what this dimension represents
+          readOnly: true
+          type: string
+        extraction_method:
+          description: Method used to extract values from annotation JSON
+          readOnly: true
+          type: string
+        extraction_method_params:
+          description: Parameters specific to the extraction method. See metrics.py for available extraction methods and their parameters.
+          readOnly: true
+          title: Extraction method parameters
+        id:
+          readOnly: true
+          type: integer
+        is_active:
+          description: Whether this dimension is used in agreement calculations.
+          readOnly: true
+          type: boolean
+        is_user_defined:
+          description: Whether this dimension was manually created by a user. System-generated dimensions have this set to False.
+          readOnly: true
+          type: boolean
+        metric_params:
+          description: Parameters for the metric. See metrics.py for available metrics and their parameters.
+          readOnly: true
+          title: Metric parameters
+        metric_type:
+          description: Strategy for comparing dimension values across annotators
+          readOnly: true
+          type: string
+        name:
+          description: Unique identifier for this dimension within the project
+          readOnly: true
+          type: string
+        order:
+          description: Display order within the project
+          readOnly: true
+          type: integer
+        project:
+          description: Project this dimension belongs to
+          readOnly: true
+          type: integer
+        updated_at:
+          format: date-time
+          readOnly: true
+          type: string
+      required:
+        - allowed_metrics
+        - control_tag
+        - created_at
+        - description
+        - extraction_method
+        - extraction_method_params
+        - id
+        - is_active
+        - is_user_defined
+        - metric_params
+        - metric_type
+        - name
+        - order
+        - project
+        - updated_at
+      type: object
+    DimensionRequest:
+      description: |-
+        Serializer for Dimension model.
+
+        Handles serialization and validation for CRUD operations on dimensions.
+        The project and created_by fields are set automatically from the request context.
+      properties:
+        description:
+          description: Human-readable description of what this dimension represents
+          type: string
+        extraction_method:
+          description: Method used to extract values from annotation JSON
+          maxLength: 32
+          minLength: 1
+          type: string
+        extraction_method_params:
+          description: Parameters specific to the extraction method. See metrics.py for available extraction methods and their parameters.
+          title: Extraction method parameters
+        is_active:
+          description: Whether this dimension is used in agreement calculations.
+          type: boolean
+        is_user_defined:
+          description: Whether this dimension was manually created by a user. System-generated dimensions have this set to False.
+          type: boolean
+        metric_params:
+          description: Parameters for the metric. See metrics.py for available metrics and their parameters.
+          title: Metric parameters
+        metric_type:
+          description: Strategy for comparing dimension values across annotators
+          maxLength: 32
+          minLength: 1
+          type: string
+        name:
+          description: Unique identifier for this dimension within the project
+          maxLength: 255
+          minLength: 1
+          type: string
+        order:
+          description: Display order within the project
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+      required:
+        - name
+      type: object
     EditionEnum:
       description: |-
         * `Community` - Community
@@ -26885,6 +27401,9 @@ components:
           type: number
         reviews_rejected:
           type: integer
+        state:
+          readOnly: true
+          type: string
         total_annotations:
           type: integer
         total_predictions:
@@ -26903,6 +27422,7 @@ components:
         - id
         - predictions
         - predictions_results
+        - state
         - unresolved_comment_count
       type: object
     LseTaskSerializerForReviewers:
@@ -29162,6 +29682,49 @@ components:
           format: date-time
           nullable: true
           type: string
+      type: object
+    PatchedDimensionRequest:
+      description: |-
+        Serializer for Dimension model.
+
+        Handles serialization and validation for CRUD operations on dimensions.
+        The project and created_by fields are set automatically from the request context.
+      properties:
+        description:
+          description: Human-readable description of what this dimension represents
+          type: string
+        extraction_method:
+          description: Method used to extract values from annotation JSON
+          maxLength: 32
+          minLength: 1
+          type: string
+        extraction_method_params:
+          description: Parameters specific to the extraction method. See metrics.py for available extraction methods and their parameters.
+          title: Extraction method parameters
+        is_active:
+          description: Whether this dimension is used in agreement calculations.
+          type: boolean
+        is_user_defined:
+          description: Whether this dimension was manually created by a user. System-generated dimensions have this set to False.
+          type: boolean
+        metric_params:
+          description: Parameters for the metric. See metrics.py for available metrics and their parameters.
+          title: Metric parameters
+        metric_type:
+          description: Strategy for comparing dimension values across annotators
+          maxLength: 32
+          minLength: 1
+          type: string
+        name:
+          description: Unique identifier for this dimension within the project
+          maxLength: 255
+          minLength: 1
+          type: string
+        order:
+          description: Display order within the project
+          maximum: 2147483647
+          minimum: 0
+          type: integer
       type: object
     PatchedFileUploadRequest:
       properties:
