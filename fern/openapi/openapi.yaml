@@ -33092,6 +33092,10 @@ components:
           nullable: true
           readOnly: true
           type: string
+        reason:
+          nullable: true
+          readOnly: true
+          type: string
         state:
           readOnly: true
           type: string
@@ -33109,6 +33113,7 @@ components:
         - created_at
         - id
         - previous_state
+        - reason
         - state
         - transition_name
         - triggered_by
