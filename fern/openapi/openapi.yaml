@@ -7684,10 +7684,22 @@ paths:
                 properties:
                   code:
                     type: string
+                  status:
+                    description: Deployment status of the Lambda function
+                    enum:
+                      - NotDeployed
+                      - Active
+                      - Pending
+                      - Inactive
+                      - Failed
+                      - NotFound
+                      - Error
+                    type: string
                 required:
                   - code
+                  - status
                 type: object
-          description: Lambda code
+          description: Lambda code and deployment status
       security:
         - Token: []
       summary: ✨ Get AWS custom metric code
@@ -19568,14 +19580,18 @@ paths:
 components:
   schemas:
     AWSCustomFunctionUpdateRequest:
+      description: Serializer for updating AWS Lambda custom metric function.
       properties:
         code:
+          description: The Python code for the custom metric function.
           minLength: 1
           type: string
         region:
+          description: The AWS region for the Lambda function. Uses default if not provided.
           nullable: true
           type: string
         role:
+          description: The AWS IAM role ARN for the Lambda function. Uses default if not provided.
           nullable: true
           type: string
       required:
