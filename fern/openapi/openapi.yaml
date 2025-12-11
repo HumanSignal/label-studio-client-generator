@@ -7685,7 +7685,7 @@ paths:
                   code:
                     type: string
                   status:
-                    description: Deployment status of the Lambda function
+                    description: Deployment status of the Lambda function.
                     enum:
                       - NotDeployed
                       - Active
