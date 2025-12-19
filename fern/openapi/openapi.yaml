@@ -8694,6 +8694,11 @@ paths:
           name: last_activity__gte
           schema:
             type: string
+        - description: Filter by last activity upper bound (ISO 8601 formatted date). Only when all=True.
+          in: query
+          name: last_activity__lte
+          schema:
+            type: string
         - description: Filter by role, project roles take precedence over organization roles. Only when all=True. (comma-separated values)
           in: query
           name: role
@@ -8745,6 +8750,11 @@ paths:
         - description: Filter by last activity (ISO 8601 formatted date). Only when all=True.
           in: query
           name: last_activity__gte
+          schema:
+            type: string
+        - description: Filter by last activity upper bound (ISO 8601 formatted date). Only when all=True.
+          in: query
+          name: last_activity__lte
           schema:
             type: string
         - description: Filter by role, project roles take precedence over organization roles. Only when all=True. (comma-separated values)
@@ -8829,6 +8839,12 @@ paths:
         - description: Filter by last activity time (ISO 8601 datetime). Returns users with last activity greater than or equal to this time.
           in: query
           name: last_activity__gte
+          schema:
+            format: date-time
+            type: string
+        - description: Filter by last activity time (ISO 8601 datetime). Returns users with last activity less than or equal to this time.
+          in: query
+          name: last_activity__lte
           schema:
             format: date-time
             type: string
@@ -33307,10 +33323,6 @@ components:
       type: object
     TaskSimple:
       properties:
-        allow_skip:
-          description: Whether this task can be skipped. Set to False to make task unskippable.
-          nullable: true
-          type: boolean
         annotations:
           default: []
           items:
