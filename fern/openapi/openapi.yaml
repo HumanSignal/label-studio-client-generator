@@ -117,7 +117,7 @@ paths:
         - Analytics
   /api/analytics/kpis/{kpi_key}:
     get:
-      description: Retrieve data for a specific KPI with support for filtering and segmentation. Can segment by time (hourly, daily, weekly, monthly, yearly), by user, or both (2D matrix). If no segmentation is specified, returns a single total value. Supports filtering by projects, members, and date range. Date filters are interpreted in the specified timezone (required parameter).
+      description: Retrieve data for a specific KPI with support for filtering and segmentation. Can segment by time (hourly, daily, weekly, monthly, yearly), by user, or both (2D matrix). If no segmentation is specified, returns a single total value. Supports filtering by projects, members, and date range. Date filters are interpreted in the specified timezone (required parameter). Maximum 50 projects allowed per request for performance reasons.
       operationId: api_analytics_kpis_retrieve_2
       parameters:
         - description: End date for filtering (ISO format)
@@ -137,7 +137,7 @@ paths:
           name: members
           schema:
             type: string
-        - description: Comma-separated project IDs. If empty, includes all organization projects.
+        - description: Comma-separated project IDs. If empty, includes all organization projects. Maximum 50 projects allowed per request. Requests exceeding this limit will be rejected with a 400 error.
           in: query
           name: projects
           schema:
@@ -8353,7 +8353,7 @@ paths:
       x-fern-sdk-method-name: list
   /api/projects/{id}/import:
     post:
-      description: "\n            Import data as labeling tasks in bulk using this API endpoint. You can use this API endpoint to import multiple tasks.\n            One POST request is limited at 250K tasks and 200 MB.\n\n            **Note:** Imported data is verified against a project *label_config* and must\n            include all variables that were used in the *label_config*. For example,\n            if the label configuration has a *$text* variable, then each item in a data object\n            must include a \"text\" field.\n            <br>\n\n            ## POST requests\n            <hr style=\"opacity:0.3\">\n\n            There are three possible ways to import tasks with this endpoint:\n\n            ### 1. **POST with data**\n            Send JSON tasks as POST data. Only JSON is supported for POSTing files directly.\n            Update this example to specify your authorization token and Label Studio instance host, then run the following from\n            the command line.\n\n            ```bash\n            curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' \\\n            -X POST 'http://localhost:8000/api/projects/1/import' --data '[{\"text\": \"Some text 1\"}, {\"text\": \"Some text 2\"}]'\n            ```\n\n            ### 2. **POST with files**\n            Send tasks as files. You can attach multiple files with different names.\n\n            - **JSON**: text files in JavaScript object notation format\n            - **CSV**: text files with tables in Comma Separated Values format\n            - **TSV**: text files with tables in Tab Separated Value format\n            - **TXT**: simple text files are similar to CSV with one column and no header, supported for projects with one source only\n\n            Update this example to specify your authorization token, Label Studio instance host, and file name and path,\n            then run the following from the command line:\n\n            ```bash\n            curl -H 'Authorization: Token abc123' \\\n            -X POST 'http://localhost:8000/api/projects/1/import' -F 'file=@path/to/my_file.csv'\n            ```\n\n            ### 3. **POST with URL**\n            You can also provide a URL to a file with labeling tasks. Supported file formats are the same as in option 2.\n\n            ```bash\n            curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' \\\n            -X POST 'http://localhost:8000/api/projects/1/import' \\\n            --data '[{\"url\": \"http://example.com/test1.csv\"}, {\"url\": \"http://example.com/test2.csv\"}]'\n            ```\n\n            <br>\n        "
+      description: "\n            Import data as labeling tasks in bulk using this API endpoint. You can use this API endpoint to import multiple tasks.\n            One POST request is limited at 250K tasks and 200 MB.\n\n            **Note:** Imported data is verified against a project *label_config* and must\n            include all variables that were used in the *label_config*. For example,\n            if the label configuration has a *$text* variable, then each item in a data object\n            must include a \"text\" field.\n            <br>\n\n            ## Async Import Behavior\n            <hr style=\"opacity:0.3\">\n\n            **For non-Community editions, this endpoint processes imports asynchronously.**\n            \n            - The POST request **can fail** for invalid parameters, malformed request body, or other request-level validation errors.\n            - However, **data validation errors** that occur during import processing are handled asynchronously and will not cause the POST request to fail.\n            - Upon successful request validation, a response is returned: `{\"import\": <import_id>}`\n            - Use the returned `import_id` to poll the GET `/api/projects/{project_id}/imports/{import_id}` endpoint to check the import status and see any data validation errors.\n            - Data-level errors and import failures will only be visible in the GET request response.\n\n            For Community edition, imports are processed synchronously and return task counts immediately.\n            <br>\n\n            ## POST requests\n            <hr style=\"opacity:0.3\">\n\n            There are three possible ways to import tasks with this endpoint:\n\n            ### 1. **POST with data**\n            Send JSON tasks as POST data. Only JSON is supported for POSTing files directly.\n            Update this example to specify your authorization token and Label Studio instance host, then run the following from\n            the command line.\n\n            ```bash\n            curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' \\\n            -X POST 'http://localhost:8000/api/projects/1/import' --data '[{\"text\": \"Some text 1\"}, {\"text\": \"Some text 2\"}]'\n            ```\n\n            ### 2. **POST with files**\n            Send tasks as files. You can attach multiple files with different names.\n\n            - **JSON**: text files in JavaScript object notation format\n            - **CSV**: text files with tables in Comma Separated Values format\n            - **TSV**: text files with tables in Tab Separated Value format\n            - **TXT**: simple text files are similar to CSV with one column and no header, supported for projects with one source only\n\n            Update this example to specify your authorization token, Label Studio instance host, and file name and path,\n            then run the following from the command line:\n\n            ```bash\n            curl -H 'Authorization: Token abc123' \\\n            -X POST 'http://localhost:8000/api/projects/1/import' -F 'file=@path/to/my_file.csv'\n            ```\n\n            ### 3. **POST with URL**\n            You can also provide a URL to a file with labeling tasks. Supported file formats are the same as in option 2.\n\n            ```bash\n            curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' \\\n            -X POST 'http://localhost:8000/api/projects/1/import' \\\n            --data '[{\"url\": \"http://example.com/test1.csv\"}, {\"url\": \"http://example.com/test2.csv\"}]'\n            ```\n\n            <br>\n        "
       operationId: api_projects_import_create
       parameters:
         - description: Set to "true" to immediately commit tasks to the project.
@@ -8404,52 +8404,56 @@ paths:
           content:
             application/json:
               schema:
-                description: Task creation response
+                description: 'Response format varies by edition. Non-Community editions return `{"import": <import_id>}` for async processing. Community edition returns the detailed response below with task counts.'
                 properties:
                   annotation_count:
-                    description: Number of annotations added
+                    description: Number of annotations added (Community edition sync import only)
                     title: annotation_count
                     type: integer
                   could_be_tasks_list:
-                    description: Whether uploaded files can contain lists of tasks, like CSV/TSV files
+                    description: Whether uploaded files can contain lists of tasks, like CSV/TSV files (Community edition sync import only)
                     title: could_be_tasks_list
                     type: boolean
                   data_columns:
-                    description: The list of found data columns
+                    description: The list of found data columns (Community edition sync import only)
                     items:
                       title: Data column name
                       type: string
                     title: data_columns
                     type: array
                   duration:
-                    description: Time in seconds to create
+                    description: Time in seconds to create (Community edition sync import only)
                     title: duration
                     type: number
                   file_upload_ids:
-                    description: Database IDs of uploaded files
+                    description: Database IDs of uploaded files (Community edition sync import only)
                     items:
                       title: File Upload IDs
                       type: integer
                     title: file_upload_ids
                     type: array
                   found_formats:
-                    description: The list of found file formats
+                    description: The list of found file formats (Community edition sync import only)
                     items:
                       title: File format
                       type: string
                     title: found_formats
                     type: array
+                  import:
+                    description: Import ID for async operations (non-Community editions only). Use this ID to poll `/api/projects/{project_id}/imports/{import_id}` for status.
+                    title: import
+                    type: integer
                   predictions_count:
-                    description: Number of predictions added
+                    description: Number of predictions added (Community edition sync import only)
                     title: predictions_count
                     type: integer
                   task_count:
-                    description: Number of tasks added
+                    description: Number of tasks added (Community edition sync import only)
                     title: task_count
                     type: integer
                 title: Task creation response
                 type: object
-          description: Tasks successfully imported
+          description: 'Tasks successfully imported or import queued. **For non-Community editions**, the response will be `{"import": <import_id>}` which you can use to poll the import status. **For Community edition**, the response contains task counts and is processed synchronously.'
         '400':
           content:
             application/json:
@@ -8523,7 +8527,7 @@ paths:
       x-fern-sdk-method-name: import_predictions
   /api/projects/{id}/imports/{import_pk}/:
     get:
-      description: Return data related to async project import operation
+      description: "\n            Poll the status of an asynchronous project import operation.\n            \n            **Usage:**\n            1. When you POST to `/api/projects/{project_id}/import`, you'll receive a response like `{\"import\": <import_id>}`\n            2. Use that `import_id` with this GET endpoint to check the import status\n            3. Poll this endpoint to see if the import has completed, is still processing, or has failed\n            4. **Import errors and failures will only be visible in this GET response**, not in the original POST request\n            \n            This endpoint returns detailed information about the import including task counts, status, and any error messages.\n        "
       operationId: api_projects_imports_retrieve
       parameters:
         - description: A unique integer value identifying this project import.
@@ -8546,7 +8550,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Get project import info
+      summary: 'Get project import status '
       tags:
         - Projects
       x-fern-audiences:
@@ -9233,7 +9237,7 @@ paths:
       x-fern-sdk-method-name: create
   /api/projects/{id}/reimports/{reimport_pk}/:
     get:
-      description: Return data related to async project reimport operation
+      description: "\n            Poll the status of an asynchronous project reimport operation.\n            \n            **Usage:**\n            1. When you POST to reimport tasks, you'll receive a response with a reimport ID\n            2. Use that `reimport_id` with this GET endpoint to check the reimport status\n            3. Poll this endpoint to see if the reimport has completed, is still processing, or has failed\n            4. **Reimport errors and failures will only be visible in this GET response**, not in the original POST request\n            \n            This endpoint returns detailed information about the reimport including task counts, status, and any error messages.\n        "
       operationId: api_projects_reimports_retrieve
       parameters:
         - description: A unique integer value identifying this project reimport.
@@ -9256,7 +9260,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Get project reimport info
+      summary: Get project reimport status
       tags:
         - Projects
       x-fern-audiences:
