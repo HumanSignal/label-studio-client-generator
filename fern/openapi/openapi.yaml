@@ -19768,11 +19768,23 @@ components:
         - recordsFiltered
         - recordsTotal
       type: object
+    AgreementMethodologyEnum:
+      description: |-
+        * `consensus` - Consensus
+        * `pairwise` - Pairwise Averaging
+      enum:
+        - consensus
+        - pairwise
+      type: string
     AllRolesProjectList:
       description: |-
         Serializer get numbers from project queryset annotation,
         make sure, that you use correct one(Project.objects.with_counts())
       properties:
+        agreement_methodology:
+          allOf:
+            - $ref: '#/components/schemas/AgreementMethodologyEnum'
+          default: pairwise
         agreement_threshold:
           description: Minimum percent agreement threshold for which minimum number of annotators must agree
           format: decimal
@@ -25180,6 +25192,10 @@ components:
         Serializer get numbers from project queryset annotation,
         make sure, that you use correct one(Project.objects.with_counts())
       properties:
+        agreement_methodology:
+          allOf:
+            - $ref: '#/components/schemas/AgreementMethodologyEnum'
+          default: pairwise
         agreement_threshold:
           description: Minimum percent agreement threshold for which minimum number of annotators must agree
           format: decimal
@@ -25884,6 +25900,10 @@ components:
     LseProjectResponse:
       description: Serializer for project response, combining all the serializers for different roles. Don't use it except for Spectacular/Fern definitions.
       properties:
+        agreement_methodology:
+          allOf:
+            - $ref: '#/components/schemas/AgreementMethodologyEnum'
+          default: pairwise
         agreement_threshold:
           description: Minimum percent agreement threshold for which minimum number of annotators must agree
           format: decimal
@@ -26197,6 +26217,10 @@ components:
         Serializer get numbers from project queryset annotation,
         make sure, that you use correct one(Project.objects.with_counts())
       properties:
+        agreement_methodology:
+          allOf:
+            - $ref: '#/components/schemas/AgreementMethodologyEnum'
+          default: pairwise
         agreement_threshold:
           description: Minimum percent agreement threshold for which minimum number of annotators must agree
           format: decimal
@@ -30137,6 +30161,10 @@ components:
         Serializer get numbers from project queryset annotation,
         make sure, that you use correct one(Project.objects.with_counts())
       properties:
+        agreement_methodology:
+          allOf:
+            - $ref: '#/components/schemas/AgreementMethodologyEnum'
+          default: pairwise
         agreement_threshold:
           description: Minimum percent agreement threshold for which minimum number of annotators must agree
           format: decimal
