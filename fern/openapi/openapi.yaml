@@ -120,6 +120,11 @@ paths:
       description: Retrieve data for a specific KPI with support for filtering and segmentation. Can segment by time (hourly, daily, weekly, monthly, yearly), by user, or both (2D matrix). If no segmentation is specified, returns a single total value. Supports filtering by projects, members, and date range. Date filters are interpreted in the specified timezone (required parameter). Maximum 50 projects allowed per request for performance reasons.
       operationId: api_analytics_kpis_retrieve_2
       parameters:
+        - description: Optional calling context. Use "member_performance" for Member Performance UI-only behavior.
+          in: query
+          name: analytics_context
+          schema:
+            type: string
         - description: End date for filtering (ISO format)
           in: query
           name: end
