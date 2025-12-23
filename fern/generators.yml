@@ -56,10 +56,9 @@ groups:
             # scikit-learn: '1.5.1'
           extra_dev_dependencies:
             respx: '^0.22.0'
-          pyproject_toml:
-            extra_content: |
-              [project.scripts]
-              label-studio-converter = "label_studio_sdk.converter.main:main"
+          pyproject_toml: |
+            [project.scripts]
+            label-studio-converter = "label_studio_sdk.converter.main:main"
         smart-casing: true
   python-sdk-local:
     audiences:
