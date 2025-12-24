@@ -5870,6 +5870,11 @@ paths:
         Retrieve a list of all users and roles in a specific organization.
       operationId: api_organizations_memberships_list
       parameters:
+        - description: Whether to include projects created and contributed to by the members.
+          in: query
+          name: contributed_to_projects
+          schema:
+            type: boolean
         - description: Project ID to exclude users who are already associated with this project (direct members, workspace members, or implicit admin/owner access).
           in: query
           name: exclude_project_id
@@ -6046,6 +6051,11 @@ paths:
       description: Get organization member details by user ID.
       operationId: api_organizations_memberships_retrieve
       parameters:
+        - description: Whether to include projects created and contributed to by the member.
+          in: query
+          name: contributed_to_projects
+          schema:
+            type: boolean
         - in: path
           name: id
           required: true
@@ -25169,6 +25179,34 @@ components:
         concurrency:
           readOnly: true
           type: string
+        contributed_to_projects:
+          items:
+            properties:
+              id:
+                type: integer
+              title:
+                type: string
+            required:
+              - id
+              - title
+            type: object
+          nullable: true
+          readOnly: true
+          type: array
+        created_projects:
+          items:
+            properties:
+              id:
+                type: integer
+              title:
+                type: string
+            required:
+              - id
+              - title
+            type: object
+          nullable: true
+          readOnly: true
+          type: array
         id:
           readOnly: true
           type: integer
@@ -25182,6 +25220,8 @@ components:
           $ref: '#/components/schemas/LseUserOrganizationMemberList'
       required:
         - concurrency
+        - contributed_to_projects
+        - created_projects
         - id
         - organization
         - role
@@ -27912,11 +27952,35 @@ components:
           readOnly: true
           type: string
         contributed_to_projects:
+          deprecated: true
+          items:
+            properties:
+              id:
+                type: integer
+              title:
+                type: string
+            required:
+              - id
+              - title
+            type: object
+          nullable: true
           readOnly: true
-          type: string
+          type: array
         created_projects:
+          deprecated: true
+          items:
+            properties:
+              id:
+                type: integer
+              title:
+                type: string
+            required:
+              - id
+              - title
+            type: object
+          nullable: true
           readOnly: true
-          type: string
+          type: array
         custom_hotkeys:
           description: Custom keyboard shortcuts configuration for the user interface
           nullable: true
@@ -28648,14 +28712,42 @@ components:
       properties:
         annotations_count:
           readOnly: true
-          type: string
+          type: integer
         contributed_projects_count:
           readOnly: true
-          type: string
+          type: integer
+        contributed_to_projects:
+          items:
+            properties:
+              id:
+                type: integer
+              title:
+                type: string
+            required:
+              - id
+              - title
+            type: object
+          nullable: true
+          readOnly: true
+          type: array
         created_at:
           format: date-time
           readOnly: true
           type: string
+        created_projects:
+          items:
+            properties:
+              id:
+                type: integer
+              title:
+                type: string
+            required:
+              - id
+              - title
+            type: object
+          nullable: true
+          readOnly: true
+          type: array
         organization:
           description: Organization ID
           type: integer
@@ -28665,7 +28757,9 @@ components:
       required:
         - annotations_count
         - contributed_projects_count
+        - contributed_to_projects
         - created_at
+        - created_projects
         - organization
         - user
       type: object
