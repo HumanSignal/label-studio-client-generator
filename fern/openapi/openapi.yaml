@@ -18171,7 +18171,7 @@ paths:
       x-fern-sdk-method-name: create
   /api/tasks/{id}/events/:
     post:
-      description: "\n    Create a new task event to track user interactions and system events during annotation.\n\n    This endpoint is designed to receive events from the frontend labeling interface to enable\n    accurate lead time calculation and detailed annotation analytics.\n\n    ## Event Types\n\n    **Core Annotation Events:**\n    - `annotation_loaded` - When annotation interface is loaded\n    - `annotation_submitted` - When annotation is submitted\n    - `annotation_updated` - When annotation is modified\n    - `annotation_reviewed` - When annotation is reviewed\n\n    **User Activity Events:**\n    - `visibility_change` - When page visibility changes (tab switch, minimize)\n    - `idle_detected` - When user goes idle\n    - `idle_resumed` - When user returns from idle\n\n    **Interaction Events:**\n    - `region_finished_drawing` - When annotation region is completed\n    - `region_deleted` - When annotation regions are removed\n    - `hotkey_pressed` - When keyboard shortcuts are used\n\n    **Media Events:**\n    - `video_playback_start/end` - Video playback control\n    - `audio_playback_start/end` - Audio playback control\n    - `video_scrub` - Video timeline scrubbing\n\n    ## Usage\n\n    Events are automatically associated with the task specified in the URL path.\n    The current user is automatically set as the actor. Project and organization\n    are derived from the task context.\n\n    ## Example Request\n\n    ```json\n    {\n        \"event_key\": \"annotation_loaded\",\n        \"event_time\": \"2024-01-15T10:30:00Z\",\n        \"annotation\": 123,\n        \"meta\": {\n            \"annotation_count\": 5,\n            \"estimated_time\": 300\n        }\n    }\n    ```\n    "
+      description: "\n    Create a new task event to track user interactions and system events during annotation.\n\n    This endpoint is designed to receive events from the frontend labeling interface to enable\n    accurate lead time calculation and detailed annotation analytics.\n\n    ## Event Types\n\n    **Core Annotation Events:**\n    - `annotation_loaded` - When annotation interface is loaded\n    - `annotation_created` - When annotation is submitted\n    - `annotation_updated` - When annotation is modified\n    - `annotation_reviewed` - When annotation is reviewed\n\n    **User Activity Events:**\n    - `visibility_change` - When page visibility changes (tab switch, minimize)\n    - `idle_detected` - When user goes idle\n    - `idle_resumed` - When user returns from idle\n\n    **Interaction Events:**\n    - `region_finished_drawing` - When annotation region is completed\n    - `region_deleted` - When annotation regions are removed\n    - `hotkey_pressed` - When keyboard shortcuts are used\n\n    **Media Events:**\n    - `video_playback_start/end` - Video playback control\n    - `audio_playback_start/end` - Audio playback control\n    - `video_scrub` - Video timeline scrubbing\n\n    ## Usage\n\n    Events are automatically associated with the task specified in the URL path.\n    The current user is automatically set as the actor. Project and organization\n    are derived from the task context.\n\n    ## Example Request\n\n    ```json\n    {\n        \"event_key\": \"annotation_loaded\",\n        \"event_time\": \"2024-01-15T10:30:00Z\",\n        \"annotation\": 123,\n        \"meta\": {\n            \"annotation_count\": 5,\n            \"estimated_time\": 300\n        }\n    }\n    ```\n    "
       operationId: api_tasks_events_create
       parameters:
         - description: Task ID to associate the event with
@@ -22725,9 +22725,9 @@ components:
         Handles serialization and validation for CRUD operations on dimensions.
         The project and created_by fields are set automatically from the request context.
       properties:
-        allowed_metrics:
+        allowed_metrics_with_params:
           additionalProperties: {}
-          description: Dictionary mapping metric type names to their parameter schemas.
+          description: 'Dictionary mapping metric type names to their parameter schemas. '
           readOnly: true
           type: object
         control_tag:
@@ -22789,7 +22789,7 @@ components:
           readOnly: true
           type: string
       required:
-        - allowed_metrics
+        - allowed_metrics_with_params
         - control_tag
         - created_at
         - created_by
@@ -22845,7 +22845,7 @@ components:
 
         Excludes detailed parameters for performance in list views.
       properties:
-        allowed_metrics:
+        allowed_metrics_with_params:
           additionalProperties: {}
           description: Dictionary mapping metric type names to their parameter schemas.
           readOnly: true
@@ -22907,7 +22907,7 @@ components:
           readOnly: true
           type: string
       required:
-        - allowed_metrics
+        - allowed_metrics_with_params
         - control_tag
         - created_at
         - description
@@ -26985,6 +26985,12 @@ components:
           description: Whether this task can be skipped. Set to False to make task unskippable.
           nullable: true
           type: boolean
+        annotation_time:
+          description: |-
+            Calculate total annotation time for this task from MetricInTimeBucket records.
+            Returns time in seconds.
+          readOnly: true
+          type: integer
         annotations:
           readOnly: true
           type: string
@@ -27200,6 +27206,7 @@ components:
       required:
         - agreement
         - agreement_selected
+        - annotation_time
         - annotations
         - annotations_ids
         - annotations_results
@@ -27538,6 +27545,12 @@ components:
           description: Whether this task can be skipped. Set to False to make task unskippable.
           nullable: true
           type: boolean
+        annotation_time:
+          description: |-
+            Calculate total annotation time for this task from MetricInTimeBucket records.
+            Returns time in seconds.
+          readOnly: true
+          type: integer
         annotations:
           readOnly: true
           type: string
@@ -27753,6 +27766,7 @@ components:
       required:
         - agreement
         - agreement_selected
+        - annotation_time
         - annotations
         - annotations_ids
         - annotations_results
