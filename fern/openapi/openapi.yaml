@@ -8024,10 +8024,135 @@ paths:
         - projects
         - exports
       x-fern-sdk-method-name: download_sync
+  /api/projects/{id}/export/:
+    get:
+      deprecated: true
+      description: "\n        This endpoint is deprecated in Enterprise. Use the async export API instead:\n        POST /api/projects/{id}/exports/ (see [Create new export](/api#operation/api_projects_exports_create)).\n        \n        This endpoint will always return a 404 Not Found response in Enterprise, with instructions to use the async export API.\n        "
+      operationId: api_projects_export_retrieve_2
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            pattern: ^\d+$
+            type: string
+        - description: A unique integer value identifying this project.
+          in: path
+          name: pk
+          required: true
+          schema:
+            type: integer
+      responses:
+        '404':
+          description: Sync export is deprecated. Use async export instead.
+      security:
+        - Token: []
+      summary: '[Deprecated] Sync export endpoint is no longer available'
+      tags:
+        - Projects
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - exports
+    post:
+      deprecated: true
+      description: "\n        This endpoint is deprecated in Enterprise. Use the async export API instead:\n        POST /api/projects/{id}/exports/ (see [Create new export](/api#operation/api_projects_exports_create)).\n        \n        This endpoint will always return a 404 Not Found response in Enterprise, with instructions to use the async export API.\n        "
+      operationId: api_projects_export_create
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            pattern: ^\d+$
+            type: string
+        - description: A unique integer value identifying this project.
+          in: path
+          name: pk
+          required: true
+          schema:
+            type: integer
+      responses:
+        '404':
+          description: Sync export is deprecated. Use async export instead.
+      security:
+        - Token: []
+      summary: '[Deprecated] Sync export endpoint is no longer available'
+      tags:
+        - Projects
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - exports
+    put:
+      deprecated: true
+      description: "\n        This endpoint is deprecated in Enterprise. Use the async export API instead:\n        POST /api/projects/{id}/exports/ (see [Create new export](/api#operation/api_projects_exports_create)).\n        \n        This endpoint will always return a 404 Not Found response in Enterprise, with instructions to use the async export API.\n        "
+      operationId: api_projects_export_update
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            pattern: ^\d+$
+            type: string
+        - description: A unique integer value identifying this project.
+          in: path
+          name: pk
+          required: true
+          schema:
+            type: integer
+      responses:
+        '404':
+          description: Sync export is deprecated. Use async export instead.
+      security:
+        - Token: []
+      summary: '[Deprecated] Sync export endpoint is no longer available'
+      tags:
+        - Projects
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - exports
   /api/projects/{id}/export/formats:
     get:
       description: Retrieve the available export formats for the current project by ID.
       operationId: api_projects_export_formats_retrieve
+      parameters:
+        - description: A unique integer value identifying this project.
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                description: List of available formats
+                items:
+                  title: Export format
+                  type: string
+                title: Format list
+                type: array
+          description: Export formats
+      security:
+        - Token: []
+      summary: Get export formats
+      tags:
+        - Export
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - exports
+      x-fern-sdk-method-name: list_formats
+  /api/projects/{id}/export/formats/:
+    get:
+      description: Retrieve the available export formats for the current project by ID.
+      operationId: api_projects_export_formats_retrieve_2
       parameters:
         - description: A unique integer value identifying this project.
           in: path
@@ -24190,6 +24315,10 @@ components:
         Provides information about available KPIs including their keys, labels,
         dependencies, and configuration.
       properties:
+        aggregation_method:
+          description: 'Aggregation method for the KPI: count, sum, avg, max, min, or snapshot. Snapshot KPIs show point-in-time counts rather than event totals.'
+          nullable: true
+          type: string
         base_class:
           description: Base class name that the KPI inherits from
           type: string
@@ -24293,6 +24422,9 @@ components:
       description: |-
         Serializer for project-segmented KPI data (compact format).
         Returns parallel arrays: projects and values.
+
+        Note: Values can be numbers (for count/time/ratio KPIs) or strings
+        (for category KPIs like project_state).
       properties:
         projects:
           description: Array of project information
@@ -24300,11 +24432,10 @@ components:
             $ref: '#/components/schemas/KPIProjectInfo'
           type: array
         values:
-          description: Array of KPI values, one per project (parallel to projects array)
+          description: Array of KPI values, one per project (parallel to projects array). Can be numbers or strings depending on KPI type.
           items:
-            format: double
             nullable: true
-            type: number
+            type: string
           type: array
       required:
         - projects
