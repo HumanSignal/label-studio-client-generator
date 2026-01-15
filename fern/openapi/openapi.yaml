@@ -8026,8 +8026,7 @@ paths:
       x-fern-sdk-method-name: download_sync
   /api/projects/{id}/export/:
     get:
-      deprecated: true
-      description: "\n        This endpoint is deprecated in Enterprise. Use the async export API instead:\n        POST /api/projects/{id}/exports/ (see [Create new export](/api#operation/api_projects_exports_create)).\n        \n        This endpoint will always return a 404 Not Found response in Enterprise, with instructions to use the async export API.\n        "
+      description: Return 404 for disabled sync export endpoint in Enterprise
       operationId: api_projects_export_retrieve_2
       parameters:
         - in: path
@@ -8036,28 +8035,15 @@ paths:
           schema:
             pattern: ^\d+$
             type: string
-        - description: A unique integer value identifying this project.
-          in: path
-          name: pk
-          required: true
-          schema:
-            type: integer
       responses:
-        '404':
-          description: Sync export is deprecated. Use async export instead.
+        '200':
+          description: No response body
       security:
         - Token: []
-      summary: '[Deprecated] Sync export endpoint is no longer available'
       tags:
-        - Projects
-      x-fern-audiences:
-        - public
-      x-fern-sdk-group-name:
-        - projects
-        - exports
+        - api
     post:
-      deprecated: true
-      description: "\n        This endpoint is deprecated in Enterprise. Use the async export API instead:\n        POST /api/projects/{id}/exports/ (see [Create new export](/api#operation/api_projects_exports_create)).\n        \n        This endpoint will always return a 404 Not Found response in Enterprise, with instructions to use the async export API.\n        "
+      description: Return 404 for disabled sync export endpoint in Enterprise
       operationId: api_projects_export_create
       parameters:
         - in: path
@@ -8066,28 +8052,15 @@ paths:
           schema:
             pattern: ^\d+$
             type: string
-        - description: A unique integer value identifying this project.
-          in: path
-          name: pk
-          required: true
-          schema:
-            type: integer
       responses:
-        '404':
-          description: Sync export is deprecated. Use async export instead.
+        '200':
+          description: No response body
       security:
         - Token: []
-      summary: '[Deprecated] Sync export endpoint is no longer available'
       tags:
-        - Projects
-      x-fern-audiences:
-        - public
-      x-fern-sdk-group-name:
-        - projects
-        - exports
+        - api
     put:
-      deprecated: true
-      description: "\n        This endpoint is deprecated in Enterprise. Use the async export API instead:\n        POST /api/projects/{id}/exports/ (see [Create new export](/api#operation/api_projects_exports_create)).\n        \n        This endpoint will always return a 404 Not Found response in Enterprise, with instructions to use the async export API.\n        "
+      description: Return 404 for disabled sync export endpoint in Enterprise
       operationId: api_projects_export_update
       parameters:
         - in: path
@@ -8096,25 +8069,13 @@ paths:
           schema:
             pattern: ^\d+$
             type: string
-        - description: A unique integer value identifying this project.
-          in: path
-          name: pk
-          required: true
-          schema:
-            type: integer
       responses:
-        '404':
-          description: Sync export is deprecated. Use async export instead.
+        '200':
+          description: No response body
       security:
         - Token: []
-      summary: '[Deprecated] Sync export endpoint is no longer available'
       tags:
-        - Projects
-      x-fern-audiences:
-        - public
-      x-fern-sdk-group-name:
-        - projects
-        - exports
+        - api
   /api/projects/{id}/export/formats:
     get:
       description: Retrieve the available export formats for the current project by ID.
