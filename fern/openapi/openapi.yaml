@@ -7972,7 +7972,8 @@ paths:
       x-fern-sdk-method-name: duplicate
   /api/projects/{id}/export:
     get:
-      description: "\n        <i>Note: if you have a large project it's recommended to use\n        export snapshots, this easy export endpoint might have timeouts.</i><br/><br>\n        Export annotated tasks as a file in a specific format.\n        For example, to export JSON annotations for a project to a file called `annotations.json`,\n        run the following from the command line:\n        ```bash\n        curl -X GET http://localhost:8000/api/projects/{id}/export?exportType=JSON -H 'Authorization: Token abc123' --output 'annotations.json'\n        ```\n        To export all tasks, including skipped tasks and others without annotations, run the following from the command line:\n        ```bash\n        curl -X GET http://localhost:8000/api/projects/{id}/export?exportType=JSON&download_all_tasks=true -H 'Authorization: Token abc123' --output 'annotations.json'\n        ```\n        To export specific tasks with IDs of 123 and 345, run the following from the command line:\n        ```bash\n        curl -X GET 'http://localhost:8000/api/projects/{id}/export?ids[]=123&ids[]=345' -H 'Authorization: Token abc123' --output 'annotations.json'\n        ```\n        "
+      deprecated: true
+      description: "\n        This endpoint is deprecated in Enterprise. Use the async export API instead:\n        POST /api/projects/{id}/exports/ (see [Create new export](/api#operation/api_projects_exports_create)).\n\n        In Label Studio Enterprise, this endpoint will always return a 404 Not Found response with instructions to use the async export API.\n\n        <i>Note: if you have a large project it's recommended to use\n        export snapshots, this easy export endpoint might have timeouts.</i><br/><br>\n        Export annotated tasks as a file in a specific format.\n        For example, to export JSON annotations for a project to a file called `annotations.json`,\n        run the following from the command line:\n        ```bash\n        curl -X GET http://localhost:8000/api/projects/{id}/export?exportType=JSON -H 'Authorization: Token abc123' --output 'annotations.json'\n        ```\n        To export all tasks, including skipped tasks and others without annotations, run the following from the command line:\n        ```bash\n        curl -X GET http://localhost:8000/api/projects/{id}/export?exportType=JSON&download_all_tasks=true -H 'Authorization: Token abc123' --output 'annotations.json'\n        ```\n        To export specific tasks with IDs of 123 and 345, run the following from the command line:\n        ```bash\n        curl -X GET 'http://localhost:8000/api/projects/{id}/export?ids[]=123&ids[]=345' -H 'Authorization: Token abc123' --output 'annotations.json'\n        ```\n        "
       operationId: api_projects_export_retrieve
       parameters:
         - description: If true, download all tasks regardless of status. If false, download only annotated tasks.
@@ -8015,7 +8016,7 @@ paths:
           description: Exported data
       security:
         - Token: []
-      summary: Easy export of tasks and annotations
+      summary: '[Deprecated] Easy export of tasks and annotations'
       tags:
         - Export
       x-fern-audiences:
@@ -8024,61 +8025,17 @@ paths:
         - projects
         - exports
       x-fern-sdk-method-name: download_sync
-  /api/projects/{id}/export/:
-    get:
-      description: Return 404 for disabled sync export endpoint in Enterprise
-      operationId: api_projects_export_retrieve_2
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            pattern: ^\d+$
-            type: string
-      responses:
-        '200':
-          description: No response body
-      security:
-        - Token: []
-      tags:
-        - api
-    post:
-      description: Return 404 for disabled sync export endpoint in Enterprise
-      operationId: api_projects_export_create
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            pattern: ^\d+$
-            type: string
-      responses:
-        '200':
-          description: No response body
-      security:
-        - Token: []
-      tags:
-        - api
-    put:
-      description: Return 404 for disabled sync export endpoint in Enterprise
-      operationId: api_projects_export_update
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            pattern: ^\d+$
-            type: string
-      responses:
-        '200':
-          description: No response body
-      security:
-        - Token: []
-      tags:
-        - api
   /api/projects/{id}/export/formats:
     get:
-      description: Retrieve the available export formats for the current project by ID.
+      deprecated: true
+      description: |2-
+
+                This endpoint is deprecated in Enterprise. Use the async export API instead:
+                POST /api/projects/\{id\}/exports/ (see [Create new export](/api#operation/api_projects_exports_create)).
+
+                In Label Studio Enterprise, this endpoint will always return a 404 Not Found response with instructions to use the async export API.
+
+                Retrieve the available export formats for the current project by ID.
       operationId: api_projects_export_formats_retrieve
       parameters:
         - description: A unique integer value identifying this project.
@@ -8101,41 +8058,7 @@ paths:
           description: Export formats
       security:
         - Token: []
-      summary: Get export formats
-      tags:
-        - Export
-      x-fern-audiences:
-        - public
-      x-fern-sdk-group-name:
-        - projects
-        - exports
-      x-fern-sdk-method-name: list_formats
-  /api/projects/{id}/export/formats/:
-    get:
-      description: Retrieve the available export formats for the current project by ID.
-      operationId: api_projects_export_formats_retrieve_2
-      parameters:
-        - description: A unique integer value identifying this project.
-          in: path
-          name: id
-          required: true
-          schema:
-            type: integer
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                description: List of available formats
-                items:
-                  title: Export format
-                  type: string
-                title: Format list
-                type: array
-          description: Export formats
-      security:
-        - Token: []
-      summary: Get export formats
+      summary: '[Deprecated] Get export formats'
       tags:
         - Export
       x-fern-audiences:
