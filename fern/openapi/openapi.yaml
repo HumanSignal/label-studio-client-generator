@@ -7972,7 +7972,8 @@ paths:
       x-fern-sdk-method-name: duplicate
   /api/projects/{id}/export:
     get:
-      description: "\n        <i>Note: if you have a large project it's recommended to use\n        export snapshots, this easy export endpoint might have timeouts.</i><br/><br>\n        Export annotated tasks as a file in a specific format.\n        For example, to export JSON annotations for a project to a file called `annotations.json`,\n        run the following from the command line:\n        ```bash\n        curl -X GET http://localhost:8000/api/projects/{id}/export?exportType=JSON -H 'Authorization: Token abc123' --output 'annotations.json'\n        ```\n        To export all tasks, including skipped tasks and others without annotations, run the following from the command line:\n        ```bash\n        curl -X GET http://localhost:8000/api/projects/{id}/export?exportType=JSON&download_all_tasks=true -H 'Authorization: Token abc123' --output 'annotations.json'\n        ```\n        To export specific tasks with IDs of 123 and 345, run the following from the command line:\n        ```bash\n        curl -X GET 'http://localhost:8000/api/projects/{id}/export?ids[]=123&ids[]=345' -H 'Authorization: Token abc123' --output 'annotations.json'\n        ```\n        "
+      deprecated: true
+      description: "\n        This endpoint is deprecated in Enterprise. Use the async export API instead:\n        POST /api/projects/{id}/exports/ (see [Create new export](/api#operation/api_projects_exports_create)).\n\n        In Label Studio Enterprise, this endpoint will always return a 404 Not Found response with instructions to use the async export API.\n\n        <i>Note: if you have a large project it's recommended to use\n        export snapshots, this easy export endpoint might have timeouts.</i><br/><br>\n        Export annotated tasks as a file in a specific format.\n        For example, to export JSON annotations for a project to a file called `annotations.json`,\n        run the following from the command line:\n        ```bash\n        curl -X GET http://localhost:8000/api/projects/{id}/export?exportType=JSON -H 'Authorization: Token abc123' --output 'annotations.json'\n        ```\n        To export all tasks, including skipped tasks and others without annotations, run the following from the command line:\n        ```bash\n        curl -X GET http://localhost:8000/api/projects/{id}/export?exportType=JSON&download_all_tasks=true -H 'Authorization: Token abc123' --output 'annotations.json'\n        ```\n        To export specific tasks with IDs of 123 and 345, run the following from the command line:\n        ```bash\n        curl -X GET 'http://localhost:8000/api/projects/{id}/export?ids[]=123&ids[]=345' -H 'Authorization: Token abc123' --output 'annotations.json'\n        ```\n        "
       operationId: api_projects_export_retrieve
       parameters:
         - description: If true, download all tasks regardless of status. If false, download only annotated tasks.
@@ -8015,7 +8016,7 @@ paths:
           description: Exported data
       security:
         - Token: []
-      summary: Easy export of tasks and annotations
+      summary: '[Deprecated] Easy export of tasks and annotations'
       tags:
         - Export
       x-fern-audiences:
@@ -8026,7 +8027,15 @@ paths:
       x-fern-sdk-method-name: download_sync
   /api/projects/{id}/export/formats:
     get:
-      description: Retrieve the available export formats for the current project by ID.
+      deprecated: true
+      description: |2-
+
+                This endpoint is deprecated in Enterprise. Use the async export API instead:
+                POST /api/projects/\{id\}/exports/ (see [Create new export](/api#operation/api_projects_exports_create)).
+
+                In Label Studio Enterprise, this endpoint will always return a 404 Not Found response with instructions to use the async export API.
+
+                Retrieve the available export formats for the current project by ID.
       operationId: api_projects_export_formats_retrieve
       parameters:
         - description: A unique integer value identifying this project.
@@ -8049,7 +8058,7 @@ paths:
           description: Export formats
       security:
         - Token: []
-      summary: Get export formats
+      summary: '[Deprecated] Get export formats'
       tags:
         - Export
       x-fern-audiences:
@@ -24190,6 +24199,10 @@ components:
         Provides information about available KPIs including their keys, labels,
         dependencies, and configuration.
       properties:
+        aggregation_method:
+          description: 'Aggregation method for the KPI: count, sum, avg, max, min, or snapshot. Snapshot KPIs show point-in-time counts rather than event totals.'
+          nullable: true
+          type: string
         base_class:
           description: Base class name that the KPI inherits from
           type: string
@@ -24293,6 +24306,9 @@ components:
       description: |-
         Serializer for project-segmented KPI data (compact format).
         Returns parallel arrays: projects and values.
+
+        Note: Values can be numbers (for count/time/ratio KPIs) or strings
+        (for category KPIs like project_state).
       properties:
         projects:
           description: Array of project information
@@ -24300,11 +24316,10 @@ components:
             $ref: '#/components/schemas/KPIProjectInfo'
           type: array
         values:
-          description: Array of KPI values, one per project (parallel to projects array)
+          description: Array of KPI values, one per project (parallel to projects array). Can be numbers or strings depending on KPI type.
           items:
-            format: double
             nullable: true
-            type: number
+            type: string
           type: array
       required:
         - projects
