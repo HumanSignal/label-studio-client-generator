@@ -5850,7 +5850,8 @@ paths:
         Retrieve a list of all member tags for a specific organization.
       operationId: api_organizations_member_tags_list
       parameters:
-        - in: path
+        - description: A unique integer value identifying this organization.
+          in: path
           name: id
           required: true
           schema:
@@ -5865,12 +5866,6 @@ paths:
           in: query
           name: page
           required: false
-          schema:
-            type: integer
-        - description: A unique integer value identifying this organization.
-          in: path
-          name: pk
-          required: true
           schema:
             type: integer
       responses:
@@ -5903,14 +5898,9 @@ paths:
         Create a new member tag for a specific organization.
       operationId: api_organizations_member_tags_create
       parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: integer
         - description: A unique integer value identifying this organization.
           in: path
-          name: pk
+          name: id
           required: true
           schema:
             type: integer
@@ -5961,14 +5951,9 @@ paths:
         Delete a member tag from the organization.
       operationId: api_organizations_member_tags_destroy
       parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: integer
         - description: A unique integer value identifying this organization.
           in: path
-          name: pk
+          name: id
           required: true
           schema:
             type: integer
@@ -6008,14 +5993,9 @@ paths:
         Retrieve details of a specific member tag.
       operationId: api_organizations_member_tags_retrieve
       parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: integer
         - description: A unique integer value identifying this organization.
           in: path
-          name: pk
+          name: id
           required: true
           schema:
             type: integer
@@ -6057,14 +6037,9 @@ paths:
         Partially update an existing member tag.
       operationId: api_organizations_member_tags_partial_update
       parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: integer
         - description: A unique integer value identifying this organization.
           in: path
-          name: pk
+          name: id
           required: true
           schema:
             type: integer
