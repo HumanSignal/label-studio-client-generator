@@ -5938,6 +5938,107 @@ paths:
         - organizations
         - member_tags
       x-fern-sdk-method-name: create
+  /api/organizations/{id}/member-tags/bulk:
+    delete:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Delete multiple member tags from the organization in bulk. Allows the same request body as bulk create.
+      operationId: api_organizations_member_tags_bulk_destroy
+      parameters:
+        - description: A unique integer value identifying this organization.
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  deleted:
+                    type: integer
+                type: object
+          description: Number of tags deleted
+        '400':
+          description: Bad Request - Invalid input
+        '403':
+          description: Permission Denied
+      security:
+        - Token: []
+      summary: ✨ Bulk delete organization member tags
+      tags:
+        - Organizations
+        - Member Tags
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - organizations
+        - member_tags
+        - bulk
+      x-fern-sdk-method-name: delete
+    post:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Create multiple member tags for the organization in bulk. Duplicate labels within the request are deduplicated. Labels that already exist in the organization are skipped.
+      operationId: api_organizations_member_tags_bulk_create
+      parameters:
+        - description: A unique integer value identifying this organization.
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrganizationMemberTagBulkCreateRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/OrganizationMemberTagBulkCreateRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/OrganizationMemberTagBulkCreateRequest'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                properties:
+                  created:
+                    type: integer
+                type: object
+          description: Number of tags created
+        '400':
+          description: Bad Request - Invalid input
+        '403':
+          description: Permission Denied
+      security:
+        - Token: []
+      summary: ✨ Bulk create organization member tags
+      tags:
+        - Organizations
+        - Member Tags
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - organizations
+        - member_tags
+        - bulk
+      x-fern-sdk-method-name: post
   /api/organizations/{id}/member-tags/{tag_pk}:
     delete:
       description: |-
@@ -29052,6 +29153,20 @@ components:
         - member_count
         - organization
         - updated_at
+      type: object
+    OrganizationMemberTagBulkCreateRequest:
+      description: Serializer for bulk create of organization member tags.
+      properties:
+        labels:
+          description: List of tag labels to create.
+          items:
+            maxLength: 255
+            minLength: 1
+            type: string
+          minItems: 1
+          type: array
+      required:
+        - labels
       type: object
     OrganizationMemberTagRequest:
       properties:
