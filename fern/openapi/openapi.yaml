@@ -746,26 +746,6 @@ paths:
         - public
       x-fern-sdk-group-name: annotations
       x-fern-sdk-method-name: update
-  /api/annotations/{id}/convert-to-draft:
-    post:
-      description: Convert annotation to draft
-      operationId: api_annotations_convert_to_draft_create
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: integer
-      responses:
-        '200':
-          description: No response body
-      security:
-        - Token: []
-      summary: Convert annotation to draft
-      tags:
-        - Annotations
-      x-fern-audiences:
-        - internal
   /api/billing/info:
     get:
       description: |-
@@ -5857,6 +5837,353 @@ paths:
         - public
       x-fern-sdk-group-name:
         - organizations
+      x-fern-sdk-method-name: update
+  /api/organizations/{id}/member-tags:
+    get:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Retrieve a list of all member tags for a specific organization.
+      operationId: api_organizations_member_tags_list
+      parameters:
+        - description: A unique integer value identifying this organization.
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - description: A page number within the paginated result set.
+          in: query
+          name: page
+          required: false
+          schema:
+            type: integer
+        - description: Search tags by label (case-insensitive).
+          in: query
+          name: search
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedOrganizationMemberTagList'
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ List organization member tags
+      tags:
+        - Organizations
+        - Member Tags
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - organizations
+        - member_tags
+      x-fern-sdk-method-name: list
+    post:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Create a new member tag for a specific organization.
+      operationId: api_organizations_member_tags_create
+      parameters:
+        - description: A unique integer value identifying this organization.
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrganizationMemberTagRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/OrganizationMemberTagRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/OrganizationMemberTagRequest'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationMemberTag'
+          description: ''
+        '400':
+          description: Bad Request - A tag with this label already exists
+        '403':
+          description: Permission Denied
+      security:
+        - Token: []
+      summary: ✨ Create organization member tag
+      tags:
+        - Organizations
+        - Member Tags
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - organizations
+        - member_tags
+      x-fern-sdk-method-name: create
+  /api/organizations/{id}/member-tags/bulk:
+    delete:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Delete multiple member tags from the organization in bulk. Allows the same request body as bulk create.
+      operationId: api_organizations_member_tags_bulk_destroy
+      parameters:
+        - description: A unique integer value identifying this organization.
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  deleted:
+                    type: integer
+                type: object
+          description: Number of tags deleted
+        '400':
+          description: Bad Request - Invalid input
+        '403':
+          description: Permission Denied
+      security:
+        - Token: []
+      summary: ✨ Bulk delete organization member tags
+      tags:
+        - Organizations
+        - Member Tags
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - organizations
+        - member_tags
+        - bulk
+      x-fern-sdk-method-name: delete
+    post:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Create multiple member tags for the organization in bulk. Duplicate labels within the request are deduplicated. Labels that already exist in the organization are skipped.
+      operationId: api_organizations_member_tags_bulk_create
+      parameters:
+        - description: A unique integer value identifying this organization.
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrganizationMemberTagBulkCreateRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/OrganizationMemberTagBulkCreateRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/OrganizationMemberTagBulkCreateRequest'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                properties:
+                  created:
+                    type: integer
+                type: object
+          description: Number of tags created
+        '400':
+          description: Bad Request - Invalid input
+        '403':
+          description: Permission Denied
+      security:
+        - Token: []
+      summary: ✨ Bulk create organization member tags
+      tags:
+        - Organizations
+        - Member Tags
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - organizations
+        - member_tags
+        - bulk
+      x-fern-sdk-method-name: post
+  /api/organizations/{id}/member-tags/{tag_pk}:
+    delete:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Delete a member tag from the organization.
+      operationId: api_organizations_member_tags_destroy
+      parameters:
+        - description: A unique integer value identifying this organization.
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - description: A unique integer value identifying this member tag.
+          in: path
+          name: tag_pk
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Member tag deleted successfully
+        '403':
+          description: Permission Denied
+        '404':
+          description: Member tag not found
+      security:
+        - Token: []
+      summary: ✨ Delete organization member tag
+      tags:
+        - Organizations
+        - Member Tags
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - organizations
+        - member_tags
+      x-fern-sdk-method-name: delete
+    get:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Retrieve details of a specific member tag.
+      operationId: api_organizations_member_tags_retrieve
+      parameters:
+        - description: A unique integer value identifying this organization.
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - description: A unique integer value identifying this member tag.
+          in: path
+          name: tag_pk
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationMemberTag'
+          description: ''
+        '404':
+          description: Member tag not found
+      security:
+        - Token: []
+      summary: ✨ Get organization member tag
+      tags:
+        - Organizations
+        - Member Tags
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - organizations
+        - member_tags
+      x-fern-sdk-method-name: get
+    patch:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Partially update an existing member tag.
+      operationId: api_organizations_member_tags_partial_update
+      parameters:
+        - description: A unique integer value identifying this organization.
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - description: A unique integer value identifying this member tag.
+          in: path
+          name: tag_pk
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedOrganizationMemberTagRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedOrganizationMemberTagRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedOrganizationMemberTagRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationMemberTag'
+          description: ''
+        '400':
+          description: Bad Request - A tag with this label already exists
+        '403':
+          description: Permission Denied
+        '404':
+          description: Member tag not found
+      security:
+        - Token: []
+      summary: ✨ Update organization member tag
+      tags:
+        - Organizations
+        - Member Tags
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - organizations
+        - member_tags
       x-fern-sdk-method-name: update
   /api/organizations/{id}/memberships:
     get:
@@ -28792,6 +29119,64 @@ components:
         - organization
         - user
       type: object
+    OrganizationMemberTag:
+      properties:
+        created_at:
+          format: date-time
+          readOnly: true
+          type: string
+        created_by:
+          nullable: true
+          readOnly: true
+          type: integer
+        id:
+          readOnly: true
+          type: integer
+        label:
+          maxLength: 255
+          type: string
+        member_count:
+          readOnly: true
+          type: integer
+        organization:
+          readOnly: true
+          type: integer
+        updated_at:
+          format: date-time
+          readOnly: true
+          type: string
+      required:
+        - created_at
+        - created_by
+        - id
+        - label
+        - member_count
+        - organization
+        - updated_at
+      type: object
+    OrganizationMemberTagBulkCreateRequest:
+      description: Serializer for bulk create of organization member tags.
+      properties:
+        labels:
+          description: List of tag labels to create.
+          items:
+            maxLength: 255
+            minLength: 1
+            type: string
+          minItems: 1
+          type: array
+      required:
+        - labels
+      type: object
+    OrganizationMemberTagRequest:
+      properties:
+        label:
+          maxLength: 255
+          minLength: 1
+          type: string
+      required:
+        - label
+      type: object
     OrganizationMembership:
       properties:
         active:
@@ -29057,6 +29442,29 @@ components:
         results:
           items:
             $ref: '#/components/schemas/LseUser'
+          type: array
+      required:
+        - count
+        - results
+      type: object
+    PaginatedOrganizationMemberTagList:
+      properties:
+        count:
+          example: 123
+          type: integer
+        next:
+          example: http://api.example.org/accounts/?page=4
+          format: uri
+          nullable: true
+          type: string
+        previous:
+          example: http://api.example.org/accounts/?page=2
+          format: uri
+          nullable: true
+          type: string
+        results:
+          items:
+            $ref: '#/components/schemas/OrganizationMemberTag'
           type: array
       required:
         - count
@@ -30876,6 +31284,13 @@ components:
           $ref: '#/components/schemas/Role9e7Enum'
         user_id:
           type: integer
+      type: object
+    PatchedOrganizationMemberTagRequest:
+      properties:
+        label:
+          maxLength: 255
+          minLength: 1
+          type: string
       type: object
     PatchedOrganizationPermissionRequest:
       properties:
