@@ -21907,6 +21907,8 @@ components:
           type: boolean
         allow_organization_webhooks:
           type: boolean
+        allow_reviewing:
+          type: boolean
         allow_sso:
           type: boolean
         allow_storage_proxy:
@@ -21956,6 +21958,7 @@ components:
         - allow_invite_project_experts
         - allow_nda
         - allow_organization_webhooks
+        - allow_reviewing
         - allow_sso
         - allow_storage_proxy
         - automax_enabled
@@ -32234,18 +32237,7 @@ components:
         project:
           type: integer
         role:
-          allOf:
-            - $ref: '#/components/schemas/Role9e7Enum'
-          description: |-
-            User role in project
-
-            * `OW` - Owner
-            * `AD` - Administrator
-            * `MA` - Manager
-            * `RE` - Reviewer
-            * `AN` - Annotator
-            * `DI` - Deactivated
-            * `NO` - Not Activated
+          $ref: '#/components/schemas/Role9e7Enum'
         user:
           type: integer
       required:
@@ -32259,18 +32251,7 @@ components:
         project:
           type: integer
         role:
-          allOf:
-            - $ref: '#/components/schemas/Role9e7Enum'
-          description: |-
-            User role in project
-
-            * `OW` - Owner
-            * `AD` - Administrator
-            * `MA` - Manager
-            * `RE` - Reviewer
-            * `AN` - Annotator
-            * `DI` - Deactivated
-            * `NO` - Not Activated
+          $ref: '#/components/schemas/Role9e7Enum'
         user:
           type: integer
       required:
