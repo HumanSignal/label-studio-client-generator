@@ -5947,7 +5947,7 @@ paths:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Assign tags to multiple organization members in bulk. Tags are specified by label and will be auto-created if they do not exist.
+        Assign tags to multiple organization members in bulk.
       operationId: api_organizations_member_tags_assignments_create
       parameters:
         - description: A unique integer value identifying this organization.
@@ -29231,18 +29231,17 @@ components:
       type: object
     OrganizationMemberTagAssignmentRequest:
       properties:
-        labels:
-          description: List of tag labels to assign. Tags will be created if they do not exist. Use an empty list with overwrite=true to remove all tags from a user.
+        tag_ids:
+          description: List of tag IDs to assign. Use an empty list with overwrite=true to remove all tags from a user.
           items:
-            maxLength: 255
-            minLength: 1
-            type: string
+            minimum: 1
+            type: integer
           type: array
         user_id:
           minimum: 1
           type: integer
       required:
-        - labels
+        - tag_ids
         - user_id
       type: object
     OrganizationMemberTagAssignmentsRequest:
