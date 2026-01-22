@@ -5939,49 +5939,6 @@ paths:
         - member_tags
       x-fern-sdk-method-name: create
   /api/organizations/{id}/member-tags/assignments:
-    delete:
-      description: |-
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
-        Remove tag assignments from multiple organization members in bulk.
-      operationId: api_organizations_member_tags_assignments_destroy
-      parameters:
-        - description: A unique integer value identifying this organization.
-          in: path
-          name: id
-          required: true
-          schema:
-            type: integer
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                properties:
-                  deleted:
-                    type: integer
-                type: object
-          description: Number of tag assignments deleted
-        '400':
-          description: Bad Request - Invalid input
-        '403':
-          description: Permission Denied
-      security:
-        - Token: []
-      summary: ✨ Bulk unassign tags from organization members
-      tags:
-        - Organizations
-        - Member Tags
-      x-fern-audiences:
-        - public
-      x-fern-sdk-group-name:
-        - organizations
-        - member_tags
-      x-fern-sdk-method-name: unassign
     post:
       description: |-
         <Card href="https://humansignal.com/goenterprise">
@@ -5990,7 +5947,7 @@ paths:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Assign tags to multiple organization members in bulk.
+        Assign tags to multiple organization members in bulk. Tags are specified by label and will be auto-created if they do not exist.
       operationId: api_organizations_member_tags_assignments_create
       parameters:
         - description: A unique integer value identifying this organization.
@@ -6003,13 +5960,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/OrganizationMemberTagAssignmentsCreateRequest'
+              $ref: '#/components/schemas/OrganizationMemberTagAssignmentsRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/OrganizationMemberTagAssignmentsCreateRequest'
+              $ref: '#/components/schemas/OrganizationMemberTagAssignmentsRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/OrganizationMemberTagAssignmentsCreateRequest'
+              $ref: '#/components/schemas/OrganizationMemberTagAssignmentsRequest'
         required: true
       responses:
         '200':
@@ -29274,23 +29231,24 @@ components:
       type: object
     OrganizationMemberTagAssignmentRequest:
       properties:
-        tag_ids:
+        tag_labels:
+          description: List of tag labels to assign. Tags will be created if they do not exist. Use an empty list with overwrite=true to remove all tags from a user.
           items:
-            minimum: 1
-            type: integer
-          minItems: 1
+            maxLength: 255
+            minLength: 1
+            type: string
           type: array
         user_id:
           minimum: 1
           type: integer
       required:
-        - tag_ids
+        - tag_labels
         - user_id
       type: object
-    OrganizationMemberTagAssignmentsCreateRequest:
+    OrganizationMemberTagAssignmentsRequest:
       properties:
         assignments:
-          description: List of member tag assignments to assign/unassign.
+          description: List of member tag assignments to assign.
           items:
             $ref: '#/components/schemas/OrganizationMemberTagAssignmentRequest'
           minItems: 1
