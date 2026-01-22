@@ -5960,13 +5960,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/OrganizationMemberTagAssignmentsRequest'
+              $ref: '#/components/schemas/BulkOrganizationMemberTagAssignmentRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/OrganizationMemberTagAssignmentsRequest'
+              $ref: '#/components/schemas/BulkOrganizationMemberTagAssignmentRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/OrganizationMemberTagAssignmentsRequest'
+              $ref: '#/components/schemas/BulkOrganizationMemberTagAssignmentRequest'
         required: true
       responses:
         '200':
@@ -22157,6 +22157,21 @@ components:
         - Monthly
         - Yearly
       type: string
+    BulkOrganizationMemberTagAssignmentRequest:
+      properties:
+        assignments:
+          description: List of member tag assignments to assign.
+          items:
+            $ref: '#/components/schemas/OrganizationMemberTagAssignmentRequest'
+          minItems: 1
+          type: array
+        overwrite:
+          default: false
+          description: If true, replace all existing tag assignments for each user with the provided ones. If false, only add new assignments.
+          type: boolean
+      required:
+        - assignments
+      type: object
     CancelModelRunResponse:
       properties:
         detail:
@@ -29243,21 +29258,6 @@ components:
       required:
         - tag_ids
         - user_id
-      type: object
-    OrganizationMemberTagAssignmentsRequest:
-      properties:
-        assignments:
-          description: List of member tag assignments to assign.
-          items:
-            $ref: '#/components/schemas/OrganizationMemberTagAssignmentRequest'
-          minItems: 1
-          type: array
-        overwrite:
-          default: false
-          description: If true, replace all existing tag assignments for each user with the provided ones. If false, only add new assignments.
-          type: boolean
-      required:
-        - assignments
       type: object
     OrganizationMemberTagBulkCreateRequest:
       description: Serializer for bulk create of organization member tags.
