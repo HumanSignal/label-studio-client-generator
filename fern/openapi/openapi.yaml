@@ -6317,6 +6317,11 @@ paths:
           required: false
           schema:
             type: string
+        - description: Filter members by tags. Use a comma-separated list of tag IDs.
+          in: query
+          name: tags
+          schema:
+            type: string
       responses:
         '200':
           content:
@@ -9317,6 +9322,11 @@ paths:
         - description: Search term for filtering members by name, email, or username
           in: query
           name: search
+          schema:
+            type: string
+        - description: Filter members by tags. Use a comma-separated list of tag IDs.
+          in: query
+          name: tags
           schema:
             type: string
         - description: Include deleted members in the results
@@ -29673,8 +29683,10 @@ components:
           readOnly: true
           type: string
         tags:
+          items:
+            $ref: '#/components/schemas/SimpleOrganizationMemberTag'
           readOnly: true
-          type: string
+          type: array
         username:
           maxLength: 256
           type: string
