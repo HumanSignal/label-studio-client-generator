@@ -33923,7 +33923,7 @@ components:
           description: Annotation ID associated with this event
           nullable: true
           type: integer
-        annotation_draft:
+        annotation_draft_id:
           description: Draft annotation ID associated with this event
           nullable: true
           type: integer
@@ -33980,7 +33980,7 @@ components:
           description: Annotation ID associated with this event
           nullable: true
           type: integer
-        annotation_draft:
+        annotation_draft_id:
           description: Draft annotation ID associated with this event
           nullable: true
           type: integer
