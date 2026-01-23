@@ -28513,7 +28513,7 @@ components:
           type: boolean
         basic_auth_pass_is_set:
           readOnly: true
-          type: string
+          type: boolean
         basic_auth_user:
           description: HTTP Basic Auth user
           nullable: true
