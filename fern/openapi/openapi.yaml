@@ -5868,6 +5868,11 @@ paths:
           required: false
           schema:
             type: integer
+        - description: 'Number of results per page (default: 30, max: 100).'
+          in: query
+          name: page_size
+          schema:
+            type: integer
         - description: Search tags by label (case-insensitive).
           in: query
           name: search
@@ -33923,7 +33928,7 @@ components:
           description: Annotation ID associated with this event
           nullable: true
           type: integer
-        annotation_draft:
+        annotation_draft_id:
           description: Draft annotation ID associated with this event
           nullable: true
           type: integer
@@ -33980,7 +33985,7 @@ components:
           description: Annotation ID associated with this event
           nullable: true
           type: integer
-        annotation_draft:
+        annotation_draft_id:
           description: Draft annotation ID associated with this event
           nullable: true
           type: integer
