@@ -11140,6 +11140,11 @@ paths:
         List all dimensions for a specific project.
       operationId: api_projects_dimensions_list
       parameters:
+        - description: 'Agreement methodology to use for computing allowed_metrics_with_params. If not provided, uses the methodology stored in the project settings. Valid values: "pairwise", "consensus". '
+          in: query
+          name: agreement_methodology
+          schema:
+            type: string
         - description: Filter by active status
           in: query
           name: is_active
@@ -23167,10 +23172,9 @@ components:
         The project and created_by fields are set automatically from the request context.
       properties:
         allowed_metrics_with_params:
-          additionalProperties: {}
-          description: 'Dictionary mapping metric type names to their parameter schemas. '
+          description: Dictionary mapping metric type names to their parameter schemas.
           readOnly: true
-          type: object
+          type: string
         control_tag:
           description: Name of the control tag this dimension is extracted from. Set automatically for system dimensions.
           nullable: true
@@ -23287,10 +23291,9 @@ components:
         Excludes detailed parameters for performance in list views.
       properties:
         allowed_metrics_with_params:
-          additionalProperties: {}
           description: Dictionary mapping metric type names to their parameter schemas.
           readOnly: true
-          type: object
+          type: string
         control_tag:
           description: Name of the control tag this dimension is extracted from. Set automatically for system dimensions.
           nullable: true
