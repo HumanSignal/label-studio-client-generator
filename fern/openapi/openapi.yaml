@@ -5856,6 +5856,12 @@ paths:
           required: true
           schema:
             type: integer
+        - description: Which field to use when ordering the results.
+          in: query
+          name: ordering
+          required: false
+          schema:
+            type: string
         - description: A page number within the paginated result set.
           in: query
           name: page
@@ -29226,9 +29232,9 @@ components:
           readOnly: true
           type: string
         created_by:
-          nullable: true
+          allOf:
+            - $ref: '#/components/schemas/UserSimple'
           readOnly: true
-          type: integer
         id:
           readOnly: true
           type: integer
