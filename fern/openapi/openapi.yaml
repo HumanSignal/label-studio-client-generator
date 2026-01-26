@@ -6106,6 +6106,115 @@ paths:
         - member_tags
         - bulk
       x-fern-sdk-method-name: post
+  /api/organizations/{id}/member-tags/imports:
+    post:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Upload a CSV file to bulk import member tags and assign them to organization members.
+
+        The CSV file must contain `email` and `tags` columns. The `tags` column should contain comma-separated tag labels (quoted if they contain commas). Tags that do not exist will be created.
+
+        Optionally, you can specify `bulk_tags` as a comma-separated list of tags to apply to all users in the CSV file.
+
+        The import runs asynchronously. Use the returned import job ID to check the status.
+      operationId: api_organizations_member_tags_imports_create
+      parameters:
+        - description: A unique integer value identifying this organization.
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/OrganizationMemberTagImportCreateRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/OrganizationMemberTagImportCreateRequest'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                properties:
+                  import:
+                    description: The ID of the created import job
+                    type: integer
+                type: object
+          description: Import job created successfully
+        '400':
+          description: Bad Request - Invalid CSV file or missing required columns
+        '403':
+          description: Permission Denied
+      security:
+        - Token: []
+      summary: ✨ Import member tags from CSV
+      tags:
+        - Organizations
+        - Member Tags
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - organizations
+        - member_tags
+      x-fern-sdk-method-name: import
+  /api/organizations/{id}/member-tags/imports/{import_pk}:
+    get:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Retrieve the status and results of a member tag import job.
+
+        The response includes the current status (created, in_progress, completed, failed), timestamps, and counts of tags created, assignments made, and users skipped.
+      operationId: api_organizations_member_tags_imports_retrieve
+      parameters:
+        - description: A unique integer value identifying this organization.
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - description: A unique integer value identifying this import job.
+          in: path
+          name: import_pk
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationMemberTagImportStatus'
+          description: ''
+        '403':
+          description: Permission Denied
+        '404':
+          description: Import job not found
+      security:
+        - Token: []
+      summary: ✨ Get member tag import status
+      tags:
+        - Organizations
+        - Member Tags
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - organizations
+        - member_tags
+      x-fern-sdk-method-name: get_import
   /api/organizations/{id}/member-tags/{tag_pk}:
     delete:
       description: |-
@@ -11140,7 +11249,7 @@ paths:
         List all dimensions for a specific project.
       operationId: api_projects_dimensions_list
       parameters:
-        - description: 'Agreement methodology to use for computing allowed_metrics_with_params. If not provided, uses the methodology stored in the project settings. Valid values: "pairwise", "consensus". '
+        - description: 'Agreement methodology to use for computing allowed_metrics_with_params. If not provided, uses the methodology stored in the project settings. Valid values: "pairwise", "consensus".'
           in: query
           name: agreement_methodology
           schema:
@@ -21095,16 +21204,6 @@ components:
         - NONE
         - BASIC_AUTH
       type: string
-    AuthTypeEnum:
-      description: |-
-        * `pat` - Personal Access Token
-        * `dbx_sp` - Databricks Service Principal
-        * `azure_ad_sp` - Azure AD Service Principal
-      enum:
-        - pat
-        - dbx_sp
-        - azure_ad_sp
-      type: string
     AzureBlobExportStorage:
       properties:
         account_key:
@@ -22543,27 +22642,13 @@ components:
         - reached
       type: object
     DatabricksExportStorage:
-      description: Serializer for Databricks export storage with multi-auth support.
       properties:
-        auth_type:
-          allOf:
-            - $ref: '#/components/schemas/AuthTypeEnum'
-          default: pat
-          description: |-
-            Authentication method: PAT, Databricks SP, or Azure AD SP
-
-            * `pat` - Personal Access Token
-            * `dbx_sp` - Databricks Service Principal
-            * `azure_ad_sp` - Azure AD Service Principal
         can_delete_objects:
           description: Deletion from storage enabled
           nullable: true
           type: boolean
         catalog:
           description: UC catalog name
-          type: string
-        client_id:
-          description: Service principal client/application ID (required for SP modes)
           type: string
         created_at:
           description: Creation time
@@ -22626,9 +22711,6 @@ components:
         synchronizable:
           default: true
           type: boolean
-        tenant_id:
-          description: Azure AD tenant ID (required for Azure AD SP mode)
-          type: string
         title:
           description: Cloud storage title
           maxLength: 256
@@ -22662,18 +22744,7 @@ components:
         - volume
       type: object
     DatabricksExportStorageRequest:
-      description: Serializer for Databricks export storage with multi-auth support.
       properties:
-        auth_type:
-          allOf:
-            - $ref: '#/components/schemas/AuthTypeEnum'
-          default: pat
-          description: |-
-            Authentication method: PAT, Databricks SP, or Azure AD SP
-
-            * `pat` - Personal Access Token
-            * `dbx_sp` - Databricks Service Principal
-            * `azure_ad_sp` - Azure AD Service Principal
         can_delete_objects:
           description: Deletion from storage enabled
           nullable: true
@@ -22682,13 +22753,6 @@ components:
           description: UC catalog name
           minLength: 1
           type: string
-        client_id:
-          description: Service principal client/application ID (required for SP modes)
-          type: string
-        client_secret:
-          description: Service principal client secret (required for SP modes)
-          type: string
-          writeOnly: true
         description:
           description: Cloud storage description
           nullable: true
@@ -22744,16 +22808,12 @@ components:
         synchronizable:
           default: true
           type: boolean
-        tenant_id:
-          description: Azure AD tenant ID (required for Azure AD SP mode)
-          type: string
         title:
           description: Cloud storage title
           maxLength: 256
           nullable: true
           type: string
         token:
-          description: Databricks personal access token (required for PAT mode)
           type: string
           writeOnly: true
         traceback:
@@ -22778,23 +22838,9 @@ components:
         - volume
       type: object
     DatabricksImportStorage:
-      description: Serializer for Databricks import storage with multi-auth support.
       properties:
-        auth_type:
-          allOf:
-            - $ref: '#/components/schemas/AuthTypeEnum'
-          default: pat
-          description: |-
-            Authentication method: PAT, Databricks SP, or Azure AD SP
-
-            * `pat` - Personal Access Token
-            * `dbx_sp` - Databricks Service Principal
-            * `azure_ad_sp` - Azure AD Service Principal
         catalog:
           description: UC catalog name
-          type: string
-        client_id:
-          description: Service principal client/application ID (required for SP modes)
           type: string
         created_at:
           description: Creation time
@@ -22868,9 +22914,6 @@ components:
         synchronizable:
           default: true
           type: boolean
-        tenant_id:
-          description: Azure AD tenant ID (required for Azure AD SP mode)
-          type: string
         title:
           description: Cloud storage title
           maxLength: 256
@@ -22904,29 +22947,11 @@ components:
         - volume
       type: object
     DatabricksImportStorageRequest:
-      description: Serializer for Databricks import storage with multi-auth support.
       properties:
-        auth_type:
-          allOf:
-            - $ref: '#/components/schemas/AuthTypeEnum'
-          default: pat
-          description: |-
-            Authentication method: PAT, Databricks SP, or Azure AD SP
-
-            * `pat` - Personal Access Token
-            * `dbx_sp` - Databricks Service Principal
-            * `azure_ad_sp` - Azure AD Service Principal
         catalog:
           description: UC catalog name
           minLength: 1
           type: string
-        client_id:
-          description: Service principal client/application ID (required for SP modes)
-          type: string
-        client_secret:
-          description: Service principal client secret (required for SP modes)
-          type: string
-          writeOnly: true
         description:
           description: Cloud storage description
           nullable: true
@@ -22993,16 +23018,12 @@ components:
         synchronizable:
           default: true
           type: boolean
-        tenant_id:
-          description: Azure AD tenant ID (required for Azure AD SP mode)
-          type: string
         title:
           description: Cloud storage title
           maxLength: 256
           nullable: true
           type: string
         token:
-          description: Databricks personal access token (required for PAT mode)
           type: string
           writeOnly: true
         traceback:
@@ -28601,7 +28622,7 @@ components:
           type: boolean
         basic_auth_pass_is_set:
           readOnly: true
-          type: boolean
+          type: string
         basic_auth_user:
           description: HTTP Basic Auth user
           nullable: true
@@ -29385,6 +29406,58 @@ components:
       required:
         - labels
       type: object
+    OrganizationMemberTagImportCreateRequest:
+      properties:
+        bulk_tags:
+          type: string
+        file:
+          format: binary
+          type: string
+      required:
+        - bulk_tags
+        - file
+      type: object
+    OrganizationMemberTagImportStatus:
+      description: Serializer for the status of a member tag import job.
+      properties:
+        assignments_created:
+          maximum: 2147483647
+          minimum: -2147483648
+          type: integer
+        created_at:
+          format: date-time
+          readOnly: true
+          type: string
+        finished_at:
+          format: date-time
+          nullable: true
+          type: string
+        id:
+          readOnly: true
+          type: integer
+        status:
+          $ref: '#/components/schemas/OrganizationMemberTagImportStatusStatusEnum'
+        tags_created:
+          maximum: 2147483647
+          minimum: -2147483648
+          type: integer
+        users_skipped: {}
+      required:
+        - created_at
+        - id
+      type: object
+    OrganizationMemberTagImportStatusStatusEnum:
+      description: |-
+        * `created` - Created
+        * `in_progress` - In Progress
+        * `completed` - Completed
+        * `failed` - Failed
+      enum:
+        - created
+        - in_progress
+        - completed
+        - failed
+      type: string
     OrganizationMemberTagRequest:
       properties:
         label:
@@ -30201,18 +30274,7 @@ components:
           type: string
       type: object
     PatchedDatabricksExportStorageRequest:
-      description: Serializer for Databricks export storage with multi-auth support.
       properties:
-        auth_type:
-          allOf:
-            - $ref: '#/components/schemas/AuthTypeEnum'
-          default: pat
-          description: |-
-            Authentication method: PAT, Databricks SP, or Azure AD SP
-
-            * `pat` - Personal Access Token
-            * `dbx_sp` - Databricks Service Principal
-            * `azure_ad_sp` - Azure AD Service Principal
         can_delete_objects:
           description: Deletion from storage enabled
           nullable: true
@@ -30221,13 +30283,6 @@ components:
           description: UC catalog name
           minLength: 1
           type: string
-        client_id:
-          description: Service principal client/application ID (required for SP modes)
-          type: string
-        client_secret:
-          description: Service principal client secret (required for SP modes)
-          type: string
-          writeOnly: true
         description:
           description: Cloud storage description
           nullable: true
@@ -30283,16 +30338,12 @@ components:
         synchronizable:
           default: true
           type: boolean
-        tenant_id:
-          description: Azure AD tenant ID (required for Azure AD SP mode)
-          type: string
         title:
           description: Cloud storage title
           maxLength: 256
           nullable: true
           type: string
         token:
-          description: Databricks personal access token (required for PAT mode)
           type: string
           writeOnly: true
         traceback:
@@ -30311,29 +30362,11 @@ components:
           type: string
       type: object
     PatchedDatabricksImportStorageRequest:
-      description: Serializer for Databricks import storage with multi-auth support.
       properties:
-        auth_type:
-          allOf:
-            - $ref: '#/components/schemas/AuthTypeEnum'
-          default: pat
-          description: |-
-            Authentication method: PAT, Databricks SP, or Azure AD SP
-
-            * `pat` - Personal Access Token
-            * `dbx_sp` - Databricks Service Principal
-            * `azure_ad_sp` - Azure AD Service Principal
         catalog:
           description: UC catalog name
           minLength: 1
           type: string
-        client_id:
-          description: Service principal client/application ID (required for SP modes)
-          type: string
-        client_secret:
-          description: Service principal client secret (required for SP modes)
-          type: string
-          writeOnly: true
         description:
           description: Cloud storage description
           nullable: true
@@ -30400,16 +30433,12 @@ components:
         synchronizable:
           default: true
           type: boolean
-        tenant_id:
-          description: Azure AD tenant ID (required for Azure AD SP mode)
-          type: string
         title:
           description: Cloud storage title
           maxLength: 256
           nullable: true
           type: string
         token:
-          description: Databricks personal access token (required for PAT mode)
           type: string
           writeOnly: true
         traceback:
