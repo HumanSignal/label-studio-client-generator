@@ -21095,6 +21095,16 @@ components:
         - NONE
         - BASIC_AUTH
       type: string
+    AuthTypeEnum:
+      description: |-
+        * `pat` - Personal Access Token
+        * `dbx_sp` - Databricks Service Principal
+        * `azure_ad_sp` - Azure AD Service Principal
+      enum:
+        - pat
+        - dbx_sp
+        - azure_ad_sp
+      type: string
     AzureBlobExportStorage:
       properties:
         account_key:
@@ -22533,13 +22543,27 @@ components:
         - reached
       type: object
     DatabricksExportStorage:
+      description: Serializer for Databricks export storage with multi-auth support.
       properties:
+        auth_type:
+          allOf:
+            - $ref: '#/components/schemas/AuthTypeEnum'
+          default: pat
+          description: |-
+            Authentication method: PAT, Databricks SP, or Azure AD SP
+
+            * `pat` - Personal Access Token
+            * `dbx_sp` - Databricks Service Principal
+            * `azure_ad_sp` - Azure AD Service Principal
         can_delete_objects:
           description: Deletion from storage enabled
           nullable: true
           type: boolean
         catalog:
           description: UC catalog name
+          type: string
+        client_id:
+          description: Service principal client/application ID (required for SP modes)
           type: string
         created_at:
           description: Creation time
@@ -22602,6 +22626,9 @@ components:
         synchronizable:
           default: true
           type: boolean
+        tenant_id:
+          description: Azure AD tenant ID (required for Azure AD SP mode)
+          type: string
         title:
           description: Cloud storage title
           maxLength: 256
@@ -22635,7 +22662,18 @@ components:
         - volume
       type: object
     DatabricksExportStorageRequest:
+      description: Serializer for Databricks export storage with multi-auth support.
       properties:
+        auth_type:
+          allOf:
+            - $ref: '#/components/schemas/AuthTypeEnum'
+          default: pat
+          description: |-
+            Authentication method: PAT, Databricks SP, or Azure AD SP
+
+            * `pat` - Personal Access Token
+            * `dbx_sp` - Databricks Service Principal
+            * `azure_ad_sp` - Azure AD Service Principal
         can_delete_objects:
           description: Deletion from storage enabled
           nullable: true
@@ -22644,6 +22682,13 @@ components:
           description: UC catalog name
           minLength: 1
           type: string
+        client_id:
+          description: Service principal client/application ID (required for SP modes)
+          type: string
+        client_secret:
+          description: Service principal client secret (required for SP modes)
+          type: string
+          writeOnly: true
         description:
           description: Cloud storage description
           nullable: true
@@ -22699,12 +22744,16 @@ components:
         synchronizable:
           default: true
           type: boolean
+        tenant_id:
+          description: Azure AD tenant ID (required for Azure AD SP mode)
+          type: string
         title:
           description: Cloud storage title
           maxLength: 256
           nullable: true
           type: string
         token:
+          description: Databricks personal access token (required for PAT mode)
           type: string
           writeOnly: true
         traceback:
@@ -22729,9 +22778,23 @@ components:
         - volume
       type: object
     DatabricksImportStorage:
+      description: Serializer for Databricks import storage with multi-auth support.
       properties:
+        auth_type:
+          allOf:
+            - $ref: '#/components/schemas/AuthTypeEnum'
+          default: pat
+          description: |-
+            Authentication method: PAT, Databricks SP, or Azure AD SP
+
+            * `pat` - Personal Access Token
+            * `dbx_sp` - Databricks Service Principal
+            * `azure_ad_sp` - Azure AD Service Principal
         catalog:
           description: UC catalog name
+          type: string
+        client_id:
+          description: Service principal client/application ID (required for SP modes)
           type: string
         created_at:
           description: Creation time
@@ -22805,6 +22868,9 @@ components:
         synchronizable:
           default: true
           type: boolean
+        tenant_id:
+          description: Azure AD tenant ID (required for Azure AD SP mode)
+          type: string
         title:
           description: Cloud storage title
           maxLength: 256
@@ -22838,11 +22904,29 @@ components:
         - volume
       type: object
     DatabricksImportStorageRequest:
+      description: Serializer for Databricks import storage with multi-auth support.
       properties:
+        auth_type:
+          allOf:
+            - $ref: '#/components/schemas/AuthTypeEnum'
+          default: pat
+          description: |-
+            Authentication method: PAT, Databricks SP, or Azure AD SP
+
+            * `pat` - Personal Access Token
+            * `dbx_sp` - Databricks Service Principal
+            * `azure_ad_sp` - Azure AD Service Principal
         catalog:
           description: UC catalog name
           minLength: 1
           type: string
+        client_id:
+          description: Service principal client/application ID (required for SP modes)
+          type: string
+        client_secret:
+          description: Service principal client secret (required for SP modes)
+          type: string
+          writeOnly: true
         description:
           description: Cloud storage description
           nullable: true
@@ -22909,12 +22993,16 @@ components:
         synchronizable:
           default: true
           type: boolean
+        tenant_id:
+          description: Azure AD tenant ID (required for Azure AD SP mode)
+          type: string
         title:
           description: Cloud storage title
           maxLength: 256
           nullable: true
           type: string
         token:
+          description: Databricks personal access token (required for PAT mode)
           type: string
           writeOnly: true
         traceback:
@@ -28513,7 +28601,7 @@ components:
           type: boolean
         basic_auth_pass_is_set:
           readOnly: true
-          type: string
+          type: boolean
         basic_auth_user:
           description: HTTP Basic Auth user
           nullable: true
@@ -30113,7 +30201,18 @@ components:
           type: string
       type: object
     PatchedDatabricksExportStorageRequest:
+      description: Serializer for Databricks export storage with multi-auth support.
       properties:
+        auth_type:
+          allOf:
+            - $ref: '#/components/schemas/AuthTypeEnum'
+          default: pat
+          description: |-
+            Authentication method: PAT, Databricks SP, or Azure AD SP
+
+            * `pat` - Personal Access Token
+            * `dbx_sp` - Databricks Service Principal
+            * `azure_ad_sp` - Azure AD Service Principal
         can_delete_objects:
           description: Deletion from storage enabled
           nullable: true
@@ -30122,6 +30221,13 @@ components:
           description: UC catalog name
           minLength: 1
           type: string
+        client_id:
+          description: Service principal client/application ID (required for SP modes)
+          type: string
+        client_secret:
+          description: Service principal client secret (required for SP modes)
+          type: string
+          writeOnly: true
         description:
           description: Cloud storage description
           nullable: true
@@ -30177,12 +30283,16 @@ components:
         synchronizable:
           default: true
           type: boolean
+        tenant_id:
+          description: Azure AD tenant ID (required for Azure AD SP mode)
+          type: string
         title:
           description: Cloud storage title
           maxLength: 256
           nullable: true
           type: string
         token:
+          description: Databricks personal access token (required for PAT mode)
           type: string
           writeOnly: true
         traceback:
@@ -30201,11 +30311,29 @@ components:
           type: string
       type: object
     PatchedDatabricksImportStorageRequest:
+      description: Serializer for Databricks import storage with multi-auth support.
       properties:
+        auth_type:
+          allOf:
+            - $ref: '#/components/schemas/AuthTypeEnum'
+          default: pat
+          description: |-
+            Authentication method: PAT, Databricks SP, or Azure AD SP
+
+            * `pat` - Personal Access Token
+            * `dbx_sp` - Databricks Service Principal
+            * `azure_ad_sp` - Azure AD Service Principal
         catalog:
           description: UC catalog name
           minLength: 1
           type: string
+        client_id:
+          description: Service principal client/application ID (required for SP modes)
+          type: string
+        client_secret:
+          description: Service principal client secret (required for SP modes)
+          type: string
+          writeOnly: true
         description:
           description: Cloud storage description
           nullable: true
@@ -30272,12 +30400,16 @@ components:
         synchronizable:
           default: true
           type: boolean
+        tenant_id:
+          description: Azure AD tenant ID (required for Azure AD SP mode)
+          type: string
         title:
           description: Cloud storage title
           maxLength: 256
           nullable: true
           type: string
         token:
+          description: Databricks personal access token (required for PAT mode)
           type: string
           writeOnly: true
         traceback:
