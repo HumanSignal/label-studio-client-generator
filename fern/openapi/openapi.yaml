@@ -281,7 +281,7 @@ paths:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        List all reviews for a specific annotation ID.
+        List all reviews for a specific annotation ID. Only allowed for organizations with reviewing features enabled.
       operationId: api_annotation_reviews_list
       parameters:
         - in: query
@@ -324,7 +324,7 @@ paths:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Create a review for a specific annotation ID.
+        Create a review for a specific annotation ID. Only allowed for organizations with reviewing features enabled.
       operationId: api_annotation_reviews_create
       parameters:
         - description: Whether to postprocess the review asynchronously.
@@ -369,7 +369,7 @@ paths:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Delete a review by ID
+        Delete a review by ID. Only allowed for organizations with reviewing features enabled.
       operationId: api_annotation_reviews_destroy
       parameters:
         - description: A unique integer value identifying this annotation review.
@@ -398,7 +398,7 @@ paths:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Retrieve a specific review by ID for an annotation.
+        Retrieve a specific review by ID for an annotation. Only allowed for organizations with reviewing features enabled.
       operationId: api_annotation_reviews_retrieve
       parameters:
         - description: A unique integer value identifying this annotation review.
@@ -431,7 +431,7 @@ paths:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Update a specific review by ID.
+        Update a specific review by ID. Only allowed for organizations with reviewing features enabled.
       operationId: api_annotation_reviews_partial_update
       parameters:
         - description: A unique integer value identifying this annotation review.
@@ -475,7 +475,7 @@ paths:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Overwrite a specific review by ID.
+        Overwrite a specific review by ID. Only allowed for organizations with reviewing features enabled.
       operationId: api_annotation_reviews_update
       parameters:
         - description: A unique integer value identifying this annotation review.
@@ -10858,7 +10858,7 @@ paths:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Get review score and performance score statistics for multiple annotators within a project.
+        Get review score and performance score statistics for multiple annotators within a project. Only allowed for accounts with reviewing features enabled.
       operationId: api_projects_user_stats_review_score_retrieve
       parameters:
         - in: path
@@ -10981,7 +10981,7 @@ paths:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Get review score statistics for a specific user within a project.
+        Get review score statistics for a specific user within a project. Only allowed for accounts with reviewing features enabled.
       operationId: api_projects_user_stats_review_score_retrieve_2
       parameters:
         - in: path
@@ -19468,6 +19468,11 @@ paths:
         List all workspaces for your organization. Workspaces in Label Studio let you organize your projects and users into separate spaces. This is useful for managing different teams, departments, or projects within your organization. For more information, see the [Workspaces documentation](https://docs.humansignal.com/workspaces).
       operationId: api_workspaces_list
       parameters:
+        - description: Include all workspaces in the organization, including other users' personal workspaces. Only effective for users with Administrator or Owner role. When enabled, the response includes created_by_user info for personal workspaces.
+          in: query
+          name: include_all_workspaces
+          schema:
+            type: boolean
         - description: Workspace is a personal user workspace.
           in: query
           name: is_personal
@@ -33617,19 +33622,123 @@ components:
         - type
       type: object
     SamlSettings:
+      description: |-
+        Serializer for reading SAML settings (GET requests).
+
+        Includes all model fields plus computed read-only fields for SP URLs
+        that are needed for IdP configuration.
       properties:
+        acs_url:
+          readOnly: true
+          type: string
+        domain:
+          description: 'Organization web domain or domains; use comma separated list with no spaces for multiple. Example:<br><br>labelstud.io,humansignal.com<br><br>IMPORTANT: DO NOT PUT COMMON DOMAINS LIKE GMAIL.COM, YAHOO.COM, ETC. IN THIS FIELD'
+          maxLength: 65536
+          minLength: 3
+          type: string
+        login_url:
+          readOnly: true
+          type: string
+        logout_url:
+          readOnly: true
+          type: string
+        mapping_email:
+          description: 'Mapping attributes: user email from SAML request'
+          maxLength: 1024
+          minLength: 1
+          nullable: true
+          title: Email
+          type: string
+        mapping_first_name:
+          description: 'Mapping attributes: user first name from SAML request'
+          maxLength: 1024
+          nullable: true
+          title: First name
+          type: string
+        mapping_groups:
+          description: 'Mapping attributes: groups attribute for user mapping to workspaces and roles'
+          maxLength: 1024
+          nullable: true
+          title: Groups
+          type: string
+        mapping_last_name:
+          description: 'Mapping attributes: user last name from SAML request'
+          maxLength: 1024
+          nullable: true
+          title: Last name
+          type: string
+        metadata_url:
+          description: URL SAML metadata from IdP
+          maxLength: 65536
+          type: string
+        metadata_xml:
+          description: Metadata XML file
+          type: string
+        metadata_xml_url:
+          readOnly: true
+          type: string
+        nameid_format:
+          readOnly: true
+          type: string
         projects_groups:
           description: Projects to groups mapping
           nullable: true
         roles_groups:
           description: Roles to groups mapping
           nullable: true
+        token:
+          maxLength: 256
+          type: string
         workspaces_groups:
           description: Workspaces to groups mapping
           nullable: true
+      required:
+        - acs_url
+        - login_url
+        - logout_url
+        - metadata_xml_url
+        - nameid_format
       type: object
     SamlSettingsUpdate:
+      description: Serializer for updating SAML settings (POST requests).
       properties:
+        domain:
+          description: 'Organization web domain or domains; use comma separated list with no spaces for multiple. Example:<br><br>labelstud.io,humansignal.com<br><br>IMPORTANT: DO NOT PUT COMMON DOMAINS LIKE GMAIL.COM, YAHOO.COM, ETC. IN THIS FIELD'
+          maxLength: 65536
+          minLength: 3
+          type: string
+        mapping_email:
+          description: 'Mapping attributes: user email from SAML request'
+          maxLength: 1024
+          minLength: 1
+          nullable: true
+          title: Email
+          type: string
+        mapping_first_name:
+          description: 'Mapping attributes: user first name from SAML request'
+          maxLength: 1024
+          nullable: true
+          title: First name
+          type: string
+        mapping_groups:
+          description: 'Mapping attributes: groups attribute for user mapping to workspaces and roles'
+          maxLength: 1024
+          nullable: true
+          title: Groups
+          type: string
+        mapping_last_name:
+          description: 'Mapping attributes: user last name from SAML request'
+          maxLength: 1024
+          nullable: true
+          title: Last name
+          type: string
+        metadata_url:
+          description: URL SAML metadata from IdP
+          maxLength: 65536
+          type: string
+        metadata_xml:
+          description: Metadata XML file
+          type: string
         projects_groups:
           items:
             $ref: '#/components/schemas/ProjectGroup'
@@ -33648,7 +33757,45 @@ components:
           type: array
       type: object
     SamlSettingsUpdateRequest:
+      description: Serializer for updating SAML settings (POST requests).
       properties:
+        domain:
+          description: 'Organization web domain or domains; use comma separated list with no spaces for multiple. Example:<br><br>labelstud.io,humansignal.com<br><br>IMPORTANT: DO NOT PUT COMMON DOMAINS LIKE GMAIL.COM, YAHOO.COM, ETC. IN THIS FIELD'
+          maxLength: 65536
+          minLength: 3
+          type: string
+        mapping_email:
+          description: 'Mapping attributes: user email from SAML request'
+          maxLength: 1024
+          minLength: 1
+          nullable: true
+          title: Email
+          type: string
+        mapping_first_name:
+          description: 'Mapping attributes: user first name from SAML request'
+          maxLength: 1024
+          nullable: true
+          title: First name
+          type: string
+        mapping_groups:
+          description: 'Mapping attributes: groups attribute for user mapping to workspaces and roles'
+          maxLength: 1024
+          nullable: true
+          title: Groups
+          type: string
+        mapping_last_name:
+          description: 'Mapping attributes: user last name from SAML request'
+          maxLength: 1024
+          nullable: true
+          title: Last name
+          type: string
+        metadata_url:
+          description: URL SAML metadata from IdP
+          maxLength: 65536
+          type: string
+        metadata_xml:
+          description: Metadata XML file
+          type: string
         projects_groups:
           items:
             $ref: '#/components/schemas/ProjectGroupRequest'
@@ -34906,6 +35053,9 @@ components:
         created_by:
           readOnly: true
           type: integer
+        created_by_user:
+          readOnly: true
+          type: string
         description:
           description: Workspace description
           nullable: true
@@ -34934,6 +35084,7 @@ components:
           type: string
       required:
         - created_by
+        - created_by_user
         - id
         - membership
         - projects_count
