@@ -5961,12 +5961,47 @@ paths:
         Assign tags to multiple organization members in bulk.
       operationId: api_organizations_member_tags_assignments_create
       parameters:
+        - description: Filter exclude_project_id by exact match
+          in: query
+          name: exclude_project_id
+          schema:
+            type: number
+        - description: Filter exclude_workspace_id by exact match
+          in: query
+          name: exclude_workspace_id
+          schema:
+            type: number
         - description: A unique integer value identifying this organization.
           in: path
           name: id
           required: true
           schema:
             type: integer
+        - description: Filter is_deleted by exact match
+          in: query
+          name: is_deleted
+          schema:
+            type: boolean
+        - description: Filter role by in list (comma-separated values)
+          in: query
+          name: role
+          schema:
+            type: string
+        - description: Filter tags by in list (comma-separated values)
+          in: query
+          name: tags
+          schema:
+            type: string
+        - description: Filter user__last_activity by greater than or equal to
+          in: query
+          name: user__last_activity__gte
+          schema:
+            type: string
+        - description: Filter user__last_activity by less than or equal to
+          in: query
+          name: user__last_activity__lte
+          schema:
+            type: string
       requestBody:
         content:
           application/json:
@@ -22309,18 +22344,33 @@ components:
       type: string
     BulkOrganizationMemberTagAssignmentRequest:
       properties:
-        assignments:
-          description: List of member tag assignments to assign.
+        all:
+          description: If true, assign tags to all organization members. If false, assign tags to the provided users.
+          type: boolean
+        excluded:
+          description: List of user IDs to exclude from the assignment.
           items:
-            $ref: '#/components/schemas/OrganizationMemberTagAssignmentRequest'
-          minItems: 1
+            minimum: 1
+            type: integer
+          type: array
+        included:
+          description: List of user IDs to include in the assignment.
+          items:
+            minimum: 1
+            type: integer
           type: array
         overwrite:
           default: false
           description: If true, replace all existing tag assignments for each user with the provided ones. If false, only add new assignments.
           type: boolean
+        tags:
+          description: List of tag IDs to assign.
+          items:
+            minimum: 1
+            type: integer
+          type: array
       required:
-        - assignments
+        - all
       type: object
     CancelModelRunResponse:
       properties:
@@ -29469,21 +29519,6 @@ components:
         - member_count
         - organization
         - updated_at
-      type: object
-    OrganizationMemberTagAssignmentRequest:
-      properties:
-        tag_ids:
-          description: List of tag IDs to assign. Use an empty list with overwrite=true to remove all tags from a user.
-          items:
-            minimum: 1
-            type: integer
-          type: array
-        user_id:
-          minimum: 1
-          type: integer
-      required:
-        - tag_ids
-        - user_id
       type: object
     OrganizationMemberTagBulkCreateRequest:
       description: Serializer for bulk create of organization member tags.
