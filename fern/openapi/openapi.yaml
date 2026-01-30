@@ -20617,6 +20617,9 @@ components:
         state:
           readOnly: true
           type: string
+        strict_task_overlap:
+          default: true
+          type: boolean
         task_number:
           description: Total task number in project
           readOnly: true
@@ -26168,6 +26171,9 @@ components:
         state:
           readOnly: true
           type: string
+        strict_task_overlap:
+          default: true
+          type: boolean
         task_data_login:
           description: 'Task data credentials: login'
           maxLength: 256
@@ -26889,6 +26895,9 @@ components:
         state:
           readOnly: true
           type: string
+        strict_task_overlap:
+          default: true
+          type: boolean
         task_data_login:
           description: 'Task data credentials: login'
           maxLength: 256
@@ -27173,6 +27182,9 @@ components:
         state:
           readOnly: true
           type: string
+        strict_task_overlap:
+          default: true
+          type: boolean
         task_data_login:
           description: 'Task data credentials: login'
           maxLength: 256
@@ -29304,6 +29316,11 @@ components:
           maxLength: 255
           nullable: true
           type: string
+        only_missing_predictions:
+          default: false
+          description: When true, only tasks without successful predictions for this prompt version are submitted for inference.
+          type: boolean
+          writeOnly: true
         organization:
           nullable: true
           type: integer
@@ -31318,6 +31335,9 @@ components:
           allOf:
             - $ref: '#/components/schemas/SkipQueueEnum'
           nullable: true
+        strict_task_overlap:
+          default: true
+          type: boolean
         task_data_login:
           description: 'Task data credentials: login'
           maxLength: 256
