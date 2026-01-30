@@ -20390,6 +20390,10 @@ components:
           nullable: true
           pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
           type: string
+        annotator_evaluation_continuous_tasks:
+          default: 0
+          minimum: 0
+          type: integer
         annotator_evaluation_enabled:
           description: Enable annotator evaluation for the project
           type: boolean
@@ -20617,6 +20621,9 @@ components:
         state:
           readOnly: true
           type: string
+        strict_task_overlap:
+          default: true
+          type: boolean
         task_number:
           description: Total task number in project
           readOnly: true
@@ -25959,6 +25966,10 @@ components:
           nullable: true
           pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
           type: string
+        annotator_evaluation_continuous_tasks:
+          default: 0
+          minimum: 0
+          type: integer
         annotator_evaluation_enabled:
           description: Enable annotator evaluation for the project
           type: boolean
@@ -26168,6 +26179,9 @@ components:
         state:
           readOnly: true
           type: string
+        strict_task_overlap:
+          default: true
+          type: boolean
         task_data_login:
           description: 'Task data credentials: login'
           maxLength: 256
@@ -26670,6 +26684,10 @@ components:
           nullable: true
           pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
           type: string
+        annotator_evaluation_continuous_tasks:
+          default: 0
+          minimum: 0
+          type: integer
         annotator_evaluation_enabled:
           description: Enable annotator evaluation for the project
           type: boolean
@@ -26889,6 +26907,9 @@ components:
         state:
           readOnly: true
           type: string
+        strict_task_overlap:
+          default: true
+          type: boolean
         task_data_login:
           description: 'Task data credentials: login'
           maxLength: 256
@@ -26984,6 +27005,10 @@ components:
           nullable: true
           pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
           type: string
+        annotator_evaluation_continuous_tasks:
+          default: 0
+          minimum: 0
+          type: integer
         annotator_evaluation_enabled:
           description: Enable annotator evaluation for the project
           type: boolean
@@ -27173,6 +27198,9 @@ components:
         state:
           readOnly: true
           type: string
+        strict_task_overlap:
+          default: true
+          type: boolean
         task_data_login:
           description: 'Task data credentials: login'
           maxLength: 256
@@ -31179,6 +31207,10 @@ components:
           nullable: true
           pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
           type: string
+        annotator_evaluation_continuous_tasks:
+          default: 0
+          minimum: 0
+          type: integer
         annotator_evaluation_enabled:
           description: Enable annotator evaluation for the project
           type: boolean
@@ -31318,6 +31350,9 @@ components:
           allOf:
             - $ref: '#/components/schemas/SkipQueueEnum'
           nullable: true
+        strict_task_overlap:
+          default: true
+          type: boolean
         task_data_login:
           description: 'Task data credentials: login'
           maxLength: 256
