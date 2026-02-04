@@ -20390,6 +20390,10 @@ components:
           nullable: true
           pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
           type: string
+        annotator_evaluation_continuous_tasks:
+          default: 0
+          minimum: 0
+          type: integer
         annotator_evaluation_enabled:
           description: Enable annotator evaluation for the project
           type: boolean
@@ -25962,6 +25966,10 @@ components:
           nullable: true
           pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
           type: string
+        annotator_evaluation_continuous_tasks:
+          default: 0
+          minimum: 0
+          type: integer
         annotator_evaluation_enabled:
           description: Enable annotator evaluation for the project
           type: boolean
@@ -26676,6 +26684,10 @@ components:
           nullable: true
           pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
           type: string
+        annotator_evaluation_continuous_tasks:
+          default: 0
+          minimum: 0
+          type: integer
         annotator_evaluation_enabled:
           description: Enable annotator evaluation for the project
           type: boolean
@@ -26993,6 +27005,10 @@ components:
           nullable: true
           pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
           type: string
+        annotator_evaluation_continuous_tasks:
+          default: 0
+          minimum: 0
+          type: integer
         annotator_evaluation_enabled:
           description: Enable annotator evaluation for the project
           type: boolean
@@ -31196,6 +31212,10 @@ components:
           nullable: true
           pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
           type: string
+        annotator_evaluation_continuous_tasks:
+          default: 0
+          minimum: 0
+          type: integer
         annotator_evaluation_enabled:
           description: Enable annotator evaluation for the project
           type: boolean
