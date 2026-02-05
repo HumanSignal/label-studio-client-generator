@@ -20531,8 +20531,10 @@ components:
           minimum: -2147483648
           type: integer
         parsed_label_config:
+          additionalProperties: true
           description: JSON-formatted labeling configuration
           readOnly: true
+          type: object
         pause_on_failed_annotator_evaluation:
           default: false
           nullable: true
@@ -26096,8 +26098,10 @@ components:
           minimum: -2147483648
           type: integer
         parsed_label_config:
+          additionalProperties: true
           description: JSON-formatted labeling configuration
           readOnly: true
+          type: object
         pause_on_failed_annotator_evaluation:
           default: false
           nullable: true
@@ -26406,8 +26410,10 @@ components:
           minimum: -2147483648
           type: integer
         parsed_label_config:
+          additionalProperties: true
           description: JSON-formatted labeling configuration
           readOnly: true
+          type: object
         pinned_at:
           description: Pinned date and time
           format: date-time
@@ -26809,8 +26815,10 @@ components:
           minimum: -2147483648
           type: integer
         parsed_label_config:
+          additionalProperties: true
           description: JSON-formatted labeling configuration
           readOnly: true
+          type: object
         pause_on_failed_annotator_evaluation:
           default: false
           nullable: true
@@ -27113,8 +27121,10 @@ components:
           minimum: -2147483648
           type: integer
         parsed_label_config:
+          additionalProperties: true
           description: JSON-formatted labeling configuration
           readOnly: true
+          type: object
         pause_on_failed_annotator_evaluation:
           default: false
           nullable: true
@@ -32376,8 +32386,10 @@ components:
           minimum: -2147483648
           type: integer
         parsed_label_config:
+          additionalProperties: true
           description: JSON-formatted labeling configuration
           readOnly: true
+          type: object
         pinned_at:
           description: Pinned date and time
           format: date-time
