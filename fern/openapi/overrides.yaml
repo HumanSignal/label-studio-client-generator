@@ -8,6 +8,7 @@ components:
     AllRolesProjectList:
       properties:
         control_weights:
+          description: Weights for each control tag used in agreement metrics.
           type: object
           nullable: true
           additionalProperties:
@@ -35,6 +36,7 @@ components:
     LseProject:
       properties:
         control_weights:
+          description: Weights for each control tag used in agreement metrics.
           type: object
           nullable: true
           additionalProperties:
@@ -62,6 +64,7 @@ components:
     LseProjectCreate:
       properties:
         control_weights:
+          description: Weights for each control tag used in agreement metrics.
           type: object
           nullable: true
           additionalProperties:
@@ -84,6 +87,7 @@ components:
     LseProjectCreateRequest:
       properties:
         control_weights:
+          description: Weights for each control tag used in agreement metrics.
           type: object
           nullable: true
           additionalProperties:
@@ -102,6 +106,7 @@ components:
     LseProjectResponse:
       properties:
         control_weights:
+          description: Weights for each control tag used in agreement metrics.
           type: object
           nullable: true
           additionalProperties:
@@ -129,6 +134,7 @@ components:
     LseProjectUpdate:
       properties:
         control_weights:
+          description: Weights for each control tag used in agreement metrics.
           type: object
           nullable: true
           additionalProperties:
@@ -151,6 +157,7 @@ components:
     PatchedLseProjectUpdateRequest:
       properties:
         control_weights:
+          description: Weights for each control tag used in agreement metrics.
           type: object
           nullable: true
           additionalProperties:
@@ -169,6 +176,7 @@ components:
     Project:
       properties:
         control_weights:
+          description: Weights for each control tag used in agreement metrics.
           type: object
           nullable: true
           additionalProperties:
