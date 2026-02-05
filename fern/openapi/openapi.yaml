@@ -20449,8 +20449,10 @@ components:
           nullable: true
           type: integer
         data_types:
+          additionalProperties: true
           nullable: true
           readOnly: true
+          type: object
         description:
           description: Project description
           nullable: true
@@ -26018,8 +26020,10 @@ components:
           nullable: true
           type: integer
         data_types:
+          additionalProperties: true
           nullable: true
           readOnly: true
+          type: object
         description:
           description: Project description
           nullable: true
@@ -26736,8 +26740,10 @@ components:
           nullable: true
           type: integer
         data_types:
+          additionalProperties: true
           nullable: true
           readOnly: true
+          type: object
         description:
           description: Project description
           nullable: true
