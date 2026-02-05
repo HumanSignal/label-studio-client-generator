@@ -1,0 +1,189 @@
+components:
+  schemas:
+    # Fern-hosted docs crash-loop investigation:
+    # These endpoints consistently redirect to `?error=true` on hosted preview and they all
+    # share the following project-related schemas. These schemas contain several
+    # `additionalProperties: true` object-map fields. Replace boolean `true` with explicit
+    # schemas to avoid renderer edge-cases while preserving the shape for SDKs/docs.
+    AllRolesProjectList:
+      properties:
+        control_weights:
+          type: object
+          nullable: true
+          additionalProperties:
+            type: object
+            properties:
+              type:
+                type: string
+              labels:
+                type: object
+                additionalProperties:
+                  type: number
+              overall:
+                type: number
+            additionalProperties: true
+        data_types:
+          type: object
+          nullable: true
+          readOnly: true
+          additionalProperties: {}
+        parsed_label_config:
+          type: object
+          readOnly: true
+          additionalProperties: {}
+
+    LseProject:
+      properties:
+        control_weights:
+          type: object
+          nullable: true
+          additionalProperties:
+            type: object
+            properties:
+              type:
+                type: string
+              labels:
+                type: object
+                additionalProperties:
+                  type: number
+              overall:
+                type: number
+            additionalProperties: true
+        data_types:
+          type: object
+          nullable: true
+          readOnly: true
+          additionalProperties: {}
+        parsed_label_config:
+          type: object
+          readOnly: true
+          additionalProperties: {}
+
+    LseProjectCreate:
+      properties:
+        control_weights:
+          type: object
+          nullable: true
+          additionalProperties:
+            type: object
+            properties:
+              type:
+                type: string
+              labels:
+                type: object
+                additionalProperties:
+                  type: number
+              overall:
+                type: number
+            additionalProperties: true
+        parsed_label_config:
+          type: object
+          readOnly: true
+          additionalProperties: {}
+
+    LseProjectCreateRequest:
+      properties:
+        control_weights:
+          type: object
+          nullable: true
+          additionalProperties:
+            type: object
+            properties:
+              type:
+                type: string
+              labels:
+                type: object
+                additionalProperties:
+                  type: number
+              overall:
+                type: number
+            additionalProperties: true
+
+    LseProjectResponse:
+      properties:
+        control_weights:
+          type: object
+          nullable: true
+          additionalProperties:
+            type: object
+            properties:
+              type:
+                type: string
+              labels:
+                type: object
+                additionalProperties:
+                  type: number
+              overall:
+                type: number
+            additionalProperties: true
+        data_types:
+          type: object
+          nullable: true
+          readOnly: true
+          additionalProperties: {}
+        parsed_label_config:
+          type: object
+          readOnly: true
+          additionalProperties: {}
+
+    LseProjectUpdate:
+      properties:
+        control_weights:
+          type: object
+          nullable: true
+          additionalProperties:
+            type: object
+            properties:
+              type:
+                type: string
+              labels:
+                type: object
+                additionalProperties:
+                  type: number
+              overall:
+                type: number
+            additionalProperties: true
+        parsed_label_config:
+          type: object
+          readOnly: true
+          additionalProperties: {}
+
+    PatchedLseProjectUpdateRequest:
+      properties:
+        control_weights:
+          type: object
+          nullable: true
+          additionalProperties:
+            type: object
+            properties:
+              type:
+                type: string
+              labels:
+                type: object
+                additionalProperties:
+                  type: number
+              overall:
+                type: number
+            additionalProperties: true
+
+    Project:
+      properties:
+        control_weights:
+          type: object
+          nullable: true
+          additionalProperties:
+            type: object
+            properties:
+              type:
+                type: string
+              labels:
+                type: object
+                additionalProperties:
+                  type: number
+              overall:
+                type: number
+            additionalProperties: true
+        parsed_label_config:
+          type: object
+          readOnly: true
+          additionalProperties: {}
