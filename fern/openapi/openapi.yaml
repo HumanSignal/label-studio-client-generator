@@ -20434,8 +20434,10 @@ components:
           readOnly: true
           type: boolean
         control_weights:
-          description: 'Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have it''s own key in control weight dict with weight for each label and overall weight.For example, if bounding box annotation with control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice more important than Airplaine, then you have to need the specify: {''my_bbox'': {''type'': ''RectangleLabels'', ''labels'': {''Car'': 1.0, ''Airplaine'': 0.5}, ''overall'': 0.33}'
+          additionalProperties: true
+          description: Dict of weights for each control tag in metric calculation.
           nullable: true
+          type: object
         created_at:
           format: date-time
           readOnly: true
@@ -20453,8 +20455,10 @@ components:
           nullable: true
           type: integer
         data_types:
+          additionalProperties: true
           nullable: true
           readOnly: true
+          type: object
         description:
           description: Project description
           nullable: true
@@ -20535,8 +20539,10 @@ components:
           minimum: -2147483648
           type: integer
         parsed_label_config:
+          additionalProperties: true
           description: JSON-formatted labeling configuration
           readOnly: true
+          type: object
         pause_on_failed_annotator_evaluation:
           default: false
           nullable: true
@@ -26005,8 +26011,10 @@ components:
           readOnly: true
           type: boolean
         control_weights:
-          description: 'Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have it''s own key in control weight dict with weight for each label and overall weight.For example, if bounding box annotation with control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice more important than Airplaine, then you have to need the specify: {''my_bbox'': {''type'': ''RectangleLabels'', ''labels'': {''Car'': 1.0, ''Airplaine'': 0.5}, ''overall'': 0.33}'
+          additionalProperties: true
+          description: Dict of weights for each control tag in metric calculation.
           nullable: true
+          type: object
         created_at:
           format: date-time
           readOnly: true
@@ -26024,8 +26032,10 @@ components:
           nullable: true
           type: integer
         data_types:
+          additionalProperties: true
           nullable: true
           readOnly: true
+          type: object
         description:
           description: Project description
           nullable: true
@@ -26104,8 +26114,10 @@ components:
           minimum: -2147483648
           type: integer
         parsed_label_config:
+          additionalProperties: true
           description: JSON-formatted labeling configuration
           readOnly: true
+          type: object
         pause_on_failed_annotator_evaluation:
           default: false
           nullable: true
@@ -26341,8 +26353,10 @@ components:
           readOnly: true
           type: boolean
         control_weights:
-          description: 'Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have it''s own key in control weight dict with weight for each label and overall weight.For example, if bounding box annotation with control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice more important than Airplaine, then you have to need the specify: {''my_bbox'': {''type'': ''RectangleLabels'', ''labels'': {''Car'': 1.0, ''Airplaine'': 0.5}, ''overall'': 0.33}'
+          additionalProperties: true
+          description: Dict of weights for each control tag in metric calculation.
           nullable: true
+          type: object
         created_at:
           format: date-time
           readOnly: true
@@ -26414,8 +26428,10 @@ components:
           minimum: -2147483648
           type: integer
         parsed_label_config:
+          additionalProperties: true
           description: JSON-formatted labeling configuration
           readOnly: true
+          type: object
         pinned_at:
           description: Pinned date and time
           format: date-time
@@ -26534,8 +26550,10 @@ components:
           nullable: true
           type: string
         control_weights:
-          description: 'Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have it''s own key in control weight dict with weight for each label and overall weight.For example, if bounding box annotation with control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice more important than Airplaine, then you have to need the specify: {''my_bbox'': {''type'': ''RectangleLabels'', ''labels'': {''Car'': 1.0, ''Airplaine'': 0.5}, ''overall'': 0.33}'
+          additionalProperties: true
+          description: Dict of weights for each control tag in metric calculation.
           nullable: true
+          type: object
         created_by:
           allOf:
             - $ref: '#/components/schemas/UserSimpleRequest'
@@ -26723,8 +26741,10 @@ components:
           readOnly: true
           type: boolean
         control_weights:
-          description: 'Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have it''s own key in control weight dict with weight for each label and overall weight.For example, if bounding box annotation with control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice more important than Airplaine, then you have to need the specify: {''my_bbox'': {''type'': ''RectangleLabels'', ''labels'': {''Car'': 1.0, ''Airplaine'': 0.5}, ''overall'': 0.33}'
+          additionalProperties: true
+          description: Dict of weights for each control tag in metric calculation.
           nullable: true
+          type: object
         created_at:
           format: date-time
           readOnly: true
@@ -26742,8 +26762,10 @@ components:
           nullable: true
           type: integer
         data_types:
+          additionalProperties: true
           nullable: true
           readOnly: true
+          type: object
         description:
           description: Project description
           nullable: true
@@ -26821,8 +26843,10 @@ components:
           minimum: -2147483648
           type: integer
         parsed_label_config:
+          additionalProperties: true
           description: JSON-formatted labeling configuration
           readOnly: true
+          type: object
         pause_on_failed_annotator_evaluation:
           default: false
           nullable: true
@@ -27044,8 +27068,10 @@ components:
           readOnly: true
           type: boolean
         control_weights:
-          description: 'Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have it''s own key in control weight dict with weight for each label and overall weight.For example, if bounding box annotation with control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice more important than Airplaine, then you have to need the specify: {''my_bbox'': {''type'': ''RectangleLabels'', ''labels'': {''Car'': 1.0, ''Airplaine'': 0.5}, ''overall'': 0.33}'
+          additionalProperties: true
+          description: Dict of weights for each control tag in metric calculation.
           nullable: true
+          type: object
         created_at:
           format: date-time
           readOnly: true
@@ -27129,8 +27155,10 @@ components:
           minimum: -2147483648
           type: integer
         parsed_label_config:
+          additionalProperties: true
           description: JSON-formatted labeling configuration
           readOnly: true
+          type: object
         pause_on_failed_annotator_evaluation:
           default: false
           nullable: true
@@ -31243,8 +31271,10 @@ components:
         comment_classification_config:
           type: string
         control_weights:
-          description: 'Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have it''s own key in control weight dict with weight for each label and overall weight.For example, if bounding box annotation with control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice more important than Airplaine, then you have to need the specify: {''my_bbox'': {''type'': ''RectangleLabels'', ''labels'': {''Car'': 1.0, ''Airplaine'': 0.5}, ''overall'': 0.33}'
+          additionalProperties: true
+          description: Dict of weights for each control tag in metric calculation.
           nullable: true
+          type: object
         created_by:
           allOf:
             - $ref: '#/components/schemas/UserSimpleRequest'
@@ -32323,8 +32353,10 @@ components:
           readOnly: true
           type: boolean
         control_weights:
-          description: 'Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have it''s own key in control weight dict with weight for each label and overall weight.For example, if bounding box annotation with control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice more important than Airplaine, then you have to need the specify: {''my_bbox'': {''type'': ''RectangleLabels'', ''labels'': {''Car'': 1.0, ''Airplaine'': 0.5}, ''overall'': 0.33}'
+          additionalProperties: true
+          description: Dict of weights for each control tag in metric calculation.
           nullable: true
+          type: object
         created_at:
           format: date-time
           readOnly: true
@@ -32396,8 +32428,10 @@ components:
           minimum: -2147483648
           type: integer
         parsed_label_config:
+          additionalProperties: true
           description: JSON-formatted labeling configuration
           readOnly: true
+          type: object
         pinned_at:
           description: Pinned date and time
           format: date-time
