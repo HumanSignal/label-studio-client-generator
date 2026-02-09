@@ -18555,6 +18555,26 @@ paths:
         - public
       x-fern-sdk-group-name: tasks
       x-fern-sdk-method-name: update
+  /api/tasks/{id}/agreement/:
+    get:
+      description: Get aggregated label distribution across all annotations for a task. Returns counts of each label value grouped by control tag. This is an efficient endpoint that avoids N+1 queries.
+      operationId: api_tasks_agreement_retrieve
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Label distribution data
+      security:
+        - Token: []
+      summary: Get task label distribution
+      tags:
+        - Tasks
+      x-fern-audiences:
+        - internal
   /api/tasks/{id}/annotations/:
     get:
       description: List all annotations for a task.
