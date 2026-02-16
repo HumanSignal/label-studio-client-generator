@@ -511,6 +511,33 @@ paths:
       x-fern-audiences:
         - internal
   /api/annotations/bulk/:
+    delete:
+      description: Delete multiple annotations by their IDs. The deletion is processed synchronously. Returns the count of deleted annotations in the response.
+      operationId: api_annotations_bulk_destroy
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  deleted_count:
+                    description: Number of annotations deleted
+                    type: integer
+                type: object
+          description: Annotations deleted successfully
+        '400':
+          description: Bad request - validation errors
+        '403':
+          description: Forbidden - insufficient permissions
+      security:
+        - Token: []
+      summary: Bulk delete annotations by IDs
+      tags:
+        - Annotations
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: annotations
+      x-fern-sdk-method-name: delete_bulk
     post:
       description: Create multiple annotations at once
       operationId: api_annotations_bulk_create
