@@ -510,10 +510,22 @@ paths:
         - Annotation Reviews
       x-fern-audiences:
         - internal
-  /api/annotations/bulk/:
-    delete:
+  /api/annotations/bulk-delete/:
+    post:
       description: Delete multiple annotations by their IDs. The deletion is processed synchronously. Returns the count of deleted annotations in the response.
-      operationId: api_annotations_bulk_destroy
+      operationId: api_annotations_bulk_delete_create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AnnotationBulkDeleteRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AnnotationBulkDeleteRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AnnotationBulkDeleteRequest'
+        required: true
       responses:
         '200':
           content:
@@ -538,6 +550,7 @@ paths:
         - public
       x-fern-sdk-group-name: annotations
       x-fern-sdk-method-name: delete_bulk
+  /api/annotations/bulk/:
     post:
       description: Create multiple annotations at once
       operationId: api_annotations_bulk_create
@@ -20865,6 +20878,23 @@ components:
         - id
         - state
         - updated_at
+      type: object
+    AnnotationBulkDeleteRequest:
+      description: Serializer for bulk annotation deletion by IDs.
+      properties:
+        ids:
+          description: List of annotation IDs to delete
+          items:
+            minimum: 1
+            type: integer
+          maxItems: 100
+          minItems: 1
+          type: array
+        project:
+          type: integer
+      required:
+        - ids
+        - project
       type: object
     AnnotationBulkSerializerWithSelectedItemsRequest:
       description: |-
