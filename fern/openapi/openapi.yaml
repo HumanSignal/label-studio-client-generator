@@ -33526,6 +33526,12 @@ components:
         - 'NO'
       type: string
     RoleBasedTask:
+      discriminator:
+        mapping:
+          LseTask: '#/components/schemas/LseTask'
+          LseTaskSerializerForAnnotators: '#/components/schemas/LseTaskSerializerForAnnotators'
+          LseTaskSerializerForReviewers: '#/components/schemas/LseTaskSerializerForReviewers'
+        propertyName: user_role
       oneOf:
         - $ref: '#/components/schemas/LseTask'
         - $ref: '#/components/schemas/LseTaskSerializerForReviewers'
