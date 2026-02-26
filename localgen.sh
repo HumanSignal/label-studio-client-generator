@@ -103,7 +103,7 @@ cleanup_local_dir() {
 generate_sdk() {
     cleanup_local_dir
     log_info "Generating Python SDK with fern..."
-    if ! fern generate --group python-sdk-local --version AUTO; then
+    if ! fern generate --group python-sdk-local; then
         log_error "SDK generation failed"
         exit 1
     fi
