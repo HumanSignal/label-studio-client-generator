@@ -20432,8 +20432,13 @@ components:
           allOf:
             - $ref: '#/components/schemas/AgreementMethodologyEnum'
           default: pairwise
+          description: |-
+            Methodology (Consensus / Pairwise Averaging)
+
+            * `consensus` - Consensus
+            * `pairwise` - Pairwise Averaging
         agreement_threshold:
-          description: Minimum percent agreement threshold for which minimum number of annotators must agree
+          description: Agreement threshold
           format: decimal
           nullable: true
           pattern: ^-?\d{0,1}(?:\.\d{0,2})?$
@@ -20442,34 +20447,40 @@ components:
           readOnly: true
           type: boolean
         annotation_limit_count:
+          description: Limit by number of tasks
           minimum: 1
           nullable: true
           type: integer
         annotation_limit_percent:
+          description: Limit by percentage of tasks
           format: decimal
           nullable: true
           pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
           type: string
         annotator_evaluation_continuous_tasks:
           default: 0
+          description: 'Continuous Evaluation: Required tasks'
           minimum: 0
           type: integer
         annotator_evaluation_enabled:
-          description: Enable annotator evaluation for the project
+          description: Evaluate all annotators against ground truth
           type: boolean
         annotator_evaluation_minimum_score:
           default: '95.00'
+          description: Score required to pass evaluation
           format: decimal
           nullable: true
           pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
           type: string
         annotator_evaluation_minimum_tasks:
           default: 10
+          description: Number of tasks for evaluation
           minimum: 0
           nullable: true
           type: integer
         annotator_evaluation_onboarding_tasks:
           default: 0
+          description: 'Onboarding Evaluation: Required tasks'
           minimum: 0
           type: integer
         assignment_settings:
@@ -20480,6 +20491,7 @@ components:
           readOnly: true
           type: array
         color:
+          description: Color
           maxLength: 16
           nullable: true
           type: string
@@ -20507,9 +20519,10 @@ components:
             - $ref: '#/components/schemas/UserSimple'
           description: Project owner
         custom_script:
+          description: Plugins
           type: string
         custom_task_lock_ttl:
-          description: TTL in seconds for task reservations, on new and existing tasks
+          description: Task reservation time. TTL in seconds (UI displays and edits this value in minutes).
           maximum: 86400
           minimum: 1
           nullable: true
@@ -20520,7 +20533,7 @@ components:
           readOnly: true
           type: object
         description:
-          description: Project description
+          description: Description
           nullable: true
           type: string
         description_short:
@@ -20532,13 +20545,13 @@ components:
         duplication_status:
           type: string
         enable_empty_annotation:
-          description: Allow annotators to submit empty annotations
+          description: Allow empty annotations
           type: boolean
         evaluate_predictions_automatically:
           description: Retrieve and display predictions when loading a task
           type: boolean
         expert_instruction:
-          description: Labeling instructions in HTML format
+          description: Instructions
           nullable: true
           type: string
         finished_task_number:
@@ -20559,15 +20572,15 @@ components:
           title: Published
           type: boolean
         label_config:
-          description: Label config in XML format. See more about it in documentation
+          description: Labeling Configuration
           nullable: true
           type: string
         max_additional_annotators_assignable:
-          description: Maximum number of additional annotators that can be assigned to a low agreement task
+          description: Maximum additional annotators
           nullable: true
           type: integer
         maximum_annotations:
-          description: Maximum number of annotations for one task. If the number of annotations per task is equal or greater to this value, the task is completed (is_labeled=True)
+          description: Annotations per task
           maximum: 2147483647
           minimum: -2147483648
           title: Maximum annotation number
@@ -20595,6 +20608,7 @@ components:
           nullable: true
           type: integer
         overlap_cohort_percentage:
+          description: Annotations per task coverage
           maximum: 2147483647
           minimum: -2147483648
           type: integer
@@ -20605,6 +20619,7 @@ components:
           type: object
         pause_on_failed_annotator_evaluation:
           default: false
+          description: Pause annotator on failed evaluation
           nullable: true
           type: boolean
         pinned_at:
@@ -20632,6 +20647,7 @@ components:
           type: integer
         require_comment_on_skip:
           default: false
+          description: Require comment to skip
           type: boolean
         reveal_preannotations_interactively:
           description: Reveal pre-annotations interactively
@@ -20652,10 +20668,10 @@ components:
             - $ref: '#/components/schemas/SamplingDe5Enum'
           nullable: true
         show_annotation_history:
-          description: Show annotation history to annotator
+          description: Show Data Manager to Annotators
           type: boolean
         show_collab_predictions:
-          description: If set, the annotator can view model predictions
+          description: Use predictions to pre-label Tasks
           title: Show predictions to annotator
           type: boolean
         show_ground_truth_first:
@@ -20663,14 +20679,16 @@ components:
           description: 'Onboarding mode (true): show ground truth tasks first in the labeling stream'
           type: boolean
         show_instruction:
-          description: Show instructions to the annotator before they start
+          description: Show instructions before labeling
           type: boolean
         show_overlap_first:
+          description: Show tasks with overlap first
           type: boolean
         show_skip_button:
-          description: Show a skip button in interface and allow annotators to skip the task
+          description: Allow skipping tasks
           type: boolean
         show_unused_data_columns_to_annotators:
+          description: 'Show only columns used in labeling configuration to Annotators. API uses inverse field semantics here: set false to show only used columns, set true to show all task.data columns.'
           nullable: true
           type: boolean
         skip_queue:
@@ -20689,13 +20707,14 @@ components:
           type: string
         strict_task_overlap:
           default: true
+          description: Enforce strict overlap limit
           type: boolean
         task_number:
           description: Total task number in project
           readOnly: true
           type: integer
         title:
-          description: Project name. Must be between 3 and 50 characters long.
+          description: Project Name
           maxLength: 50
           minLength: 3
           nullable: true
@@ -21281,7 +21300,7 @@ components:
           allOf:
             - $ref: '#/components/schemas/LabelStreamTaskDistributionEnum'
           description: |-
-            Modes for distributing tasks to annotators
+            Automatic / Manual
 
             * `auto_distribution` - Label Stream distributes tasks automatically to annotators
             * `assigned_only` - Label Stream shows tasks only to assigned users
@@ -21298,7 +21317,7 @@ components:
           allOf:
             - $ref: '#/components/schemas/LabelStreamTaskDistributionEnum'
           description: |-
-            Modes for distributing tasks to annotators
+            Automatic / Manual
 
             * `auto_distribution` - Label Stream distributes tasks automatically to annotators
             * `assigned_only` - Label Stream shows tasks only to assigned users
@@ -26034,46 +26053,58 @@ components:
           allOf:
             - $ref: '#/components/schemas/AgreementMethodologyEnum'
           default: pairwise
+          description: |-
+            Methodology (Consensus / Pairwise Averaging)
+
+            * `consensus` - Consensus
+            * `pairwise` - Pairwise Averaging
         agreement_threshold:
-          description: Minimum percent agreement threshold for which minimum number of annotators must agree
+          description: Agreement threshold
           format: decimal
           nullable: true
           pattern: ^-?\d{0,1}(?:\.\d{0,2})?$
           type: string
         annotation_limit_count:
+          description: Limit by number of tasks
           minimum: 1
           nullable: true
           type: integer
         annotation_limit_percent:
+          description: Limit by percentage of tasks
           format: decimal
           nullable: true
           pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
           type: string
         annotator_evaluation_continuous_tasks:
           default: 0
+          description: 'Continuous Evaluation: Required tasks'
           minimum: 0
           type: integer
         annotator_evaluation_enabled:
-          description: Enable annotator evaluation for the project
+          description: Evaluate all annotators against ground truth
           type: boolean
         annotator_evaluation_minimum_score:
           default: '95.00'
+          description: Score required to pass evaluation
           format: decimal
           nullable: true
           pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
           type: string
         annotator_evaluation_minimum_tasks:
           default: 10
+          description: Number of tasks for evaluation
           minimum: 0
           nullable: true
           type: integer
         annotator_evaluation_onboarding_tasks:
           default: 0
+          description: 'Onboarding Evaluation: Required tasks'
           minimum: 0
           type: integer
         assignment_settings:
           $ref: '#/components/schemas/AssignmentSettings'
         color:
+          description: Color
           maxLength: 16
           nullable: true
           type: string
@@ -26101,9 +26132,10 @@ components:
             - $ref: '#/components/schemas/UserSimple'
           description: Project owner
         custom_script:
+          description: Plugins
           type: string
         custom_task_lock_ttl:
-          description: TTL in seconds for task reservations, on new and existing tasks
+          description: Task reservation time. TTL in seconds (UI displays and edits this value in minutes).
           maximum: 86400
           minimum: 1
           nullable: true
@@ -26114,7 +26146,7 @@ components:
           readOnly: true
           type: object
         description:
-          description: Project description
+          description: Description
           nullable: true
           type: string
         duplication_done:
@@ -26123,13 +26155,13 @@ components:
         duplication_status:
           type: string
         enable_empty_annotation:
-          description: Allow annotators to submit empty annotations
+          description: Allow empty annotations
           type: boolean
         evaluate_predictions_automatically:
           description: Retrieve and display predictions when loading a task
           type: boolean
         expert_instruction:
-          description: Labeling instructions in HTML format
+          description: Instructions
           nullable: true
           type: string
         finished_task_number:
@@ -26151,15 +26183,15 @@ components:
           title: Published
           type: boolean
         label_config:
-          description: Label config in XML format. See more about it in documentation
+          description: Labeling Configuration
           nullable: true
           type: string
         max_additional_annotators_assignable:
-          description: Maximum number of additional annotators that can be assigned to a low agreement task
+          description: Maximum additional annotators
           nullable: true
           type: integer
         maximum_annotations:
-          description: Maximum number of annotations for one task. If the number of annotations per task is equal or greater to this value, the task is completed (is_labeled=True)
+          description: Annotations per task
           maximum: 2147483647
           minimum: -2147483648
           title: Maximum annotation number
@@ -26187,6 +26219,7 @@ components:
           nullable: true
           type: integer
         overlap_cohort_percentage:
+          description: Annotations per task coverage
           maximum: 2147483647
           minimum: -2147483648
           type: integer
@@ -26197,6 +26230,7 @@ components:
           type: object
         pause_on_failed_annotator_evaluation:
           default: false
+          description: Pause annotator on failed evaluation
           nullable: true
           type: boolean
         pinned_at:
@@ -26218,6 +26252,7 @@ components:
           type: string
         require_comment_on_skip:
           default: false
+          description: Require comment to skip
           type: boolean
         reveal_preannotations_interactively:
           description: Reveal pre-annotations interactively
@@ -26232,10 +26267,10 @@ components:
             - $ref: '#/components/schemas/SamplingDe5Enum'
           nullable: true
         show_annotation_history:
-          description: Show annotation history to annotator
+          description: Show Data Manager to Annotators
           type: boolean
         show_collab_predictions:
-          description: If set, the annotator can view model predictions
+          description: Use predictions to pre-label Tasks
           title: Show predictions to annotator
           type: boolean
         show_ground_truth_first:
@@ -26243,14 +26278,16 @@ components:
           description: 'Onboarding mode (true): show ground truth tasks first in the labeling stream'
           type: boolean
         show_instruction:
-          description: Show instructions to the annotator before they start
+          description: Show instructions before labeling
           type: boolean
         show_overlap_first:
+          description: Show tasks with overlap first
           type: boolean
         show_skip_button:
-          description: Show a skip button in interface and allow annotators to skip the task
+          description: Allow skipping tasks
           type: boolean
         show_unused_data_columns_to_annotators:
+          description: 'Show only columns used in labeling configuration to Annotators. API uses inverse field semantics here: set false to show only used columns, set true to show all task.data columns.'
           nullable: true
           type: boolean
         skip_queue:
@@ -26270,14 +26307,15 @@ components:
           type: string
         strict_task_overlap:
           default: true
+          description: Enforce strict overlap limit
           type: boolean
         task_data_login:
-          description: 'Task data credentials: login'
+          description: Login
           maxLength: 256
           nullable: true
           type: string
         task_data_password:
-          description: 'Task data credentials: password'
+          description: Password
           maxLength: 256
           nullable: true
           type: string
@@ -26286,7 +26324,7 @@ components:
           readOnly: true
           type: integer
         title:
-          description: Project name. Must be between 3 and 50 characters long.
+          description: Project Name
           maxLength: 50
           minLength: 3
           nullable: true
@@ -26443,7 +26481,7 @@ components:
             - $ref: '#/components/schemas/UserSimple'
           description: Project owner
         description:
-          description: Project description
+          description: Project Description
           nullable: true
           type: string
         enable_empty_annotation:
@@ -26576,7 +26614,7 @@ components:
           readOnly: true
           type: integer
         title:
-          description: Project name. Must be between 3 and 50 characters long.
+          description: Project Title
           maxLength: 50
           minLength: 3
           nullable: true
@@ -26594,6 +26632,7 @@ components:
           readOnly: true
           type: integer
         workspace:
+          description: In Workspace
           type: integer
       required:
         - config_has_control_tags
@@ -26636,7 +26675,7 @@ components:
             - $ref: '#/components/schemas/UserSimpleRequest'
           description: Project owner
         description:
-          description: Project description
+          description: Project Description
           nullable: true
           type: string
         enable_empty_annotation:
@@ -26728,12 +26767,13 @@ components:
           nullable: true
           type: string
         title:
-          description: Project name. Must be between 3 and 50 characters long.
+          description: Project Title
           maxLength: 50
           minLength: 3
           nullable: true
           type: string
         workspace:
+          description: In Workspace
           type: integer
       type: object
     LseProjectParams:
@@ -26761,8 +26801,13 @@ components:
           allOf:
             - $ref: '#/components/schemas/AgreementMethodologyEnum'
           default: pairwise
+          description: |-
+            Methodology (Consensus / Pairwise Averaging)
+
+            * `consensus` - Consensus
+            * `pairwise` - Pairwise Averaging
         agreement_threshold:
-          description: Minimum percent agreement threshold for which minimum number of annotators must agree
+          description: Agreement threshold
           format: decimal
           nullable: true
           pattern: ^-?\d{0,1}(?:\.\d{0,2})?$
@@ -26771,39 +26816,46 @@ components:
           readOnly: true
           type: boolean
         annotation_limit_count:
+          description: Limit by number of tasks
           minimum: 1
           nullable: true
           type: integer
         annotation_limit_percent:
+          description: Limit by percentage of tasks
           format: decimal
           nullable: true
           pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
           type: string
         annotator_evaluation_continuous_tasks:
           default: 0
+          description: 'Continuous Evaluation: Required tasks'
           minimum: 0
           type: integer
         annotator_evaluation_enabled:
-          description: Enable annotator evaluation for the project
+          description: Evaluate all annotators against ground truth
           type: boolean
         annotator_evaluation_minimum_score:
           default: '95.00'
+          description: Score required to pass evaluation
           format: decimal
           nullable: true
           pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
           type: string
         annotator_evaluation_minimum_tasks:
           default: 10
+          description: Number of tasks for evaluation
           minimum: 0
           nullable: true
           type: integer
         annotator_evaluation_onboarding_tasks:
           default: 0
+          description: 'Onboarding Evaluation: Required tasks'
           minimum: 0
           type: integer
         assignment_settings:
           $ref: '#/components/schemas/AssignmentSettings'
         color:
+          description: Color
           maxLength: 16
           nullable: true
           type: string
@@ -26831,9 +26883,10 @@ components:
             - $ref: '#/components/schemas/UserSimple'
           description: Project owner
         custom_script:
+          description: Plugins
           type: string
         custom_task_lock_ttl:
-          description: TTL in seconds for task reservations, on new and existing tasks
+          description: Task reservation time. TTL in seconds (UI displays and edits this value in minutes).
           maximum: 86400
           minimum: 1
           nullable: true
@@ -26844,7 +26897,7 @@ components:
           readOnly: true
           type: object
         description:
-          description: Project description
+          description: Description
           nullable: true
           type: string
         duplication_done:
@@ -26853,13 +26906,13 @@ components:
         duplication_status:
           type: string
         enable_empty_annotation:
-          description: Allow annotators to submit empty annotations
+          description: Allow empty annotations
           type: boolean
         evaluate_predictions_automatically:
           description: Retrieve and display predictions when loading a task
           type: boolean
         expert_instruction:
-          description: Labeling instructions in HTML format
+          description: Instructions
           nullable: true
           type: string
         finished_task_number:
@@ -26881,15 +26934,15 @@ components:
           title: Published
           type: boolean
         label_config:
-          description: Label config in XML format. See more about it in documentation
+          description: Labeling Configuration
           nullable: true
           type: string
         max_additional_annotators_assignable:
-          description: Maximum number of additional annotators that can be assigned to a low agreement task
+          description: Maximum additional annotators
           nullable: true
           type: integer
         maximum_annotations:
-          description: Maximum number of annotations for one task. If the number of annotations per task is equal or greater to this value, the task is completed (is_labeled=True)
+          description: Annotations per task
           maximum: 2147483647
           minimum: -2147483648
           title: Maximum annotation number
@@ -26916,6 +26969,7 @@ components:
           nullable: true
           type: integer
         overlap_cohort_percentage:
+          description: Annotations per task coverage
           maximum: 2147483647
           minimum: -2147483648
           type: integer
@@ -26926,6 +26980,7 @@ components:
           type: object
         pause_on_failed_annotator_evaluation:
           default: false
+          description: Pause annotator on failed evaluation
           nullable: true
           type: boolean
         pinned_at:
@@ -26953,6 +27008,7 @@ components:
           type: integer
         require_comment_on_skip:
           default: false
+          description: Require comment to skip
           type: boolean
         reveal_preannotations_interactively:
           description: Reveal pre-annotations interactively
@@ -26973,10 +27029,10 @@ components:
             - $ref: '#/components/schemas/SamplingDe5Enum'
           nullable: true
         show_annotation_history:
-          description: Show annotation history to annotator
+          description: Show Data Manager to Annotators
           type: boolean
         show_collab_predictions:
-          description: If set, the annotator can view model predictions
+          description: Use predictions to pre-label Tasks
           title: Show predictions to annotator
           type: boolean
         show_ground_truth_first:
@@ -26984,14 +27040,16 @@ components:
           description: 'Onboarding mode (true): show ground truth tasks first in the labeling stream'
           type: boolean
         show_instruction:
-          description: Show instructions to the annotator before they start
+          description: Show instructions before labeling
           type: boolean
         show_overlap_first:
+          description: Show tasks with overlap first
           type: boolean
         show_skip_button:
-          description: Show a skip button in interface and allow annotators to skip the task
+          description: Allow skipping tasks
           type: boolean
         show_unused_data_columns_to_annotators:
+          description: 'Show only columns used in labeling configuration to Annotators. API uses inverse field semantics here: set false to show only used columns, set true to show all task.data columns.'
           nullable: true
           type: boolean
         skip_queue:
@@ -27010,14 +27068,15 @@ components:
           type: string
         strict_task_overlap:
           default: true
+          description: Enforce strict overlap limit
           type: boolean
         task_data_login:
-          description: 'Task data credentials: login'
+          description: Login
           maxLength: 256
           nullable: true
           type: string
         task_data_password:
-          description: 'Task data credentials: password'
+          description: Password
           maxLength: 256
           nullable: true
           type: string
@@ -27026,7 +27085,7 @@ components:
           readOnly: true
           type: integer
         title:
-          description: Project name. Must be between 3 and 50 characters long.
+          description: Project Name
           maxLength: 50
           minLength: 3
           nullable: true
@@ -27091,46 +27150,58 @@ components:
           allOf:
             - $ref: '#/components/schemas/AgreementMethodologyEnum'
           default: pairwise
+          description: |-
+            Methodology (Consensus / Pairwise Averaging)
+
+            * `consensus` - Consensus
+            * `pairwise` - Pairwise Averaging
         agreement_threshold:
-          description: Minimum percent agreement threshold for which minimum number of annotators must agree
+          description: Agreement threshold
           format: decimal
           nullable: true
           pattern: ^-?\d{0,1}(?:\.\d{0,2})?$
           type: string
         annotation_limit_count:
+          description: Limit by number of tasks
           minimum: 1
           nullable: true
           type: integer
         annotation_limit_percent:
+          description: Limit by percentage of tasks
           format: decimal
           nullable: true
           pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
           type: string
         annotator_evaluation_continuous_tasks:
           default: 0
+          description: 'Continuous Evaluation: Required tasks'
           minimum: 0
           type: integer
         annotator_evaluation_enabled:
-          description: Enable annotator evaluation for the project
+          description: Evaluate all annotators against ground truth
           type: boolean
         annotator_evaluation_minimum_score:
           default: '95.00'
+          description: Score required to pass evaluation
           format: decimal
           nullable: true
           pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
           type: string
         annotator_evaluation_minimum_tasks:
           default: 10
+          description: Number of tasks for evaluation
           minimum: 0
           nullable: true
           type: integer
         annotator_evaluation_onboarding_tasks:
           default: 0
+          description: 'Onboarding Evaluation: Required tasks'
           minimum: 0
           type: integer
         assignment_settings:
           $ref: '#/components/schemas/AssignmentSettings'
         color:
+          description: Color
           maxLength: 16
           nullable: true
           type: string
@@ -27158,25 +27229,26 @@ components:
             - $ref: '#/components/schemas/UserSimple'
           description: Project owner
         custom_script:
+          description: Plugins
           type: string
         custom_task_lock_ttl:
-          description: TTL in seconds for task reservations, on new and existing tasks
+          description: Task reservation time. TTL in seconds (UI displays and edits this value in minutes).
           maximum: 86400
           minimum: 1
           nullable: true
           type: integer
         description:
-          description: Project description
+          description: Description
           nullable: true
           type: string
         enable_empty_annotation:
-          description: Allow annotators to submit empty annotations
+          description: Allow empty annotations
           type: boolean
         evaluate_predictions_automatically:
           description: Retrieve and display predictions when loading a task
           type: boolean
         expert_instruction:
-          description: Labeling instructions in HTML format
+          description: Instructions
           nullable: true
           type: string
         finished_task_number:
@@ -27198,15 +27270,15 @@ components:
           title: Published
           type: boolean
         label_config:
-          description: Label config in XML format. See more about it in documentation
+          description: Labeling Configuration
           nullable: true
           type: string
         max_additional_annotators_assignable:
-          description: Maximum number of additional annotators that can be assigned to a low agreement task
+          description: Maximum additional annotators
           nullable: true
           type: integer
         maximum_annotations:
-          description: Maximum number of annotations for one task. If the number of annotations per task is equal or greater to this value, the task is completed (is_labeled=True)
+          description: Annotations per task
           maximum: 2147483647
           minimum: -2147483648
           title: Maximum annotation number
@@ -27228,6 +27300,7 @@ components:
           nullable: true
           type: integer
         overlap_cohort_percentage:
+          description: Annotations per task coverage
           maximum: 2147483647
           minimum: -2147483648
           type: integer
@@ -27238,6 +27311,7 @@ components:
           type: object
         pause_on_failed_annotator_evaluation:
           default: false
+          description: Pause annotator on failed evaluation
           nullable: true
           type: boolean
         pinned_at:
@@ -27256,6 +27330,7 @@ components:
           type: integer
         require_comment_on_skip:
           default: false
+          description: Require comment to skip
           type: boolean
         reveal_preannotations_interactively:
           description: Reveal pre-annotations interactively
@@ -27267,10 +27342,10 @@ components:
             - $ref: '#/components/schemas/SamplingDe5Enum'
           nullable: true
         show_annotation_history:
-          description: Show annotation history to annotator
+          description: Show Data Manager to Annotators
           type: boolean
         show_collab_predictions:
-          description: If set, the annotator can view model predictions
+          description: Use predictions to pre-label Tasks
           title: Show predictions to annotator
           type: boolean
         show_ground_truth_first:
@@ -27278,14 +27353,16 @@ components:
           description: 'Onboarding mode (true): show ground truth tasks first in the labeling stream'
           type: boolean
         show_instruction:
-          description: Show instructions to the annotator before they start
+          description: Show instructions before labeling
           type: boolean
         show_overlap_first:
+          description: Show tasks with overlap first
           type: boolean
         show_skip_button:
-          description: Show a skip button in interface and allow annotators to skip the task
+          description: Allow skipping tasks
           type: boolean
         show_unused_data_columns_to_annotators:
+          description: 'Show only columns used in labeling configuration to Annotators. API uses inverse field semantics here: set false to show only used columns, set true to show all task.data columns.'
           nullable: true
           type: boolean
         skip_queue:
@@ -27305,14 +27382,15 @@ components:
           type: string
         strict_task_overlap:
           default: true
+          description: Enforce strict overlap limit
           type: boolean
         task_data_login:
-          description: 'Task data credentials: login'
+          description: Login
           maxLength: 256
           nullable: true
           type: string
         task_data_password:
-          description: 'Task data credentials: password'
+          description: Password
           maxLength: 256
           nullable: true
           type: string
@@ -27321,7 +27399,7 @@ components:
           readOnly: true
           type: integer
         title:
-          description: Project name. Must be between 3 and 50 characters long.
+          description: Project Name
           maxLength: 50
           minLength: 3
           nullable: true
@@ -27339,6 +27417,7 @@ components:
           readOnly: true
           type: integer
         workspace:
+          description: Workspace
           type: integer
         workspace_title:
           readOnly: true
@@ -29060,6 +29139,7 @@ components:
       properties:
         additional_params:
           additionalProperties: {}
+          description: Agreement metric parameters
           nullable: true
           type: object
         agreement_threshold:
@@ -29072,6 +29152,7 @@ components:
           minimum: 0
           type: integer
         metric_name:
+          description: Agreement metric
           minLength: 1
           type: string
       type: object
@@ -29637,6 +29718,7 @@ components:
           readOnly: true
           type: integer
         label:
+          description: Label
           maxLength: 255
           type: string
         member_count:
@@ -29727,6 +29809,7 @@ components:
     OrganizationMemberTagRequest:
       properties:
         label:
+          description: Label
           maxLength: 255
           minLength: 1
           type: string
@@ -29787,7 +29870,7 @@ components:
           maxLength: 255
           type: string
         roles:
-          description: Explicit roles that have this permission within the organization.
+          description: Organization roles
           items:
             $ref: '#/components/schemas/Role9e7Enum'
           type: array
@@ -29812,7 +29895,7 @@ components:
           minLength: 1
           type: string
         roles:
-          description: Explicit roles that have this permission within the organization.
+          description: Organization roles
           items:
             $ref: '#/components/schemas/Role9e7Enum'
           type: array
@@ -31265,13 +31348,16 @@ components:
           nullable: true
           type: integer
         custom_scripts_enabled:
+          description: Plugins
           nullable: true
           type: boolean
           writeOnly: true
         email_notification_settings:
+          description: Email Notification Settings
           nullable: true
           writeOnly: true
         embed_domains:
+          description: Supported domains
           items:
             additionalProperties:
               minLength: 1
@@ -31281,9 +31367,11 @@ components:
           type: array
           writeOnly: true
         embed_settings:
+          description: Public Verification Key and Public Verification Algorithms configuration
           nullable: true
           writeOnly: true
         title:
+          description: Organization name
           minLength: 1
           nullable: true
           type: string
@@ -31302,46 +31390,58 @@ components:
           allOf:
             - $ref: '#/components/schemas/AgreementMethodologyEnum'
           default: pairwise
+          description: |-
+            Methodology (Consensus / Pairwise Averaging)
+
+            * `consensus` - Consensus
+            * `pairwise` - Pairwise Averaging
         agreement_threshold:
-          description: Minimum percent agreement threshold for which minimum number of annotators must agree
+          description: Agreement threshold
           format: decimal
           nullable: true
           pattern: ^-?\d{0,1}(?:\.\d{0,2})?$
           type: string
         annotation_limit_count:
+          description: Limit by number of tasks
           minimum: 1
           nullable: true
           type: integer
         annotation_limit_percent:
+          description: Limit by percentage of tasks
           format: decimal
           nullable: true
           pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
           type: string
         annotator_evaluation_continuous_tasks:
           default: 0
+          description: 'Continuous Evaluation: Required tasks'
           minimum: 0
           type: integer
         annotator_evaluation_enabled:
-          description: Enable annotator evaluation for the project
+          description: Evaluate all annotators against ground truth
           type: boolean
         annotator_evaluation_minimum_score:
           default: '95.00'
+          description: Score required to pass evaluation
           format: decimal
           nullable: true
           pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
           type: string
         annotator_evaluation_minimum_tasks:
           default: 10
+          description: Number of tasks for evaluation
           minimum: 0
           nullable: true
           type: integer
         annotator_evaluation_onboarding_tasks:
           default: 0
+          description: 'Onboarding Evaluation: Required tasks'
           minimum: 0
           type: integer
         assignment_settings:
           $ref: '#/components/schemas/AssignmentSettingsRequest'
         color:
+          description: Color
           maxLength: 16
           nullable: true
           type: string
@@ -31357,25 +31457,26 @@ components:
             - $ref: '#/components/schemas/UserSimpleRequest'
           description: Project owner
         custom_script:
+          description: Plugins
           type: string
         custom_task_lock_ttl:
-          description: TTL in seconds for task reservations, on new and existing tasks
+          description: Task reservation time. TTL in seconds (UI displays and edits this value in minutes).
           maximum: 86400
           minimum: 1
           nullable: true
           type: integer
         description:
-          description: Project description
+          description: Description
           nullable: true
           type: string
         enable_empty_annotation:
-          description: Allow annotators to submit empty annotations
+          description: Allow empty annotations
           type: boolean
         evaluate_predictions_automatically:
           description: Retrieve and display predictions when loading a task
           type: boolean
         expert_instruction:
-          description: Labeling instructions in HTML format
+          description: Instructions
           nullable: true
           type: string
         is_draft:
@@ -31386,15 +31487,15 @@ components:
           title: Published
           type: boolean
         label_config:
-          description: Label config in XML format. See more about it in documentation
+          description: Labeling Configuration
           nullable: true
           type: string
         max_additional_annotators_assignable:
-          description: Maximum number of additional annotators that can be assigned to a low agreement task
+          description: Maximum additional annotators
           nullable: true
           type: integer
         maximum_annotations:
-          description: Maximum number of annotations for one task. If the number of annotations per task is equal or greater to this value, the task is completed (is_labeled=True)
+          description: Annotations per task
           maximum: 2147483647
           minimum: -2147483648
           title: Maximum annotation number
@@ -31412,11 +31513,13 @@ components:
           nullable: true
           type: integer
         overlap_cohort_percentage:
+          description: Annotations per task coverage
           maximum: 2147483647
           minimum: -2147483648
           type: integer
         pause_on_failed_annotator_evaluation:
           default: false
+          description: Pause annotator on failed evaluation
           nullable: true
           type: boolean
         pinned_at:
@@ -31426,6 +31529,7 @@ components:
           type: string
         require_comment_on_skip:
           default: false
+          description: Require comment to skip
           type: boolean
         reveal_preannotations_interactively:
           description: Reveal pre-annotations interactively
@@ -31437,10 +31541,10 @@ components:
             - $ref: '#/components/schemas/SamplingDe5Enum'
           nullable: true
         show_annotation_history:
-          description: Show annotation history to annotator
+          description: Show Data Manager to Annotators
           type: boolean
         show_collab_predictions:
-          description: If set, the annotator can view model predictions
+          description: Use predictions to pre-label Tasks
           title: Show predictions to annotator
           type: boolean
         show_ground_truth_first:
@@ -31448,14 +31552,16 @@ components:
           description: 'Onboarding mode (true): show ground truth tasks first in the labeling stream'
           type: boolean
         show_instruction:
-          description: Show instructions to the annotator before they start
+          description: Show instructions before labeling
           type: boolean
         show_overlap_first:
+          description: Show tasks with overlap first
           type: boolean
         show_skip_button:
-          description: Show a skip button in interface and allow annotators to skip the task
+          description: Allow skipping tasks
           type: boolean
         show_unused_data_columns_to_annotators:
+          description: 'Show only columns used in labeling configuration to Annotators. API uses inverse field semantics here: set false to show only used columns, set true to show all task.data columns.'
           nullable: true
           type: boolean
         skip_queue:
@@ -31464,24 +31570,26 @@ components:
           nullable: true
         strict_task_overlap:
           default: true
+          description: Enforce strict overlap limit
           type: boolean
         task_data_login:
-          description: 'Task data credentials: login'
+          description: Login
           maxLength: 256
           nullable: true
           type: string
         task_data_password:
-          description: 'Task data credentials: password'
+          description: Password
           maxLength: 256
           nullable: true
           type: string
         title:
-          description: Project name. Must be between 3 and 50 characters long.
+          description: Project Name
           maxLength: 50
           minLength: 3
           nullable: true
           type: string
         workspace:
+          description: Workspace
           type: integer
       type: object
     PatchedLseS3ExportStorageRequest:
@@ -31896,13 +32004,26 @@ components:
     PatchedOrganizationMemberCreateUpdateRequest:
       properties:
         role:
-          $ref: '#/components/schemas/Role9e7Enum'
+          allOf:
+            - $ref: '#/components/schemas/Role9e7Enum'
+          description: |-
+            Organization role
+
+            * `OW` - Owner
+            * `AD` - Administrator
+            * `MA` - Manager
+            * `RE` - Reviewer
+            * `AN` - Annotator
+            * `DI` - Deactivated
+            * `NO` - Not Activated
         user_id:
+          description: Member
           type: integer
       type: object
     PatchedOrganizationMemberTagRequest:
       properties:
         label:
+          description: Label
           maxLength: 255
           minLength: 1
           type: string
@@ -31914,7 +32035,7 @@ components:
           minLength: 1
           type: string
         roles:
-          description: Explicit roles that have this permission within the organization.
+          description: Organization roles
           items:
             $ref: '#/components/schemas/Role9e7Enum'
           type: array
@@ -32176,6 +32297,7 @@ components:
         values with complex, nested serializations
       properties:
         color:
+          description: Color
           maxLength: 16
           nullable: true
           type: string
@@ -32192,7 +32314,7 @@ components:
           title: Personal
           type: boolean
         title:
-          description: Workspace name
+          description: Workspace Name
           maxLength: 1000
           minLength: 1
           type: string
@@ -32616,23 +32738,23 @@ components:
       properties:
         description:
           default: ''
-          description: Description of duplicated project
+          description: Project Description
           type: string
         mode:
           allOf:
             - $ref: '#/components/schemas/ModeEnum'
           description: |-
-            Data that you want to duplicate: settings only, with tasks, with annotations
+            What to Duplicate (Project configuration only / Project configuration and tasks)
 
             * `settings` - Only settings
             * `settings,data` - Settings and tasks
         title:
-          description: Title of duplicated project
+          description: Project Name
           maxLength: 50
           minLength: 3
           type: string
         workspace:
-          description: Workspace, where to place duplicated project
+          description: Destination Workspace
           type: integer
       required:
         - mode
@@ -32642,11 +32764,20 @@ components:
     ProjectGroup:
       properties:
         group:
+          description: Group name
           type: string
         project_id:
+          description: Project ID
           type: integer
         role:
-          $ref: '#/components/schemas/ProjectGroupRoleEnum'
+          allOf:
+            - $ref: '#/components/schemas/ProjectGroupRoleEnum'
+          description: |-
+            Project role (Inherit, Annotator, Reviewer)
+
+            * `Inherit` - Inherit
+            * `Annotator` - Annotator
+            * `Reviewer` - Reviewer
       required:
         - group
         - project_id
@@ -32655,12 +32786,21 @@ components:
     ProjectGroupRequest:
       properties:
         group:
+          description: Group name
           minLength: 1
           type: string
         project_id:
+          description: Project ID
           type: integer
         role:
-          $ref: '#/components/schemas/ProjectGroupRoleEnum'
+          allOf:
+            - $ref: '#/components/schemas/ProjectGroupRoleEnum'
+          description: |-
+            Project role (Inherit, Annotator, Reviewer)
+
+            * `Inherit` - Inherit
+            * `Annotator` - Annotator
+            * `Reviewer` - Reviewer
       required:
         - group
         - project_id
@@ -32772,18 +32912,22 @@ components:
     ProjectMemberBulkAssignRequest:
       properties:
         all:
+          description: Apply to all project members
           type: boolean
         excluded:
+          description: Excluded user IDs
           items:
             minimum: 1
             type: integer
           type: array
         included:
+          description: Included user IDs
           items:
             minimum: 1
             type: integer
           type: array
         roles:
+          description: Member roles
           items:
             $ref: '#/components/schemas/ProjectMemberBulkAssignRolesRequest'
           type: array
@@ -32793,8 +32937,20 @@ components:
     ProjectMemberBulkAssignRolesRequest:
       properties:
         role:
-          $ref: '#/components/schemas/Role9e7Enum'
+          allOf:
+            - $ref: '#/components/schemas/Role9e7Enum'
+          description: |-
+            Role
+
+            * `OW` - Owner
+            * `AD` - Administrator
+            * `MA` - Manager
+            * `RE` - Reviewer
+            * `AN` - Annotator
+            * `DI` - Deactivated
+            * `NO` - Not Activated
         user_id:
+          description: User ID
           minimum: 1
           type: integer
       required:
@@ -33345,7 +33501,7 @@ components:
           readOnly: true
           type: integer
         instruction:
-          description: Reviewer instructions in HTML format
+          description: Instructions
           nullable: true
           type: string
         only_finished_tasks:
@@ -33358,7 +33514,7 @@ components:
           allOf:
             - $ref: '#/components/schemas/RequeueRejectedTasksModeEnum'
           description: |-
-            Requeue mode for rejected tasks
+            Remove rejected annotations from labeling queue / Requeue rejected annotations back to annotators / Allow reviewer to decide: Remove or Requeue
 
             * `requeue` - Requeue
             * `remove` - Remove
@@ -33368,22 +33524,22 @@ components:
           readOnly: true
           type: boolean
         require_comment_on_reject:
-          description: If set, the reviewer must leave a comment on reject
+          description: Reviewers must leave a comment on reject
           type: boolean
         review_criteria:
           allOf:
             - $ref: '#/components/schemas/ReviewCriteriaEnum'
           description: |-
-            Criteria to mark task as reviewed
+            Task is reviewed after at least one accepted annotation / Task is reviewed when all annotations are reviewed
 
             * `all` - Task is reviewed if all annotations are reviewed
             * `one` - Task is reviewed if at least one annotation is reviewed
           nullable: true
         review_only_manual_assignments:
-          description: When set True, review queue is built only from manually assigned tasks
+          description: Show only manually assigned tasks in the review stream
           type: boolean
         review_task_limit_percent:
-          description: Percent of tasks to include in review stream (0-100). Null/0 disables.
+          description: Task limit (%)
           format: decimal
           nullable: true
           pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
@@ -33392,22 +33548,22 @@ components:
           allOf:
             - $ref: '#/components/schemas/ReviewSettingsSamplingEnum'
           description: |-
-            Task sampling strategy in the review stream (by task id or random)
+            By Task ID / Random
 
             * `task_id` - By Task ID
             * `random` - Random
           nullable: true
         show_agreement_to_reviewers:
-          description: Show the agreement column to reviewers
+          description: Show agreement to reviewers in the Data Manager
           type: boolean
         show_data_manager_to_reviewers:
-          description: Show the data manager to reviewers
+          description: Show the Data Manager to reviewers
           type: boolean
         show_instruction:
-          description: Show instructions to the reviewers before they start
+          description: Show before reviewing
           type: boolean
         show_unused_data_columns_to_reviewers:
-          description: If true, Data Manager shows all task.data columns to reviewers; if false, hides columns not referenced by the label interface
+          description: Show unused task data columns to reviewers in the Data Manager
           nullable: true
           type: boolean
       required:
@@ -33420,7 +33576,7 @@ components:
           description: Hide annotator names from annotations while review
           type: boolean
         instruction:
-          description: Reviewer instructions in HTML format
+          description: Instructions
           nullable: true
           type: string
         only_finished_tasks:
@@ -33433,29 +33589,29 @@ components:
           allOf:
             - $ref: '#/components/schemas/RequeueRejectedTasksModeEnum'
           description: |-
-            Requeue mode for rejected tasks
+            Remove rejected annotations from labeling queue / Requeue rejected annotations back to annotators / Allow reviewer to decide: Remove or Requeue
 
             * `requeue` - Requeue
             * `remove` - Remove
             * `flexible` - Flexible
           nullable: true
         require_comment_on_reject:
-          description: If set, the reviewer must leave a comment on reject
+          description: Reviewers must leave a comment on reject
           type: boolean
         review_criteria:
           allOf:
             - $ref: '#/components/schemas/ReviewCriteriaEnum'
           description: |-
-            Criteria to mark task as reviewed
+            Task is reviewed after at least one accepted annotation / Task is reviewed when all annotations are reviewed
 
             * `all` - Task is reviewed if all annotations are reviewed
             * `one` - Task is reviewed if at least one annotation is reviewed
           nullable: true
         review_only_manual_assignments:
-          description: When set True, review queue is built only from manually assigned tasks
+          description: Show only manually assigned tasks in the review stream
           type: boolean
         review_task_limit_percent:
-          description: Percent of tasks to include in review stream (0-100). Null/0 disables.
+          description: Task limit (%)
           format: decimal
           nullable: true
           pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
@@ -33464,22 +33620,22 @@ components:
           allOf:
             - $ref: '#/components/schemas/ReviewSettingsSamplingEnum'
           description: |-
-            Task sampling strategy in the review stream (by task id or random)
+            By Task ID / Random
 
             * `task_id` - By Task ID
             * `random` - Random
           nullable: true
         show_agreement_to_reviewers:
-          description: Show the agreement column to reviewers
+          description: Show agreement to reviewers in the Data Manager
           type: boolean
         show_data_manager_to_reviewers:
-          description: Show the data manager to reviewers
+          description: Show the Data Manager to reviewers
           type: boolean
         show_instruction:
-          description: Show instructions to the reviewers before they start
+          description: Show before reviewing
           type: boolean
         show_unused_data_columns_to_reviewers:
-          description: If true, Data Manager shows all task.data columns to reviewers; if false, hides columns not referenced by the label interface
+          description: Show unused task data columns to reviewers in the Data Manager
           nullable: true
           type: boolean
       type: object
@@ -33502,6 +33658,7 @@ components:
     RevokeInviteRequest:
       properties:
         email:
+          description: Email address
           minLength: 1
           type: string
       required:
@@ -34087,16 +34244,19 @@ components:
           description: Metadata XML file
           type: string
         projects_groups:
+          description: Projects to Groups Mapping. List of objects with project_id, group, role.
           items:
             $ref: '#/components/schemas/ProjectGroup'
           type: array
         roles_groups:
+          description: Organization Roles to Groups Mapping. List of [role_name, group_name] pairs.
           items:
             items:
               type: string
             type: array
           type: array
         workspaces_groups:
+          description: Workspaces to Groups Mapping. List of [workspace_title, group_name] pairs.
           items:
             items:
               type: string
@@ -34144,10 +34304,12 @@ components:
           description: Metadata XML file
           type: string
         projects_groups:
+          description: Projects to Groups Mapping. List of objects with project_id, group, role.
           items:
             $ref: '#/components/schemas/ProjectGroupRequest'
           type: array
         roles_groups:
+          description: Organization Roles to Groups Mapping. List of [role_name, group_name] pairs.
           items:
             items:
               minLength: 1
@@ -34155,6 +34317,7 @@ components:
             type: array
           type: array
         workspaces_groups:
+          description: Workspaces to Groups Mapping. List of [workspace_title, group_name] pairs.
           items:
             items:
               minLength: 1
@@ -34187,16 +34350,19 @@ components:
     ScimSettingsUpdate:
       properties:
         projects_groups:
+          description: Projects to Groups Mapping. List of objects with project_id, group, role.
           items:
             $ref: '#/components/schemas/ProjectGroup'
           type: array
         roles_groups:
+          description: Organization Roles to Groups Mapping. List of [role_name, group_name] pairs.
           items:
             items:
               type: string
             type: array
           type: array
         workspaces_groups:
+          description: Workspaces to Groups Mapping. List of [workspace_title, group_name] pairs.
           items:
             items:
               type: string
@@ -34206,10 +34372,12 @@ components:
     ScimSettingsUpdateRequest:
       properties:
         projects_groups:
+          description: Projects to Groups Mapping. List of objects with project_id, group, role.
           items:
             $ref: '#/components/schemas/ProjectGroupRequest'
           type: array
         roles_groups:
+          description: Organization Roles to Groups Mapping. List of [role_name, group_name] pairs.
           items:
             items:
               minLength: 1
@@ -34217,6 +34385,7 @@ components:
             type: array
           type: array
         workspaces_groups:
+          description: Workspaces to Groups Mapping. List of [workspace_title, group_name] pairs.
           items:
             items:
               minLength: 1
@@ -34268,17 +34437,31 @@ components:
     SendInviteRequest:
       properties:
         emails:
+          description: Email addresses
           items:
             minLength: 1
             type: string
           type: array
         projects:
+          description: Project IDs to grant access to
           items:
             type: integer
           type: array
         role:
-          $ref: '#/components/schemas/Role9e7Enum'
+          allOf:
+            - $ref: '#/components/schemas/Role9e7Enum'
+          description: |-
+            Organization role
+
+            * `OW` - Owner
+            * `AD` - Administrator
+            * `MA` - Manager
+            * `RE` - Reviewer
+            * `AN` - Annotator
+            * `DI` - Deactivated
+            * `NO` - Not Activated
         workspaces:
+          description: Workspace IDs to grant access to
           items:
             type: integer
           type: array
@@ -35394,6 +35577,7 @@ components:
         values with complex, nested serializations
       properties:
         color:
+          description: Color
           maxLength: 16
           nullable: true
           type: string
@@ -35426,7 +35610,7 @@ components:
           readOnly: true
           type: integer
         title:
-          description: Workspace name
+          description: Workspace Name
           maxLength: 1000
           type: string
       required:
@@ -35440,13 +35624,16 @@ components:
     WorkspaceMemberBulkAssignRequest:
       properties:
         all:
+          description: Apply to all workspace members
           type: boolean
         excluded:
+          description: Excluded user IDs
           items:
             minimum: 1
             type: integer
           type: array
         included:
+          description: Included user IDs
           items:
             minimum: 1
             type: integer
@@ -35489,6 +35676,7 @@ components:
     WorkspaceProjectsRequest:
       properties:
         project:
+          description: Project ID
           type: integer
       required:
         - project
@@ -35501,6 +35689,7 @@ components:
         values with complex, nested serializations
       properties:
         color:
+          description: Color
           maxLength: 16
           nullable: true
           type: string
@@ -35517,7 +35706,7 @@ components:
           title: Personal
           type: boolean
         title:
-          description: Workspace name
+          description: Workspace Name
           maxLength: 1000
           minLength: 1
           type: string
