@@ -1076,6 +1076,42 @@ paths:
         - internal
       x-fern-sdk-group-name: blueprints
       x-fern-sdk-method-name: delete
+    patch:
+      description: Update a blueprint. Only title, description, and task_ids can be changed.
+      operationId: api_blueprints_partial_update
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedBlueprintUpdateRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedBlueprintUpdateRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedBlueprintUpdateRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Blueprint'
+          description: ''
+      security:
+        - Token: []
+      summary: Update blueprint
+      tags:
+        - Blueprints
+      x-fern-audiences:
+        - internal
+      x-fern-sdk-group-name: blueprints
+      x-fern-sdk-method-name: update
   /api/blueprints/{share_id}/create-project:
     get:
       description: Create a new project from an existing blueprint. On success, user is redirected to the new project with a 302.
@@ -4216,7 +4252,7 @@ paths:
       tags:
         - FSM
       x-fern-audiences:
-        - internal
+        - public
       x-fern-pagination:
         offset: $request.page
         results: $response.results
@@ -4262,7 +4298,7 @@ paths:
       tags:
         - FSM
       x-fern-audiences:
-        - internal
+        - public
       x-fern-sdk-group-name: fsm
       x-fern-sdk-method-name: execute_transition
   /api/import/file-upload/{id}:
@@ -22373,6 +22409,9 @@ components:
         short_url:
           readOnly: true
           type: string
+        task_count:
+          readOnly: true
+          type: string
         title:
           description: Blueprint name. Must be between 3 and 50 characters long.
           maxLength: 50
@@ -22388,6 +22427,7 @@ components:
         - project
         - share_id
         - short_url
+        - task_count
         - updated_at
       type: object
     BlueprintList:
@@ -22409,6 +22449,9 @@ components:
         short_url:
           readOnly: true
           type: string
+        task_count:
+          readOnly: true
+          type: string
         title:
           description: Blueprint name. Must be between 3 and 50 characters long.
           maxLength: 50
@@ -22419,6 +22462,7 @@ components:
         - id
         - share_id
         - short_url
+        - task_count
       type: object
     BlueprintRequest:
       properties:
@@ -22435,6 +22479,12 @@ components:
           type: string
         project:
           type: integer
+        task_ids:
+          items:
+            type: integer
+          maxItems: 100
+          type: array
+          writeOnly: true
         title:
           description: Blueprint name. Must be between 3 and 50 characters long.
           maxLength: 50
@@ -30591,6 +30641,25 @@ components:
           nullable: true
           type: string
       type: object
+    PatchedBlueprintUpdateRequest:
+      description: Serializer for updating a blueprint. Only title, description, and task_ids can be changed.
+      properties:
+        description:
+          description: Project description
+          nullable: true
+          type: string
+        task_ids:
+          items:
+            type: integer
+          maxItems: 100
+          type: array
+          writeOnly: true
+        title:
+          description: Blueprint name. Must be between 3 and 50 characters long.
+          maxLength: 50
+          nullable: true
+          type: string
+      type: object
     PatchedCommentRequest:
       description: |-
         Comment Serializer with FSM state support.
@@ -34822,6 +34891,11 @@ components:
         - event_time
       type: object
     TaskSimple:
+      description: |-
+        A ModelSerializer that takes additional arguments for
+        "fields", "omit" and "expand" in order to
+        control which fields are displayed, and whether to replace simple
+        values with complex, nested serializations
       properties:
         annotations:
           default: []
