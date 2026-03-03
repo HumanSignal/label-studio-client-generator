@@ -4036,7 +4036,7 @@ paths:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Cancel FSM state backfill jobs for the authenticated user's active organization. Can cancel a specific job by job_id, all jobs for a specific project by project_id, or all backfill jobs for the entire organization if neither is provided.
+        Cancel state backfill jobs for the authenticated user's active organization. Can cancel a specific job by job_id, all jobs for a specific project by project_id, or all backfill jobs for the entire organization if neither is provided.
       operationId: api_fsm_backfill_destroy
       parameters:
         - description: Optional specific job ID to cancel
@@ -4054,12 +4054,7 @@ paths:
           content:
             application/json:
               schema:
-                content:
-                  application/json:
-                    example:
-                      cancelled_count: 5
-                      message: Successfully cancelled 5 jobs
-                description: Jobs cancelled successfully
+                $ref: '#/components/schemas/StateBackfillCancelResponse'
           description: ''
         '403':
           content:
@@ -4075,12 +4070,13 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: ✨ Cancel FSM backfill jobs
+      summary: ✨ Cancel state backfill jobs
       tags:
-        - FSM
+        - States
       x-fern-audiences:
         - public
-      x-fern-sdk-group-name: fsm
+      x-fern-sdk-group-name: states
+      x-fern-sdk-method-name: cancel_backfill
     post:
       description: |-
         <Card href="https://humansignal.com/goenterprise">
@@ -4089,7 +4085,7 @@ paths:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Trigger FSM state backfill for the authenticated user's active organization. Creates initial state records for entities without FSM states. Requires administrator or owner role and both FSM feature flags (fflag_feat_fit_568_finite_state_management and fflag_feat_fit_710_fsm_state_fields).
+        Trigger state backfill for the authenticated user's active organization. Creates initial state records for entities without states. Requires administrator or owner role and both FSM feature flags (fflag_feat_fit_568_finite_state_management and fflag_feat_fit_710_fsm_state_fields).
       operationId: api_fsm_backfill_create
       parameters:
         - description: Optional project ID to trigger backfill for a single project
@@ -4102,15 +4098,7 @@ paths:
           content:
             application/json:
               schema:
-                content:
-                  application/json:
-                    example:
-                      job_id: 123
-                      message: FSM backfill job started successfully
-                      organization_id: 456
-                      rq_job_id: abc-123
-                      status: QUEUED
-                description: Job created successfully
+                $ref: '#/components/schemas/StateBackfillResponse'
           description: ''
         '400':
           content:
@@ -4132,12 +4120,13 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: ✨ Trigger FSM backfill for organization
+      summary: ✨ Trigger state backfill for organization
       tags:
-        - FSM
+        - States
       x-fern-audiences:
         - public
-      x-fern-sdk-group-name: fsm
+      x-fern-sdk-group-name: states
+      x-fern-sdk-method-name: trigger_backfill
   /api/fsm/backfill/jobs/:
     get:
       description: |-
@@ -4147,33 +4136,14 @@ paths:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Retrieve the latest 10 FSM backfill jobs for the authenticated user's active organization. Shows job history with status, progress, and timing information. Requires administrator or owner role and both FSM feature flags (fflag_feat_fit_568_finite_state_management and fflag_feat_fit_710_fsm_state_fields).
+        Retrieve the latest 10 state backfill jobs for the authenticated user's active organization. Shows job history with status, progress, and timing information. Requires administrator or owner role and both FSM feature flags (fflag_feat_fit_568_finite_state_management and fflag_feat_fit_710_fsm_state_fields).
       operationId: api_fsm_backfill_jobs_retrieve
       responses:
         '200':
           content:
             application/json:
               schema:
-                content:
-                  application/json:
-                    example:
-                      jobs:
-                        - completed_at: '2024-01-01T12:30:00Z'
-                          created_at: '2024-01-01T11:59:00Z'
-                          error_message: ''
-                          job_id: 123
-                          progress_data:
-                            failed_projects: 0
-                            successful_projects: 10
-                            total_entities_processed: 5000
-                            total_projects: 10
-                          rq_job_id: abc-123
-                          started_at: '2024-01-01T12:00:00Z'
-                          status: COMPLETED
-                          triggered_by:
-                            email: user@example.com
-                            id: 1
-                description: Job list retrieved successfully
+                $ref: '#/components/schemas/StateBackfillJobListResponse'
           description: ''
         '400':
           content:
@@ -4195,12 +4165,13 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: ✨ List FSM backfill jobs
+      summary: ✨ List state backfill jobs
       tags:
-        - FSM
+        - States
       x-fern-audiences:
         - public
-      x-fern-sdk-group-name: fsm
+      x-fern-sdk-group-name: states
+      x-fern-sdk-method-name: list_backfills
   /api/fsm/backfill/status/:
     get:
       description: |-
@@ -4210,7 +4181,7 @@ paths:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Retrieve the status of an FSM backfill job for the authenticated user's active organization. By default returns the latest job, or specify job_id to get a specific job. Shows progress, completion time, and any errors. Requires administrator or owner role and both FSM feature flags (fflag_feat_fit_568_finite_state_management and fflag_feat_fit_710_fsm_state_fields).
+        Retrieve the status of a state backfill job for the authenticated user's active organization. By default returns the aggregated org status, or specify job_id or project_id to get explicit job statuses. Shows progress, completion time, and any errors. Requires administrator or owner role and both FSM feature flags (fflag_feat_fit_568_finite_state_management and fflag_feat_fit_710_fsm_state_fields).
       operationId: api_fsm_backfill_status_retrieve
       parameters:
         - description: Optional job ID to retrieve specific job status
@@ -4228,21 +4199,7 @@ paths:
           content:
             application/json:
               schema:
-                content:
-                  application/json:
-                    example:
-                      completed_at: null
-                      error_message: ''
-                      job_id: 123
-                      progress:
-                        failed_projects: 0
-                        successful_projects: 7
-                        total_entities_processed: 1234
-                        total_projects: 10
-                      rq_job_id: abc-123
-                      started_at: '2024-01-01T12:00:00Z'
-                      status: RUNNING
-                description: Job status retrieved successfully
+                $ref: '#/components/schemas/StateBackfillStatusResponse'
           description: ''
         '403':
           content:
@@ -4258,12 +4215,13 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: ✨ Get FSM backfill status
+      summary: ✨ Get state backfill status
       tags:
-        - FSM
+        - States
       x-fern-audiences:
         - public
-      x-fern-sdk-group-name: fsm
+      x-fern-sdk-group-name: states
+      x-fern-sdk-method-name: get_backfill_status
   /api/fsm/entities/{entity_name}/{entity_id}/history:
     get:
       description: |-
@@ -4345,13 +4303,13 @@ paths:
         - Token: []
       summary: ✨ Get entity state history
       tags:
-        - FSM
+        - States
       x-fern-audiences:
         - public
       x-fern-pagination:
         offset: $request.page
         results: $response.results
-      x-fern-sdk-group-name: fsm
+      x-fern-sdk-group-name: states
       x-fern-sdk-method-name: state_history
   /api/fsm/entities/{entity_name}/{entity_id}/transition/:
     post:
@@ -4396,12 +4354,12 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: ✨ Execute manual FSM transition
+      summary: ✨ Execute manual state transition
       tags:
-        - FSM
+        - States
       x-fern-audiences:
         - public
-      x-fern-sdk-group-name: fsm
+      x-fern-sdk-group-name: states
       x-fern-sdk-method-name: execute_transition
   /api/import/file-upload/{id}:
     delete:
@@ -34764,6 +34722,180 @@ components:
       enum:
         - only
         - exclude
+    StateBackfillCancelResponse:
+      properties:
+        cancelled_count:
+          description: Number of jobs successfully cancelled
+          type: integer
+        message:
+          description: Cancellation status message
+          type: string
+      required:
+        - cancelled_count
+        - message
+      type: object
+    StateBackfillJobItem:
+      properties:
+        job_id:
+          description: Database ID of the backfill job
+          type: integer
+        project_id:
+          description: Project ID being backfilled
+          type: integer
+        rq_job_id:
+          description: Redis queue job ID
+          nullable: true
+          type: string
+      required:
+        - job_id
+        - project_id
+      type: object
+    StateBackfillJobItemResponse:
+      properties:
+        completed_at:
+          format: date-time
+          nullable: true
+          type: string
+        created_at:
+          format: date-time
+          type: string
+        error_message:
+          nullable: true
+          type: string
+        job_id:
+          type: integer
+        progress_data:
+          allOf:
+            - $ref: '#/components/schemas/StateBackfillProgress'
+          nullable: true
+        rq_job_id:
+          nullable: true
+          type: string
+        started_at:
+          format: date-time
+          nullable: true
+          type: string
+        status:
+          type: string
+        triggered_by:
+          allOf:
+            - $ref: '#/components/schemas/StateTriggeredBy'
+          nullable: true
+      required:
+        - created_at
+        - job_id
+        - status
+      type: object
+    StateBackfillJobListResponse:
+      properties:
+        jobs:
+          items:
+            $ref: '#/components/schemas/StateBackfillJobItemResponse'
+          type: array
+      required:
+        - jobs
+      type: object
+    StateBackfillOrgStatus:
+      properties:
+        completed_projects:
+          type: integer
+        failed_projects:
+          type: integer
+        pending_projects:
+          type: integer
+        running_projects:
+          type: integer
+        total_entities_processed:
+          type: integer
+        total_projects:
+          description: Total projects in organization
+          type: integer
+      required:
+        - completed_projects
+        - failed_projects
+        - pending_projects
+        - running_projects
+        - total_entities_processed
+        - total_projects
+      type: object
+    StateBackfillProgress:
+      properties:
+        failed_projects:
+          description: Projects that failed
+          type: integer
+        successful_projects:
+          description: Projects completed successfully
+          type: integer
+        total_entities_processed:
+          description: Total entities processed so far
+          type: integer
+        total_projects:
+          description: Total projects involved
+          type: integer
+      type: object
+    StateBackfillResponse:
+      properties:
+        jobs:
+          items:
+            $ref: '#/components/schemas/StateBackfillJobItem'
+          type: array
+        jobs_queued:
+          description: Number of jobs queued
+          type: integer
+        message:
+          description: Status message
+          type: string
+        organization_id:
+          description: Organization ID
+          type: integer
+        projects_skipped:
+          description: Number of projects skipped because they are already completed
+          type: integer
+      required:
+        - jobs
+        - jobs_queued
+        - message
+        - organization_id
+        - projects_skipped
+      type: object
+    StateBackfillStatusResponse:
+      properties:
+        completed_at:
+          format: date-time
+          nullable: true
+          type: string
+        created_at:
+          format: date-time
+          nullable: true
+          type: string
+        error_message:
+          nullable: true
+          type: string
+        job_id:
+          description: Job ID (if fetching a specific job)
+          type: integer
+        org_status:
+          allOf:
+            - $ref: '#/components/schemas/StateBackfillOrgStatus'
+          description: Aggregated organization status
+        progress:
+          $ref: '#/components/schemas/StateBackfillProgress'
+        rq_job_id:
+          nullable: true
+          type: string
+        rq_job_info:
+          additionalProperties: {}
+          nullable: true
+          type: object
+        started_at:
+          format: date-time
+          nullable: true
+          type: string
+        status:
+          type: string
+        triggered_by:
+          $ref: '#/components/schemas/StateTriggeredBy'
+      type: object
     StateEnum:
       description: |-
         * `CO` - Connected
@@ -34824,6 +34956,22 @@ components:
         - state
         - transition_name
         - triggered_by
+      type: object
+    StateTriggeredBy:
+      properties:
+        email:
+          type: string
+        first_name:
+          nullable: true
+          type: string
+        id:
+          type: integer
+        last_name:
+          nullable: true
+          type: string
+      required:
+        - email
+        - id
       type: object
     Status7bfEnum:
       description: |-
