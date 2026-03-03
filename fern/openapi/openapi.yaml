@@ -4028,6 +4028,59 @@ paths:
       x-fern-audiences:
         - internal
   /api/fsm/backfill/:
+    delete:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Cancel FSM state backfill jobs for the authenticated user's active organization. Can cancel a specific job by job_id, all jobs for a specific project by project_id, or all backfill jobs for the entire organization if neither is provided.
+      operationId: api_fsm_backfill_destroy
+      parameters:
+        - description: Optional specific job ID to cancel
+          in: query
+          name: job_id
+          schema:
+            type: integer
+        - description: Optional project ID to cancel its active jobs
+          in: query
+          name: project_id
+          schema:
+            type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                content:
+                  application/json:
+                    example:
+                      cancelled_count: 5
+                      message: Successfully cancelled 5 jobs
+                description: Jobs cancelled successfully
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                description: Permission denied
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                description: Organization not found
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Cancel FSM backfill jobs
+      tags:
+        - FSM
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: fsm
     post:
       description: |-
         <Card href="https://humansignal.com/goenterprise">
@@ -4038,6 +4091,12 @@ paths:
             </Card>
         Trigger FSM state backfill for the authenticated user's active organization. Creates initial state records for entities without FSM states. Requires administrator or owner role and both FSM feature flags (fflag_feat_fit_568_finite_state_management and fflag_feat_fit_710_fsm_state_fields).
       operationId: api_fsm_backfill_create
+      parameters:
+        - description: Optional project ID to trigger backfill for a single project
+          in: query
+          name: project_id
+          schema:
+            type: integer
       responses:
         '201':
           content:
@@ -4075,9 +4134,10 @@ paths:
         - Token: []
       summary: ✨ Trigger FSM backfill for organization
       tags:
-        - Organizations
+        - FSM
       x-fern-audiences:
         - public
+      x-fern-sdk-group-name: fsm
   /api/fsm/backfill/jobs/:
     get:
       description: |-
@@ -4137,9 +4197,10 @@ paths:
         - Token: []
       summary: ✨ List FSM backfill jobs
       tags:
-        - Organizations
+        - FSM
       x-fern-audiences:
         - public
+      x-fern-sdk-group-name: fsm
   /api/fsm/backfill/status/:
     get:
       description: |-
@@ -4155,6 +4216,11 @@ paths:
         - description: Optional job ID to retrieve specific job status
           in: query
           name: job_id
+          schema:
+            type: integer
+        - description: Optional project ID to retrieve the latest job status for a project. If omitted, returns aggregated org status.
+          in: query
+          name: project_id
           schema:
             type: integer
       responses:
@@ -4194,9 +4260,10 @@ paths:
         - Token: []
       summary: ✨ Get FSM backfill status
       tags:
-        - Organizations
+        - FSM
       x-fern-audiences:
         - public
+      x-fern-sdk-group-name: fsm
   /api/fsm/entities/{entity_name}/{entity_id}/history:
     get:
       description: |-
