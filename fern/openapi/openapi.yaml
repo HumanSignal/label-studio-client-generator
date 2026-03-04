@@ -12075,6 +12075,90 @@ paths:
         - public
       x-fern-sdk-group-name: prompts
       x-fern-sdk-method-name: subsets
+  /api/projects/{project_pk}/tasks/{task_pk}/agreement-matrix:
+    get:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Returns a pairwise agreement matrix between selected participants for a single task, averaged across all active dimensions or a single specified dimension.
+      operationId: api_projects_tasks_agreement_matrix_retrieve
+      parameters:
+        - description: Dimension ID to compute agreement for. If not provided, averages across all active dimensions.
+          in: query
+          name: dimension
+          schema:
+            type: integer
+        - description: Project ID
+          in: path
+          name: project_pk
+          required: true
+          schema:
+            type: integer
+        - description: JSON object specifying which participants to include in the agreement matrix
+          in: query
+          name: selection
+          required: true
+          schema:
+            $ref: '#/components/schemas/AgreementSelectionRequest'
+        - description: Task ID
+          in: path
+          name: task_pk
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              examples:
+                TaskAgreementMatrixResponse:
+                  summary: Task agreement matrix response
+                  value:
+                    matrix:
+                      - - 1.0
+                        - 0.75
+                        - 0.5
+                      - - 0.75
+                        - 1.0
+                        - 0.6
+                      - - 0.5
+                        - 0.6
+                        - 1.0
+                    users:
+                      - avatar: null
+                        email: annotator1@example.com
+                        first_name: John
+                        id: 1
+                        initials: JD
+                        last_name: Doe
+                        username: annotator1
+                      - avatar: null
+                        email: annotator2@example.com
+                        first_name: Jane
+                        id: 2
+                        initials: JS
+                        last_name: Smith
+                        username: annotator2
+                      - id: model:v1
+                        username: Model v1
+              schema:
+                $ref: '#/components/schemas/TaskAgreementMatrixResponse'
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Get task agreement matrix
+      tags:
+        - Dimensions
+      x-fern-audiences:
+        - internal
+      x-fern-sdk-group-name:
+        - tasks
+        - agreement_matrix
+      x-fern-sdk-method-name: get
   /api/prompts/:
     get:
       description: List all prompts.
@@ -20519,6 +20603,28 @@ components:
         - consensus
         - pairwise
       type: string
+    AgreementSelectionGroupRequest:
+      properties:
+        all:
+          default: false
+          type: boolean
+        ids:
+          default: []
+          items:
+            minLength: 1
+            type: string
+          type: array
+      type: object
+    AgreementSelectionRequest:
+      properties:
+        annotators:
+          $ref: '#/components/schemas/AgreementSelectionGroupRequest'
+        ground_truth:
+          default: false
+          type: boolean
+        models:
+          $ref: '#/components/schemas/AgreementSelectionGroupRequest'
+      type: object
     AllRolesProjectList:
       description: |-
         Serializer get numbers from project queryset annotation,
@@ -20660,6 +20766,9 @@ components:
         id:
           readOnly: true
           type: integer
+        is_dimensions_enabled:
+          readOnly: true
+          type: string
         is_draft:
           description: Whether or not the project is in the middle of being created
           type: boolean
@@ -20843,6 +20952,7 @@ components:
         - finished_task_number
         - ground_truth_number
         - id
+        - is_dimensions_enabled
         - members
         - members_count
         - num_tasks_with_annotations
@@ -26285,6 +26395,9 @@ components:
         id:
           readOnly: true
           type: integer
+        is_dimensions_enabled:
+          readOnly: true
+          type: string
         is_draft:
           description: Whether or not the project is in the middle of being created
           type: boolean
@@ -26466,6 +26579,7 @@ components:
         - finished_task_number
         - ground_truth_number
         - id
+        - is_dimensions_enabled
         - members
         - members_count
         - num_tasks_with_annotations
@@ -27036,6 +27150,9 @@ components:
         id:
           readOnly: true
           type: integer
+        is_dimensions_enabled:
+          readOnly: true
+          type: string
         is_draft:
           description: Whether or not the project is in the middle of being created
           type: boolean
@@ -27227,6 +27344,7 @@ components:
         - finished_task_number
         - ground_truth_number
         - id
+        - is_dimensions_enabled
         - members
         - members_count
         - num_tasks_with_annotations
@@ -35001,6 +35119,26 @@ components:
         - completed
         - completed_with_errors
       type: string
+    TaskAgreementMatrixResponse:
+      properties:
+        matrix:
+          description: Pairwise agreement scores matrix where matrix[i][j] is the agreement between users[i] and users[j]
+          items:
+            items:
+              format: double
+              type: number
+            type: array
+          type: array
+        users:
+          description: Expanded participant details (annotators and/or model versions)
+          items:
+            additionalProperties: {}
+            type: object
+          type: array
+      required:
+        - matrix
+        - users
+      type: object
     TaskAssignment:
       description: |-
         TaskAssignment Serializer with FSM state support.
@@ -35445,9 +35583,13 @@ components:
         last_name:
           maxLength: 256
           type: string
+        username:
+          maxLength: 256
+          type: string
       required:
         - avatar
         - id
+        - username
       type: object
     UserSimpleRequest:
       description: |-
@@ -35467,6 +35609,12 @@ components:
         last_name:
           maxLength: 256
           type: string
+        username:
+          maxLength: 256
+          minLength: 1
+          type: string
+      required:
+        - username
       type: object
     VersionResponse:
       properties:
