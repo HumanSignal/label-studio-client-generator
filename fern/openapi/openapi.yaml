@@ -6118,12 +6118,12 @@ paths:
           name: is_deleted
           schema:
             type: boolean
-        - description: Filter role by in list (comma-separated values)
+        - description: Multiple values may be separated by commas. (comma-separated values)
           in: query
           name: role
           schema:
             type: string
-        - description: Filter tags by in list (comma-separated values)
+        - description: Multiple values may be separated by commas. (comma-separated values)
           in: query
           name: tags
           schema:
@@ -7874,7 +7874,7 @@ paths:
       description: Retrieve a list of projects.
       operationId: api_projects_list
       parameters:
-        - description: Filter archived by exact match
+        - description: Filter by projects that belong to archived workspaces
           in: query
           name: archived
           schema:
@@ -7993,7 +7993,7 @@ paths:
       description: Returns a list of projects with their counts. For example, task_number which is the total task number in project
       operationId: api_projects_counts_list
       parameters:
-        - description: Filter archived by exact match
+        - description: Filter by projects that belong to archived workspaces
           in: query
           name: archived
           schema:
@@ -9417,7 +9417,7 @@ paths:
           name: search
           schema:
             type: string
-        - description: Filter tags by in list (comma-separated values)
+        - description: Multiple values may be separated by commas. (comma-separated values)
           in: query
           name: tags
           schema:
@@ -9480,7 +9480,7 @@ paths:
           name: search
           schema:
             type: string
-        - description: Filter tags by in list (comma-separated values)
+        - description: Multiple values may be separated by commas. (comma-separated values)
           in: query
           name: tags
           schema:
