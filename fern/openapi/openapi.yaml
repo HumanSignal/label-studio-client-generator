@@ -6118,12 +6118,12 @@ paths:
           name: is_deleted
           schema:
             type: boolean
-        - description: Filter role by in list (comma-separated values)
+        - description: Multiple values may be separated by commas. (comma-separated values)
           in: query
           name: role
           schema:
             type: string
-        - description: Filter tags by in list (comma-separated values)
+        - description: Multiple values may be separated by commas. (comma-separated values)
           in: query
           name: tags
           schema:
@@ -7874,6 +7874,11 @@ paths:
       description: Retrieve a list of projects.
       operationId: api_projects_list
       parameters:
+        - description: Filter by projects that belong to archived workspaces
+          in: query
+          name: archived
+          schema:
+            type: boolean
         - description: Filter projects by pinned status. Use 'pinned_only' to return only pinned projects, 'exclude_pinned' to return only non-pinned projects, or 'all' to return all projects.
           in: query
           name: filter
@@ -7988,6 +7993,11 @@ paths:
       description: Returns a list of projects with their counts. For example, task_number which is the total task number in project
       operationId: api_projects_counts_list
       parameters:
+        - description: Filter by projects that belong to archived workspaces
+          in: query
+          name: archived
+          schema:
+            type: boolean
         - description: Filter projects by pinned status. Use 'pinned_only' to return only pinned projects, 'exclude_pinned' to return only non-pinned projects, or 'all' to return all projects.
           in: query
           name: filter
@@ -9407,7 +9417,7 @@ paths:
           name: search
           schema:
             type: string
-        - description: Filter tags by in list (comma-separated values)
+        - description: Multiple values may be separated by commas. (comma-separated values)
           in: query
           name: tags
           schema:
@@ -9470,7 +9480,7 @@ paths:
           name: search
           schema:
             type: string
-        - description: Filter tags by in list (comma-separated values)
+        - description: Multiple values may be separated by commas. (comma-separated values)
           in: query
           name: tags
           schema:
@@ -19855,6 +19865,11 @@ paths:
         - description: Include all workspaces in the organization, including other users' personal workspaces. Only effective for users with Administrator or Owner role. When enabled, the response includes created_by_user info for personal workspaces.
           in: query
           name: include_all_workspaces
+          schema:
+            type: boolean
+        - description: Filter by archived status. Set to false to exclude archived workspaces.
+          in: query
+          name: is_archived
           schema:
             type: boolean
         - description: Workspace is a personal user workspace.
