@@ -3400,38 +3400,49 @@ paths:
       x-fern-sdk-method-name: trigger_backfill
   /api/dimensions/backfill/jobs/:
     get:
-      description: API endpoint to list Agreement V2 backfill jobs for an organization, with pagination.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Retrieve Agreement V2 backfill jobs for the authenticated user's active organization, ordered by most-recently created first. Supports page / page_size query params (default 50 per page, max 500). Requires administrator or owner role and the Agreement V2 feature flag.
       operationId: api_dimensions_backfill_jobs_list
       parameters:
-        - description: Which field to use when ordering the results.
+        - description: 'Filter by job status: PENDING, QUEUED, RUNNING, COMPLETED, or FAILED.'
           in: query
-          name: ordering
-          required: false
+          name: status
           schema:
             type: string
-        - description: A page number within the paginated result set.
-          in: query
-          name: page
-          required: false
-          schema:
-            type: integer
-        - description: Number of results to return per page.
-          in: query
-          name: page_size
-          required: false
-          schema:
-            type: integer
       responses:
         '200':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PaginatedAgreementV2BackfillJobList'
+                items:
+                  $ref: '#/components/schemas/AgreementV2BackfillJob'
+                type: array
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                description: Agreement V2 feature is not enabled or invalid status value
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                description: Permission denied
           description: ''
       security:
         - Token: []
+      summary: ✨ List Agreement V2 backfill jobs
       tags:
-        - api
+        - Dimensions
+      x-fern-sdk-group-name: dimensions
+      x-fern-sdk-method-name: list_backfills
   /api/dimensions/backfill/status/:
     get:
       description: |-
@@ -31048,29 +31059,6 @@ components:
           type: array
       required:
         - permission
-      type: object
-    PaginatedAgreementV2BackfillJobList:
-      properties:
-        count:
-          example: 123
-          type: integer
-        next:
-          example: http://api.example.org/accounts/?page=4
-          format: uri
-          nullable: true
-          type: string
-        previous:
-          example: http://api.example.org/accounts/?page=2
-          format: uri
-          nullable: true
-          type: string
-        results:
-          items:
-            $ref: '#/components/schemas/AgreementV2BackfillJob'
-          type: array
-      required:
-        - count
-        - results
       type: object
     PaginatedAllRolesProjectListList:
       properties:
