@@ -3347,25 +3347,25 @@ paths:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Trigger an Agreement V2 backfill for the authenticated user's active organization. Recomputes agreement score matrices for all tasks that are missing them. Exactly one of three modes is selected by the query parameters:
+        Trigger an Agreement V2 backfill for the authenticated user's active organization. Recomputes agreement score matrices for all tasks that are missing them. Exactly one of three body fields must be provided:
 
         - **project_id**: backfill a single specific project.
         - **num_projects**: batched org backfill — queue the next N not-yet-started projects (in ascending project ID order), leaving any currently in-flight jobs untouched. Repeat calls until `projects_remaining` in the response reaches 0.
-        - **neither**: full org backfill — cancel all in-flight jobs and queue every remaining non-completed project at once.
+        - **all_projects**: full org backfill — cancel all in-flight jobs and queue every remaining non-completed project at once.
 
         Requires administrator or owner role and the Agreement V2 feature flag.
       operationId: api_dimensions_backfill_create
-      parameters:
-        - description: Queue at most this many projects per call (batched mode). Projects are selected in ascending project ID order, skipping any that are already completed or currently in-flight. Check `projects_remaining` in the response to know when all projects are done. Mutually exclusive with project_id.
-          in: query
-          name: num_projects
-          schema:
-            type: integer
-        - description: Backfill a single specific project. Mutually exclusive with num_projects.
-          in: query
-          name: project_id
-          schema:
-            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgreementV2BackfillTriggerRequestRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AgreementV2BackfillTriggerRequestRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AgreementV2BackfillTriggerRequestRequest'
       responses:
         '201':
           content:
@@ -21329,6 +21329,33 @@ components:
         - COMPLETED
         - FAILED
       type: string
+    AgreementV2BackfillTriggerRequestRequest:
+      description: |-
+        Request body for POST /api/dimensions/backfill/
+
+        Exactly one of the three mode fields must be provided:
+
+        - project_id:   backfill a single specific project.
+        - num_projects: batched org backfill — queue the next N not-yet-started projects
+                        (ascending project ID order), leaving in-flight jobs untouched.
+                        Check `projects_remaining` in the response and repeat until it reaches 0.
+        - all_projects: full org backfill — cancel all in-flight jobs and queue every
+                        remaining non-completed project at once.
+      properties:
+        all_projects:
+          description: Set to true to trigger a full org backfill (cancels in-flight jobs and queues all remaining projects).
+          nullable: true
+          type: boolean
+        num_projects:
+          description: Queue at most this many projects per call (batched mode).
+          minimum: 1
+          nullable: true
+          type: integer
+        project_id:
+          description: Backfill a single specific project.
+          nullable: true
+          type: integer
+      type: object
     AgreementV2BackfillTriggerResponse:
       description: Response from POST /api/dimensions/backfill/
       properties:
