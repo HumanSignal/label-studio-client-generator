@@ -185,6 +185,250 @@ paths:
       summary: Get KPI data with optional segmentation
       tags:
         - Analytics
+  /api/analytics/views/:
+    get:
+      description: |-
+        CRUD endpoints for per-user analytics saved views.
+
+        All routes are gated behind the ``fflag_feat_fit_1424_analytics_saved_views``
+        feature flag AND the same ``should_check_analytics_permission`` helper used
+        by the KPI endpoints, so a user who cannot access the analytics dashboard
+        cannot read view metadata even via a shared link.
+
+        Lookup uses ``uuid`` (not PK) so the primary key is never exposed.
+
+        Access rules
+        ------------
+        * list / create   — scoped to requesting user + active org
+        * retrieve        — any org member who passes the analytics permission check
+                            (enables shared-link UX: ``?view=<uuid>`` in the URL)
+        * update / destroy — owner-only
+      operationId: api_analytics_views_list
+      parameters:
+        - description: Which field to use when ordering the results.
+          in: query
+          name: ordering
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/AnalyticsView'
+                type: array
+          description: ''
+      security:
+        - Token: []
+      tags:
+        - Analytics
+    post:
+      description: |-
+        CRUD endpoints for per-user analytics saved views.
+
+        All routes are gated behind the ``fflag_feat_fit_1424_analytics_saved_views``
+        feature flag AND the same ``should_check_analytics_permission`` helper used
+        by the KPI endpoints, so a user who cannot access the analytics dashboard
+        cannot read view metadata even via a shared link.
+
+        Lookup uses ``uuid`` (not PK) so the primary key is never exposed.
+
+        Access rules
+        ------------
+        * list / create   — scoped to requesting user + active org
+        * retrieve        — any org member who passes the analytics permission check
+                            (enables shared-link UX: ``?view=<uuid>`` in the URL)
+        * update / destroy — owner-only
+      operationId: api_analytics_views_create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AnalyticsViewRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AnalyticsViewRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AnalyticsViewRequest'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnalyticsView'
+          description: ''
+      security:
+        - Token: []
+      tags:
+        - Analytics
+  /api/analytics/views/{uuid}/:
+    delete:
+      description: |-
+        CRUD endpoints for per-user analytics saved views.
+
+        All routes are gated behind the ``fflag_feat_fit_1424_analytics_saved_views``
+        feature flag AND the same ``should_check_analytics_permission`` helper used
+        by the KPI endpoints, so a user who cannot access the analytics dashboard
+        cannot read view metadata even via a shared link.
+
+        Lookup uses ``uuid`` (not PK) so the primary key is never exposed.
+
+        Access rules
+        ------------
+        * list / create   — scoped to requesting user + active org
+        * retrieve        — any org member who passes the analytics permission check
+                            (enables shared-link UX: ``?view=<uuid>`` in the URL)
+        * update / destroy — owner-only
+      operationId: api_analytics_views_destroy
+      parameters:
+        - in: path
+          name: uuid
+          required: true
+          schema:
+            format: uuid
+            type: string
+      responses:
+        '204':
+          description: No response body
+      security:
+        - Token: []
+      tags:
+        - Analytics
+    get:
+      description: |-
+        CRUD endpoints for per-user analytics saved views.
+
+        All routes are gated behind the ``fflag_feat_fit_1424_analytics_saved_views``
+        feature flag AND the same ``should_check_analytics_permission`` helper used
+        by the KPI endpoints, so a user who cannot access the analytics dashboard
+        cannot read view metadata even via a shared link.
+
+        Lookup uses ``uuid`` (not PK) so the primary key is never exposed.
+
+        Access rules
+        ------------
+        * list / create   — scoped to requesting user + active org
+        * retrieve        — any org member who passes the analytics permission check
+                            (enables shared-link UX: ``?view=<uuid>`` in the URL)
+        * update / destroy — owner-only
+      operationId: api_analytics_views_retrieve
+      parameters:
+        - in: path
+          name: uuid
+          required: true
+          schema:
+            format: uuid
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnalyticsView'
+          description: ''
+      security:
+        - Token: []
+      tags:
+        - Analytics
+    patch:
+      description: |-
+        CRUD endpoints for per-user analytics saved views.
+
+        All routes are gated behind the ``fflag_feat_fit_1424_analytics_saved_views``
+        feature flag AND the same ``should_check_analytics_permission`` helper used
+        by the KPI endpoints, so a user who cannot access the analytics dashboard
+        cannot read view metadata even via a shared link.
+
+        Lookup uses ``uuid`` (not PK) so the primary key is never exposed.
+
+        Access rules
+        ------------
+        * list / create   — scoped to requesting user + active org
+        * retrieve        — any org member who passes the analytics permission check
+                            (enables shared-link UX: ``?view=<uuid>`` in the URL)
+        * update / destroy — owner-only
+      operationId: api_analytics_views_partial_update
+      parameters:
+        - in: path
+          name: uuid
+          required: true
+          schema:
+            format: uuid
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedAnalyticsViewRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedAnalyticsViewRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedAnalyticsViewRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnalyticsView'
+          description: ''
+      security:
+        - Token: []
+      tags:
+        - Analytics
+    put:
+      description: |-
+        CRUD endpoints for per-user analytics saved views.
+
+        All routes are gated behind the ``fflag_feat_fit_1424_analytics_saved_views``
+        feature flag AND the same ``should_check_analytics_permission`` helper used
+        by the KPI endpoints, so a user who cannot access the analytics dashboard
+        cannot read view metadata even via a shared link.
+
+        Lookup uses ``uuid`` (not PK) so the primary key is never exposed.
+
+        Access rules
+        ------------
+        * list / create   — scoped to requesting user + active org
+        * retrieve        — any org member who passes the analytics permission check
+                            (enables shared-link UX: ``?view=<uuid>`` in the URL)
+        * update / destroy — owner-only
+      operationId: api_analytics_views_update
+      parameters:
+        - in: path
+          name: uuid
+          required: true
+          schema:
+            format: uuid
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AnalyticsViewRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AnalyticsViewRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AnalyticsViewRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnalyticsView'
+          description: ''
+      security:
+        - Token: []
+      tags:
+        - Analytics
   /api/annotation-history/:
     delete:
       description: |-
@@ -3047,6 +3291,206 @@ paths:
         - Datasets
       x-fern-audiences:
         - internal
+  /api/dimensions/backfill/:
+    delete:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Cancel Agreement V2 backfill jobs for the authenticated user's active organization. Cancel a specific job by job_id, all jobs for a specific project by project_id, or all backfill jobs for the entire organization if neither is provided.
+      operationId: api_dimensions_backfill_destroy
+      parameters:
+        - description: Optional specific job ID to cancel
+          in: query
+          name: job_id
+          schema:
+            type: integer
+        - description: Optional project ID to cancel its active backfill jobs
+          in: query
+          name: project_id
+          schema:
+            type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgreementV2BackfillCancelResponse'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                description: Permission denied
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                description: Organization not found
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Cancel Agreement V2 backfill jobs
+      tags:
+        - Dimensions
+      x-fern-sdk-group-name: dimensions
+      x-fern-sdk-method-name: cancel_backfill
+    post:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Trigger an Agreement V2 backfill for the authenticated user's active organization. Recomputes agreement score matrices for all tasks that are missing them. Exactly one of three body fields must be provided:
+
+        - **project_id**: backfill a single specific project.
+        - **num_projects**: batched org backfill — queue the next N not-yet-started projects (in ascending project ID order), leaving any currently in-flight jobs untouched. Repeat calls until `projects_remaining` in the response reaches 0.
+        - **all_projects**: full org backfill — cancel all in-flight jobs and queue every remaining non-completed project at once.
+
+        Requires administrator or owner role and the Agreement V2 feature flag.
+      operationId: api_dimensions_backfill_create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgreementV2BackfillTriggerRequestRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AgreementV2BackfillTriggerRequestRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AgreementV2BackfillTriggerRequestRequest'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgreementV2BackfillTriggerResponse'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                description: Validation error (feature flag disabled, invalid params, etc.)
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                description: Permission denied
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                description: Organization or project not found
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Trigger Agreement V2 backfill
+      tags:
+        - Dimensions
+      x-fern-sdk-group-name: dimensions
+      x-fern-sdk-method-name: trigger_backfill
+  /api/dimensions/backfill/jobs/:
+    get:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Retrieve Agreement V2 backfill jobs for the authenticated user's active organization, ordered by most-recently created first. Supports page / page_size query params (default 50 per page, max 500). Requires administrator or owner role and the Agreement V2 feature flag.
+      operationId: api_dimensions_backfill_jobs_list
+      parameters:
+        - description: 'Filter by job status: PENDING, QUEUED, RUNNING, COMPLETED, or FAILED.'
+          in: query
+          name: status
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/AgreementV2BackfillJob'
+                type: array
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                description: Agreement V2 feature is not enabled or invalid status value
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                description: Permission denied
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ List Agreement V2 backfill jobs
+      tags:
+        - Dimensions
+      x-fern-sdk-group-name: dimensions
+      x-fern-sdk-method-name: list_backfills
+  /api/dimensions/backfill/status/:
+    get:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Retrieve the status of an Agreement V2 backfill job for the authenticated user's active organization. By default returns the aggregated organization status. Specify job_id or project_id to get a specific job status. Requires administrator or owner role and the Agreement V2 feature flag.
+      operationId: api_dimensions_backfill_status_retrieve
+      parameters:
+        - description: Optional job ID to retrieve specific job status
+          in: query
+          name: job_id
+          schema:
+            type: integer
+        - description: Optional project ID to retrieve the latest backfill status for that project. If omitted, returns aggregated organization status.
+          in: query
+          name: project_id
+          schema:
+            type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgreementV2BackfillJob'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                description: Permission denied
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                description: No backfill job found or organization not found
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Get Agreement V2 backfill status
+      tags:
+        - Dimensions
+      x-fern-sdk-group-name: dimensions
+      x-fern-sdk-method-name: get_backfill_status
   /api/dm/actions/:
     get:
       description: Retrieve all the registered actions with descriptions that data manager can use.
@@ -10451,6 +10895,154 @@ paths:
         - projects
         - stats
       x-fern-sdk-method-name: finished_tasks
+  /api/projects/{id}/stats/label-distribution/counts:
+    get:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Returns counts and percentages for requested label choices, from both annotations and predictions. Supports either pagination (`limit`, `offset`) or targeted fetches via explicit `choice_keys`.
+      operationId: api_projects_stats_label_distribution_counts_retrieve
+      parameters:
+        - description: 'Explicit choice keys to fetch, joined by "___PIPE___" (for example: "label___SEP___pos___PIPE___quality___SEP___4"). When provided, pagination params are ignored.'
+          in: query
+          name: choice_keys
+          schema:
+            type: string
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - description: Maximum number of choice keys to return for pagination. Ignored when `choice_keys` is provided.
+          in: query
+          name: limit
+          schema:
+            type: integer
+        - description: Zero-based offset into the structure `choice_keys` list. Used only when `choice_keys` is not provided.
+          in: query
+          name: offset
+          schema:
+            default: 0
+            type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              examples:
+                LabelDistributionCounts(explicitChoiceKeys):
+                  description: Example response for `choice_keys=label___SEP___pos___PIPE___label___SEP___neg`.
+                  summary: Label Distribution Counts (explicit choice_keys)
+                  value:
+                    next_offset: null
+                    results:
+                      - choice: pos
+                        choice_key: label___SEP___pos
+                        dimension_name: label
+                        from_annotations_count: 12
+                        from_annotations_percent: 60.0
+                        from_predictions_count: 9
+                        from_predictions_percent: 45.0
+                      - choice: neg
+                        choice_key: label___SEP___neg
+                        dimension_name: label
+                        from_annotations_count: 8
+                        from_annotations_percent: 40.0
+                        from_predictions_count: 11
+                        from_predictions_percent: 55.0
+                    totals:
+                      annotation_totals_by_dimension:
+                        label: 20
+                      prediction_totals_by_dimension:
+                        label: 20
+              schema:
+                $ref: '#/components/schemas/LabelDistributionCountsResponse'
+          description: Label distribution counts
+      security:
+        - Token: []
+      summary: ✨ Get label distribution counts
+      tags:
+        - Stats
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - stats
+      x-fern-sdk-method-name: label_distribution_counts
+  /api/projects/{id}/stats/label-distribution/structure:
+    get:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Returns dimensions and flattened `choice_keys` for a project. Use this response to drive paginated or targeted calls to the label distribution counts endpoint.
+      operationId: api_projects_stats_label_distribution_structure_retrieve
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              examples:
+                LabelDistributionStructure:
+                  description: Example response used by Analytics Label Distribution before loading counts.
+                  summary: Label Distribution Structure
+                  value:
+                    choice_keys:
+                      - label___SEP___neg
+                      - label___SEP___pos
+                      - quality___SEP___1
+                      - quality___SEP___2
+                      - quality___SEP___3
+                      - quality___SEP___4
+                      - quality___SEP___5
+                    dimensions:
+                      - choice_keys:
+                          - label___SEP___neg
+                          - label___SEP___pos
+                        choices:
+                          - neg
+                          - pos
+                        name: label
+                        type: choices
+                      - choice_keys:
+                          - quality___SEP___1
+                          - quality___SEP___2
+                          - quality___SEP___3
+                          - quality___SEP___4
+                          - quality___SEP___5
+                        choices:
+                          - '1'
+                          - '2'
+                          - '3'
+                          - '4'
+                          - '5'
+                        name: quality
+                        type: rating
+              schema:
+                $ref: '#/components/schemas/LabelDistributionStructureResponse'
+          description: Label distribution structure
+      security:
+        - Token: []
+      summary: ✨ Get label distribution structure
+      tags:
+        - Stats
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - stats
+      x-fern-sdk-method-name: label_distribution_structure
   /api/projects/{id}/stats/lead_time:
     get:
       description: |-
@@ -13033,6 +13625,30 @@ paths:
         - versions
       x-fern-sdk-method-name: refine_prompt
   /api/saml/settings:
+    delete:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Reset SAML2 settings for the currently active organization. This clears all configured fields (domain, metadata, attribute mappings, group mappings) back to their defaults without deleting the underlying settings record.
+      operationId: api_saml_settings_destroy
+      responses:
+        '204':
+          description: No response body
+      security:
+        - Token: []
+      summary: ✨ Reset SAML2 Settings
+      tags:
+        - SSO
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - sso
+        - saml
+      x-fern-sdk-method-name: reset
     get:
       description: |-
         <Card href="https://humansignal.com/goenterprise">
@@ -20640,6 +21256,147 @@ components:
         models:
           $ref: '#/components/schemas/AgreementSelectionGroupRequest'
       type: object
+    AgreementV2BackfillCancelResponse:
+      description: Response from DELETE /api/dimensions/backfill/
+      properties:
+        cancelled_count:
+          description: Number of jobs successfully cancelled
+          type: integer
+        message:
+          type: string
+      required:
+        - cancelled_count
+        - message
+      type: object
+    AgreementV2BackfillJob:
+      description: |-
+        Serializes a DimensionsBackfillJob model instance.
+        Used by the list endpoint and as the base for the status endpoint.
+      properties:
+        completed_at:
+          format: date-time
+          nullable: true
+          type: string
+        created_at:
+          format: date-time
+          readOnly: true
+          type: string
+        error_message:
+          description: Error message if job failed
+          type: string
+        job_id:
+          description: Database ID of the backfill job
+          readOnly: true
+          type: integer
+        progress_data:
+          description: JSON data tracking job progress (matrices_created, errors, etc.)
+        project_id:
+          description: Optional specific project to backfill (if null, backfills entire organization)
+          nullable: true
+          readOnly: true
+          type: integer
+        rq_job_id:
+          description: Redis queue job ID
+          nullable: true
+          readOnly: true
+          type: string
+        started_at:
+          format: date-time
+          nullable: true
+          type: string
+        status:
+          allOf:
+            - $ref: '#/components/schemas/AgreementV2BackfillJobStatusEnum'
+          description: |-
+            Current status of the backfill job
+
+            * `PENDING` - Pending
+            * `QUEUED` - Queued
+            * `RUNNING` - Running
+            * `COMPLETED` - Completed
+            * `FAILED` - Failed
+        triggered_by:
+          description: User who triggered the backfill
+          readOnly: true
+          type: string
+      required:
+        - created_at
+        - job_id
+        - project_id
+        - rq_job_id
+        - triggered_by
+      type: object
+    AgreementV2BackfillJobStatusEnum:
+      description: |-
+        * `PENDING` - Pending
+        * `QUEUED` - Queued
+        * `RUNNING` - Running
+        * `COMPLETED` - Completed
+        * `FAILED` - Failed
+      enum:
+        - PENDING
+        - QUEUED
+        - RUNNING
+        - COMPLETED
+        - FAILED
+      type: string
+    AgreementV2BackfillTriggerRequestRequest:
+      description: |-
+        Request body for POST /api/dimensions/backfill/
+
+        Exactly one of the three mode fields must be provided:
+
+        - project_id:   backfill a single specific project.
+        - num_projects: batched org backfill — queue the next N not-yet-started projects
+                        (ascending project ID order), leaving in-flight jobs untouched.
+                        Check `projects_remaining` in the response and repeat until it reaches 0.
+        - all_projects: full org backfill — cancel all in-flight jobs and queue every
+                        remaining non-completed project at once.
+      properties:
+        all_projects:
+          description: Set to true to trigger a full org backfill (cancels in-flight jobs and queues all remaining projects).
+          nullable: true
+          type: boolean
+        num_projects:
+          description: Queue at most this many projects per call (batched mode).
+          minimum: 1
+          nullable: true
+          type: integer
+        project_id:
+          description: Backfill a single specific project.
+          nullable: true
+          type: integer
+      type: object
+    AgreementV2BackfillTriggerResponse:
+      description: Response from POST /api/dimensions/backfill/
+      properties:
+        jobs:
+          description: 'Queued jobs: [{job_id, rq_job_id, project_id}]'
+          items:
+            additionalProperties: {}
+            type: object
+          type: array
+        jobs_queued:
+          description: Number of jobs queued in this request
+          type: integer
+        message:
+          type: string
+        organization_id:
+          type: integer
+        projects_remaining:
+          description: Projects not yet started and not currently in-flight. Relevant when num_projects is used — call POST again until this reaches 0.
+          type: integer
+        projects_skipped:
+          description: Projects skipped because they already have a completed backfill
+          type: integer
+      required:
+        - jobs
+        - jobs_queued
+        - message
+        - organization_id
+        - projects_remaining
+        - projects_skipped
+      type: object
     AllRolesProjectList:
       description: |-
         Serializer get numbers from project queryset annotation,
@@ -20991,6 +21748,62 @@ components:
         - useful_annotation_number
         - workspace
         - workspace_title
+      type: object
+    AnalyticsView:
+      description: |-
+        Serializer for user-scoped analytics saved views.
+
+        The primary key is intentionally excluded; the ``uuid`` field is the only
+        stable public identifier exposed to callers.
+
+        ``dashboard_type`` scopes views per dashboard: "overview" vs "member_performance".
+      properties:
+        created_at:
+          format: date-time
+          readOnly: true
+          type: string
+        dashboard_type:
+          $ref: '#/components/schemas/DashboardTypeEnum'
+        filters: {}
+        name:
+          maxLength: 255
+          type: string
+        owner_id:
+          readOnly: true
+          type: integer
+        updated_at:
+          format: date-time
+          readOnly: true
+          type: string
+        uuid:
+          format: uuid
+          readOnly: true
+          type: string
+      required:
+        - created_at
+        - name
+        - owner_id
+        - updated_at
+        - uuid
+      type: object
+    AnalyticsViewRequest:
+      description: |-
+        Serializer for user-scoped analytics saved views.
+
+        The primary key is intentionally excluded; the ``uuid`` field is the only
+        stable public identifier exposed to callers.
+
+        ``dashboard_type`` scopes views per dashboard: "overview" vs "member_performance".
+      properties:
+        dashboard_type:
+          $ref: '#/components/schemas/DashboardTypeEnum'
+        filters: {}
+        name:
+          maxLength: 255
+          minLength: 1
+          type: string
+      required:
+        - name
       type: object
     AnnotatedEnum:
       description: |-
@@ -23050,6 +23863,14 @@ components:
         - limit
         - reached
       type: object
+    DashboardTypeEnum:
+      description: |-
+        * `overview` - Overview
+        * `member_performance` - Member Performance
+      enum:
+        - overview
+        - member_performance
+      type: string
     DatabricksExportStorage:
       description: Serializer for Databricks export storage with multi-auth support.
       properties:
@@ -25687,6 +26508,100 @@ components:
         - project
         - title
         - value
+      type: object
+    LabelDistributionCountsResponse:
+      properties:
+        next_offset:
+          description: Next offset for pagination when using limit/offset mode; null when there are no more results or when filtering by explicit `choice_keys`.
+          nullable: true
+          type: integer
+        results:
+          items:
+            $ref: '#/components/schemas/LabelDistributionCountsRow'
+          type: array
+        totals:
+          $ref: '#/components/schemas/LabelDistributionCountsTotals'
+      required:
+        - next_offset
+        - results
+        - totals
+      type: object
+    LabelDistributionCountsRow:
+      properties:
+        choice:
+          type: string
+        choice_key:
+          readOnly: true
+          type: string
+        dimension_name:
+          type: string
+        from_annotations_count:
+          type: integer
+        from_annotations_percent:
+          format: double
+          type: number
+        from_predictions_count:
+          type: integer
+        from_predictions_percent:
+          format: double
+          type: number
+      required:
+        - choice
+        - choice_key
+        - dimension_name
+        - from_annotations_count
+        - from_annotations_percent
+        - from_predictions_count
+        - from_predictions_percent
+      type: object
+    LabelDistributionCountsTotals:
+      properties:
+        annotation_totals_by_dimension:
+          additionalProperties:
+            type: integer
+          description: Total annotation counts keyed by dimension name.
+          type: object
+        prediction_totals_by_dimension:
+          additionalProperties:
+            type: integer
+          description: Total prediction counts keyed by dimension name.
+          type: object
+      type: object
+    LabelDistributionStructureDimension:
+      properties:
+        choice_keys:
+          description: Flat keys in "<from_name>___SEP___<choice>" format for this dimension.
+          readOnly: true
+          type: string
+        choices:
+          description: Sorted list of choices observed from config and/or created labels.
+          items:
+            type: string
+          type: array
+        name:
+          description: Original from_name from labeling config or observed annotation results.
+          type: string
+        type:
+          description: Result item type for this dimension when available.
+          type: string
+      required:
+        - choice_keys
+        - choices
+        - name
+      type: object
+    LabelDistributionStructureResponse:
+      properties:
+        choice_keys:
+          description: All project choice keys in stable order, joined with "___PIPE___" when passed as query param.
+          readOnly: true
+          type: string
+        dimensions:
+          items:
+            $ref: '#/components/schemas/LabelDistributionStructureDimension'
+          type: array
+      required:
+        - choice_keys
+        - dimensions
       type: object
     LabelLink:
       description: |-
@@ -30542,6 +31457,23 @@ components:
         - count
         - results
       type: object
+    PatchedAnalyticsViewRequest:
+      description: |-
+        Serializer for user-scoped analytics saved views.
+
+        The primary key is intentionally excluded; the ``uuid`` field is the only
+        stable public identifier exposed to callers.
+
+        ``dashboard_type`` scopes views per dashboard: "overview" vs "member_performance".
+      properties:
+        dashboard_type:
+          $ref: '#/components/schemas/DashboardTypeEnum'
+        filters: {}
+        name:
+          maxLength: 255
+          minLength: 1
+          type: string
+      type: object
     PatchedAnnotationReviewRequest:
       description: |-
         AnnotationReview Serializer with FSM state support.
@@ -34402,6 +35334,12 @@ components:
           maxLength: 65536
           minLength: 3
           type: string
+        idp_provider:
+          description: Identity Provider preset key (e.g. okta, azure, google, custom)
+          maxLength: 256
+          nullable: true
+          title: Identity provider
+          type: string
         login_url:
           readOnly: true
           type: string
@@ -34473,6 +35411,12 @@ components:
           maxLength: 65536
           minLength: 3
           type: string
+        idp_provider:
+          description: Identity Provider preset key (e.g. okta, azure, google, custom)
+          maxLength: 256
+          nullable: true
+          title: Identity provider
+          type: string
         mapping_email:
           description: 'Mapping attributes: user email from SAML request'
           maxLength: 1024
@@ -34532,6 +35476,12 @@ components:
           description: 'Organization web domain or domains; use comma separated list with no spaces for multiple. Example:<br><br>labelstud.io,humansignal.com<br><br>IMPORTANT: DO NOT PUT COMMON DOMAINS LIKE GMAIL.COM, YAHOO.COM, ETC. IN THIS FIELD'
           maxLength: 65536
           minLength: 3
+          type: string
+        idp_provider:
+          description: Identity Provider preset key (e.g. okta, azure, google, custom)
+          maxLength: 256
+          nullable: true
+          title: Identity provider
           type: string
         mapping_email:
           description: 'Mapping attributes: user email from SAML request'
