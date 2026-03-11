@@ -21488,8 +21488,9 @@ components:
           readOnly: true
           type: boolean
         control_weights:
-          additionalProperties: true
-          description: Dict of weights for each control tag in metric calculation.
+          additionalProperties:
+            $ref: '#/components/schemas/ControlTagWeight'
+          description: Dict of weights for each control tag in metric calculation. Keys are control tag names from the labeling config. At least one tag must have a non-zero overall weight.
           nullable: true
           type: object
         created_at:
@@ -23822,6 +23823,61 @@ components:
         - default
         - options
         - permission
+      type: object
+    ControlTagWeight:
+      description: |-
+        Weights configuration for a single control tag.
+
+        Structure: {"overall": 0.5, "type": "Choices", "labels": {"cat": 1.0, "dog": 0.0}}
+      properties:
+        labels:
+          additionalProperties:
+            format: double
+            maximum: 1.0
+            minimum: 0.0
+            type: number
+          description: Per-label weights (0.0 to 1.0). Zero excludes the label from agreement.
+          type: object
+        overall:
+          description: Overall weight for this control tag (0.0 to 1.0). Zero excludes the tag from agreement.
+          format: double
+          maximum: 1.0
+          minimum: 0.0
+          type: number
+        type:
+          description: Control tag type from the labeling config (e.g. Choices, Labels, TextArea).
+          type: string
+      required:
+        - overall
+        - type
+      type: object
+    ControlTagWeightRequest:
+      description: |-
+        Weights configuration for a single control tag.
+
+        Structure: {"overall": 0.5, "type": "Choices", "labels": {"cat": 1.0, "dog": 0.0}}
+      properties:
+        labels:
+          additionalProperties:
+            format: double
+            maximum: 1.0
+            minimum: 0.0
+            type: number
+          description: Per-label weights (0.0 to 1.0). Zero excludes the label from agreement.
+          type: object
+        overall:
+          description: Overall weight for this control tag (0.0 to 1.0). Zero excludes the tag from agreement.
+          format: double
+          maximum: 1.0
+          minimum: 0.0
+          type: number
+        type:
+          description: Control tag type from the labeling config (e.g. Choices, Labels, TextArea).
+          minLength: 1
+          type: string
+      required:
+        - overall
+        - type
       type: object
     ConvertedFormat:
       properties:
@@ -27277,8 +27333,9 @@ components:
           readOnly: true
           type: boolean
         control_weights:
-          additionalProperties: true
-          description: Dict of weights for each control tag in metric calculation.
+          additionalProperties:
+            $ref: '#/components/schemas/ControlTagWeight'
+          description: Dict of weights for each control tag in metric calculation. Keys are control tag names from the labeling config. At least one tag must have a non-zero overall weight.
           nullable: true
           type: object
         created_at:
@@ -27630,8 +27687,9 @@ components:
           readOnly: true
           type: boolean
         control_weights:
-          additionalProperties: true
-          description: Dict of weights for each control tag in metric calculation.
+          additionalProperties:
+            $ref: '#/components/schemas/ControlTagWeight'
+          description: Dict of weights for each control tag in metric calculation. Keys are control tag names from the labeling config. At least one tag must have a non-zero overall weight.
           nullable: true
           type: object
         created_at:
@@ -27828,8 +27886,9 @@ components:
           nullable: true
           type: string
         control_weights:
-          additionalProperties: true
-          description: Dict of weights for each control tag in metric calculation.
+          additionalProperties:
+            $ref: '#/components/schemas/ControlTagWeightRequest'
+          description: Dict of weights for each control tag in metric calculation. Keys are control tag names from the labeling config. At least one tag must have a non-zero overall weight.
           nullable: true
           type: object
         created_by:
@@ -28032,8 +28091,9 @@ components:
           readOnly: true
           type: boolean
         control_weights:
-          additionalProperties: true
-          description: Dict of weights for each control tag in metric calculation.
+          additionalProperties:
+            $ref: '#/components/schemas/ControlTagWeight'
+          description: Dict of weights for each control tag in metric calculation. Keys are control tag names from the labeling config. At least one tag must have a non-zero overall weight.
           nullable: true
           type: object
         created_at:
@@ -28382,8 +28442,9 @@ components:
           readOnly: true
           type: boolean
         control_weights:
-          additionalProperties: true
-          description: Dict of weights for each control tag in metric calculation.
+          additionalProperties:
+            $ref: '#/components/schemas/ControlTagWeight'
+          description: Dict of weights for each control tag in metric calculation. Keys are control tag names from the labeling config. At least one tag must have a non-zero overall weight.
           nullable: true
           type: object
         created_at:
@@ -32650,8 +32711,9 @@ components:
         comment_classification_config:
           type: string
         control_weights:
-          additionalProperties: true
-          description: Dict of weights for each control tag in metric calculation.
+          additionalProperties:
+            $ref: '#/components/schemas/ControlTagWeightRequest'
+          description: Dict of weights for each control tag in metric calculation. Keys are control tag names from the labeling config. At least one tag must have a non-zero overall weight.
           nullable: true
           type: object
         created_by:
@@ -33754,8 +33816,9 @@ components:
           readOnly: true
           type: boolean
         control_weights:
-          additionalProperties: true
-          description: Dict of weights for each control tag in metric calculation.
+          additionalProperties:
+            $ref: '#/components/schemas/ControlTagWeight'
+          description: Dict of weights for each control tag in metric calculation. Keys are control tag names from the labeling config. At least one tag must have a non-zero overall weight.
           nullable: true
           type: object
         created_at:
