@@ -3337,6 +3337,8 @@ paths:
       summary: ✨ Cancel Agreement V2 backfill jobs
       tags:
         - Dimensions
+      x-fern-audiences:
+        - public
       x-fern-sdk-group-name: dimensions
       x-fern-sdk-method-name: cancel_backfill
     post:
@@ -3396,6 +3398,8 @@ paths:
       summary: ✨ Trigger Agreement V2 backfill
       tags:
         - Dimensions
+      x-fern-audiences:
+        - public
       x-fern-sdk-group-name: dimensions
       x-fern-sdk-method-name: trigger_backfill
   /api/dimensions/backfill/jobs/:
@@ -3441,6 +3445,8 @@ paths:
       summary: ✨ List Agreement V2 backfill jobs
       tags:
         - Dimensions
+      x-fern-audiences:
+        - public
       x-fern-sdk-group-name: dimensions
       x-fern-sdk-method-name: list_backfills
   /api/dimensions/backfill/status/:
@@ -3489,6 +3495,8 @@ paths:
       summary: ✨ Get Agreement V2 backfill status
       tags:
         - Dimensions
+      x-fern-audiences:
+        - public
       x-fern-sdk-group-name: dimensions
       x-fern-sdk-method-name: get_backfill_status
   /api/dm/actions/:
@@ -12059,7 +12067,7 @@ paths:
       tags:
         - Dimensions
       x-fern-audiences:
-        - internal
+        - public
       x-fern-sdk-group-name: dimensions
       x-fern-sdk-method-name: list
     post:
@@ -12179,7 +12187,7 @@ paths:
       tags:
         - Dimensions
       x-fern-audiences:
-        - internal
+        - public
       x-fern-sdk-group-name: dimensions
       x-fern-sdk-method-name: get
     patch:
@@ -12756,7 +12764,7 @@ paths:
       tags:
         - Dimensions
       x-fern-audiences:
-        - internal
+        - public
       x-fern-sdk-group-name:
         - tasks
         - agreement_matrix
