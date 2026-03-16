@@ -516,6 +516,39 @@ paths:
         - public
       x-fern-sdk-group-name: annotation_history
       x-fern-sdk-method-name: list
+  /api/annotation-history/{id}/:
+    get:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get one annotation history item by ID with full result. Used when FIT-720 lazy load is on and the user clicks a stubbed history item to hydrate it.
+      operationId: api_annotation_history_retrieve
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnnotationHistory'
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Retrieve a single annotation history item (full result for hydration)
+      tags:
+        - Annotation History
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: annotation_history
+      x-fern-sdk-method-name: retrieve
   /api/annotation-reviews/:
     get:
       description: |-
@@ -13766,6 +13799,47 @@ paths:
         - sso
         - saml
       x-fern-sdk-method-name: update
+  /api/saml/settings/validate-metadata-url:
+    post:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Validate a SAML metadata URL by fetching it and checking whether it returns valid XML, without saving any settings.
+      operationId: api_saml_settings_validate_metadata_url_create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ValidateSamlMetadataUrlRequestRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ValidateSamlMetadataUrlRequestRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ValidateSamlMetadataUrlRequestRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidateSamlMetadataUrlResponse'
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Validate SAML Metadata URL
+      tags:
+        - SSO
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - sso
+        - saml
+      x-fern-sdk-method-name: validate_metadata_url
   /api/scim/settings:
     get:
       description: |-
@@ -36651,6 +36725,22 @@ components:
           type: string
       required:
         - username
+      type: object
+    ValidateSamlMetadataUrlRequestRequest:
+      properties:
+        metadata_url:
+          format: uri
+          minLength: 1
+          type: string
+      required:
+        - metadata_url
+      type: object
+    ValidateSamlMetadataUrlResponse:
+      properties:
+        valid:
+          type: boolean
+      required:
+        - valid
       type: object
     VersionResponse:
       properties:
