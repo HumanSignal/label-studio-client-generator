@@ -13808,7 +13808,7 @@ paths:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Validate a SAML metadata URL by fetching it and checking whether it returns valid XML, without saving any settings.
+        Validate a SAML metadata URL by fetching it and checking for valid XML, without saving.
       operationId: api_saml_settings_validate_metadata_url_create
       requestBody:
         content:
@@ -16014,6 +16014,272 @@ paths:
         - export_storage
         - gcs
       x-fern-sdk-method-name: sync
+  /api/storages/export/gcs_sa:
+    get:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get a list of all GCS export storage connections set up with SA Impersonation.
+      operationId: api_storages_export_gcs_sa_list
+      parameters:
+        - description: Which field to use when ordering the results.
+          in: query
+          name: ordering
+          required: false
+          schema:
+            type: string
+        - description: Project ID
+          in: query
+          name: project
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/GCSSAExportStorage'
+                type: array
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Get all GCS SA export storages
+      tags:
+        - 'Storage: GCS SA'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - export_storage
+        - gcs_sa
+      x-fern-sdk-method-name: list
+    post:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Create a GCS export storage connection with SA Impersonation to store annotations.
+      operationId: api_storages_export_gcs_sa_create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GCSSAExportStorageRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/GCSSAExportStorageRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/GCSSAExportStorageRequest'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GCSSAExportStorage'
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Create GCS export storage with SA Impersonation
+      tags:
+        - 'Storage: GCS SA'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - export_storage
+        - gcs_sa
+      x-fern-sdk-method-name: create
+  /api/storages/export/gcs_sa/validate:
+    post:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Validate a specific GCS export storage connection set up with SA Impersonation.
+      operationId: api_storages_export_gcs_sa_validate_create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GCSSAExportStorageRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/GCSSAExportStorageRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/GCSSAExportStorageRequest'
+        required: true
+      responses:
+        '200':
+          description: Validation successful
+      security:
+        - Token: []
+      summary: ✨ Validate GCS SA export storage
+      tags:
+        - 'Storage: GCS SA'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - export_storage
+        - gcs_sa
+      x-fern-sdk-method-name: validate
+  /api/storages/export/gcs_sa/{id}:
+    delete:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Delete a specific GCS export storage connection set up with SA Impersonation.
+      operationId: api_storages_export_gcs_sa_destroy
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: No response body
+      security:
+        - Token: []
+      summary: ✨ Delete GCS SA export storage
+      tags:
+        - 'Storage: GCS SA'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - export_storage
+        - gcs_sa
+      x-fern-sdk-method-name: delete
+    get:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get a specific GCS export storage connection set up with SA Impersonation.
+      operationId: api_storages_export_gcs_sa_retrieve
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GCSSAExportStorage'
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Get GCS SA export storage
+      tags:
+        - 'Storage: GCS SA'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - export_storage
+        - gcs_sa
+      x-fern-sdk-method-name: get
+    patch:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Update a specific GCS export storage connection set up with SA Impersonation.
+      operationId: api_storages_export_gcs_sa_partial_update
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedGCSSAExportStorageRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedGCSSAExportStorageRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedGCSSAExportStorageRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GCSSAExportStorage'
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Update GCS SA export storage
+      tags:
+        - 'Storage: GCS SA'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - export_storage
+        - gcs_sa
+      x-fern-sdk-method-name: update
+  /api/storages/export/gcs_sa/{id}/sync:
+    post:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Sync annotations to a GCS SA export storage.
+      operationId: api_storages_export_gcs_sa_sync_create
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GCSSAExportStorage'
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Sync GCS SA export storage
+      tags:
+        - 'Storage: GCS SA'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - export_storage
+        - gcs_sa
+      x-fern-sdk-method-name: sync
   /api/storages/export/gcswif:
     get:
       description: |-
@@ -17770,6 +18036,272 @@ paths:
       x-fern-sdk-group-name:
         - import_storage
         - gcs
+      x-fern-sdk-method-name: sync
+  /api/storages/gcs_sa/:
+    get:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get list of all GCS import storage connections set up with Service Account Impersonation.
+      operationId: api_storages_gcs_sa_list
+      parameters:
+        - description: Which field to use when ordering the results.
+          in: query
+          name: ordering
+          required: false
+          schema:
+            type: string
+        - description: Project ID
+          in: query
+          name: project
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/GCSSAImportStorage'
+                type: array
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Get all GCS SA import storages
+      tags:
+        - 'Storage: GCS SA'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - import_storage
+        - gcs_sa
+      x-fern-sdk-method-name: list
+    post:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Create GCS import storage with Service Account Impersonation.
+      operationId: api_storages_gcs_sa_create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GCSSAImportStorageRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/GCSSAImportStorageRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/GCSSAImportStorageRequest'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GCSSAImportStorage'
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Create GCS import storage with SA Impersonation
+      tags:
+        - 'Storage: GCS SA'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - import_storage
+        - gcs_sa
+      x-fern-sdk-method-name: create
+  /api/storages/gcs_sa/validate:
+    post:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Validate a specific GCS import storage connection set up with SA Impersonation.
+      operationId: api_storages_gcs_sa_validate_create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GCSSAImportStorageRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/GCSSAImportStorageRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/GCSSAImportStorageRequest'
+        required: true
+      responses:
+        '200':
+          description: Validation successful
+      security:
+        - Token: []
+      summary: ✨ Validate GCS SA import storage
+      tags:
+        - 'Storage: GCS SA'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - import_storage
+        - gcs_sa
+      x-fern-sdk-method-name: validate
+  /api/storages/gcs_sa/{id}:
+    delete:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Delete a specific GCS import storage connection set up with SA Impersonation.
+      operationId: api_storages_gcs_sa_destroy
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: No response body
+      security:
+        - Token: []
+      summary: ✨ Delete GCS SA import storage
+      tags:
+        - 'Storage: GCS SA'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - import_storage
+        - gcs_sa
+      x-fern-sdk-method-name: delete
+    get:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get a specific GCS import storage connection set up with SA Impersonation.
+      operationId: api_storages_gcs_sa_retrieve
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GCSSAImportStorage'
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Get GCS SA import storage
+      tags:
+        - 'Storage: GCS SA'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - import_storage
+        - gcs_sa
+      x-fern-sdk-method-name: get
+    patch:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Update a specific GCS import storage connection set up with SA Impersonation.
+      operationId: api_storages_gcs_sa_partial_update
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedGCSSAImportStorageRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedGCSSAImportStorageRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedGCSSAImportStorageRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GCSSAImportStorage'
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Update GCS SA import storage
+      tags:
+        - 'Storage: GCS SA'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - import_storage
+        - gcs_sa
+      x-fern-sdk-method-name: update
+  /api/storages/gcs_sa/{id}/sync:
+    post:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Sync tasks from a GCS import storage connection set up with SA Impersonation.
+      operationId: api_storages_gcs_sa_sync_create
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GCSSAImportStorage'
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Sync GCS SA import storage
+      tags:
+        - 'Storage: GCS SA'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - import_storage
+        - gcs_sa
       x-fern-sdk-method-name: sync
   /api/storages/gcswif/:
     get:
@@ -25567,6 +26099,340 @@ components:
         - project
         - type
       type: object
+    GCSSAExportStorage:
+      properties:
+        bucket:
+          description: GCS bucket name
+          nullable: true
+          type: string
+        can_delete_objects:
+          description: Deletion from storage enabled
+          nullable: true
+          type: boolean
+        created_at:
+          description: Creation time
+          format: date-time
+          readOnly: true
+          type: string
+        description:
+          description: Cloud storage description
+          nullable: true
+          type: string
+        google_project_id:
+          description: Google project ID
+          nullable: true
+          type: string
+        id:
+          readOnly: true
+          type: integer
+        last_sync:
+          description: Last sync finished time
+          format: date-time
+          nullable: true
+          type: string
+        last_sync_count:
+          description: Count of tasks synced last time
+          maximum: 2147483647
+          minimum: 0
+          nullable: true
+          type: integer
+        last_sync_job:
+          description: Last sync job ID
+          maxLength: 256
+          nullable: true
+          type: string
+        meta:
+          description: Meta and debug information about storage processes
+          nullable: true
+        prefix:
+          description: GCS bucket prefix
+          nullable: true
+          type: string
+        project:
+          description: A unique integer value identifying this project.
+          type: integer
+        regex_filter:
+          description: Cloud storage regex for filtering objects
+          nullable: true
+          type: string
+        status:
+          $ref: '#/components/schemas/StatusC5aEnum'
+        synchronizable:
+          default: true
+          type: boolean
+        target_service_account_email:
+          description: Service account email to impersonate for GCS access
+          nullable: true
+          type: string
+        title:
+          description: Cloud storage title
+          maxLength: 256
+          nullable: true
+          type: string
+        traceback:
+          description: Traceback report for the last failed sync
+          nullable: true
+          type: string
+        type:
+          default: gcs_sa
+          readOnly: true
+          type: string
+        use_blob_urls:
+          description: Interpret objects as BLOBs and generate URLs
+          type: boolean
+      required:
+        - created_at
+        - id
+        - project
+        - type
+      type: object
+    GCSSAExportStorageRequest:
+      properties:
+        bucket:
+          description: GCS bucket name
+          nullable: true
+          type: string
+        can_delete_objects:
+          description: Deletion from storage enabled
+          nullable: true
+          type: boolean
+        description:
+          description: Cloud storage description
+          nullable: true
+          type: string
+        google_project_id:
+          description: Google project ID
+          nullable: true
+          type: string
+        last_sync:
+          description: Last sync finished time
+          format: date-time
+          nullable: true
+          type: string
+        last_sync_count:
+          description: Count of tasks synced last time
+          maximum: 2147483647
+          minimum: 0
+          nullable: true
+          type: integer
+        last_sync_job:
+          description: Last sync job ID
+          maxLength: 256
+          nullable: true
+          type: string
+        meta:
+          description: Meta and debug information about storage processes
+          nullable: true
+        prefix:
+          description: GCS bucket prefix
+          nullable: true
+          type: string
+        project:
+          description: A unique integer value identifying this project.
+          type: integer
+        regex_filter:
+          description: Cloud storage regex for filtering objects
+          nullable: true
+          type: string
+        status:
+          $ref: '#/components/schemas/StatusC5aEnum'
+        synchronizable:
+          default: true
+          type: boolean
+        target_service_account_email:
+          description: Service account email to impersonate for GCS access
+          nullable: true
+          type: string
+        title:
+          description: Cloud storage title
+          maxLength: 256
+          nullable: true
+          type: string
+        traceback:
+          description: Traceback report for the last failed sync
+          nullable: true
+          type: string
+        use_blob_urls:
+          description: Interpret objects as BLOBs and generate URLs
+          type: boolean
+      required:
+        - project
+      type: object
+    GCSSAImportStorage:
+      properties:
+        bucket:
+          description: GCS bucket name
+          nullable: true
+          type: string
+        created_at:
+          description: Creation time
+          format: date-time
+          readOnly: true
+          type: string
+        description:
+          description: Cloud storage description
+          nullable: true
+          type: string
+        google_project_id:
+          description: Google project ID
+          nullable: true
+          type: string
+        id:
+          readOnly: true
+          type: integer
+        last_sync:
+          description: Last sync finished time
+          format: date-time
+          nullable: true
+          type: string
+        last_sync_count:
+          description: Count of tasks synced last time
+          maximum: 2147483647
+          minimum: 0
+          nullable: true
+          type: integer
+        last_sync_job:
+          description: Last sync job ID
+          maxLength: 256
+          nullable: true
+          type: string
+        meta:
+          description: Meta and debug information about storage processes
+          nullable: true
+        prefix:
+          description: GCS bucket prefix
+          nullable: true
+          type: string
+        presign:
+          default: true
+          type: boolean
+        presign_ttl:
+          description: Presigned URLs TTL (in minutes)
+          maximum: 32767
+          minimum: 0
+          type: integer
+        project:
+          description: A unique integer value identifying this project.
+          type: integer
+        recursive_scan:
+          description: Perform recursive scan over the bucket content
+          nullable: true
+          type: boolean
+        regex_filter:
+          description: Cloud storage regex for filtering objects
+          nullable: true
+          type: string
+        status:
+          $ref: '#/components/schemas/StatusC5aEnum'
+        synchronizable:
+          default: true
+          type: boolean
+        target_service_account_email:
+          description: Service account email to impersonate for GCS access
+          nullable: true
+          type: string
+        title:
+          description: Cloud storage title
+          maxLength: 256
+          nullable: true
+          type: string
+        traceback:
+          description: Traceback report for the last failed sync
+          nullable: true
+          type: string
+        type:
+          default: gcs_sa
+          readOnly: true
+          type: string
+        use_blob_urls:
+          description: Interpret objects as BLOBs and generate URLs
+          type: boolean
+      required:
+        - created_at
+        - id
+        - project
+        - type
+      type: object
+    GCSSAImportStorageRequest:
+      properties:
+        bucket:
+          description: GCS bucket name
+          nullable: true
+          type: string
+        description:
+          description: Cloud storage description
+          nullable: true
+          type: string
+        google_project_id:
+          description: Google project ID
+          nullable: true
+          type: string
+        last_sync:
+          description: Last sync finished time
+          format: date-time
+          nullable: true
+          type: string
+        last_sync_count:
+          description: Count of tasks synced last time
+          maximum: 2147483647
+          minimum: 0
+          nullable: true
+          type: integer
+        last_sync_job:
+          description: Last sync job ID
+          maxLength: 256
+          nullable: true
+          type: string
+        meta:
+          description: Meta and debug information about storage processes
+          nullable: true
+        prefix:
+          description: GCS bucket prefix
+          nullable: true
+          type: string
+        presign:
+          default: true
+          type: boolean
+        presign_ttl:
+          description: Presigned URLs TTL (in minutes)
+          maximum: 32767
+          minimum: 0
+          type: integer
+        project:
+          description: A unique integer value identifying this project.
+          type: integer
+        recursive_scan:
+          description: Perform recursive scan over the bucket content
+          nullable: true
+          type: boolean
+        regex_filter:
+          description: Cloud storage regex for filtering objects
+          nullable: true
+          type: string
+        status:
+          $ref: '#/components/schemas/StatusC5aEnum'
+        synchronizable:
+          default: true
+          type: boolean
+        target_service_account_email:
+          description: Service account email to impersonate for GCS access
+          nullable: true
+          type: string
+        title:
+          description: Cloud storage title
+          maxLength: 256
+          nullable: true
+          type: string
+        traceback:
+          description: Traceback report for the last failed sync
+          nullable: true
+          type: string
+        use_blob_urls:
+          description: Interpret objects as BLOBs and generate URLs
+          type: boolean
+      required:
+        - project
+      type: object
     GCSWIFExportStorage:
       properties:
         bucket:
@@ -27315,6 +28181,9 @@ components:
         role:
           readOnly: true
           type: string
+        role_source:
+          readOnly: true
+          type: string
         tags:
           items:
             $ref: '#/components/schemas/SimpleOrganizationMemberTag'
@@ -27329,6 +28198,7 @@ components:
         - id
         - organization
         - role
+        - role_source
         - tags
         - user
       type: object
@@ -32434,6 +33304,154 @@ components:
           description: Interpret objects as BLOBs and generate URLs
           type: boolean
       type: object
+    PatchedGCSSAExportStorageRequest:
+      properties:
+        bucket:
+          description: GCS bucket name
+          nullable: true
+          type: string
+        can_delete_objects:
+          description: Deletion from storage enabled
+          nullable: true
+          type: boolean
+        description:
+          description: Cloud storage description
+          nullable: true
+          type: string
+        google_project_id:
+          description: Google project ID
+          nullable: true
+          type: string
+        last_sync:
+          description: Last sync finished time
+          format: date-time
+          nullable: true
+          type: string
+        last_sync_count:
+          description: Count of tasks synced last time
+          maximum: 2147483647
+          minimum: 0
+          nullable: true
+          type: integer
+        last_sync_job:
+          description: Last sync job ID
+          maxLength: 256
+          nullable: true
+          type: string
+        meta:
+          description: Meta and debug information about storage processes
+          nullable: true
+        prefix:
+          description: GCS bucket prefix
+          nullable: true
+          type: string
+        project:
+          description: A unique integer value identifying this project.
+          type: integer
+        regex_filter:
+          description: Cloud storage regex for filtering objects
+          nullable: true
+          type: string
+        status:
+          $ref: '#/components/schemas/StatusC5aEnum'
+        synchronizable:
+          default: true
+          type: boolean
+        target_service_account_email:
+          description: Service account email to impersonate for GCS access
+          nullable: true
+          type: string
+        title:
+          description: Cloud storage title
+          maxLength: 256
+          nullable: true
+          type: string
+        traceback:
+          description: Traceback report for the last failed sync
+          nullable: true
+          type: string
+        use_blob_urls:
+          description: Interpret objects as BLOBs and generate URLs
+          type: boolean
+      type: object
+    PatchedGCSSAImportStorageRequest:
+      properties:
+        bucket:
+          description: GCS bucket name
+          nullable: true
+          type: string
+        description:
+          description: Cloud storage description
+          nullable: true
+          type: string
+        google_project_id:
+          description: Google project ID
+          nullable: true
+          type: string
+        last_sync:
+          description: Last sync finished time
+          format: date-time
+          nullable: true
+          type: string
+        last_sync_count:
+          description: Count of tasks synced last time
+          maximum: 2147483647
+          minimum: 0
+          nullable: true
+          type: integer
+        last_sync_job:
+          description: Last sync job ID
+          maxLength: 256
+          nullable: true
+          type: string
+        meta:
+          description: Meta and debug information about storage processes
+          nullable: true
+        prefix:
+          description: GCS bucket prefix
+          nullable: true
+          type: string
+        presign:
+          default: true
+          type: boolean
+        presign_ttl:
+          description: Presigned URLs TTL (in minutes)
+          maximum: 32767
+          minimum: 0
+          type: integer
+        project:
+          description: A unique integer value identifying this project.
+          type: integer
+        recursive_scan:
+          description: Perform recursive scan over the bucket content
+          nullable: true
+          type: boolean
+        regex_filter:
+          description: Cloud storage regex for filtering objects
+          nullable: true
+          type: string
+        status:
+          $ref: '#/components/schemas/StatusC5aEnum'
+        synchronizable:
+          default: true
+          type: boolean
+        target_service_account_email:
+          description: Service account email to impersonate for GCS access
+          nullable: true
+          type: string
+        title:
+          description: Cloud storage title
+          maxLength: 256
+          nullable: true
+          type: string
+        traceback:
+          description: Traceback report for the last failed sync
+          nullable: true
+          type: string
+        use_blob_urls:
+          description: Interpret objects as BLOBs and generate URLs
+          type: boolean
+      type: object
     PatchedGCSWIFExportStorageRequest:
       properties:
         bucket:
@@ -35491,6 +36509,10 @@ components:
         logout_url:
           readOnly: true
           type: string
+        manual_role_management:
+          description: Allow manually assigning organization roles instead of IdP-managed groups. None = use billing default.
+          nullable: true
+          type: boolean
         mapping_email:
           description: 'Mapping attributes: user email from SAML request'
           maxLength: 1024
@@ -35562,6 +36584,10 @@ components:
           nullable: true
           title: Identity provider
           type: string
+        manual_role_management:
+          description: Allow manually assigning organization roles instead of IdP-managed groups. None = use billing default.
+          nullable: true
+          type: boolean
         mapping_email:
           description: 'Mapping attributes: user email from SAML request'
           maxLength: 1024
@@ -35628,6 +36654,10 @@ components:
           nullable: true
           title: Identity provider
           type: string
+        manual_role_management:
+          description: Allow manually assigning organization roles instead of IdP-managed groups. None = use billing default.
+          nullable: true
+          type: boolean
         mapping_email:
           description: 'Mapping attributes: user email from SAML request'
           maxLength: 1024
