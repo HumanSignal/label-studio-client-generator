@@ -25243,6 +25243,10 @@ components:
         organization:
           description: A unique integer value identifying this organization.
           type: integer
+        react_code_settings:
+          description: 'ReactCode tag security settings. Structure: {"mode": "disabled"|"src_only"|"everything", "allowed_origins": ["https://..."], "allowed_permissions": ["camera", ...]}'
+          nullable: true
+          title: ReactCode settings
         read_only_quick_view_enabled_at:
           description: Set to current time to prevent creating or editing annotations in quick view.
           format: date-time
@@ -28121,6 +28125,9 @@ components:
         id:
           readOnly: true
           type: integer
+        react_code_settings:
+          readOnly: true
+          type: string
         title:
           readOnly: true
           type: string
@@ -28133,6 +28140,7 @@ components:
         - custom_scripts_enabled
         - email_notification_settings
         - id
+        - react_code_settings
         - title
         - token
       type: object
@@ -33164,6 +33172,10 @@ components:
         organization:
           description: A unique integer value identifying this organization.
           type: integer
+        react_code_settings:
+          description: 'ReactCode tag security settings. Structure: {"mode": "disabled"|"src_only"|"everything", "allowed_origins": ["https://..."], "allowed_permissions": ["camera", ...]}'
+          nullable: true
+          title: ReactCode settings
         read_only_quick_view_enabled_at:
           description: Set to current time to prevent creating or editing annotations in quick view.
           format: date-time
@@ -33723,6 +33735,10 @@ components:
           writeOnly: true
         embed_settings:
           description: Public Verification Key and Public Verification Algorithms configuration
+          nullable: true
+          writeOnly: true
+        react_code_settings:
+          description: ReactCode settings
           nullable: true
           writeOnly: true
         title:
