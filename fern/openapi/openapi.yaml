@@ -6670,7 +6670,7 @@ paths:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Delete multiple member tags from the organization in bulk. Allows the same request body as bulk create.
+        Delete multiple member tags from the organization in bulk. Pass tag IDs via the `ids` query parameter (comma-separated or repeated). For backward compatibility, a JSON body with `ids` is still accepted.
       operationId: api_organizations_member_tags_bulk_destroy
       parameters:
         - description: A unique integer value identifying this organization.
@@ -6679,10 +6679,30 @@ paths:
           required: true
           schema:
             type: integer
+        - description: Tag IDs to delete. Accepts comma-separated values (e.g., `1,2`) or repeated params.
+          in: query
+          name: ids
+          schema:
+            type: string
       responses:
         '200':
           content:
             application/json:
+              examples:
+                LegacySDKUsage(supported):
+                  description: |-
+                    Backward-compatible legacy call with DELETE body: ls.organizations.member_tags.bulk.delete(
+                        id=123,
+                        request_options={'additional_body_parameters': {'ids': [1, 2]}},
+                    )
+                  summary: Legacy SDK usage (supported)
+                SDKUsage:
+                  description: |-
+                    SDK call example using DELETE query params: ls.organizations.member_tags.bulk.delete(
+                        id=123,
+                        ids=[1, 2],
+                    )
+                  summary: SDK usage
               schema:
                 properties:
                   deleted:
@@ -10012,12 +10032,17 @@ paths:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Remove a member from a specific project.
+        Remove a member from a specific project. Pass the member ID via the `user` query parameter. For backward compatibility, a JSON body with `user` is still accepted.
       operationId: api_projects_members_destroy
       parameters:
         - in: path
           name: id
           required: true
+          schema:
+            type: integer
+        - description: User ID to remove from the project. Optional for backward compatibility with DELETE body.
+          in: query
+          name: user
           schema:
             type: integer
       responses:
@@ -10127,14 +10152,29 @@ paths:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Unassign project members in bulk. Allows the same request body as bulk assign.
+        Unassign project members in bulk. Pass selector fields via query parameters (`all`, `included`, `excluded`) and optional member filters (`search`, `role`, `tags`, `last_activity__gte`, `last_activity__lte`). For backward compatibility, a JSON body with bulk fields is still accepted.
       operationId: api_projects_members_bulk_destroy
       parameters:
+        - description: Apply unassignment to all currently matched project members.
+          in: query
+          name: all
+          schema:
+            type: boolean
+        - description: Comma-separated list of user IDs to keep assigned when `all=true`.
+          in: query
+          name: excluded
+          schema:
+            type: string
         - in: path
           name: id
           required: true
           schema:
             type: integer
+        - description: Comma-separated list of user IDs to unassign when `all=false`.
+          in: query
+          name: included
+          schema:
+            type: string
         - description: Filter by last activity (ISO 8601 formatted date). Only when all=True.
           in: query
           name: last_activity__gte
@@ -10164,6 +10204,22 @@ paths:
         '200':
           content:
             application/json:
+              examples:
+                LegacySDKUsage(supported):
+                  description: |-
+                    Backward-compatible legacy call with DELETE body: ls.projects.members.bulk.delete(
+                        id=123,
+                        request_options={'additional_body_parameters': {'all': False, 'included': [456, 789]}},
+                    )
+                  summary: Legacy SDK usage (supported)
+                SDKUsage:
+                  description: |-
+                    SDK call example using DELETE query params: ls.projects.members.bulk.delete(
+                        id=123,
+                        all_=False,
+                        included=[456, 789],
+                    )
+                  summary: SDK usage
               schema:
                 properties:
                   unassignments:
@@ -21535,12 +21591,17 @@ paths:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Remove a specific member by ID from a workspace. This endpoint expects an object like `{"user_id": 123}`.
+        Remove a specific member by ID from a workspace. Pass the member ID via the `user_id` query parameter. For backward compatibility, a JSON body with `user_id` (or `user`) is still accepted.
       operationId: api_workspaces_memberships_destroy
       parameters:
         - in: path
           name: id
           required: true
+          schema:
+            type: integer
+        - description: User ID to remove from the workspace.
+          in: query
+          name: user_id
           schema:
             type: integer
       responses:
@@ -21648,18 +21709,59 @@ paths:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Unassign workspace members in bulk. Allows the same request body as bulk assign.
+        Unassign workspace members in bulk. Pass selector fields via query parameters (`all`, `included`, `excluded`) and optional paginated-list filters (`search`, `ids`). For backward compatibility, a JSON body with bulk fields is still accepted.
       operationId: api_workspaces_memberships_bulk_destroy
       parameters:
+        - description: Apply unassignment to all currently matched workspace members.
+          in: query
+          name: all
+          schema:
+            type: boolean
+        - description: Comma-separated list of user IDs to keep assigned when `all=true`.
+          in: query
+          name: excluded
+          schema:
+            type: string
         - in: path
           name: id
           required: true
           schema:
             type: integer
+        - description: Comma-separated list of user IDs to filter matched members.
+          in: query
+          name: ids
+          schema:
+            type: string
+        - description: Comma-separated list of user IDs to unassign when `all=false`.
+          in: query
+          name: included
+          schema:
+            type: string
+        - description: Search term for filtering matched members by name or email.
+          in: query
+          name: search
+          schema:
+            type: string
       responses:
         '200':
           content:
             application/json:
+              examples:
+                LegacySDKUsage(supported):
+                  description: |-
+                    Backward-compatible legacy call with DELETE body: ls.workspaces.members.bulk.delete(
+                        id=123,
+                        request_options={'additional_body_parameters': {'all': False, 'included': [456, 789]}},
+                    )
+                  summary: Legacy SDK usage (supported)
+                SDKUsage:
+                  description: |-
+                    SDK call example using DELETE query params: ls.workspaces.members.bulk.delete(
+                        id=123,
+                        all_=False,
+                        included=[456, 789],
+                    )
+                  summary: SDK usage
               schema:
                 properties:
                   unassignments:
@@ -21799,12 +21901,17 @@ paths:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Remove a project from a specific workspace.
+        Remove a project from a specific workspace. Pass the project ID via the `project` query parameter. For backward compatibility, a JSON body with `project` is still accepted.
       operationId: api_workspaces_projects_destroy
       parameters:
         - in: path
           name: id
           required: true
+          schema:
+            type: integer
+        - description: Project ID to remove from the workspace.
+          in: query
+          name: project
           schema:
             type: integer
       responses:
