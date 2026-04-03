@@ -81,3 +81,10 @@ analytics:
 js:
   - path: ./js/analytics-enterprise-cta.js
     strategy: afterInteractive
+check:
+  rules:
+    broken-links: error
+    example-validation: error
+    valid-local-references: error
+    valid-docs-endpoints: error
+

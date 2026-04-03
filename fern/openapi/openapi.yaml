@@ -906,6 +906,9 @@ paths:
                   summary: response
                   value:
                     completed_by: 1
+                    created_ago: ''
+                    created_at: '2024-06-18T23:45:46.048490Z'
+                    created_username: ''
                     ground_truth: false
                     id: 1
                     lead_time: 10
@@ -926,7 +929,9 @@ paths:
                           width: 50
                           x: 20
                           y: 30
+                    state: CREATED
                     task: 1
+                    updated_at: '2024-06-18T23:45:46.048538Z'
                     updated_by: 1
                     was_cancelled: false
               schema:
@@ -1028,6 +1033,9 @@ paths:
                   summary: response
                   value:
                     completed_by: 1
+                    created_ago: ''
+                    created_at: '2024-06-18T23:45:46.048490Z'
+                    created_username: ''
                     ground_truth: false
                     id: 1
                     lead_time: 10
@@ -1048,7 +1056,9 @@ paths:
                           width: 50
                           x: 20
                           y: 30
+                    state: CREATED
                     task: 1
+                    updated_at: '2024-06-18T23:45:46.048538Z'
                     updated_by: 1
                     was_cancelled: false
               schema:
@@ -1126,7 +1136,9 @@ paths:
                       allow_data_credentials: true
                       allow_invite_people: true
                       allow_invite_project_experts: true
+                      allow_nda: false
                       allow_organization_webhooks: true
+                      allow_reviewing: true
                       allow_sso: false
                       allow_storage_proxy: true
                       automax_enabled: true
@@ -1135,6 +1147,7 @@ paths:
                       disable_members_page: false
                       disable_project_imports: false
                       early_adopter: false
+                      email_configured: true
                       embed_domains:
                         - domain: http://localhost:3000
                         - domain: https://example.com
@@ -1195,7 +1208,9 @@ paths:
                       allow_data_credentials: true
                       allow_invite_people: true
                       allow_invite_project_experts: true
+                      allow_nda: true
                       allow_organization_webhooks: true
+                      allow_reviewing: true
                       allow_sso: true
                       allow_storage_proxy: true
                       automax_enabled: true
@@ -1204,6 +1219,7 @@ paths:
                       disable_members_page: false
                       disable_project_imports: false
                       early_adopter: true
+                      email_configured: true
                       embed_domains:
                         - domain: http://localhost:3000
                         - domain: https://example.com
@@ -1264,7 +1280,9 @@ paths:
                       allow_data_credentials: false
                       allow_invite_people: true
                       allow_invite_project_experts: true
+                      allow_nda: false
                       allow_organization_webhooks: false
+                      allow_reviewing: true
                       allow_sso: true
                       allow_storage_proxy: true
                       automax_enabled: true
@@ -1273,6 +1291,7 @@ paths:
                       disable_members_page: false
                       disable_project_imports: false
                       early_adopter: true
+                      email_configured: true
                       embed_domains:
                         - domain: http://localhost:3000
                         - domain: https://purple-zoos-flash.loca.lt
@@ -7686,26 +7705,30 @@ paths:
                 Response:
                   summary: response
                   value:
-                    - - id: 1
-                        model_version: yolo-v8
-                        result:
-                          - from_name: bboxes
-                            image_rotation: 0
-                            original_height: 1080
-                            original_width: 1920
-                            to_name: image
-                            type: rectanglelabels
-                            value:
-                              height: 60
-                              rotation: 0
-                              values:
-                                rectanglelabels:
-                                  - Person
-                              width: 50
-                              x: 20
-                              y: 30
-                        score: 0.95
-                        task: 1
+                    - created_ago: ''
+                      created_at: '2024-06-18T23:45:46.048490Z'
+                      id: 1
+                      model_version: yolo-v8
+                      project: 1
+                      result:
+                        - from_name: bboxes
+                          image_rotation: 0
+                          original_height: 1080
+                          original_width: 1920
+                          to_name: image
+                          type: rectanglelabels
+                          value:
+                            height: 60
+                            rotation: 0
+                            values:
+                              rectanglelabels:
+                                - Person
+                            width: 50
+                            x: 20
+                            y: 30
+                      score: 0.95
+                      task: 1
+                      updated_at: '2024-06-18T23:45:46.048538Z'
               schema:
                 items:
                   $ref: '#/components/schemas/Prediction'
@@ -7788,8 +7811,11 @@ paths:
                 Response:
                   summary: response
                   value:
+                    created_ago: ''
+                    created_at: '2024-06-18T23:45:46.048490Z'
                     id: 1
                     model_version: yolo-v8
+                    project: 1
                     result:
                       - from_name: bboxes
                         image_rotation: 0
@@ -7808,6 +7834,7 @@ paths:
                           y: 30
                     score: 0.95
                     task: 1
+                    updated_at: '2024-06-18T23:45:46.048538Z'
               schema:
                 $ref: '#/components/schemas/Prediction'
           description: Created prediction
@@ -7861,8 +7888,11 @@ paths:
                 Response:
                   summary: response
                   value:
+                    created_ago: ''
+                    created_at: '2024-06-18T23:45:46.048490Z'
                     id: 1
                     model_version: yolo-v8
+                    project: 1
                     result:
                       - from_name: bboxes
                         image_rotation: 0
@@ -7881,6 +7911,7 @@ paths:
                           y: 30
                     score: 0.95
                     task: 1
+                    updated_at: '2024-06-18T23:45:46.048538Z'
               schema:
                 $ref: '#/components/schemas/Prediction'
           description: Prediction details
@@ -7968,8 +7999,11 @@ paths:
                 Response:
                   summary: response
                   value:
+                    created_ago: ''
+                    created_at: '2024-06-18T23:45:46.048490Z'
                     id: 1
                     model_version: yolo-v8
+                    project: 1
                     result:
                       - from_name: bboxes
                         image_rotation: 0
@@ -7988,6 +8022,7 @@ paths:
                           y: 30
                     score: 0.95
                     task: 1
+                    updated_at: '2024-06-18T23:45:46.048538Z'
               schema:
                 $ref: '#/components/schemas/Prediction'
           description: Updated prediction
@@ -8075,8 +8110,11 @@ paths:
                 Response:
                   summary: response
                   value:
+                    created_ago: ''
+                    created_at: '2024-06-18T23:45:46.048490Z'
                     id: 1
                     model_version: yolo-v8
+                    project: 1
                     result:
                       - from_name: bboxes
                         image_rotation: 0
@@ -8095,6 +8133,7 @@ paths:
                           y: 30
                     score: 0.95
                     task: 1
+                    updated_at: '2024-06-18T23:45:46.048538Z'
               schema:
                 $ref: '#/components/schemas/Prediction'
           description: Updated prediction
@@ -10747,8 +10786,8 @@ paths:
                 summary: payload format for annotator_params
                 value:
                   annotator_params:
-                    123: 1.0
-                    456: 0.75
+                    '123': 1.0
+                    '456': 0.75
                   use_kappa: true
             schema:
               $ref: '#/components/schemas/LseProjectParamsRequest'
@@ -14025,6 +14064,20 @@ paths:
                 Response:
                   summary: response
                   value:
+                    acs_url: http://localhost:8000/saml/saml-token-example/acs
+                    domain: example.com
+                    idp_provider: null
+                    login_url: http://localhost:8000/saml/saml-token-example/login
+                    logout_url: http://localhost:8000/saml/saml-token-example/logout
+                    manual_role_management: null
+                    mapping_email: Email
+                    mapping_first_name: FirstName
+                    mapping_groups: Groups
+                    mapping_last_name: LastName
+                    metadata_url: ''
+                    metadata_xml: ''
+                    metadata_xml_url: null
+                    nameid_format: urn:oasis:names:tc:SAML:2.0:nameid-format:transient
                     projects_groups:
                       - group: groups_test
                         project_id: 42
@@ -14032,6 +14085,7 @@ paths:
                     roles_groups:
                       - - Administrator
                         - groups_test
+                    token: saml-token-example
                     workspaces_groups:
                       - - Default workspace
                         - groups_test
@@ -20377,30 +20431,35 @@ paths:
                 Response:
                   summary: response
                   value:
-                    - - completed_by: 1
-                        ground_truth: false
-                        id: 1
-                        lead_time: 10
-                        project: 1
-                        result:
-                          - from_name: bboxes
-                            image_rotation: 0
-                            original_height: 1080
-                            original_width: 1920
-                            to_name: image
-                            type: rectanglelabels
-                            value:
-                              height: 60
-                              rotation: 0
-                              values:
-                                rectanglelabels:
-                                  - Person
-                              width: 50
-                              x: 20
-                              y: 30
-                        task: 1
-                        updated_by: 1
-                        was_cancelled: false
+                    - completed_by: 1
+                      created_ago: ''
+                      created_at: '2024-06-18T23:45:46.048490Z'
+                      created_username: ''
+                      ground_truth: false
+                      id: 1
+                      lead_time: 10
+                      project: 1
+                      result:
+                        - from_name: bboxes
+                          image_rotation: 0
+                          original_height: 1080
+                          original_width: 1920
+                          to_name: image
+                          type: rectanglelabels
+                          value:
+                            height: 60
+                            rotation: 0
+                            values:
+                              rectanglelabels:
+                                - Person
+                            width: 50
+                            x: 20
+                            y: 30
+                      state: CREATED
+                      task: 1
+                      updated_at: '2024-06-18T23:45:46.048538Z'
+                      updated_by: 1
+                      was_cancelled: false
               schema:
                 items:
                   $ref: '#/components/schemas/Annotation'
@@ -20503,6 +20562,9 @@ paths:
                   summary: response
                   value:
                     completed_by: 1
+                    created_ago: ''
+                    created_at: '2024-06-18T23:45:46.048490Z'
+                    created_username: ''
                     ground_truth: false
                     id: 1
                     lead_time: 10
@@ -20523,7 +20585,9 @@ paths:
                           width: 50
                           x: 20
                           y: 30
+                    state: CREATED
                     task: 1
+                    updated_at: '2024-06-18T23:45:46.048538Z'
                     updated_by: 1
                     was_cancelled: false
               schema:
@@ -27269,7 +27333,9 @@ components:
           minimum: -2147483648
           type: integer
         data:
+          additionalProperties: {}
           description: User imported or uploaded data for a task. Data is formatted according to the project label config. You can find examples of data for your project on the Import page in the Label Studio Data Manager UI.
+          type: object
         file_upload:
           description: Uploaded file used as data source for this task
           nullable: true
@@ -27973,8 +28039,10 @@ components:
       properties:
         choice_keys:
           description: Flat keys in "<from_name>___SEP___<choice>" format for this dimension.
+          items:
+            type: string
           readOnly: true
-          type: string
+          type: array
         choices:
           description: Sorted list of choices observed from config and/or created labels.
           items:
@@ -27995,8 +28063,10 @@ components:
       properties:
         choice_keys:
           description: All project choice keys in stable order, joined with "___PIPE___" when passed as query param.
+          items:
+            type: string
           readOnly: true
-          type: string
+          type: array
         dimensions:
           items:
             $ref: '#/components/schemas/LabelDistributionStructureDimension'
@@ -29346,8 +29416,14 @@ components:
     LseProjectParams:
       properties:
         annotator_params:
-          description: 'user ID and user weight in score calculation. Format {user_id[int]: weight[Float[0..1]]}'
+          additionalProperties:
+            format: double
+            maximum: 1
+            minimum: 0
+            type: number
+          description: 'User ID and user weight in score calculation. Format {user_id: weight} with weight in [0..1].'
           nullable: true
+          type: object
         use_kappa:
           description: If categorical variables are used in labeling (e.g. choices), Cohen's Kappa statistic is computed to measure inter-rater reliability instead of basic agreement
           type: boolean
@@ -29355,8 +29431,14 @@ components:
     LseProjectParamsRequest:
       properties:
         annotator_params:
-          description: 'user ID and user weight in score calculation. Format {user_id[int]: weight[Float[0..1]]}'
+          additionalProperties:
+            format: double
+            maximum: 1
+            minimum: 0
+            type: number
+          description: 'User ID and user weight in score calculation. Format {user_id: weight} with weight in [0..1].'
           nullable: true
+          type: object
         use_kappa:
           description: If categorical variables are used in labeling (e.g. choices), Cohen's Kappa statistic is computed to measure inter-rater reliability instead of basic agreement
           type: boolean
@@ -30536,7 +30618,9 @@ components:
           readOnly: true
           type: string
         data:
+          additionalProperties: {}
           description: User imported or uploaded data for a task. Data is formatted according to the project label config. You can find examples of data for your project on the Import page in the Label Studio Data Manager UI.
+          type: object
         draft_exists:
           type: boolean
         drafts:
@@ -30845,7 +30929,9 @@ components:
           minimum: -2147483648
           type: integer
         data:
+          additionalProperties: {}
           description: User imported or uploaded data for a task. Data is formatted according to the project label config. You can find examples of data for your project on the Import page in the Label Studio Data Manager UI.
+          type: object
         file_upload:
           description: Uploaded file used as data source for this task
           nullable: true
@@ -30923,7 +31009,9 @@ components:
           readOnly: true
           type: string
         data:
+          additionalProperties: {}
           description: User imported or uploaded data for a task. Data is formatted according to the project label config. You can find examples of data for your project on the Import page in the Label Studio Data Manager UI.
+          type: object
         draft_exists:
           type: boolean
         drafts:
@@ -31096,7 +31184,9 @@ components:
           readOnly: true
           type: string
         data:
+          additionalProperties: {}
           description: User imported or uploaded data for a task. Data is formatted according to the project label config. You can find examples of data for your project on the Import page in the Label Studio Data Manager UI.
+          type: object
         draft_exists:
           type: boolean
         drafts:
@@ -34582,7 +34672,9 @@ components:
           format: date-time
           type: string
         data:
+          additionalProperties: {}
           description: User imported or uploaded data for a task. Data is formatted according to the project label config. You can find examples of data for your project on the Import page in the Label Studio Data Manager UI.
+          type: object
         draft_exists:
           type: boolean
         ground_truth:
@@ -36900,6 +36992,7 @@ components:
         that are needed for IdP configuration.
       properties:
         acs_url:
+          nullable: true
           readOnly: true
           type: string
         domain:
@@ -36914,9 +37007,11 @@ components:
           title: Identity provider
           type: string
         login_url:
+          nullable: true
           readOnly: true
           type: string
         logout_url:
+          nullable: true
           readOnly: true
           type: string
         manual_role_management:
@@ -36956,23 +37051,37 @@ components:
           description: Metadata XML file
           type: string
         metadata_xml_url:
+          nullable: true
           readOnly: true
           type: string
         nameid_format:
           readOnly: true
           type: string
         projects_groups:
-          description: Projects to groups mapping
+          description: Projects to Groups Mapping. List of objects with project_id, group, role.
+          items:
+            $ref: '#/components/schemas/ProjectGroup'
           nullable: true
+          type: array
         roles_groups:
-          description: Roles to groups mapping
+          description: Organization Roles to Groups Mapping. List of [role_name, group_name] pairs.
+          items:
+            items:
+              type: string
+            type: array
           nullable: true
+          type: array
         token:
           maxLength: 256
           type: string
         workspaces_groups:
-          description: Workspaces to groups mapping
+          description: Workspaces to Groups Mapping. List of [workspace_title, group_name] pairs.
+          items:
+            items:
+              type: string
+            type: array
           nullable: true
+          type: array
       required:
         - acs_url
         - login_url
@@ -37135,14 +37244,27 @@ components:
     ScimSettings:
       properties:
         projects_groups:
-          description: Projects to groups mapping
+          description: Projects to Groups Mapping. List of objects with project_id, group, role.
+          items:
+            $ref: '#/components/schemas/ProjectGroup'
           nullable: true
+          type: array
         roles_groups:
-          description: Roles to groups mapping
+          description: Organization Roles to Groups Mapping. List of [role_name, group_name] pairs.
+          items:
+            items:
+              type: string
+            type: array
           nullable: true
+          type: array
         workspaces_groups:
-          description: Workspaces to groups mapping
+          description: Workspaces to Groups Mapping. List of [workspace_title, group_name] pairs.
+          items:
+            items:
+              type: string
+            type: array
           nullable: true
+          type: array
       type: object
     ScimSettingsUpdate:
       properties:
