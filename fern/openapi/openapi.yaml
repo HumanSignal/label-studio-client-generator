@@ -38897,6 +38897,7 @@ components:
           items:
             items:
               format: double
+              nullable: true
               type: number
             type: array
           type: array
