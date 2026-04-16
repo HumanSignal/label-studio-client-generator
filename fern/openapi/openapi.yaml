@@ -4951,6 +4951,73 @@ paths:
       x-fern-sdk-group-name:
         - files
       x-fern-sdk-method-name: update
+  /api/inference-runs/bulk-indicators/:
+    get:
+      description: |-
+        Bulk fetch default indicators for multiple inference runs at once.
+
+        Returns aggregated metrics for up to 20 completed runs in a single request,
+        used by the Comparison Matrix to show all versions side by side.
+      operationId: api_inference_runs_bulk_indicators_retrieve
+      responses:
+        '200':
+          description: No response body
+      security:
+        - Token: []
+      summary: ✨ Bulk fetch indicators for inference runs
+      tags:
+        - Prompts
+  /api/inference-runs/re-evaluate/:
+    post:
+      description: |-
+        Create a new inference run targeting only specific tasks (re-evaluation).
+
+        Supports four modes:
+        - custom: provide explicit task_ids
+        - failed: re-run tasks with failed predictions from a source run
+        - incorrect: re-run tasks with score < 1.0 from a source run
+        - regressions: re-run tasks that regressed between two runs
+      operationId: api_inference_runs_re_evaluate_create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReEvaluateRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ReEvaluateRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ReEvaluateRequest'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReEvaluate'
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Re-evaluate specific tasks from a previous run
+      tags:
+        - Prompts
+  /api/inference-runs/regressions/:
+    get:
+      description: |-
+        Compare correctness transitions between two inference runs.
+
+        Classifies each task as regression, improvement, stable_correct,
+        stable_incorrect, new, or removed based on prediction scores.
+      operationId: api_inference_runs_regressions_retrieve
+      responses:
+        '200':
+          description: No response body
+      security:
+        - Token: []
+      summary: ✨ Compare correctness transitions between inference runs
+      tags:
+        - Prompts
   /api/inference-runs/{id}/indicators/:
     get:
       description: |-
@@ -5033,6 +5100,255 @@ paths:
         - prompts
         - indicators
       x-fern-sdk-method-name: get
+  /api/interfaces/:
+    get:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        List saved interfaces for the current organization.
+      operationId: api_interfaces_list
+      parameters:
+        - description: Which field to use when ordering the results.
+          in: query
+          name: ordering
+          required: false
+          schema:
+            type: string
+        - description: A page number within the paginated result set.
+          in: query
+          name: page
+          required: false
+          schema:
+            type: integer
+        - description: Number of results to return per page.
+          in: query
+          name: page_size
+          required: false
+          schema:
+            type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedLseInterfaceList'
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ List saved interfaces
+      tags:
+        - Interfaces
+    post:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Create a new saved interface.
+      operationId: api_interfaces_create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LseInterfaceRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/LseInterfaceRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/LseInterfaceRequest'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LseInterface'
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Create a saved interface
+      tags:
+        - Interfaces
+  /api/interfaces/{id}/:
+    delete:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Delete a saved interface.
+      operationId: api_interfaces_destroy
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: No response body
+      security:
+        - Token: []
+      summary: ✨ Delete a saved interface
+      tags:
+        - Interfaces
+    get:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Retrieve a saved interface by ID.
+      operationId: api_interfaces_retrieve
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LseInterface'
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Get a saved interface
+      tags:
+        - Interfaces
+    patch:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Partially update a saved interface.
+      operationId: api_interfaces_partial_update
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedLseInterfaceRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedLseInterfaceRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedLseInterfaceRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LseInterface'
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Partially update a saved interface
+      tags:
+        - Interfaces
+    put:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Update a saved interface.
+      operationId: api_interfaces_update
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LseInterfaceRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/LseInterfaceRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/LseInterfaceRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LseInterface'
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Update a saved interface
+      tags:
+        - Interfaces
+  /api/interfaces/{id}/duplicate/:
+    post:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Create a copy of an existing saved interface.
+      operationId: api_interfaces_duplicate_create
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LseInterfaceRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/LseInterfaceRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/LseInterfaceRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LseInterface'
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Duplicate a saved interface
+      tags:
+        - Interfaces
   /api/invite:
     get:
       description: Get invite link for organization
@@ -11505,7 +11821,7 @@ paths:
             </Card>
         Overall or per-label total agreement across the project.
 
-        NOTE: due to an open issue in Fern, SDK clients will raise ApiError upon handling a 204 response. As a workaround, wrap call to this function in a try-except block.
+        NOTE: when this endpoint returns 204 No Content, SDK clients return None.
       operationId: api_projects_stats_total_agreement_retrieve
       parameters:
         - in: path
@@ -12407,6 +12723,24 @@ paths:
         - public
       x-fern-sdk-group-name: projects
       x-fern-sdk-method-name: validate_label_config
+  /api/projects/{project_pk}/annotations-browse:
+    get:
+      description: Lightweight annotations list for few-shot example browser.
+      operationId: api_projects_annotations_browse_retrieve
+      parameters:
+        - in: path
+          name: project_pk
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: No response body
+      security:
+        - Token: []
+      summary: ✨ Browse annotations for few-shot examples
+      tags:
+        - Prompts
   /api/projects/{project_pk}/dimensions/:
     get:
       description: |-
@@ -13419,6 +13753,39 @@ paths:
         - Prompts
       x-fern-audiences:
         - internal
+  /api/prompts/{id}/duplicate/:
+    post:
+      operationId: api_prompts_duplicate_create
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ModelInterfaceRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ModelInterfaceRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ModelInterfaceRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelInterface'
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Duplicate a prompt
+      tags:
+        - Prompts
   /api/prompts/{id}/get-default-version-name:
     get:
       description: |-
@@ -13751,6 +14118,227 @@ paths:
         - prompts
         - versions
       x-fern-sdk-method-name: cost_estimate
+  /api/prompts/{prompt_id}/versions/{version_id}/duplicate:
+    post:
+      description: Duplicate an existing version, optionally overriding the model/connection.
+      operationId: api_prompts_versions_duplicate_create
+      parameters:
+        - in: path
+          name: prompt_id
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: version_id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ThirdPartyModelVersionRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ThirdPartyModelVersionRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ThirdPartyModelVersionRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ThirdPartyModelVersion'
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Duplicate a prompt version
+      tags:
+        - Prompts
+  /api/prompts/{prompt_id}/versions/{version_id}/few-shot-examples:
+    get:
+      description: CRUD API for managing few-shot examples on a ThirdPartyModelVersion.
+      operationId: api_prompts_versions_few_shot_examples_list
+      parameters:
+        - description: Which field to use when ordering the results.
+          in: query
+          name: ordering
+          required: false
+          schema:
+            type: string
+        - in: path
+          name: prompt_id
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: version_id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/FewShotExample'
+                type: array
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ List few-shot examples
+      tags:
+        - Prompts
+    post:
+      description: CRUD API for managing few-shot examples on a ThirdPartyModelVersion.
+      operationId: api_prompts_versions_few_shot_examples_create
+      parameters:
+        - in: path
+          name: prompt_id
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: version_id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FewShotExampleRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/FewShotExampleRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/FewShotExampleRequest'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FewShotExample'
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Create a few-shot example
+      tags:
+        - Prompts
+  /api/prompts/{prompt_id}/versions/{version_id}/few-shot-examples/reorder:
+    post:
+      description: Accept ordered list of example IDs, update order fields.
+      operationId: api_prompts_versions_few_shot_examples_reorder_create
+      parameters:
+        - in: path
+          name: prompt_id
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: version_id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FewShotExampleRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/FewShotExampleRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/FewShotExampleRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FewShotExample'
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Reorder few-shot examples
+      tags:
+        - Prompts
+  /api/prompts/{prompt_id}/versions/{version_id}/few-shot-examples/{id}:
+    delete:
+      description: CRUD API for managing few-shot examples on a ThirdPartyModelVersion.
+      operationId: api_prompts_versions_few_shot_examples_destroy
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: prompt_id
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: version_id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: No response body
+      security:
+        - Token: []
+      summary: ✨ Delete a few-shot example
+      tags:
+        - Prompts
+    patch:
+      description: CRUD API for managing few-shot examples on a ThirdPartyModelVersion.
+      operationId: api_prompts_versions_few_shot_examples_partial_update
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: prompt_id
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: version_id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedFewShotExampleRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedFewShotExampleRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedFewShotExampleRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FewShotExample'
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Update a few-shot example
+      tags:
+        - Prompts
   /api/prompts/{prompt_id}/versions/{version_id}/inference-runs:
     get:
       description: |-
@@ -13914,6 +14502,59 @@ paths:
         - prompts
         - runs
       x-fern-sdk-method-name: cancel
+  /api/prompts/{prompt_id}/versions/{version_id}/prediction-count:
+    get:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Return how many tasks in a subset already have predictions for a given version.
+      operationId: api_prompts_versions_prediction_count_retrieve
+      parameters:
+        - in: path
+          name: prompt_id
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: version_id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: No response body
+      security:
+        - Token: []
+      summary: ✨ Get prediction count for a prompt version
+      tags:
+        - Prompts
+  /api/prompts/{prompt_id}/versions/{version_id}/prompt-preview:
+    get:
+      description: Return the fully assembled prompt with few-shot examples injected.
+      operationId: api_prompts_versions_prompt_preview_retrieve
+      parameters:
+        - in: path
+          name: prompt_id
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: version_id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: No response body
+      security:
+        - Token: []
+      summary: ✨ Preview assembled prompt
+      tags:
+        - Prompts
   /api/prompts/{prompt_id}/versions/{version_id}/refine:
     get:
       description: |-
@@ -14021,6 +14662,33 @@ paths:
         - prompts
         - versions
       x-fern-sdk-method-name: refine_prompt
+  /api/prompts/{prompt_id}/versions/{version_id}/try-task:
+    post:
+      description: |-
+        Run a single-task ephemeral prediction using the current (possibly unsaved) prompt.
+
+        No ModelRun is created and no Prediction is stored. The user iterates
+        until happy, then saves and does a full Run.
+      operationId: api_prompts_versions_try_task_create
+      parameters:
+        - in: path
+          name: prompt_id
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: version_id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: No response body
+      security:
+        - Token: []
+      summary: ✨ Try prompt on a single task
+      tags:
+        - Prompts
   /api/saml/settings:
     delete:
       description: |-
@@ -22539,6 +23207,14 @@ components:
           allOf:
             - $ref: '#/components/schemas/UserSimple'
           description: Project owner
+        custom_interface_code:
+          nullable: true
+          type: string
+        custom_interface_compiled:
+          nullable: true
+          type: string
+        custom_interface_params:
+          nullable: true
         custom_script:
           description: Plugins
           type: string
@@ -22585,6 +23261,8 @@ components:
         id:
           readOnly: true
           type: integer
+        input_schema:
+          nullable: true
         is_dimensions_enabled:
           readOnly: true
           type: string
@@ -22722,6 +23400,12 @@ components:
         skipped_annotations_number:
           readOnly: true
           type: string
+        source_interface_id:
+          nullable: true
+          type: integer
+        source_interface_version:
+          nullable: true
+          type: integer
         start_training_on_annotation_update:
           description: Start model training after any annotations are submitted or updated
           readOnly: true
@@ -22749,6 +23433,9 @@ components:
         total_predictions_number:
           readOnly: true
           type: integer
+        use_custom_interface:
+          default: false
+          type: boolean
         useful_annotation_number:
           nullable: true
           readOnly: true
@@ -26034,6 +26721,51 @@ components:
         - state_record
         - success
       type: object
+    FewShotExample:
+      properties:
+        annotation:
+          type: integer
+        annotation_result:
+          readOnly: true
+          type: string
+        created_at:
+          format: date-time
+          readOnly: true
+          type: string
+        id:
+          readOnly: true
+          type: integer
+        order:
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+        task:
+          type: integer
+        task_data:
+          readOnly: true
+          type: string
+      required:
+        - annotation
+        - annotation_result
+        - created_at
+        - id
+        - task
+        - task_data
+      type: object
+    FewShotExampleRequest:
+      properties:
+        annotation:
+          type: integer
+        order:
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+        task:
+          type: integer
+      required:
+        - annotation
+        - task
+      type: object
     FileUpload:
       properties:
         file:
@@ -28549,6 +29281,102 @@ components:
             - $ref: '#/components/schemas/TrialRoleEnum'
           nullable: true
       type: object
+    LseInterface:
+      properties:
+        artifacts:
+          description: AI-produced code snapshots for session continuity
+        code:
+          description: JSX source code for the interface screen module
+          type: string
+        compiled:
+          type: string
+        created_at:
+          format: date-time
+          readOnly: true
+          type: string
+        created_by:
+          allOf:
+            - $ref: '#/components/schemas/UserSimple'
+          readOnly: true
+        data_sample:
+          description: Sample task data for preview
+        description:
+          type: string
+        id:
+          readOnly: true
+          type: integer
+        input_schema:
+          description: JSON Schema declaring expected task data field types for import validation
+        is_system:
+          description: HumanSignal-provided system template visible to all organizations
+          readOnly: true
+          type: boolean
+        messages:
+          description: Chat conversation history
+        output_schema:
+          description: JSON Schema declaring the annotation output fields this interface produces (for Prompter/auto-labeling)
+        projects_count:
+          default: 0
+          readOnly: true
+          type: integer
+        title:
+          maxLength: 500
+          type: string
+        updated_at:
+          format: date-time
+          readOnly: true
+          type: string
+        versions:
+          description: Code version history
+        workspace:
+          nullable: true
+          type: integer
+      required:
+        - code
+        - compiled
+        - created_at
+        - created_by
+        - id
+        - is_system
+        - projects_count
+        - title
+        - updated_at
+      type: object
+    LseInterfaceRequest:
+      properties:
+        artifacts:
+          description: AI-produced code snapshots for session continuity
+        code:
+          description: JSX source code for the interface screen module
+          minLength: 1
+          type: string
+        compiled:
+          minLength: 1
+          type: string
+        data_sample:
+          description: Sample task data for preview
+        description:
+          type: string
+        input_schema:
+          description: JSON Schema declaring expected task data field types for import validation
+        messages:
+          description: Chat conversation history
+        output_schema:
+          description: JSON Schema declaring the annotation output fields this interface produces (for Prompter/auto-labeling)
+        title:
+          maxLength: 500
+          minLength: 1
+          type: string
+        versions:
+          description: Code version history
+        workspace:
+          nullable: true
+          type: integer
+      required:
+        - code
+        - compiled
+        - title
+      type: object
     LseOrganization:
       properties:
         billing:
@@ -28762,6 +29590,14 @@ components:
           allOf:
             - $ref: '#/components/schemas/UserSimple'
           description: Project owner
+        custom_interface_code:
+          nullable: true
+          type: string
+        custom_interface_compiled:
+          nullable: true
+          type: string
+        custom_interface_params:
+          nullable: true
         custom_script:
           description: Plugins
           type: string
@@ -28806,6 +29642,8 @@ components:
         id:
           readOnly: true
           type: integer
+        input_schema:
+          nullable: true
         is_dimensions_enabled:
           readOnly: true
           type: string
@@ -28932,6 +29770,12 @@ components:
           description: Skipped by collaborators annotation number in project
           readOnly: true
           type: integer
+        source_interface_id:
+          nullable: true
+          type: integer
+        source_interface_version:
+          nullable: true
+          type: integer
         start_training_on_annotation_update:
           description: Start model training after any annotations are submitted or updated
           readOnly: true
@@ -28971,6 +29815,9 @@ components:
           description: Total predictions number in project including skipped_annotations_number, ground_truth_number, and useful_annotation_number.
           readOnly: true
           type: integer
+        use_custom_interface:
+          default: false
+          type: boolean
         useful_annotation_number:
           description: Useful annotation number in project not including skipped_annotations_number and ground_truth_number. Total annotations = annotation_number + skipped_annotations_number + ground_truth_number
           readOnly: true
@@ -29116,6 +29963,14 @@ components:
           allOf:
             - $ref: '#/components/schemas/UserSimple'
           description: Project owner
+        custom_interface_code:
+          nullable: true
+          type: string
+        custom_interface_compiled:
+          nullable: true
+          type: string
+        custom_interface_params:
+          nullable: true
         description:
           description: Project Description
           nullable: true
@@ -29141,6 +29996,8 @@ components:
         id:
           readOnly: true
           type: integer
+        input_schema:
+          nullable: true
         is_draft:
           description: Whether or not the project is in the middle of being created
           type: boolean
@@ -29228,6 +30085,12 @@ components:
           description: Skipped by collaborators annotation number in project
           readOnly: true
           type: integer
+        source_interface_id:
+          nullable: true
+          type: integer
+        source_interface_version:
+          nullable: true
+          type: integer
         start_training_on_annotation_update:
           description: Start model training after any annotations are submitted or updated
           readOnly: true
@@ -29263,6 +30126,9 @@ components:
           description: Total predictions number in project including skipped_annotations_number, ground_truth_number, and useful_annotation_number.
           readOnly: true
           type: integer
+        use_custom_interface:
+          default: false
+          type: boolean
         useful_annotation_number:
           description: Useful annotation number in project not including skipped_annotations_number and ground_truth_number. Total annotations = annotation_number + skipped_annotations_number + ground_truth_number
           readOnly: true
@@ -29311,6 +30177,14 @@ components:
           allOf:
             - $ref: '#/components/schemas/UserSimpleRequest'
           description: Project owner
+        custom_interface_code:
+          nullable: true
+          type: string
+        custom_interface_compiled:
+          nullable: true
+          type: string
+        custom_interface_params:
+          nullable: true
         description:
           description: Project Description
           nullable: true
@@ -29325,6 +30199,8 @@ components:
           description: Labeling instructions in HTML format
           nullable: true
           type: string
+        input_schema:
+          nullable: true
         is_draft:
           description: Whether or not the project is in the middle of being created
           type: boolean
@@ -29393,6 +30269,12 @@ components:
           allOf:
             - $ref: '#/components/schemas/SkipQueueEnum'
           nullable: true
+        source_interface_id:
+          nullable: true
+          type: integer
+        source_interface_version:
+          nullable: true
+          type: integer
         task_data_login:
           description: 'Task data credentials: login'
           maxLength: 256
@@ -29409,6 +30291,9 @@ components:
           minLength: 3
           nullable: true
           type: string
+        use_custom_interface:
+          default: false
+          type: boolean
         workspace:
           description: In Workspace
           type: integer
@@ -29532,6 +30417,14 @@ components:
           allOf:
             - $ref: '#/components/schemas/UserSimple'
           description: Project owner
+        custom_interface_code:
+          nullable: true
+          type: string
+        custom_interface_compiled:
+          nullable: true
+          type: string
+        custom_interface_params:
+          nullable: true
         custom_script:
           description: Plugins
           type: string
@@ -29576,6 +30469,8 @@ components:
         id:
           readOnly: true
           type: integer
+        input_schema:
+          nullable: true
         is_dimensions_enabled:
           readOnly: true
           type: string
@@ -29712,6 +30607,12 @@ components:
         skipped_annotations_number:
           readOnly: true
           type: integer
+        source_interface_id:
+          nullable: true
+          type: integer
+        source_interface_version:
+          nullable: true
+          type: integer
         start_training_on_annotation_update:
           description: Start model training after any annotations are submitted or updated
           readOnly: true
@@ -29750,6 +30651,9 @@ components:
           nullable: true
           readOnly: true
           type: integer
+        use_custom_interface:
+          default: false
+          type: boolean
         useful_annotation_number:
           nullable: true
           readOnly: true
@@ -29883,6 +30787,14 @@ components:
           allOf:
             - $ref: '#/components/schemas/UserSimple'
           description: Project owner
+        custom_interface_code:
+          nullable: true
+          type: string
+        custom_interface_compiled:
+          nullable: true
+          type: string
+        custom_interface_params:
+          nullable: true
         custom_script:
           description: Plugins
           type: string
@@ -29917,6 +30829,8 @@ components:
         id:
           readOnly: true
           type: integer
+        input_schema:
+          nullable: true
         is_draft:
           description: Whether or not the project is in the middle of being created
           type: boolean
@@ -30028,6 +30942,12 @@ components:
           description: Skipped by collaborators annotation number in project
           readOnly: true
           type: integer
+        source_interface_id:
+          nullable: true
+          type: integer
+        source_interface_version:
+          nullable: true
+          type: integer
         start_training_on_annotation_update:
           description: Start model training after any annotations are submitted or updated
           readOnly: true
@@ -30067,6 +30987,9 @@ components:
           description: Total predictions number in project including skipped_annotations_number, ground_truth_number, and useful_annotation_number.
           readOnly: true
           type: integer
+        use_custom_interface:
+          default: false
+          type: boolean
         useful_annotation_number:
           description: Useful annotation number in project not including skipped_annotations_number and ground_truth_number. Total annotations = annotation_number + skipped_annotations_number + ground_truth_number
           readOnly: true
@@ -31819,14 +32742,6 @@ components:
           minLength: 1
           type: string
       type: object
-    ModeEnum:
-      description: |-
-        * `settings` - Only settings
-        * `settings,data` - Settings and tasks
-      enum:
-        - settings
-        - settings,data
-      type: string
     ModelInterface:
       properties:
         associated_projects:
@@ -32118,9 +33033,12 @@ components:
           readOnly: true
           type: string
         created_by:
-          nullable: true
+          allOf:
+            - $ref: '#/components/schemas/UserSimple'
           readOnly: true
-          type: integer
+        filters_json:
+          description: DM filter group for Filtered subset. Stored for display/re-run purposes.
+          nullable: true
         id:
           readOnly: true
           type: integer
@@ -32143,21 +33061,38 @@ components:
           type: integer
         project_subset:
           $ref: '#/components/schemas/ProjectSubsetEnum'
+        sample_subset_size:
+          description: Custom sample size for Sample subset. Uses PROMPTER_SAMPLE_SUBSET_SIZE if not set.
+          maximum: 2147483647
+          minimum: 0
+          nullable: true
+          type: integer
+        source_model_run:
+          nullable: true
+          readOnly: true
+          type: integer
         status:
           allOf:
             - $ref: '#/components/schemas/ModelRunStatusEnum'
           readOnly: true
+        task_ids:
+          description: List of task IDs for Custom subset re-evaluation.
+          nullable: true
+          readOnly: true
         total_correct_predictions:
           maximum: 2147483647
           minimum: -2147483648
+          nullable: true
           type: integer
         total_predictions:
           maximum: 2147483647
           minimum: -2147483648
+          nullable: true
           type: integer
         total_tasks:
           maximum: 2147483647
           minimum: -2147483648
+          nullable: true
           type: integer
         triggered_at:
           format: date-time
@@ -32171,11 +33106,16 @@ components:
         - id
         - parent_model
         - project
+        - source_model_run
         - status
+        - task_ids
         - triggered_at
       type: object
     ModelRunRequest:
       properties:
+        filters_json:
+          description: DM filter group for Filtered subset. Stored for display/re-run purposes.
+          nullable: true
         job_id:
           description: Job ID for inference job for a ModelRun e.g. Adala job ID
           maxLength: 255
@@ -32197,17 +33137,26 @@ components:
           type: integer
         project_subset:
           $ref: '#/components/schemas/ProjectSubsetEnum'
+        sample_subset_size:
+          description: Custom sample size for Sample subset. Uses PROMPTER_SAMPLE_SUBSET_SIZE if not set.
+          maximum: 2147483647
+          minimum: 0
+          nullable: true
+          type: integer
         total_correct_predictions:
           maximum: 2147483647
           minimum: -2147483648
+          nullable: true
           type: integer
         total_predictions:
           maximum: 2147483647
           minimum: -2147483648
+          nullable: true
           type: integer
         total_tasks:
           maximum: 2147483647
           minimum: -2147483648
+          nullable: true
           type: integer
       required:
         - project
@@ -32675,6 +33624,29 @@ components:
         results:
           items:
             $ref: '#/components/schemas/Label'
+          type: array
+      required:
+        - count
+        - results
+      type: object
+    PaginatedLseInterfaceList:
+      properties:
+        count:
+          example: 123
+          type: integer
+        next:
+          example: http://api.example.org/accounts/?page=4
+          format: uri
+          nullable: true
+          type: string
+        previous:
+          example: http://api.example.org/accounts/?page=2
+          format: uri
+          nullable: true
+          type: string
+        results:
+          items:
+            $ref: '#/components/schemas/LseInterface'
           type: array
       required:
         - count
@@ -33709,6 +34681,17 @@ components:
           minimum: 0
           type: integer
       type: object
+    PatchedFewShotExampleRequest:
+      properties:
+        annotation:
+          type: integer
+        order:
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+        task:
+          type: integer
+      type: object
     PatchedFileUploadRequest:
       properties:
         file:
@@ -34185,6 +35168,37 @@ components:
         value:
           description: Label value
       type: object
+    PatchedLseInterfaceRequest:
+      properties:
+        artifacts:
+          description: AI-produced code snapshots for session continuity
+        code:
+          description: JSX source code for the interface screen module
+          minLength: 1
+          type: string
+        compiled:
+          minLength: 1
+          type: string
+        data_sample:
+          description: Sample task data for preview
+        description:
+          type: string
+        input_schema:
+          description: JSON Schema declaring expected task data field types for import validation
+        messages:
+          description: Chat conversation history
+        output_schema:
+          description: JSON Schema declaring the annotation output fields this interface produces (for Prompter/auto-labeling)
+        title:
+          maxLength: 500
+          minLength: 1
+          type: string
+        versions:
+          description: Code version history
+        workspace:
+          nullable: true
+          type: integer
+      type: object
     PatchedLseOrganizationSerializerUpdateRequest:
       description: |-
         A serializer mixin that takes an additional `fields` argument that controls
@@ -34312,6 +35326,14 @@ components:
           allOf:
             - $ref: '#/components/schemas/UserSimpleRequest'
           description: Project owner
+        custom_interface_code:
+          nullable: true
+          type: string
+        custom_interface_compiled:
+          nullable: true
+          type: string
+        custom_interface_params:
+          nullable: true
         custom_script:
           description: Plugins
           type: string
@@ -34335,6 +35357,8 @@ components:
           description: Instructions
           nullable: true
           type: string
+        input_schema:
+          nullable: true
         is_draft:
           description: Whether or not the project is in the middle of being created
           type: boolean
@@ -34424,6 +35448,12 @@ components:
           allOf:
             - $ref: '#/components/schemas/SkipQueueEnum'
           nullable: true
+        source_interface_id:
+          nullable: true
+          type: integer
+        source_interface_version:
+          nullable: true
+          type: integer
         strict_task_overlap:
           default: true
           description: Enforce strict overlap limit
@@ -34444,6 +35474,9 @@ components:
           minLength: 3
           nullable: true
           type: string
+        use_custom_interface:
+          default: false
+          type: boolean
         workspace:
           description: Workspace
           type: integer
@@ -35076,6 +36109,12 @@ components:
       type: object
     PatchedThirdPartyModelVersionRequest:
       properties:
+        max_few_shot_examples:
+          description: Max number of few-shot examples to include in prompts. 0 = disabled.
+          maximum: 2147483647
+          minimum: 0
+          nullable: true
+          type: integer
         model_provider_connection:
           nullable: true
           type: integer
@@ -35593,6 +36632,14 @@ components:
         - total_predictions_number
         - useful_annotation_number
       type: object
+    ProjectDuplicateModeEnum:
+      description: |-
+        * `settings` - Only settings
+        * `settings,data` - Settings and tasks
+      enum:
+        - settings
+        - settings,data
+      type: string
     ProjectDuplicateRequest:
       properties:
         description:
@@ -35601,7 +36648,7 @@ components:
           type: string
         mode:
           allOf:
-            - $ref: '#/components/schemas/ModeEnum'
+            - $ref: '#/components/schemas/ProjectDuplicateModeEnum'
           description: |-
             What to Duplicate (Project configuration only / Project configuration and tasks)
 
@@ -35895,10 +36942,12 @@ components:
         * `All` - All
         * `HasGT` - HasGT
         * `Sample` - Sample
+        * `Custom` - Custom
       enum:
         - All
         - HasGT
         - Sample
+        - Custom
       type: string
     ProjectSubsetItem:
       properties:
@@ -36081,6 +37130,56 @@ components:
         - Anthropic
         - Custom
       type: string
+    ReEvaluate:
+      properties:
+        mode:
+          $ref: '#/components/schemas/ReEvaluateModeEnum'
+        model_version_id:
+          type: integer
+        run_b_id:
+          type: integer
+        source_model_run_id:
+          type: integer
+        task_ids:
+          default: []
+          items:
+            type: integer
+          type: array
+      required:
+        - mode
+        - model_version_id
+      type: object
+    ReEvaluateModeEnum:
+      description: |-
+        * `failed` - failed
+        * `incorrect` - incorrect
+        * `regressions` - regressions
+        * `custom` - custom
+      enum:
+        - failed
+        - incorrect
+        - regressions
+        - custom
+      type: string
+    ReEvaluateRequest:
+      properties:
+        mode:
+          $ref: '#/components/schemas/ReEvaluateModeEnum'
+        model_version_id:
+          type: integer
+        run_b_id:
+          type: integer
+        source_model_run_id:
+          type: integer
+        task_ids:
+          default: []
+          items:
+            type: integer
+          type: array
+      required:
+        - mode
+        - model_version_id
+      type: object
     ReasonEnum:
       description: |-
         * `MANUAL` - Manual
@@ -38071,6 +39170,15 @@ components:
         id:
           readOnly: true
           type: integer
+        max_few_shot_examples:
+          description: Max number of few-shot examples to include in prompts. 0 = disabled.
+          maximum: 2147483647
+          minimum: 0
+          nullable: true
+          type: integer
+        model_display_name:
+          readOnly: true
+          type: string
         model_provider_connection:
           nullable: true
           type: integer
@@ -38115,6 +39223,7 @@ components:
         - created_at
         - created_by
         - id
+        - model_display_name
         - prompt
         - provider_model_id
         - score
@@ -38123,6 +39232,12 @@ components:
       type: object
     ThirdPartyModelVersionRequest:
       properties:
+        max_few_shot_examples:
+          description: Max number of few-shot examples to include in prompts. 0 = disabled.
+          maximum: 2147483647
+          minimum: 0
+          nullable: true
+          type: integer
         model_provider_connection:
           nullable: true
           type: integer
