@@ -39829,6 +39829,12 @@ components:
         phone:
           maxLength: 256
           type: string
+        social_accounts:
+          items:
+            additionalProperties: {}
+            type: object
+          readOnly: true
+          type: array
         username:
           maxLength: 256
           type: string
@@ -39843,6 +39849,7 @@ components:
         - organization_membership
         - pause
         - permissions
+        - social_accounts
         - username
       type: object
     Workspace:
