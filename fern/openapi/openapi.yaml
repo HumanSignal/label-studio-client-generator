@@ -10435,7 +10435,7 @@ paths:
           required: true
           schema:
             type: integer
-        - description: 'Comma-separated list of user IDs to include. Example: user_ids=1,2,3'
+        - description: 'Comma-separated list of user IDs to include. Example: user_ids=1,2,3. When annotator pausing is enabled, users with an active pause on this project are always included in addition to the listed IDs.'
           in: query
           name: user_ids
           schema:
@@ -28505,7 +28505,7 @@ components:
     LSEJWTSettings:
       properties:
         api_token_ttl_days:
-          maximum: 365
+          maximum: 73000
           minimum: 1
           type: integer
         api_tokens_enabled:
@@ -28521,7 +28521,7 @@ components:
     LSEJWTSettingsRequest:
       properties:
         api_token_ttl_days:
-          maximum: 365
+          maximum: 73000
           minimum: 1
           type: integer
         api_tokens_enabled:
