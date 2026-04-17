@@ -31499,12 +31499,12 @@ components:
           readOnly: true
           type: string
         annotators:
-          description: Annotators IDs who annotated this task
+          description: Who annotated this task; each item includes user_id plus minimal profile fields for Data Manager display.
           items:
-            title: User IDs
-            type: integer
+            title: Annotator
+            type: object
           readOnly: true
-          title: Annotators IDs
+          title: Annotators
           type: array
         annotators_count:
           description: The annotators_count is calculated as the number of users with annotations (can be repeated, so same as the number of annotations) + the number of assignees without annotations.
@@ -32065,12 +32065,12 @@ components:
           readOnly: true
           type: string
         annotators:
-          description: Annotators IDs who annotated this task
+          description: Who annotated this task; each item includes user_id plus minimal profile fields for Data Manager display.
           items:
-            title: User IDs
-            type: integer
+            title: Annotator
+            type: object
           readOnly: true
-          title: Annotators IDs
+          title: Annotators
           type: array
         annotators_count:
           description: The annotators_count is calculated as the number of users with annotations (can be repeated, so same as the number of annotations) + the number of assignees without annotations.
