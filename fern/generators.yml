@@ -9,7 +9,7 @@ groups:
       - public
     generators:
       - name: fernapi/fern-python-sdk
-        version: 5.3.14
+        version: 5.5.8
         output:
           location: pypi
           package-name: label-studio-sdk
@@ -43,7 +43,7 @@ groups:
             ujson: '>=5.8.0'
             ijson: '>=3.2.3'
             appdirs: '>=1.4.3'
-            lxml: '>=4.2.5'
+            lxml: ">=6.1.0"
             xmljson: '0.2.1'
             jsonschema: '>=4.23.0'
             requests-mock: '1.12.1'
@@ -67,7 +67,7 @@ groups:
       - public
     generators:
       - name: fernapi/fern-python-sdk
-        version: 5.3.14
+        version: 5.5.8
         output:
           location: local-file-system
           path: ../label_studio_sdk
