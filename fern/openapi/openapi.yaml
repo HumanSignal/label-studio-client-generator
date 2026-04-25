@@ -26329,6 +26329,10 @@ components:
           format: date-time
           nullable: true
           type: string
+        custom_interfaces_enabled:
+          description: Enable custom interfaces for this organization. When disabled, projects with use_custom_interface=True will not render custom interfaces anywhere in the product (label stream, embed, data manager, interfaces dashboard).
+          nullable: true
+          type: boolean
         custom_scripts_enabled_at:
           description: Set to current time to enable custom scripts (Plugins) for this organization. Can only be enabled if no organization members are active members of any other organizations; otherwise an error will be raised. If this occurs, contact the LEAP team for assistance with enabling custom scripts (Plugins).
           format: date-time
@@ -26353,6 +26357,10 @@ components:
         embed_domains:
           description: 'List of objects: {"domain": "example.com"}. Used for CSP header on /embed routes.'
           nullable: true
+        embed_enabled:
+          description: Enable embed functionality for this organization
+          nullable: true
+          type: boolean
         embed_settings:
           description: Embed settings for this organization
           nullable: true
@@ -26362,6 +26370,9 @@ components:
           type: string
         extra_data_on_activity_logs:
           type: boolean
+        interface_settings:
+          description: 'Security settings for custom interfaces: CSP allowlists, script origins, iframe permissions.'
+          nullable: true
         label_stream_navigation_disabled_at:
           description: Set to current time to disable the label stream navigation for this organization. This will prevent users from going back in the label stream to view previous labels.
           format: date-time
@@ -34587,6 +34598,10 @@ components:
           format: date-time
           nullable: true
           type: string
+        custom_interfaces_enabled:
+          description: Enable custom interfaces for this organization. When disabled, projects with use_custom_interface=True will not render custom interfaces anywhere in the product (label stream, embed, data manager, interfaces dashboard).
+          nullable: true
+          type: boolean
         custom_scripts_enabled_at:
           description: Set to current time to enable custom scripts (Plugins) for this organization. Can only be enabled if no organization members are active members of any other organizations; otherwise an error will be raised. If this occurs, contact the LEAP team for assistance with enabling custom scripts (Plugins).
           format: date-time
@@ -34611,6 +34626,10 @@ components:
         embed_domains:
           description: 'List of objects: {"domain": "example.com"}. Used for CSP header on /embed routes.'
           nullable: true
+        embed_enabled:
+          description: Enable embed functionality for this organization
+          nullable: true
+          type: boolean
         embed_settings:
           description: Embed settings for this organization
           nullable: true
@@ -34620,6 +34639,9 @@ components:
           type: string
         extra_data_on_activity_logs:
           type: boolean
+        interface_settings:
+          description: 'Security settings for custom interfaces: CSP allowlists, script origins, iframe permissions.'
+          nullable: true
         label_stream_navigation_disabled_at:
           description: Set to current time to disable the label stream navigation for this organization. This will prevent users from going back in the label stream to view previous labels.
           format: date-time
