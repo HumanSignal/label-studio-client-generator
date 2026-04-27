@@ -13503,14 +13503,24 @@ paths:
           required: false
           schema:
             type: string
+        - description: A page number within the paginated result set.
+          in: query
+          name: page
+          required: false
+          schema:
+            type: integer
+        - description: A search term.
+          in: query
+          name: search
+          required: false
+          schema:
+            type: string
       responses:
         '200':
           content:
             application/json:
               schema:
-                items:
-                  $ref: '#/components/schemas/ModelInterfaceSerializerGET'
-                type: array
+                $ref: '#/components/schemas/PaginatedModelInterfaceSerializerGETList'
           description: ''
       security:
         - Token: []
@@ -32835,6 +32845,11 @@ components:
           items:
             $ref: '#/components/schemas/AssociatedProject'
           type: array
+        best_score:
+          format: double
+          nullable: true
+          readOnly: true
+          type: number
         created_at:
           format: date-time
           readOnly: true
@@ -32855,6 +32870,10 @@ components:
           nullable: true
           type: integer
         output_classes: {}
+        runs_count:
+          default: 0
+          readOnly: true
+          type: integer
         skill_name:
           allOf:
             - $ref: '#/components/schemas/SkillNameEnum'
@@ -32867,11 +32886,18 @@ components:
           format: date-time
           readOnly: true
           type: string
+        versions_count:
+          default: 0
+          readOnly: true
+          type: integer
       required:
+        - best_score
         - created_at
         - id
+        - runs_count
         - title
         - updated_at
+        - versions_count
       type: object
     ModelProviderConnection:
       properties:
@@ -33727,6 +33753,29 @@ components:
         results:
           items:
             $ref: '#/components/schemas/LseUser'
+          type: array
+      required:
+        - count
+        - results
+      type: object
+    PaginatedModelInterfaceSerializerGETList:
+      properties:
+        count:
+          example: 123
+          type: integer
+        next:
+          example: http://api.example.org/accounts/?page=4
+          format: uri
+          nullable: true
+          type: string
+        previous:
+          example: http://api.example.org/accounts/?page=2
+          format: uri
+          nullable: true
+          type: string
+        results:
+          items:
+            $ref: '#/components/schemas/ModelInterfaceSerializerGET'
           type: array
       required:
         - count
