@@ -6958,6 +6958,11 @@ paths:
           name: user__last_activity__lte
           schema:
             type: string
+        - description: Multiple values may be separated by commas. (comma-separated values)
+          in: query
+          name: user_type
+          schema:
+            type: string
       requestBody:
         content:
           application/json:
@@ -10563,6 +10568,11 @@ paths:
           name: tags
           schema:
             type: string
+        - description: Multiple values may be separated by commas. (comma-separated values)
+          in: query
+          name: user_type
+          schema:
+            type: string
       responses:
         '200':
           content:
@@ -10640,6 +10650,11 @@ paths:
         - description: Multiple values may be separated by commas. (comma-separated values)
           in: query
           name: tags
+          schema:
+            type: string
+        - description: Multiple values may be separated by commas. (comma-separated values)
+          in: query
+          name: user_type
           schema:
             type: string
       requestBody:
@@ -29518,6 +29533,9 @@ components:
           type: array
         user:
           $ref: '#/components/schemas/LseUserOrganizationMemberList'
+        user_type:
+          readOnly: true
+          type: string
       required:
         - concurrency
         - contributed_to_projects
@@ -29528,6 +29546,7 @@ components:
         - role_source
         - tags
         - user
+        - user_type
       type: object
     LseProject:
       description: |-
@@ -33912,6 +33931,9 @@ components:
             $ref: '#/components/schemas/SimpleOrganizationMemberTag'
           readOnly: true
           type: array
+        user_type:
+          readOnly: true
+          type: string
         username:
           maxLength: 256
           type: string
@@ -33928,6 +33950,7 @@ components:
         - pause
         - project_role
         - tags
+        - user_type
         - username
       type: object
     PaginatedProjectSubsetTasksResponseList:
