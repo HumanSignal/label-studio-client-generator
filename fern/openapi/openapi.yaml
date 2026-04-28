@@ -13509,6 +13509,12 @@ paths:
           required: false
           schema:
             type: integer
+        - description: Number of results to return per page.
+          in: query
+          name: page_size
+          required: false
+          schema:
+            type: integer
         - description: A search term.
           in: query
           name: search
