@@ -11176,6 +11176,98 @@ paths:
         - Projects
       x-fern-audiences:
         - internal
+  /api/projects/{id}/review-routing-rules/:
+    get:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        List ordered review routing rules for a project.
+      operationId: api_projects_review_routing_rules_list
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - description: Which field to use when ordering the results.
+          in: query
+          name: ordering
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ReviewRoutingRule'
+                type: array
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ List review routing rules
+      tags:
+        - Review Routing Rules
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - review_routing_rules
+      x-fern-sdk-method-name: list
+  /api/projects/{id}/review-routing-rules/bulk/:
+    post:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Atomically replace the ordered review routing rules for a project. Rules with an `id` update the existing project rule. Rules without an `id` are created. Existing project rules omitted from the request are deleted, and request order becomes rule order.
+      operationId: api_projects_review_routing_rules_bulk_create
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReviewRoutingRulesReplaceRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ReviewRoutingRulesReplaceRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ReviewRoutingRulesReplaceRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ReviewRoutingRule'
+                type: array
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Bulk replace review routing rules
+      tags:
+        - Review Routing Rules
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - review_routing_rules
+      x-fern-sdk-method-name: bulk_replace
   /api/projects/{id}/roles:
     get:
       description: "<Card href=\"https://humansignal.com/goenterprise\">\n        <img style=\"pointer-events: none; margin-left: 0px; margin-right: 0px;\" src=\"https://docs.humansignal.com/images/badge.svg\" alt=\"Label Studio Enterprise badge\"/>\n        <p style=\"margin-top: 10px; font-size: 14px;\">\n            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)\n        </p>\n    </Card>\n\n        List users and their project level roles for a given project.\n        If user is not listed here and is a member of the project then they would behave as assigned role in organization.\n        "
@@ -33253,6 +33345,20 @@ components:
         - in_app_guidance
         - complete
       type: string
+    OperatorEnum:
+      description: |-
+        * `lt` - <
+        * `lte` - <=
+        * `gt` - >
+        * `gte` - >=
+        * `eq` - =
+      enum:
+        - lt
+        - lte
+        - gt
+        - gte
+        - eq
+      type: string
     Options165Enum:
       enum:
         - OW
@@ -37550,6 +37656,91 @@ components:
         - all
         - one
       type: string
+    ReviewRoutingRule:
+      properties:
+        agreement_threshold:
+          description: Agreement threshold (0..1) compared against the rule operator. Required when operator is set.
+          format: decimal
+          nullable: true
+          pattern: ^-?\d{0,1}(?:\.\d{0,4})?$
+          type: string
+        created_at:
+          description: Time this rule was created
+          format: date-time
+          readOnly: true
+          type: string
+        dimension:
+          description: Dimension whose agreement is compared. Null => compare overall task agreement. Deleting the dimension cascades to the rule (a dimension-scoped rule has no meaning without its dimension; falling back to overall agreement would silently change the cohort).
+          nullable: true
+          type: integer
+        id:
+          type: integer
+        operator:
+          allOf:
+            - $ref: '#/components/schemas/OperatorEnum'
+          description: |-
+            Comparison operator applied to the agreement value. Null => catch-all rule.
+
+            * `lt` - <
+            * `lte` - <=
+            * `gt` - >
+            * `gte` - >=
+            * `eq` - =
+          nullable: true
+        order:
+          description: Position in the rule list (rules are evaluated in ascending order)
+          readOnly: true
+          type: integer
+        sample_rate:
+          description: Sample rate (0..1) of matching tasks routed for review. 1 always routes, 0 never routes.
+          format: decimal
+          pattern: ^-?\d{0,1}(?:\.\d{0,4})?$
+          type: string
+        updated_at:
+          description: Last time this rule was updated
+          format: date-time
+          readOnly: true
+          type: string
+      required:
+        - created_at
+        - order
+        - updated_at
+      type: object
+    ReviewRoutingRuleRequestRequest:
+      properties:
+        agreement_threshold:
+          format: decimal
+          nullable: true
+          pattern: ^-?\d{0,1}(?:\.\d{0,4})?$
+          type: string
+        dimension:
+          nullable: true
+          type: integer
+        id:
+          type: integer
+        operator:
+          allOf:
+            - $ref: '#/components/schemas/OperatorEnum'
+          nullable: true
+        sample_rate:
+          format: decimal
+          pattern: ^-?\d{0,1}(?:\.\d{0,4})?$
+          type: string
+      required:
+        - agreement_threshold
+        - dimension
+        - operator
+        - sample_rate
+      type: object
+    ReviewRoutingRulesReplaceRequest:
+      properties:
+        rules:
+          items:
+            $ref: '#/components/schemas/ReviewRoutingRuleRequestRequest'
+          type: array
+      required:
+        - rules
+      type: object
     ReviewSettings:
       properties:
         anonymize_annotations:
