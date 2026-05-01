@@ -11917,6 +11917,86 @@ paths:
         - projects
         - stats
       x-fern-sdk-method-name: lead_time
+  /api/projects/{id}/stats/member_performance_rows/:
+    get:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Paginated, sortable member performance rows for annotation/review tables. Guarded by <code>fflag_feat_lse_project_dashboards_v3_members_short</code>.
+      operationId: api_projects_stats_member_performance_rows_retrieve
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - description: Comma-separated user IDs to include. When omitted, members are derived from the project.
+          in: query
+          name: ids
+          schema:
+            type: string
+        - description: Sort field; prefix with "-" for descending (e.g. "-finished").
+          in: query
+          name: ordering
+          schema:
+            type: string
+        - description: 1-based page index.
+          in: query
+          name: page
+          schema:
+            type: integer
+        - description: Page size (1–100).
+          in: query
+          name: page_size
+          schema:
+            type: integer
+        - description: 'Which table to load: "annotations" or "reviews".'
+          in: query
+          name: table
+          schema:
+            enum:
+              - annotations
+              - reviews
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  count:
+                    type: integer
+                  page:
+                    type: integer
+                  page_size:
+                    type: integer
+                  results:
+                    items:
+                      additionalProperties: true
+                      type: object
+                    type: array
+                  summary:
+                    additionalProperties: true
+                    type: object
+                type: object
+          description: Member performance rows for one page plus summary aggregates.
+        '404':
+          description: Feature flag off or project not found.
+      security:
+        - Token: []
+      summary: ✨ Get paginated member performance rows
+      tags:
+        - Stats
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - stats
+      x-fern-sdk-method-name: member_performance_rows
   /api/projects/{id}/stats/total_agreement:
     get:
       description: |-
