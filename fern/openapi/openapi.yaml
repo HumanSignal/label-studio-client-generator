@@ -5130,6 +5130,12 @@ paths:
           required: false
           schema:
             type: integer
+        - description: A search term.
+          in: query
+          name: search
+          required: false
+          schema:
+            type: string
       responses:
         '200':
           content:
@@ -9743,7 +9749,7 @@ paths:
   /api/projects/{id}/export/formats:
     get:
       deprecated: true
-      description: |2-
+      description: |-
 
                 This endpoint is deprecated in Enterprise. Use the async export API instead:
                 POST /api/projects/{{id}}/exports/ (see [Create new export](/api#operation/api_projects_exports_create)).
@@ -13500,6 +13506,26 @@ paths:
       description: "<Card href=\"https://humansignal.com/goenterprise\">\n        <img style=\"pointer-events: none; margin-left: 0px; margin-right: 0px;\" src=\"https://docs.humansignal.com/images/badge.svg\" alt=\"Label Studio Enterprise badge\"/>\n        <p style=\"margin-top: 10px; font-size: 14px;\">\n            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)\n        </p>\n    </Card>\n\n        Provides list of tasks, based on project subset. Includes predictions for tasks. For the 'HasGT' subset, accuracy metrics will also be provided.\n        "
       operationId: api_projects_subset_tasks_list
       parameters:
+        - description: Only include tasks whose prediction/reference alignment includes this class.
+          in: query
+          name: alignment_class
+          schema:
+            type: string
+        - description: When alignment_class is set, limit matching to this output control tag.
+          in: query
+          name: alignment_from_name
+          schema:
+            type: string
+        - description: Alignment outcome to drill into. Defaults to all TP, FP, and FN outcomes.
+          in: query
+          name: alignment_outcome
+          schema:
+            enum:
+              - all
+              - false_negative
+              - false_positive
+              - true_positive
+            type: string
         - description: If true (default), includes task_count in response; if false, omits it.
           in: query
           name: include_total
@@ -13514,6 +13540,16 @@ paths:
           in: query
           name: ordering
           required: false
+          schema:
+            type: string
+        - description: Only include tasks whose prediction contains this output class.
+          in: query
+          name: output_class
+          schema:
+            type: string
+        - description: When output_class is set, limit matching to this output control tag.
+          in: query
+          name: output_from_name
           schema:
             type: string
         - description: A page number within the paginated result set.
@@ -13533,6 +13569,11 @@ paths:
           name: parent_model
           schema:
             type: integer
+        - description: Comma-separated model version IDs. Only include tasks that have predictions for every listed version.
+          in: query
+          name: prediction_version_ids
+          schema:
+            type: string
         - in: path
           name: project_pk
           required: true
@@ -23512,6 +23553,8 @@ components:
         organization:
           nullable: true
           type: integer
+        output_schema:
+          nullable: true
         overlap_cohort_percentage:
           description: Annotations per task coverage
           maximum: 2147483647
@@ -29527,6 +29570,9 @@ components:
           type: boolean
         messages:
           description: Chat conversation history
+        metadata:
+          description: Arbitrary metadata for this interface
+          nullable: true
         output_schema:
           description: JSON Schema declaring the annotation output fields this interface produces (for Prompter/auto-labeling)
         projects_count:
@@ -29575,6 +29621,9 @@ components:
           description: JSON Schema declaring expected task data field types for import validation
         messages:
           description: Chat conversation history
+        metadata:
+          description: Arbitrary metadata for this interface
+          nullable: true
         output_schema:
           description: JSON Schema declaring the annotation output fields this interface produces (for Prompter/auto-labeling)
         title:
@@ -29599,6 +29648,10 @@ components:
           format: date-time
           readOnly: true
           type: string
+        custom_interfaces_enabled:
+          description: Enable custom interfaces for this organization. When disabled, projects with use_custom_interface=True will not render custom interfaces anywhere in the product (label stream, embed, data manager, interfaces dashboard).
+          nullable: true
+          type: boolean
         custom_scripts_enabled:
           readOnly: true
           type: string
@@ -29621,6 +29674,10 @@ components:
         embed_domains:
           description: 'List of objects: {"domain": "example.com"}. Used for CSP header on /embed routes.'
           nullable: true
+        embed_enabled:
+          description: Enable embed functionality for this organization
+          nullable: true
+          type: boolean
         embed_settings:
           description: Embed settings for this organization
           nullable: true
@@ -29631,6 +29688,9 @@ components:
         id:
           readOnly: true
           type: integer
+        interface_settings:
+          description: 'Security settings for custom interfaces: CSP allowlists, script origins, iframe permissions.'
+          nullable: true
         react_code_settings:
           readOnly: true
           type: string
@@ -29908,6 +29968,8 @@ components:
         organization:
           nullable: true
           type: integer
+        output_schema:
+          nullable: true
         overlap_cohort_percentage:
           description: Annotations per task coverage
           maximum: 2147483647
@@ -30249,6 +30311,8 @@ components:
         organization:
           nullable: true
           type: integer
+        output_schema:
+          nullable: true
         overlap_cohort_percentage:
           maximum: 2147483647
           minimum: -2147483648
@@ -30448,6 +30512,8 @@ components:
         organization:
           nullable: true
           type: integer
+        output_schema:
+          nullable: true
         overlap_cohort_percentage:
           maximum: 2147483647
           minimum: -2147483648
@@ -30734,6 +30800,8 @@ components:
         organization:
           nullable: true
           type: integer
+        output_schema:
+          nullable: true
         overlap_cohort_percentage:
           description: Annotations per task coverage
           maximum: 2147483647
@@ -31086,6 +31154,8 @@ components:
         organization:
           nullable: true
           type: integer
+        output_schema:
+          nullable: true
         overlap_cohort_percentage:
           description: Annotations per task coverage
           maximum: 2147483647
@@ -35473,6 +35543,9 @@ components:
           description: JSON Schema declaring expected task data field types for import validation
         messages:
           description: Chat conversation history
+        metadata:
+          description: Arbitrary metadata for this interface
+          nullable: true
         output_schema:
           description: JSON Schema declaring the annotation output fields this interface produces (for Prompter/auto-labeling)
         title:
@@ -35498,6 +35571,10 @@ components:
         created_by:
           nullable: true
           type: integer
+        custom_interfaces_enabled:
+          description: Enable or disable custom interfaces for this organization
+          type: boolean
+          writeOnly: true
         custom_scripts_enabled:
           description: Plugins
           nullable: true
@@ -35517,8 +35594,16 @@ components:
           nullable: true
           type: array
           writeOnly: true
+        embed_enabled:
+          description: Enable or disable embed functionality for this organization
+          type: boolean
+          writeOnly: true
         embed_settings:
           description: Public Verification Key and Public Verification Algorithms configuration
+          nullable: true
+          writeOnly: true
+        interface_settings:
+          description: 'Security settings for custom interfaces: CSP allowlists, script origins, iframe permissions'
           nullable: true
           writeOnly: true
         react_code_settings:
@@ -35678,6 +35763,8 @@ components:
         organization:
           nullable: true
           type: integer
+        output_schema:
+          nullable: true
         overlap_cohort_percentage:
           description: Annotations per task coverage
           maximum: 2147483647
