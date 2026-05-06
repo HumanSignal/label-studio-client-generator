@@ -8952,10 +8952,15 @@ paths:
       description: "<Card href=\"https://humansignal.com/goenterprise\">\n        <img style=\"pointer-events: none; margin-left: 0px; margin-right: 0px;\" src=\"https://docs.humansignal.com/images/badge.svg\" alt=\"Label Studio Enterprise badge\"/>\n        <p style=\"margin-top: 10px; font-size: 14px;\">\n            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)\n        </p>\n    </Card>\n\n        List project roles for requested IDs for the current user\n        "
       operationId: api_projects_roles_list
       parameters:
-        - in: query
+        - description: Multiple values may be separated by commas.
+          explode: false
+          in: query
           name: ids
           schema:
-            type: integer
+            items:
+              type: integer
+            type: array
+          style: form
         - description: Which field to use when ordering the results.
           in: query
           name: ordering
