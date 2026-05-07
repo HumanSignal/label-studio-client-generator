@@ -5141,7 +5141,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PaginatedLseInterfaceList'
+                $ref: '#/components/schemas/PaginatedLseInterfaceListList'
           description: ''
       security:
         - Token: []
@@ -5314,6 +5314,47 @@ paths:
       summary: ✨ Update a saved interface
       tags:
         - Interfaces
+  /api/interfaces/{id}/append_versions/:
+    post:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Append one or more published versions to a saved interface with server-assigned stable version IDs.
+      operationId: api_interfaces_append_versions_create
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LseInterfaceAppendVersionsRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/LseInterfaceAppendVersionsRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/LseInterfaceAppendVersionsRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LseInterface'
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Append saved interface versions
+      tags:
+        - Interfaces
   /api/interfaces/{id}/duplicate/:
     post:
       description: |-
@@ -5353,6 +5394,129 @@ paths:
       security:
         - Token: []
       summary: ✨ Duplicate a saved interface
+      tags:
+        - Interfaces
+  /api/interfaces/{id}/publish/:
+    post:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Publish one saved interface version by stable version ID.
+      operationId: api_interfaces_publish_create
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LseInterfaceVersionIdRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/LseInterfaceVersionIdRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/LseInterfaceVersionIdRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LseInterface'
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Publish a saved interface version
+      tags:
+        - Interfaces
+  /api/interfaces/{id}/unpublish/:
+    post:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Unpublish one saved interface version by stable version ID.
+      operationId: api_interfaces_unpublish_create
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LseInterfaceVersionIdRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/LseInterfaceVersionIdRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/LseInterfaceVersionIdRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LseInterface'
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Unpublish a saved interface version
+      tags:
+        - Interfaces
+  /api/interfaces/{id}/update_description/:
+    post:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Update the description for one saved interface version by stable version ID.
+      operationId: api_interfaces_update_description_create
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LseInterfaceVersionDescriptionRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/LseInterfaceVersionDescriptionRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/LseInterfaceVersionDescriptionRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LseInterface'
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Update a saved interface version description
       tags:
         - Interfaces
   /api/invite:
@@ -23829,6 +23993,7 @@ components:
           nullable: true
           type: integer
         source_interface_version:
+          description: Stable version ID of the saved interface snapshot used by this project.
           nullable: true
           type: integer
         start_training_on_annotation_update:
@@ -29865,6 +30030,110 @@ components:
         - title
         - updated_at
       type: object
+    LseInterfaceAppendVersionRequest:
+      properties:
+        artifactId:
+          type: string
+        changeRanges: {}
+        code:
+          minLength: 1
+          type: string
+        compiled:
+          minLength: 1
+          type: string
+        description:
+          type: string
+        inputSchema:
+          nullable: true
+        messageId:
+          type: string
+        op:
+          type: string
+        outputSchema:
+          nullable: true
+        paramsSchema:
+          nullable: true
+      required:
+        - code
+        - compiled
+      type: object
+    LseInterfaceAppendVersionsRequest:
+      properties:
+        artifacts: {}
+        code:
+          minLength: 1
+          type: string
+        compiled:
+          minLength: 1
+          type: string
+        data_sample: {}
+        input_schema: {}
+        messages: {}
+        output_schema: {}
+        versions:
+          items:
+            $ref: '#/components/schemas/LseInterfaceAppendVersionRequest'
+          type: array
+      required:
+        - versions
+      type: object
+    LseInterfaceList:
+      properties:
+        code:
+          description: JSX source code for the interface screen module
+          type: string
+        created_at:
+          format: date-time
+          readOnly: true
+          type: string
+        created_by:
+          allOf:
+            - $ref: '#/components/schemas/UserSimple'
+          readOnly: true
+        description:
+          type: string
+        id:
+          readOnly: true
+          type: integer
+        input_schema:
+          description: JSON Schema declaring expected task data field types for import validation
+        is_system:
+          description: HumanSignal-provided system template visible to all organizations
+          readOnly: true
+          type: boolean
+        metadata:
+          description: Arbitrary metadata for this interface
+          nullable: true
+        output_schema:
+          description: JSON Schema declaring the annotation output fields this interface produces (for Prompter/auto-labeling)
+        projects_count:
+          default: 0
+          readOnly: true
+          type: integer
+        title:
+          maxLength: 500
+          type: string
+        updated_at:
+          format: date-time
+          readOnly: true
+          type: string
+        versions:
+          readOnly: true
+          type: string
+        workspace:
+          nullable: true
+          type: integer
+      required:
+        - code
+        - created_at
+        - created_by
+        - id
+        - is_system
+        - projects_count
+        - title
+        - updated_at
+        - versions
+      type: object
     LseInterfaceRequest:
       properties:
         artifacts:
@@ -29902,6 +30171,28 @@ components:
         - code
         - compiled
         - title
+      type: object
+    LseInterfaceVersionDescriptionRequest:
+      properties:
+        description:
+          description: Description to store on the saved interface version.
+          type: string
+        version_id:
+          description: Stable interface version ID.
+          minimum: 0
+          type: integer
+      required:
+        - description
+        - version_id
+      type: object
+    LseInterfaceVersionIdRequest:
+      properties:
+        version_id:
+          description: Stable interface version ID.
+          minimum: 0
+          type: integer
+      required:
+        - version_id
       type: object
     LseOrganization:
       properties:
@@ -30317,6 +30608,7 @@ components:
           nullable: true
           type: integer
         source_interface_version:
+          description: Stable version ID of the saved interface snapshot used by this project.
           nullable: true
           type: integer
         start_training_on_annotation_update:
@@ -30634,6 +30926,7 @@ components:
           nullable: true
           type: integer
         source_interface_version:
+          description: Stable version ID of the saved interface used to create this project.
           nullable: true
           type: integer
         start_training_on_annotation_update:
@@ -30820,6 +31113,7 @@ components:
           nullable: true
           type: integer
         source_interface_version:
+          description: Stable version ID of the saved interface used to create this project.
           nullable: true
           type: integer
         task_data_login:
@@ -31160,6 +31454,7 @@ components:
           nullable: true
           type: integer
         source_interface_version:
+          description: Stable version ID of the saved interface snapshot used by this project.
           nullable: true
           type: integer
         start_training_on_annotation_update:
@@ -31497,6 +31792,7 @@ components:
           nullable: true
           type: integer
         source_interface_version:
+          description: Stable version ID of the saved interface snapshot used by this project.
           nullable: true
           type: integer
         start_training_on_annotation_update:
@@ -34210,7 +34506,7 @@ components:
         - count
         - results
       type: object
-    PaginatedLseInterfaceList:
+    PaginatedLseInterfaceListList:
       properties:
         count:
           example: 123
@@ -34227,7 +34523,7 @@ components:
           type: string
         results:
           items:
-            $ref: '#/components/schemas/LseInterface'
+            $ref: '#/components/schemas/LseInterfaceList'
           type: array
       required:
         - count
@@ -36088,6 +36384,7 @@ components:
           nullable: true
           type: integer
         source_interface_version:
+          description: Stable version ID of the saved interface snapshot used by this project.
           nullable: true
           type: integer
         strict_task_overlap:
