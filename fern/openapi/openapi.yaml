@@ -8764,7 +8764,7 @@ paths:
           schema:
             default: all
             type: string
-        - description: Filter id by in list
+        - description: Multiple values may be separated by commas. (comma-separated values)
           in: query
           name: ids
           schema:
@@ -8883,7 +8883,7 @@ paths:
           schema:
             default: all
             type: string
-        - description: Filter id by in list
+        - description: Multiple values may be separated by commas. (comma-separated values)
           in: query
           name: ids
           schema:
@@ -9169,6 +9169,129 @@ paths:
         - public
       x-fern-sdk-group-name: projects
       x-fern-sdk-method-name: update
+  /api/projects/{id}/analytics/data-quality/agreement-analysis/confusion-matrix:
+    get:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Returns label confusion matrix with precision, recall, and top confusion pairs.
+      operationId: api_projects_analytics_data_quality_agreement_analysis_confusion_matrix_retrieve
+      parameters:
+        - description: From name
+          in: query
+          name: from_name
+          schema:
+            default: ''
+            type: string
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - description: Mode
+          in: query
+          name: mode
+          schema:
+            default: all
+            enum:
+              - accepted
+              - all
+              - ground_truth
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataQualityAgreementConfusionMatrix'
+          description: ''
+      security:
+        - Token: []
+      summary: '✨ Data quality: confusion matrix'
+      tags:
+        - Stats
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - stats
+      x-fern-sdk-method-name: data_quality_agreement_confusion_matrix
+  /api/projects/{id}/analytics/data-quality/agreement-analysis/dimensions:
+    get:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Returns per-dimension agreement scores for active dimensions.
+      operationId: api_projects_analytics_data_quality_agreement_analysis_dimensions_retrieve
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/DataQualityAgreementDimensions'
+                type: array
+          description: ''
+      security:
+        - Token: []
+      summary: '✨ Data quality: agreement by dimension'
+      tags:
+        - Stats
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - stats
+      x-fern-sdk-method-name: data_quality_agreement_dimensions
+  /api/projects/{id}/analytics/data-quality/agreement-analysis/distribution:
+    get:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Returns average agreement, histogram buckets, low-agreement count, and total tasks.
+      operationId: api_projects_analytics_data_quality_agreement_analysis_distribution_retrieve
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataQualityAgreementDistribution'
+          description: ''
+      security:
+        - Token: []
+      summary: '✨ Data quality: agreement distribution'
+      tags:
+        - Stats
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - stats
+      x-fern-sdk-method-name: data_quality_agreement_distribution
   /api/projects/{id}/annotation-history/:
     get:
       description: |-
@@ -11937,7 +12060,7 @@ paths:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Paginated, sortable member performance rows for annotation/review tables. Footer totals are returned by <code>member_performance_summary</code>. Guarded by <code>fflag_feat_lse_project_dashboards_v3_members_short</code>.
+        Paginated, sortable member performance rows for annotation/review tables. Guarded by <code>fflag_feat_lse_project_dashboards_v3_members_short</code>.
       operationId: api_projects_stats_member_performance_rows_retrieve
       parameters:
         - in: path
@@ -11991,7 +12114,7 @@ paths:
                       type: object
                     type: array
                 type: object
-          description: Member performance rows for one page (summary aggregates via member_performance_summary).
+          description: 'Member performance rows for one page (footer totals: member_performance_summary).'
         '404':
           description: Feature flag off or project not found.
       security:
@@ -12014,7 +12137,7 @@ paths:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Footer / Total aggregates for member performance tables. Use with paginated <code>member_performance_rows</code>. Guarded by <code>fflag_feat_lse_project_dashboards_v3_members_short</code>.
+        Footer / Total aggregates for annotation or review member tables. Use with paginated <code>member_performance_rows</code>. Guarded by <code>fflag_feat_lse_project_dashboards_v3_members_short</code>.
       operationId: api_projects_stats_member_performance_summary_retrieve
       parameters:
         - in: path
@@ -25970,6 +26093,90 @@ components:
         - overview
         - member_performance
       type: string
+    DataQualityAgreementConfusionMatrix:
+      properties:
+        labels:
+          items:
+            type: string
+          type: array
+        matrix:
+          items:
+            items:
+              type: integer
+            type: array
+          type: array
+        precision:
+          items:
+            format: double
+            type: number
+          type: array
+        recall:
+          items:
+            format: double
+            type: number
+          type: array
+        top_confusion_pairs:
+          items:
+            $ref: '#/components/schemas/DataQualityConfusionPair'
+          type: array
+      required:
+        - labels
+        - matrix
+        - precision
+        - recall
+        - top_confusion_pairs
+      type: object
+    DataQualityAgreementDimensions:
+      properties:
+        agreement:
+          format: double
+          nullable: true
+          type: number
+        name:
+          type: string
+      required:
+        - agreement
+        - name
+      type: object
+    DataQualityAgreementDistribution:
+      properties:
+        average_agreement:
+          format: double
+          nullable: true
+          type: number
+        histogram:
+          items:
+            type: integer
+          maxItems: 10
+          minItems: 10
+          type: array
+        low_agreement_count:
+          type: integer
+        total_tasks:
+          type: integer
+      required:
+        - average_agreement
+        - histogram
+        - low_agreement_count
+        - total_tasks
+      type: object
+    DataQualityConfusionPair:
+      properties:
+        actual:
+          type: string
+        count:
+          type: integer
+        label:
+          type: string
+        rate:
+          format: double
+          type: number
+      required:
+        - actual
+        - count
+        - label
+        - rate
+      type: object
     DatabricksExportStorage:
       description: Serializer for Databricks export storage with multi-auth support.
       properties:
