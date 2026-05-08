@@ -26302,10 +26302,13 @@ components:
           format: double
           nullable: true
           type: number
+        from_name:
+          type: string
         name:
           type: string
       required:
         - agreement
+        - from_name
         - name
       type: object
     DataQualityAgreementDistribution:
