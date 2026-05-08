@@ -5323,7 +5323,7 @@ paths:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Append one or more published versions to a saved interface with server-assigned stable version IDs.
+        Append one or more versions to a saved interface with server-assigned stable version IDs.
       operationId: api_interfaces_append_versions_create
       parameters:
         - in: path
@@ -12232,7 +12232,7 @@ paths:
           required: true
           schema:
             type: integer
-        - description: Comma-separated user IDs to include. When omitted, members are derived from the project.
+        - description: 'Comma-separated participant IDs: numeric user IDs and/or synthetic members as <code>model:&lt;version&gt;</code> (annotations table only). When omitted, members and distinct model versions are derived from the project.'
           in: query
           name: ids
           schema:
@@ -12309,7 +12309,7 @@ paths:
           required: true
           schema:
             type: integer
-        - description: Comma-separated user IDs. When omitted, members are derived from the project.
+        - description: 'Comma-separated participant IDs: numeric user IDs and/or <code>model:&lt;version&gt;</code> for annotations. When omitted, derived from the project.'
           in: query
           name: ids
           schema:
@@ -30061,6 +30061,8 @@ components:
           nullable: true
         paramsSchema:
           nullable: true
+        unpublished:
+          type: boolean
       required:
         - code
         - compiled
@@ -30077,7 +30079,11 @@ components:
         data_sample: {}
         input_schema: {}
         messages: {}
+        metadata: {}
         output_schema: {}
+        title:
+          minLength: 1
+          type: string
         versions:
           items:
             $ref: '#/components/schemas/LseInterfaceAppendVersionRequest'
