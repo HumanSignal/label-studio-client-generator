@@ -37608,6 +37608,10 @@ components:
           default: ''
           description: Project Description
           type: string
+        include_members:
+          default: true
+          description: Whether to include explicit project members and project role overrides in the duplicated project.
+          type: boolean
         mode:
           allOf:
             - $ref: '#/components/schemas/ProjectDuplicateModeEnum'
