@@ -30064,6 +30064,8 @@ components:
           nullable: true
         paramsSchema:
           nullable: true
+        screenParams:
+          nullable: true
         unpublished:
           type: boolean
       required:
