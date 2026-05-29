@@ -23940,6 +23940,7 @@ components:
           readOnly: true
           type: integer
         queue_left:
+          nullable: true
           readOnly: true
           type: integer
         queue_total:
@@ -23961,12 +23962,15 @@ components:
         review_settings:
           $ref: '#/components/schemas/ReviewSettings'
         review_total_tasks:
+          nullable: true
           readOnly: true
           type: integer
         reviewed_number:
+          nullable: true
           readOnly: true
           type: integer
         reviewer_queue_total:
+          nullable: true
           readOnly: true
           type: integer
         sampling:
@@ -30745,6 +30749,7 @@ components:
           readOnly: true
           type: integer
         queue_left:
+          nullable: true
           readOnly: true
           type: integer
         queue_total:
@@ -30754,9 +30759,11 @@ components:
           readOnly: true
           type: integer
         review_total_tasks:
+          nullable: true
           readOnly: true
           type: integer
         reviewed_number:
+          nullable: true
           readOnly: true
           type: integer
         skipped_annotations_number:
