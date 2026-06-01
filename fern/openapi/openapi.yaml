@@ -27133,6 +27133,10 @@ components:
         is_active:
           description: Whether this dimension is used in agreement calculations.
           type: boolean
+        is_categorical:
+          description: Whether this dimension produces categorical (primitive/scalar) values.
+          readOnly: true
+          type: boolean
         is_user_defined:
           description: Whether this dimension was manually created by a user. System-generated dimensions have this set to False.
           type: boolean
@@ -27167,6 +27171,7 @@ components:
         - created_at
         - created_by
         - id
+        - is_categorical
         - name
         - project
         - updated_at
@@ -27250,6 +27255,10 @@ components:
           description: Whether this dimension is used in agreement calculations.
           readOnly: true
           type: boolean
+        is_categorical:
+          description: Whether this dimension produces categorical (primitive/scalar) values.
+          readOnly: true
+          type: boolean
         is_user_defined:
           description: Whether this dimension was manually created by a user. System-generated dimensions have this set to False.
           readOnly: true
@@ -27287,6 +27296,7 @@ components:
         - extraction_method_params
         - id
         - is_active
+        - is_categorical
         - is_user_defined
         - metric_params
         - metric_type
