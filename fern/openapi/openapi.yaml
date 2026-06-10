@@ -5156,6 +5156,10 @@ paths:
       summary: ✨ List saved interfaces
       tags:
         - Interfaces
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: interfaces
+      x-fern-sdk-method-name: list
     post:
       description: |-
         <Card href="https://humansignal.com/goenterprise">
@@ -5190,6 +5194,10 @@ paths:
       summary: ✨ Create a saved interface
       tags:
         - Interfaces
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: interfaces
+      x-fern-sdk-method-name: create
   /api/interfaces/{id}/:
     delete:
       description: |-
@@ -5215,6 +5223,10 @@ paths:
       summary: ✨ Delete a saved interface
       tags:
         - Interfaces
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: interfaces
+      x-fern-sdk-method-name: delete
     get:
       description: |-
         <Card href="https://humansignal.com/goenterprise">
@@ -5243,6 +5255,10 @@ paths:
       summary: ✨ Get a saved interface
       tags:
         - Interfaces
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: interfaces
+      x-fern-sdk-method-name: get
     patch:
       description: |-
         <Card href="https://humansignal.com/goenterprise">
@@ -5282,6 +5298,10 @@ paths:
       summary: ✨ Partially update a saved interface
       tags:
         - Interfaces
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: interfaces
+      x-fern-sdk-method-name: partial_update
     put:
       description: |-
         <Card href="https://humansignal.com/goenterprise">
@@ -5322,6 +5342,10 @@ paths:
       summary: ✨ Update a saved interface
       tags:
         - Interfaces
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: interfaces
+      x-fern-sdk-method-name: update
   /api/interfaces/{id}/append_versions/:
     post:
       description: |-
@@ -5363,6 +5387,10 @@ paths:
       summary: ✨ Append saved interface versions
       tags:
         - Interfaces
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: interfaces
+      x-fern-sdk-method-name: append_versions
   /api/interfaces/{id}/duplicate/:
     post:
       description: |-
@@ -5404,6 +5432,10 @@ paths:
       summary: ✨ Duplicate a saved interface
       tags:
         - Interfaces
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: interfaces
+      x-fern-sdk-method-name: duplicate
   /api/interfaces/{id}/publish/:
     post:
       description: |-
@@ -5413,7 +5445,7 @@ paths:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Publish a saved interface version by ID.
+        Publish one saved interface version by stable version ID.
       operationId: api_interfaces_publish_create
       parameters:
         - in: path
@@ -5445,6 +5477,10 @@ paths:
       summary: ✨ Publish a saved interface version
       tags:
         - Interfaces
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: interfaces
+      x-fern-sdk-method-name: publish_version
   /api/interfaces/{id}/unpublish/:
     post:
       description: |-
@@ -5454,7 +5490,7 @@ paths:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Unpublish a saved interface version by ID.
+        Unpublish one saved interface version by stable version ID.
       operationId: api_interfaces_unpublish_create
       parameters:
         - in: path
@@ -5486,6 +5522,10 @@ paths:
       summary: ✨ Unpublish a saved interface version
       tags:
         - Interfaces
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: interfaces
+      x-fern-sdk-method-name: unpublish_version
   /api/interfaces/{id}/update_description/:
     post:
       description: |-
@@ -5495,7 +5535,7 @@ paths:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Update description for a saved interface version by ID.
+        Update the description for one saved interface version by stable version ID.
       operationId: api_interfaces_update_description_create
       parameters:
         - in: path
@@ -5527,6 +5567,10 @@ paths:
       summary: ✨ Update a saved interface version description
       tags:
         - Interfaces
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: interfaces
+      x-fern-sdk-method-name: update_version_description
   /api/invite:
     get:
       description: Get invite link for organization
@@ -10049,7 +10093,7 @@ paths:
   /api/projects/{id}/export/formats:
     get:
       deprecated: true
-      description: |2-
+      description: |-
 
                 This endpoint is deprecated in Enterprise. Use the async export API instead:
                 POST /api/projects/{{id}}/exports/ (see [Create new export](api:POST/api/projects/{id}/exports/)).
