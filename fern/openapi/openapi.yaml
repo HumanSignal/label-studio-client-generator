@@ -6080,6 +6080,915 @@ paths:
         - internal
       x-fern-sdk-group-name: labels
       x-fern-sdk-method-name: update
+  /api/learning-resources/:
+    get:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        List org-level courses.
+      operationId: api_learning_resources_list
+      parameters:
+        - description: Which field to use when ordering the results.
+          in: query
+          name: ordering
+          required: false
+          schema:
+            type: string
+        - description: A page number within the paginated result set.
+          in: query
+          name: page
+          required: false
+          schema:
+            type: integer
+        - description: Number of results to return per page.
+          in: query
+          name: page_size
+          required: false
+          schema:
+            type: integer
+        - description: A search term.
+          in: query
+          name: search
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedLearningResourceList'
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ List learning resources
+      tags:
+        - Learning Resources
+    post:
+      operationId: api_learning_resources_create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LearningResourceCreateRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/LearningResourceCreateRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/LearningResourceCreateRequest'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LearningResourceCreate'
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Create a learning resource
+      tags:
+        - Learning Resources
+  /api/learning-resources/{id}/:
+    delete:
+      operationId: api_learning_resources_destroy
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: No response body
+      security:
+        - Token: []
+      summary: ✨ Delete a learning resource
+      tags:
+        - Learning Resources
+    get:
+      operationId: api_learning_resources_retrieve
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LearningResourceDetail'
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Get a learning resource
+      tags:
+        - Learning Resources
+    patch:
+      operationId: api_learning_resources_partial_update
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedLearningResourceUpdateRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedLearningResourceUpdateRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedLearningResourceUpdateRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LearningResourceUpdate'
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Update a learning resource
+      tags:
+        - Learning Resources
+  /api/learning-resources/{id}/certificates/:
+    get:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        List all certificates issued for a course.
+      operationId: api_learning_resources_certificates_list
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+        - description: Which field to use when ordering the results.
+          in: query
+          name: ordering
+          required: false
+          schema:
+            type: string
+        - description: A page number within the paginated result set.
+          in: query
+          name: page
+          required: false
+          schema:
+            type: integer
+        - description: Number of results to return per page.
+          in: query
+          name: page_size
+          required: false
+          schema:
+            type: integer
+        - description: A search term.
+          in: query
+          name: search
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedCertificateList'
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ List certificates for a learning resource
+      tags:
+        - Learning Resources
+  /api/learning-resources/{id}/certificates/{certificate_id}/revoke/:
+    post:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Revoke a certificate issued for a learning resource.
+      operationId: api_learning_resources_certificates_revoke_create
+      parameters:
+        - in: path
+          name: certificate_id
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RevokeCertificateRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RevokeCertificateRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RevokeCertificateRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Certificate'
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Revoke a certificate
+      tags:
+        - Learning Resources
+  /api/learning-resources/{id}/duplicate/:
+    post:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Create a copy of a learning resource.
+      operationId: api_learning_resources_duplicate_create
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DuplicateLearningResourceRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/DuplicateLearningResourceRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/DuplicateLearningResourceRequest'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LearningResource'
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Duplicate a learning resource
+      tags:
+        - Learning Resources
+  /api/learning-resources/{id}/invalidate-progress/:
+    post:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Invalidate all learner progress for a learning resource.
+      operationId: api_learning_resources_invalidate_progress_create
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LearningResourceRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/LearningResourceRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/LearningResourceRequest'
+      responses:
+        '200':
+          description: No response body
+      security:
+        - Token: []
+      summary: ✨ Invalidate progress for a learning resource
+      tags:
+        - Learning Resources
+  /api/learning-resources/{id}/modules/:
+    get:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        List or create modules for a learning resource.
+      operationId: api_learning_resources_modules_list
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+        - description: Which field to use when ordering the results.
+          in: query
+          name: ordering
+          required: false
+          schema:
+            type: string
+        - description: A page number within the paginated result set.
+          in: query
+          name: page
+          required: false
+          schema:
+            type: integer
+        - description: Number of results to return per page.
+          in: query
+          name: page_size
+          required: false
+          schema:
+            type: integer
+        - description: A search term.
+          in: query
+          name: search
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedCourseModuleList'
+          description: ''
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CourseModule'
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ List or create modules for a learning resource
+      tags:
+        - Learning Resources
+    post:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        List or create modules for a learning resource.
+      operationId: api_learning_resources_modules_create
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+        - description: Which field to use when ordering the results.
+          in: query
+          name: ordering
+          required: false
+          schema:
+            type: string
+        - description: A page number within the paginated result set.
+          in: query
+          name: page
+          required: false
+          schema:
+            type: integer
+        - description: Number of results to return per page.
+          in: query
+          name: page_size
+          required: false
+          schema:
+            type: integer
+        - description: A search term.
+          in: query
+          name: search
+          required: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LearningResourceRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/LearningResourceRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/LearningResourceRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedCourseModuleList'
+          description: ''
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CourseModule'
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ List or create modules for a learning resource
+      tags:
+        - Learning Resources
+  /api/learning-resources/{id}/modules/reorder/:
+    post:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Reorder modules for a learning resource.
+      operationId: api_learning_resources_modules_reorder_create
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+        - description: Which field to use when ordering the results.
+          in: query
+          name: ordering
+          required: false
+          schema:
+            type: string
+        - description: A page number within the paginated result set.
+          in: query
+          name: page
+          required: false
+          schema:
+            type: integer
+        - description: Number of results to return per page.
+          in: query
+          name: page_size
+          required: false
+          schema:
+            type: integer
+        - description: A search term.
+          in: query
+          name: search
+          required: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LearningResourceRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/LearningResourceRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/LearningResourceRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedCourseModuleList'
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Reorder modules for a learning resource
+      tags:
+        - Learning Resources
+  /api/learning-resources/{id}/modules/{module_id}/:
+    delete:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Update or delete a module in a learning resource.
+      operationId: api_learning_resources_modules_destroy
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: module_id
+          required: true
+          schema:
+            pattern: ^\d+$
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CourseModule'
+          description: ''
+        '204':
+          description: No response body
+      security:
+        - Token: []
+      summary: ✨ Update or delete a module
+      tags:
+        - Learning Resources
+    patch:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Update or delete a module in a learning resource.
+      operationId: api_learning_resources_modules_partial_update
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: module_id
+          required: true
+          schema:
+            pattern: ^\d+$
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedLearningResourceRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedLearningResourceRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedLearningResourceRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CourseModule'
+          description: ''
+        '204':
+          description: No response body
+      security:
+        - Token: []
+      summary: ✨ Update or delete a module
+      tags:
+        - Learning Resources
+  /api/learning-resources/{id}/progress/:
+    post:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Update the current user's progress on a learning resource.
+      operationId: api_learning_resources_progress_create
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LearningProgressUpdateRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/LearningProgressUpdateRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/LearningProgressUpdateRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LearningProgressResponse'
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Update learner progress on a learning resource
+      tags:
+        - Learning Resources
+  /api/learning-resources/{id}/project-assignments/:
+    post:
+      description: Create project assignments for many projects in one request.
+      operationId: api_learning_resources_project_assignments_create
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkProjectLearningAssignmentRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/BulkProjectLearningAssignmentRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BulkProjectLearningAssignmentRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LearningResource'
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Bulk assign learning resource to projects
+      tags:
+        - Learning Resources
+  /api/learning-resources/{id}/publish/:
+    post:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Publish a learning resource to make it available to learners.
+      operationId: api_learning_resources_publish_create
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PublishLearningResourceRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PublishLearningResourceRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PublishLearningResourceRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LearningResource'
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Publish a learning resource
+      tags:
+        - Learning Resources
+  /api/learning-resources/{id}/take/:
+    get:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get a published learning resource available for standalone access.
+      operationId: api_learning_resources_take_retrieve
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LearningResourceDetail'
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Get a standalone learning resource
+      tags:
+        - Learning Resources
+  /api/learning-resources/{id}/unpublish/:
+    post:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Unpublish a learning resource to hide it from learners.
+      operationId: api_learning_resources_unpublish_create
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LearningResourceRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/LearningResourceRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/LearningResourceRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LearningResource'
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Unpublish a learning resource
+      tags:
+        - Learning Resources
+  /api/learning-resources/{id}/upload/:
+    post:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Upload a file asset for use in a learning resource.
+      operationId: api_learning_resources_upload_create
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LearningResourceRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/LearningResourceRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/LearningResourceRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LearningResourceUploadResponse'
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Upload a file for a learning resource
+      tags:
+        - Learning Resources
+  /api/learning-resources/{id}/user-progress/:
+    get:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Paginated progress for users who started the course.
+      operationId: api_learning_resources_user_progress_list
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+        - description: Which field to use when ordering the results.
+          in: query
+          name: ordering
+          required: false
+          schema:
+            type: string
+        - description: A page number within the paginated result set.
+          in: query
+          name: page
+          required: false
+          schema:
+            type: integer
+        - description: Number of results to return per page.
+          in: query
+          name: page_size
+          required: false
+          schema:
+            type: integer
+        - description: A search term.
+          in: query
+          name: search
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedUserLearningProgressListList'
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ List user progress for a learning resource
+      tags:
+        - Learning Resources
+  /api/learning-resources/{id}/user-progress/{user_id}/reset/:
+    post:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Delete a learner's progress on this course and revoke their certificate so they must retake it.
+      operationId: api_learning_resources_user_progress_reset_create
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: user_id
+          required: true
+          schema:
+            pattern: ^\d+$
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LearningResourceRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/LearningResourceRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/LearningResourceRequest'
+      responses:
+        '204':
+          description: No response body
+      security:
+        - Token: []
+      summary: ✨ Reset user progress on a learning resource
+      tags:
+        - Learning Resources
   /api/llm/openai/chat/completions:
     post:
       description: 'Proxy requests to OpenAI-compatible chat completions APIs and return the full response payload. Supports multiple providers via model parameter format: "model_name" (defaults to OpenAI), "provider/model_name", or "provider:model_name". Works with providers that offer OpenAI-compatible endpoints.'
@@ -13602,6 +14511,116 @@ paths:
         - Dimensions
       x-fern-audiences:
         - internal
+  /api/projects/{project_pk}/learning-assignments/:
+    get:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        List all learning resource assignments for a project.
+      operationId: api_projects_learning_assignments_retrieve
+      parameters:
+        - in: path
+          name: project_pk
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: No response body
+      security:
+        - Token: []
+      summary: ✨ List learning assignments for a project
+      tags:
+        - Learning Resources
+    post:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Create a learning resource assignment for a project.
+      operationId: api_projects_learning_assignments_create
+      parameters:
+        - in: path
+          name: project_pk
+          required: true
+          schema:
+            type: integer
+      responses:
+        '201':
+          description: No response body
+      security:
+        - Token: []
+      summary: ✨ Assign a learning resource to a project
+      tags:
+        - Learning Resources
+  /api/projects/{project_pk}/learning-assignments/reorder/:
+    patch:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Reorder the learning resource assignments for a project.
+      operationId: api_projects_learning_assignments_reorder_partial_update
+      parameters:
+        - in: path
+          name: project_pk
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ProjectLearningAssignment'
+                type: array
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Reorder learning assignments for a project
+      tags:
+        - Learning Resources
+  /api/projects/{project_pk}/learning-assignments/{id}/:
+    delete:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Delete a learning resource assignment from a project.
+      operationId: api_projects_learning_assignments_destroy
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: project_pk
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: No response body
+      security:
+        - Token: []
+      summary: ✨ Remove a learning assignment from a project
+      tags:
+        - Learning Resources
   /api/projects/{project_pk}/members/{user_pk}/pauses/:
     get:
       description: |-
@@ -22202,6 +23221,31 @@ paths:
         - public
       x-fern-sdk-group-name: users
       x-fern-sdk-method-name: create
+  /api/users/me/certificates/:
+    get:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        List all certificates issued to the current user.
+      operationId: api_users_me_certificates_list
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Certificate'
+                type: array
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ List certificates for the current user
+      tags:
+        - Learning Resources
   /api/users/{id}/:
     delete:
       description: |-
@@ -25916,12 +26960,63 @@ components:
       required:
         - all
       type: object
+    BulkProjectLearningAssignmentRequest:
+      properties:
+        project_ids:
+          items:
+            minimum: 1
+            type: integer
+          type: array
+      required:
+        - project_ids
+      type: object
     CancelModelRunResponse:
       properties:
         detail:
           type: string
       required:
         - detail
+      type: object
+    Certificate:
+      properties:
+        completed_at:
+          format: date-time
+          readOnly: true
+          type: string
+        created_at:
+          format: date-time
+          readOnly: true
+          type: string
+        expires_at:
+          format: date-time
+          nullable: true
+          readOnly: true
+          type: string
+        id:
+          readOnly: true
+          type: integer
+        learning_resource:
+          readOnly: true
+          type: integer
+        metadata:
+          readOnly: true
+        revoked_at:
+          format: date-time
+          nullable: true
+          readOnly: true
+          type: string
+        serial_number:
+          readOnly: true
+          type: string
+      required:
+        - completed_at
+        - created_at
+        - expires_at
+        - id
+        - learning_resource
+        - metadata
+        - revoked_at
+        - serial_number
       type: object
     CheckMatchingFunctionRequestRequest:
       properties:
@@ -26304,6 +27399,43 @@ components:
         - count
         - limit
         - reached
+      type: object
+    CourseModule:
+      properties:
+        content: {}
+        created_at:
+          format: date-time
+          readOnly: true
+          type: string
+        id:
+          readOnly: true
+          type: integer
+        learning_resource:
+          readOnly: true
+          type: integer
+        marked_stale:
+          type: boolean
+        page_count:
+          readOnly: true
+          type: string
+        sort_order:
+          default: 0
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+        title:
+          maxLength: 255
+          type: string
+        updated_at:
+          format: date-time
+          readOnly: true
+          type: string
+      required:
+        - created_at
+        - id
+        - learning_resource
+        - page_count
+        - updated_at
       type: object
     CustomFunctionCodeRequestRequest:
       properties:
@@ -27394,6 +28526,12 @@ components:
       required:
         - name
       type: object
+    DuplicateLearningResourceRequest:
+      properties:
+        workspace:
+          nullable: true
+          type: integer
+      type: object
     EditionEnum:
       description: |-
         * `Community` - Community
@@ -27401,6 +28539,18 @@ components:
       enum:
         - Community
         - Enterprise
+      type: string
+    EstimatedDurationUnitEnum:
+      description: |-
+        * `minutes` - Minutes
+        * `hours` - Hours
+        * `days` - Days
+        * `weeks` - Weeks
+      enum:
+        - minutes
+        - hours
+        - days
+        - weeks
       type: string
     Export:
       properties:
@@ -29654,6 +30804,400 @@ components:
         - fixed_and_accepted
         - deleted_review
       type: string
+    LearningProgressResponse:
+      properties:
+        completed_at:
+          format: date-time
+          nullable: true
+          type: string
+        gating:
+          additionalProperties: {}
+          type: object
+        is_stale:
+          type: boolean
+        module_progress:
+          additionalProperties: {}
+          type: object
+        pages_visited:
+          items:
+            type: string
+          type: array
+        quiz_results:
+          additionalProperties: {}
+          type: object
+        resource_version:
+          type: integer
+        time_spent_seconds:
+          type: integer
+      required:
+        - completed_at
+        - gating
+        - is_stale
+        - pages_visited
+        - quiz_results
+        - resource_version
+        - time_spent_seconds
+      type: object
+    LearningProgressUpdateRequest:
+      properties:
+        answers:
+          additionalProperties: {}
+          type: object
+        mark_complete:
+          default: false
+          type: boolean
+        module_id:
+          type: integer
+        page_id:
+          minLength: 1
+          type: string
+        passed:
+          type: boolean
+        quiz_id:
+          minLength: 1
+          type: string
+        time_spent_seconds:
+          minimum: 0
+          type: integer
+      type: object
+    LearningResource:
+      properties:
+        allow_standalone:
+          type: boolean
+        color:
+          maxLength: 16
+          nullable: true
+          type: string
+        content:
+          readOnly: true
+          type: string
+        content_version:
+          readOnly: true
+          type: integer
+        cover_image_url:
+          maxLength: 1024
+          type: string
+        created_at:
+          format: date-time
+          readOnly: true
+          type: string
+        created_by:
+          allOf:
+            - $ref: '#/components/schemas/UserSimple'
+          readOnly: true
+        default_allow_manual_access:
+          type: boolean
+        default_gate_before_first_annotation:
+          type: boolean
+        estimated_duration_unit:
+          $ref: '#/components/schemas/EstimatedDurationUnitEnum'
+        estimated_duration_value:
+          maximum: 2147483647
+          minimum: 0
+          nullable: true
+          type: integer
+        generate_certificate_on_completion:
+          type: boolean
+        has_unpublished_changes:
+          nullable: true
+          readOnly: true
+          type: boolean
+        hide_completed_quizzes:
+          type: boolean
+        id:
+          readOnly: true
+          type: integer
+        is_published:
+          readOnly: true
+          type: boolean
+        learner_count:
+          readOnly: true
+          type: string
+        learners_completed_count:
+          readOnly: true
+          type: string
+        learners_started_count:
+          readOnly: true
+          type: string
+        module_count:
+          readOnly: true
+          type: string
+        organization:
+          readOnly: true
+          type: integer
+        page_count:
+          readOnly: true
+          type: string
+        project_count:
+          readOnly: true
+          type: string
+        summary:
+          type: string
+        title:
+          maxLength: 255
+          type: string
+        updated_at:
+          format: date-time
+          readOnly: true
+          type: string
+        updated_by:
+          allOf:
+            - $ref: '#/components/schemas/UserSimple'
+          readOnly: true
+        workspace:
+          nullable: true
+          type: integer
+      required:
+        - content
+        - content_version
+        - created_at
+        - created_by
+        - has_unpublished_changes
+        - id
+        - is_published
+        - learner_count
+        - learners_completed_count
+        - learners_started_count
+        - module_count
+        - organization
+        - page_count
+        - project_count
+        - updated_at
+        - updated_by
+      type: object
+    LearningResourceCreate:
+      properties:
+        default_allow_manual_access:
+          type: boolean
+        default_gate_before_first_annotation:
+          type: boolean
+        summary:
+          type: string
+        title:
+          maxLength: 255
+          type: string
+        workspace:
+          nullable: true
+          type: integer
+      type: object
+    LearningResourceCreateRequest:
+      properties:
+        default_allow_manual_access:
+          type: boolean
+        default_gate_before_first_annotation:
+          type: boolean
+        summary:
+          type: string
+        title:
+          maxLength: 255
+          minLength: 1
+          type: string
+        workspace:
+          nullable: true
+          type: integer
+      type: object
+    LearningResourceDetail:
+      properties:
+        allow_standalone:
+          type: boolean
+        color:
+          maxLength: 16
+          nullable: true
+          type: string
+        content:
+          readOnly: true
+          type: string
+        content_version:
+          readOnly: true
+          type: integer
+        cover_image_url:
+          maxLength: 1024
+          type: string
+        created_at:
+          format: date-time
+          readOnly: true
+          type: string
+        created_by:
+          allOf:
+            - $ref: '#/components/schemas/UserSimple'
+          readOnly: true
+        default_allow_manual_access:
+          type: boolean
+        default_gate_before_first_annotation:
+          type: boolean
+        estimated_duration_unit:
+          $ref: '#/components/schemas/EstimatedDurationUnitEnum'
+        estimated_duration_value:
+          maximum: 2147483647
+          minimum: 0
+          nullable: true
+          type: integer
+        generate_certificate_on_completion:
+          type: boolean
+        has_unpublished_changes:
+          nullable: true
+          readOnly: true
+          type: boolean
+        hide_completed_quizzes:
+          type: boolean
+        id:
+          readOnly: true
+          type: integer
+        is_published:
+          readOnly: true
+          type: boolean
+        learner_count:
+          readOnly: true
+          type: string
+        learners_completed_count:
+          readOnly: true
+          type: string
+        learners_started_count:
+          readOnly: true
+          type: string
+        module_count:
+          readOnly: true
+          type: string
+        modules:
+          items:
+            $ref: '#/components/schemas/CourseModule'
+          readOnly: true
+          type: array
+        organization:
+          readOnly: true
+          type: integer
+        page_count:
+          readOnly: true
+          type: string
+        progress:
+          readOnly: true
+          type: string
+        project_assignments:
+          readOnly: true
+          type: string
+        project_count:
+          readOnly: true
+          type: string
+        summary:
+          type: string
+        title:
+          maxLength: 255
+          type: string
+        unpublished_module_ids:
+          readOnly: true
+          type: string
+        updated_at:
+          format: date-time
+          readOnly: true
+          type: string
+        updated_by:
+          allOf:
+            - $ref: '#/components/schemas/UserSimple'
+          readOnly: true
+        workspace:
+          nullable: true
+          type: integer
+      required:
+        - content
+        - content_version
+        - created_at
+        - created_by
+        - has_unpublished_changes
+        - id
+        - is_published
+        - learner_count
+        - learners_completed_count
+        - learners_started_count
+        - module_count
+        - modules
+        - organization
+        - page_count
+        - progress
+        - project_assignments
+        - project_count
+        - unpublished_module_ids
+        - updated_at
+        - updated_by
+      type: object
+    LearningResourceRequest:
+      properties:
+        allow_standalone:
+          type: boolean
+        color:
+          maxLength: 16
+          nullable: true
+          type: string
+        cover_image_url:
+          maxLength: 1024
+          type: string
+        default_allow_manual_access:
+          type: boolean
+        default_gate_before_first_annotation:
+          type: boolean
+        estimated_duration_unit:
+          $ref: '#/components/schemas/EstimatedDurationUnitEnum'
+        estimated_duration_value:
+          maximum: 2147483647
+          minimum: 0
+          nullable: true
+          type: integer
+        generate_certificate_on_completion:
+          type: boolean
+        hide_completed_quizzes:
+          type: boolean
+        summary:
+          type: string
+        title:
+          maxLength: 255
+          minLength: 1
+          type: string
+        workspace:
+          nullable: true
+          type: integer
+      type: object
+    LearningResourceUpdate:
+      properties:
+        allow_standalone:
+          type: boolean
+        color:
+          maxLength: 16
+          nullable: true
+          type: string
+        cover_image_url:
+          maxLength: 1024
+          type: string
+        default_allow_manual_access:
+          type: boolean
+        default_gate_before_first_annotation:
+          type: boolean
+        estimated_duration_unit:
+          $ref: '#/components/schemas/EstimatedDurationUnitEnum'
+        estimated_duration_value:
+          maximum: 2147483647
+          minimum: 0
+          nullable: true
+          type: integer
+        generate_certificate_on_completion:
+          type: boolean
+        hide_completed_quizzes:
+          type: boolean
+        summary:
+          type: string
+        title:
+          maxLength: 255
+          type: string
+        workspace:
+          nullable: true
+          type: integer
+      type: object
+    LearningResourceUploadResponse:
+      properties:
+        url:
+          format: uri
+          type: string
+      required:
+        - url
+      type: object
     LocalFilesExportStorage:
       properties:
         can_delete_objects:
@@ -34519,6 +36063,52 @@ components:
         - count
         - results
       type: object
+    PaginatedCertificateList:
+      properties:
+        count:
+          example: 123
+          type: integer
+        next:
+          example: http://api.example.org/accounts/?page=4
+          format: uri
+          nullable: true
+          type: string
+        previous:
+          example: http://api.example.org/accounts/?page=2
+          format: uri
+          nullable: true
+          type: string
+        results:
+          items:
+            $ref: '#/components/schemas/Certificate'
+          type: array
+      required:
+        - count
+        - results
+      type: object
+    PaginatedCourseModuleList:
+      properties:
+        count:
+          example: 123
+          type: integer
+        next:
+          example: http://api.example.org/accounts/?page=4
+          format: uri
+          nullable: true
+          type: string
+        previous:
+          example: http://api.example.org/accounts/?page=2
+          format: uri
+          nullable: true
+          type: string
+        results:
+          items:
+            $ref: '#/components/schemas/CourseModule'
+          type: array
+      required:
+        - count
+        - results
+      type: object
     PaginatedLabelCreateList:
       properties:
         count:
@@ -34583,6 +36173,29 @@ components:
         results:
           items:
             $ref: '#/components/schemas/Label'
+          type: array
+      required:
+        - count
+        - results
+      type: object
+    PaginatedLearningResourceList:
+      properties:
+        count:
+          example: 123
+          type: integer
+        next:
+          example: http://api.example.org/accounts/?page=4
+          format: uri
+          nullable: true
+          type: string
+        previous:
+          example: http://api.example.org/accounts/?page=2
+          format: uri
+          nullable: true
+          type: string
+        results:
+          items:
+            $ref: '#/components/schemas/LearningResource'
           type: array
       required:
         - count
@@ -34915,6 +36528,29 @@ components:
         results:
           items:
             $ref: '#/components/schemas/StateModel'
+          type: array
+      required:
+        - count
+        - results
+      type: object
+    PaginatedUserLearningProgressListList:
+      properties:
+        count:
+          example: 123
+          type: integer
+        next:
+          example: http://api.example.org/accounts/?page=4
+          format: uri
+          nullable: true
+          type: string
+        previous:
+          example: http://api.example.org/accounts/?page=2
+          format: uri
+          nullable: true
+          type: string
+        results:
+          items:
+            $ref: '#/components/schemas/UserLearningProgressList'
           type: array
       required:
         - count
@@ -36164,6 +37800,78 @@ components:
           type: string
         value:
           description: Label value
+      type: object
+    PatchedLearningResourceRequest:
+      properties:
+        allow_standalone:
+          type: boolean
+        color:
+          maxLength: 16
+          nullable: true
+          type: string
+        cover_image_url:
+          maxLength: 1024
+          type: string
+        default_allow_manual_access:
+          type: boolean
+        default_gate_before_first_annotation:
+          type: boolean
+        estimated_duration_unit:
+          $ref: '#/components/schemas/EstimatedDurationUnitEnum'
+        estimated_duration_value:
+          maximum: 2147483647
+          minimum: 0
+          nullable: true
+          type: integer
+        generate_certificate_on_completion:
+          type: boolean
+        hide_completed_quizzes:
+          type: boolean
+        summary:
+          type: string
+        title:
+          maxLength: 255
+          minLength: 1
+          type: string
+        workspace:
+          nullable: true
+          type: integer
+      type: object
+    PatchedLearningResourceUpdateRequest:
+      properties:
+        allow_standalone:
+          type: boolean
+        color:
+          maxLength: 16
+          nullable: true
+          type: string
+        cover_image_url:
+          maxLength: 1024
+          type: string
+        default_allow_manual_access:
+          type: boolean
+        default_gate_before_first_annotation:
+          type: boolean
+        estimated_duration_unit:
+          $ref: '#/components/schemas/EstimatedDurationUnitEnum'
+        estimated_duration_value:
+          maximum: 2147483647
+          minimum: 0
+          nullable: true
+          type: integer
+        generate_certificate_on_completion:
+          type: boolean
+        hide_completed_quizzes:
+          type: boolean
+        summary:
+          type: string
+        title:
+          maxLength: 255
+          minLength: 1
+          type: string
+        workspace:
+          nullable: true
+          type: integer
       type: object
     PatchedLseInterfaceRequest:
       properties:
@@ -37827,6 +39535,41 @@ components:
       required:
         - label_config
       type: object
+    ProjectLearningAssignment:
+      properties:
+        allow_manual_access:
+          type: boolean
+        created_at:
+          format: date-time
+          readOnly: true
+          type: string
+        gate_before_first_annotation:
+          type: boolean
+        id:
+          readOnly: true
+          type: integer
+        learning_resource:
+          allOf:
+            - $ref: '#/components/schemas/LearningResource'
+          readOnly: true
+        project:
+          readOnly: true
+          type: integer
+        sort_order:
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+        updated_at:
+          format: date-time
+          readOnly: true
+          type: string
+      required:
+        - created_at
+        - id
+        - learning_resource
+        - project
+        - updated_at
+      type: object
     ProjectMember:
       properties:
         user:
@@ -38149,6 +39892,16 @@ components:
         - Anthropic
         - Custom
       type: string
+    PublishLearningResourceRequest:
+      properties:
+        force_reshown:
+          default: false
+          type: boolean
+        retake_scope:
+          allOf:
+            - $ref: '#/components/schemas/RetakeScopeEnum'
+          default: none
+      type: object
     ReEvaluate:
       properties:
         mode:
@@ -38461,6 +40214,16 @@ components:
         - remove
         - flexible
       type: string
+    RetakeScopeEnum:
+      description: |-
+        * `none` - none
+        * `full` - full
+        * `changed_modules` - changed_modules
+      enum:
+        - none
+        - full
+        - changed_modules
+      type: string
     ReviewCriteriaEnum:
       description: |-
         * `all` - Task is reviewed if all annotations are reviewed
@@ -38717,6 +40480,12 @@ components:
       enum:
         - only
         - exclude
+    RevokeCertificateRequest:
+      properties:
+        reason:
+          default: ''
+          type: string
+      type: object
     RevokeInviteRequest:
       properties:
         email:
@@ -40451,6 +42220,59 @@ components:
         - AN
         - RE
       type: string
+    UserLearningProgressList:
+      properties:
+        completed_at:
+          format: date-time
+          nullable: true
+          readOnly: true
+          type: string
+        is_stale:
+          readOnly: true
+          type: boolean
+        last_module_title:
+          readOnly: true
+          type: string
+        last_page_id:
+          readOnly: true
+          type: string
+        last_page_title:
+          readOnly: true
+          type: string
+        progress_percent:
+          readOnly: true
+          type: string
+        requires_retake:
+          readOnly: true
+          type: string
+        started_at:
+          format: date-time
+          nullable: true
+          readOnly: true
+          type: string
+        status:
+          readOnly: true
+          type: string
+        time_spent_seconds:
+          readOnly: true
+          type: integer
+        user:
+          allOf:
+            - $ref: '#/components/schemas/UserSimple'
+          readOnly: true
+      required:
+        - completed_at
+        - is_stale
+        - last_module_title
+        - last_page_id
+        - last_page_title
+        - progress_percent
+        - requires_retake
+        - started_at
+        - status
+        - time_spent_seconds
+        - user
+      type: object
     UserSimple:
       description: |-
         A ModelSerializer that takes additional arguments for
