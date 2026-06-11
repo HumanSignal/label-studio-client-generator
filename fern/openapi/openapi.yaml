@@ -9928,6 +9928,11 @@ paths:
           name: search
           schema:
             type: string
+        - description: Filter lse_project__source_interface_id by exact match
+          in: query
+          name: source_interface_id
+          schema:
+            type: number
         - description: Filter current_state by exact match
           in: query
           name: state
@@ -10041,6 +10046,11 @@ paths:
           name: search
           schema:
             type: string
+        - description: Filter lse_project__source_interface_id by exact match
+          in: query
+          name: source_interface_id
+          schema:
+            type: number
         - description: Filter current_state by exact match
           in: query
           name: state
