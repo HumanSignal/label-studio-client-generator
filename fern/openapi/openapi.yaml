@@ -42250,6 +42250,8 @@ components:
         last_page_title:
           readOnly: true
           type: string
+        pages_visited:
+          readOnly: true
         progress_percent:
           readOnly: true
           type: string
@@ -42280,6 +42282,7 @@ components:
         - last_module_title
         - last_page_id
         - last_page_title
+        - pages_visited
         - progress_percent
         - quiz_summary
         - requires_retake
