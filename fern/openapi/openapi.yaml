@@ -30810,6 +30810,9 @@ components:
           format: date-time
           nullable: true
           type: string
+        course_reset:
+          default: false
+          type: boolean
         gating:
           additionalProperties: {}
           type: object
@@ -30851,8 +30854,6 @@ components:
         page_id:
           minLength: 1
           type: string
-        passed:
-          type: boolean
         quiz_id:
           minLength: 1
           type: string
@@ -42242,6 +42243,9 @@ components:
         progress_percent:
           readOnly: true
           type: string
+        quiz_summary:
+          readOnly: true
+          type: string
         requires_retake:
           readOnly: true
           type: string
@@ -42267,6 +42271,7 @@ components:
         - last_page_id
         - last_page_title
         - progress_percent
+        - quiz_summary
         - requires_retake
         - started_at
         - status
