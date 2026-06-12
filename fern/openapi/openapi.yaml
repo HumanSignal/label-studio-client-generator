@@ -31057,6 +31057,11 @@ components:
         is_published:
           readOnly: true
           type: boolean
+        learner_content:
+          additionalProperties: true
+          nullable: true
+          readOnly: true
+          type: object
         learner_count:
           readOnly: true
           type: string
@@ -31116,6 +31121,7 @@ components:
         - has_unpublished_changes
         - id
         - is_published
+        - learner_content
         - learner_count
         - learners_completed_count
         - learners_started_count
@@ -42251,7 +42257,10 @@ components:
           readOnly: true
           type: string
         pages_visited:
+          items:
+            type: string
           readOnly: true
+          type: array
         progress_percent:
           readOnly: true
           type: string
