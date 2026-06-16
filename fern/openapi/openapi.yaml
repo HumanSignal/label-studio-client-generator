@@ -6947,6 +6947,88 @@ paths:
       summary: ✨ List user progress for a learning resource
       tags:
         - Learning Resources
+  /api/learning-resources/{id}/user-progress/bulk-reset/:
+    post:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Delete multiple learners' progress on this course and revoke their certificates.
+      operationId: api_learning_resources_user_progress_bulk_reset_create
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkResetCourseProgressRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/BulkResetCourseProgressRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BulkResetCourseProgressRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  reset_count:
+                    type: integer
+                type: object
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Bulk reset user progress on a learning resource
+      tags:
+        - Learning Resources
+  /api/learning-resources/{id}/user-progress/import/:
+    post:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Upload a CSV export to mark organization members as having completed the course.
+      operationId: api_learning_resources_user_progress_import_create
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              properties:
+                file:
+                  format: binary
+                  type: string
+              type: object
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CourseProgressImportResult'
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Import completed learner progress from CSV
+      tags:
+        - Learning Resources
   /api/learning-resources/{id}/user-progress/{user_id}/reset/:
     post:
       description: |-
@@ -26980,6 +27062,16 @@ components:
       required:
         - project_ids
       type: object
+    BulkResetCourseProgressRequest:
+      properties:
+        user_ids:
+          items:
+            minimum: 1
+            type: integer
+          type: array
+      required:
+        - user_ids
+      type: object
     CancelModelRunResponse:
       properties:
         detail:
@@ -27446,6 +27538,35 @@ components:
         - learning_resource
         - page_count
         - updated_at
+      type: object
+    CourseProgressImportResult:
+      properties:
+        imported_count:
+          type: integer
+        imported_emails:
+          items:
+            format: email
+            type: string
+          type: array
+        skipped_invalid:
+          items:
+            additionalProperties: {}
+            type: object
+          type: array
+        skipped_not_completed:
+          items:
+            type: string
+          type: array
+        skipped_not_in_org:
+          items:
+            type: string
+          type: array
+      required:
+        - imported_count
+        - imported_emails
+        - skipped_invalid
+        - skipped_not_completed
+        - skipped_not_in_org
       type: object
     CustomFunctionCodeRequestRequest:
       properties:
@@ -42244,6 +42365,11 @@ components:
           nullable: true
           readOnly: true
           type: string
+        imported_at:
+          format: date-time
+          nullable: true
+          readOnly: true
+          type: string
         is_stale:
           readOnly: true
           type: boolean
@@ -42287,6 +42413,7 @@ components:
           readOnly: true
       required:
         - completed_at
+        - imported_at
         - is_stale
         - last_module_title
         - last_page_id
