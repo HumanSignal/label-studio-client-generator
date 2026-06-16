@@ -31019,7 +31019,20 @@ components:
           readOnly: true
         default_allow_manual_access:
           type: boolean
-        default_gate_before_first_annotation:
+        default_gate_annotator_data_manager:
+          nullable: true
+          type: boolean
+        default_gate_annotator_label_stream:
+          nullable: true
+          type: boolean
+        default_gate_reviewer_data_manager:
+          nullable: true
+          type: boolean
+        default_gate_reviewer_label_stream:
+          nullable: true
+          type: boolean
+        default_gate_reviewer_review_stream:
+          nullable: true
           type: boolean
         estimated_duration_unit:
           $ref: '#/components/schemas/EstimatedDurationUnitEnum'
@@ -31101,7 +31114,20 @@ components:
       properties:
         default_allow_manual_access:
           type: boolean
-        default_gate_before_first_annotation:
+        default_gate_annotator_data_manager:
+          nullable: true
+          type: boolean
+        default_gate_annotator_label_stream:
+          nullable: true
+          type: boolean
+        default_gate_reviewer_data_manager:
+          nullable: true
+          type: boolean
+        default_gate_reviewer_label_stream:
+          nullable: true
+          type: boolean
+        default_gate_reviewer_review_stream:
+          nullable: true
           type: boolean
         summary:
           type: string
@@ -31116,7 +31142,20 @@ components:
       properties:
         default_allow_manual_access:
           type: boolean
-        default_gate_before_first_annotation:
+        default_gate_annotator_data_manager:
+          nullable: true
+          type: boolean
+        default_gate_annotator_label_stream:
+          nullable: true
+          type: boolean
+        default_gate_reviewer_data_manager:
+          nullable: true
+          type: boolean
+        default_gate_reviewer_label_stream:
+          nullable: true
+          type: boolean
+        default_gate_reviewer_review_stream:
+          nullable: true
           type: boolean
         summary:
           type: string
@@ -31155,7 +31194,20 @@ components:
           readOnly: true
         default_allow_manual_access:
           type: boolean
-        default_gate_before_first_annotation:
+        default_gate_annotator_data_manager:
+          nullable: true
+          type: boolean
+        default_gate_annotator_label_stream:
+          nullable: true
+          type: boolean
+        default_gate_reviewer_data_manager:
+          nullable: true
+          type: boolean
+        default_gate_reviewer_label_stream:
+          nullable: true
+          type: boolean
+        default_gate_reviewer_review_stream:
+          nullable: true
           type: boolean
         estimated_duration_unit:
           $ref: '#/components/schemas/EstimatedDurationUnitEnum'
@@ -31270,7 +31322,20 @@ components:
           type: string
         default_allow_manual_access:
           type: boolean
-        default_gate_before_first_annotation:
+        default_gate_annotator_data_manager:
+          nullable: true
+          type: boolean
+        default_gate_annotator_label_stream:
+          nullable: true
+          type: boolean
+        default_gate_reviewer_data_manager:
+          nullable: true
+          type: boolean
+        default_gate_reviewer_label_stream:
+          nullable: true
+          type: boolean
+        default_gate_reviewer_review_stream:
+          nullable: true
           type: boolean
         estimated_duration_unit:
           $ref: '#/components/schemas/EstimatedDurationUnitEnum'
@@ -31306,7 +31371,20 @@ components:
           type: string
         default_allow_manual_access:
           type: boolean
-        default_gate_before_first_annotation:
+        default_gate_annotator_data_manager:
+          nullable: true
+          type: boolean
+        default_gate_annotator_label_stream:
+          nullable: true
+          type: boolean
+        default_gate_reviewer_data_manager:
+          nullable: true
+          type: boolean
+        default_gate_reviewer_label_stream:
+          nullable: true
+          type: boolean
+        default_gate_reviewer_review_stream:
+          nullable: true
           type: boolean
         estimated_duration_unit:
           $ref: '#/components/schemas/EstimatedDurationUnitEnum'
@@ -37952,7 +38030,20 @@ components:
           type: string
         default_allow_manual_access:
           type: boolean
-        default_gate_before_first_annotation:
+        default_gate_annotator_data_manager:
+          nullable: true
+          type: boolean
+        default_gate_annotator_label_stream:
+          nullable: true
+          type: boolean
+        default_gate_reviewer_data_manager:
+          nullable: true
+          type: boolean
+        default_gate_reviewer_label_stream:
+          nullable: true
+          type: boolean
+        default_gate_reviewer_review_stream:
+          nullable: true
           type: boolean
         estimated_duration_unit:
           $ref: '#/components/schemas/EstimatedDurationUnitEnum'
@@ -37988,7 +38079,20 @@ components:
           type: string
         default_allow_manual_access:
           type: boolean
-        default_gate_before_first_annotation:
+        default_gate_annotator_data_manager:
+          nullable: true
+          type: boolean
+        default_gate_annotator_label_stream:
+          nullable: true
+          type: boolean
+        default_gate_reviewer_data_manager:
+          nullable: true
+          type: boolean
+        default_gate_reviewer_label_stream:
+          nullable: true
+          type: boolean
+        default_gate_reviewer_review_stream:
+          nullable: true
           type: boolean
         estimated_duration_unit:
           $ref: '#/components/schemas/EstimatedDurationUnitEnum'
@@ -39681,7 +39785,20 @@ components:
           format: date-time
           readOnly: true
           type: string
-        gate_before_first_annotation:
+        gate_annotator_data_manager:
+          nullable: true
+          type: boolean
+        gate_annotator_label_stream:
+          nullable: true
+          type: boolean
+        gate_reviewer_data_manager:
+          nullable: true
+          type: boolean
+        gate_reviewer_label_stream:
+          nullable: true
+          type: boolean
+        gate_reviewer_review_stream:
+          nullable: true
           type: boolean
         id:
           readOnly: true
