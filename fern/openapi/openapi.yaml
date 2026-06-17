@@ -27532,12 +27532,17 @@ components:
           format: date-time
           readOnly: true
           type: string
+        updated_by:
+          allOf:
+            - $ref: '#/components/schemas/UserSimple'
+          readOnly: true
       required:
         - created_at
         - id
         - learning_resource
         - page_count
         - updated_at
+        - updated_by
       type: object
     CourseProgressImportResult:
       properties:
