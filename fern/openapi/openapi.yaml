@@ -3551,6 +3551,214 @@ paths:
         - public
       x-fern-sdk-group-name: dimensions
       x-fern-sdk-method-name: get_backfill_status
+  /api/dimensions/value-counts-backfill/:
+    delete:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Cancel Dimension value-counts backfill jobs for the authenticated user's active organization. Cancel a specific job by job_id, all jobs for a specific project by project_id, or all backfill jobs for the entire organization if neither is provided.
+      operationId: api_dimensions_value_counts_backfill_destroy
+      parameters:
+        - description: Optional specific job ID to cancel
+          in: query
+          name: job_id
+          schema:
+            type: integer
+        - description: Optional project ID to cancel its active backfill jobs
+          in: query
+          name: project_id
+          schema:
+            type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgreementV2BackfillCancelResponse'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                description: Permission denied
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                description: Organization not found
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Cancel Dimension value-counts backfill jobs
+      tags:
+        - Dimensions
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: dimensions
+      x-fern-sdk-method-name: cancel_value_counts_backfill
+    post:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Trigger a Dimension label-distribution value-counts backfill for the authenticated user's active organization. Populates MatrixAnnotatorEntry.value_counts and rebuilds the ProjectSummary.dimension_value_counts cache for all tasks, without recomputing agreement scores. Exactly one of three body fields must be provided:
+
+        - **project_id**: backfill a single specific project.
+        - **num_projects**: batched org backfill — queue the next N not-yet-started projects (in ascending project ID order), leaving any currently in-flight jobs untouched. Repeat calls until `projects_remaining` in the response reaches 0.
+        - **all_projects**: full org backfill — cancel all in-flight jobs and queue every remaining non-completed project at once.
+
+        Requires administrator or owner role, the Agreement V2 feature flag, and the value-counts write feature flag.
+      operationId: api_dimensions_value_counts_backfill_create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgreementV2BackfillTriggerRequestRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AgreementV2BackfillTriggerRequestRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AgreementV2BackfillTriggerRequestRequest'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgreementV2BackfillTriggerResponse'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                description: Validation error (feature flag disabled, invalid params, etc.)
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                description: Permission denied
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                description: Organization or project not found
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Trigger Dimension value-counts backfill
+      tags:
+        - Dimensions
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: dimensions
+      x-fern-sdk-method-name: trigger_value_counts_backfill
+  /api/dimensions/value-counts-backfill/jobs/:
+    get:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Retrieve Dimension value-counts backfill jobs for the authenticated user's active organization, ordered by most-recently created first. Supports page / page_size query params (default 50 per page, max 500). Requires administrator or owner role and the Agreement V2 feature flag.
+      operationId: api_dimensions_value_counts_backfill_jobs_list
+      parameters:
+        - description: 'Filter by job status: PENDING, QUEUED, RUNNING, COMPLETED, or FAILED.'
+          in: query
+          name: status
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ValueCountsBackfillJob'
+                type: array
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                description: Agreement V2 feature is not enabled or invalid status value
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                description: Permission denied
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ List Dimension value-counts backfill jobs
+      tags:
+        - Dimensions
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: dimensions
+      x-fern-sdk-method-name: list_value_counts_backfills
+  /api/dimensions/value-counts-backfill/status/:
+    get:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Retrieve the status of a Dimension value-counts backfill job for the authenticated user's active organization. By default returns the aggregated organization status. Specify job_id or project_id to get a specific job status. Requires administrator or owner role and the Agreement V2 feature flag.
+      operationId: api_dimensions_value_counts_backfill_status_retrieve
+      parameters:
+        - description: Optional job ID to retrieve specific job status
+          in: query
+          name: job_id
+          schema:
+            type: integer
+        - description: Optional project ID to retrieve the latest backfill status for that project. If omitted, returns aggregated organization status.
+          in: query
+          name: project_id
+          schema:
+            type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValueCountsBackfillJob'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                description: Permission denied
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                description: No backfill job found or organization not found
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Get Dimension value-counts backfill status
+      tags:
+        - Dimensions
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: dimensions
+      x-fern-sdk-method-name: get_value_counts_backfill_status
   /api/dm/actions/:
     get:
       description: Retrieve all the registered actions with descriptions that data manager can use.
@@ -24802,7 +25010,7 @@ components:
           type: string
         status:
           allOf:
-            - $ref: '#/components/schemas/AgreementV2BackfillJobStatusEnum'
+            - $ref: '#/components/schemas/StatusA47Enum'
           description: |-
             Current status of the backfill job
 
@@ -24822,20 +25030,6 @@ components:
         - rq_job_id
         - triggered_by
       type: object
-    AgreementV2BackfillJobStatusEnum:
-      description: |-
-        * `PENDING` - Pending
-        * `QUEUED` - Queued
-        * `RUNNING` - Running
-        * `COMPLETED` - Completed
-        * `FAILED` - Failed
-      enum:
-        - PENDING
-        - QUEUED
-        - RUNNING
-        - COMPLETED
-        - FAILED
-      type: string
     AgreementV2BackfillTriggerRequestRequest:
       description: |-
         Request body for POST /api/dimensions/backfill/
@@ -27628,6 +27822,9 @@ components:
           format: double
           nullable: true
           type: number
+        control_tag:
+          nullable: true
+          type: string
         from_name:
           type: string
         name:
@@ -28477,6 +28674,10 @@ components:
           format: date-time
           readOnly: true
           type: string
+        values_enum:
+          description: Schema-defined enum values for indexed value_counts. Refreshed only with label config changes.
+          nullable: true
+          readOnly: true
       required:
         - allowed_metrics_with_params
         - control_tag
@@ -28487,6 +28688,7 @@ components:
         - name
         - project
         - updated_at
+        - values_enum
       type: object
     DimensionCreateRequest:
       description: |-
@@ -28599,6 +28801,10 @@ components:
           format: date-time
           readOnly: true
           type: string
+        values_enum:
+          description: Schema-defined enum values for indexed value_counts. Refreshed only with label config changes.
+          nullable: true
+          readOnly: true
       required:
         - allowed_metrics_with_params
         - control_tag
@@ -28616,6 +28822,7 @@ components:
         - order
         - project
         - updated_at
+        - values_enum
       type: object
     DimensionRequest:
       description: |-
@@ -30835,6 +31042,9 @@ components:
           type: string
         type:
           description: Result item type for this dimension when available.
+          type: string
+        unsupported_reason:
+          description: Reason this dimension cannot render label distribution rows, when unavailable.
           type: string
       required:
         - choice_keys
@@ -42007,6 +42217,20 @@ components:
         - failed
         - completed
       type: string
+    StatusA47Enum:
+      description: |-
+        * `PENDING` - Pending
+        * `QUEUED` - Queued
+        * `RUNNING` - Running
+        * `COMPLETED` - Completed
+        * `FAILED` - Failed
+      enum:
+        - PENDING
+        - QUEUED
+        - RUNNING
+        - COMPLETED
+        - FAILED
+      type: string
     StatusC5aEnum:
       description: |-
         * `initialized` - Initialized
@@ -42621,6 +42845,64 @@ components:
           type: boolean
       required:
         - valid
+      type: object
+    ValueCountsBackfillJob:
+      description: |-
+        Serializes a DimensionValueCountsBackfillJob model instance.
+        Used by the value-counts backfill list endpoint and as the base for the status endpoint.
+      properties:
+        completed_at:
+          format: date-time
+          nullable: true
+          type: string
+        created_at:
+          format: date-time
+          readOnly: true
+          type: string
+        error_message:
+          description: Error message if job failed
+          type: string
+        job_id:
+          description: Database ID of the backfill job
+          readOnly: true
+          type: integer
+        progress_data:
+          description: JSON data tracking job progress (rows_written, etc.)
+        project_id:
+          description: Optional specific project to backfill (if null, backfills entire organization)
+          nullable: true
+          readOnly: true
+          type: integer
+        rq_job_id:
+          description: Redis queue job ID
+          nullable: true
+          readOnly: true
+          type: string
+        started_at:
+          format: date-time
+          nullable: true
+          type: string
+        status:
+          allOf:
+            - $ref: '#/components/schemas/StatusA47Enum'
+          description: |-
+            Current status of the backfill job
+
+            * `PENDING` - Pending
+            * `QUEUED` - Queued
+            * `RUNNING` - Running
+            * `COMPLETED` - Completed
+            * `FAILED` - Failed
+        triggered_by:
+          description: User who triggered the backfill
+          readOnly: true
+          type: string
+      required:
+        - created_at
+        - job_id
+        - project_id
+        - rq_job_id
+        - triggered_by
       type: object
     VersionResponse:
       properties:
