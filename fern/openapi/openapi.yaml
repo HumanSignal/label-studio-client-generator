@@ -34400,8 +34400,11 @@ components:
           readOnly: true
           type: integer
         annotations:
+          items:
+            title: Annotation
+            type: object
           readOnly: true
-          type: string
+          type: array
         annotations_ids:
           readOnly: true
           type: string
@@ -34821,8 +34824,11 @@ components:
       properties:
         annotations:
           default: []
+          items:
+            title: Annotation
+            type: object
           readOnly: true
-          type: string
+          type: array
         annotations_results:
           readOnly: true
           type: string
@@ -34830,7 +34836,7 @@ components:
           type: integer
         comment_count:
           readOnly: true
-          type: string
+          type: integer
         comments:
           readOnly: true
           type: string
@@ -34929,7 +34935,7 @@ components:
           type: integer
         unresolved_comment_count:
           readOnly: true
-          type: string
+          type: integer
       required:
         - annotations
         - annotations_results
@@ -34962,8 +34968,11 @@ components:
           readOnly: true
           type: integer
         annotations:
+          items:
+            title: Annotation
+            type: object
           readOnly: true
-          type: string
+          type: array
         annotations_ids:
           readOnly: true
           type: string
