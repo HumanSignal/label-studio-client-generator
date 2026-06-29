@@ -31325,6 +31325,51 @@ components:
         - updated_at
         - updated_by
       type: object
+    LearningResourceAssignmentSummary:
+      properties:
+        default_allow_manual_access:
+          readOnly: true
+          type: boolean
+        default_gate_annotator_data_manager:
+          nullable: true
+          readOnly: true
+          type: boolean
+        default_gate_annotator_label_stream:
+          nullable: true
+          readOnly: true
+          type: boolean
+        default_gate_reviewer_data_manager:
+          nullable: true
+          readOnly: true
+          type: boolean
+        default_gate_reviewer_label_stream:
+          nullable: true
+          readOnly: true
+          type: boolean
+        default_gate_reviewer_review_stream:
+          nullable: true
+          readOnly: true
+          type: boolean
+        id:
+          readOnly: true
+          type: integer
+        is_published:
+          readOnly: true
+          type: boolean
+        title:
+          readOnly: true
+          type: string
+      required:
+        - default_allow_manual_access
+        - default_gate_annotator_data_manager
+        - default_gate_annotator_label_stream
+        - default_gate_reviewer_data_manager
+        - default_gate_reviewer_label_stream
+        - default_gate_reviewer_review_stream
+        - id
+        - is_published
+        - title
+      type: object
     LearningResourceCreate:
       properties:
         default_allow_manual_access:
@@ -40029,7 +40074,7 @@ components:
           type: integer
         learning_resource:
           allOf:
-            - $ref: '#/components/schemas/LearningResource'
+            - $ref: '#/components/schemas/LearningResourceAssignmentSummary'
           readOnly: true
         project:
           readOnly: true
