@@ -13476,6 +13476,51 @@ paths:
         - projects
         - stats
       x-fern-sdk-method-name: lead_time
+  /api/projects/{id}/stats/member_performance_participants/:
+    get:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Human participants for the Member Performance dropdown.
+      operationId: api_projects_stats_member_performance_participants_list
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - description: 'Which participant scope to load: "annotations" or "reviews".'
+          in: query
+          name: table
+          schema:
+            enum:
+              - annotations
+              - reviews
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/UserSimple'
+                type: array
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Get member performance participants
+      tags:
+        - Stats
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - stats
+      x-fern-sdk-method-name: member_performance_participants
   /api/projects/{id}/stats/member_performance_rows/:
     get:
       description: |-
