@@ -1603,11 +1603,12 @@ paths:
           name: expand_created_by
           schema:
             type: boolean
-        - in: path
+        - description: A unique integer value identifying this comment.
+          in: path
           name: id
           required: true
           schema:
-            type: string
+            type: integer
       responses:
         '204':
           description: No response body
@@ -1636,11 +1637,12 @@ paths:
           name: expand_created_by
           schema:
             type: boolean
-        - in: path
+        - description: A unique integer value identifying this comment.
+          in: path
           name: id
           required: true
           schema:
-            type: string
+            type: integer
       responses:
         '200':
           content:
@@ -1673,11 +1675,12 @@ paths:
           name: expand_created_by
           schema:
             type: boolean
-        - in: path
+        - description: A unique integer value identifying this comment.
+          in: path
           name: id
           required: true
           schema:
-            type: string
+            type: integer
       requestBody:
         content:
           application/json:
@@ -1721,11 +1724,12 @@ paths:
           name: expand_created_by
           schema:
             type: boolean
-        - in: path
+        - description: A unique integer value identifying this comment.
+          in: path
           name: id
           required: true
           schema:
-            type: string
+            type: integer
       requestBody:
         content:
           application/json:
@@ -3145,11 +3149,12 @@ paths:
       description: Delete a dataset by ID
       operationId: api_datasets_destroy
       parameters:
-        - in: path
+        - description: A unique integer value identifying this dataset.
+          in: path
           name: id
           required: true
           schema:
-            type: string
+            type: integer
       responses:
         '204':
           description: No response body
@@ -3164,11 +3169,12 @@ paths:
       description: Retrieve a specific dataset.
       operationId: api_datasets_retrieve
       parameters:
-        - in: path
+        - description: A unique integer value identifying this dataset.
+          in: path
           name: id
           required: true
           schema:
-            type: string
+            type: integer
       responses:
         '200':
           content:
@@ -3187,11 +3193,12 @@ paths:
       description: Update a specific dataset by ID.
       operationId: api_datasets_partial_update
       parameters:
-        - in: path
+        - description: A unique integer value identifying this dataset.
+          in: path
           name: id
           required: true
           schema:
-            type: string
+            type: integer
       requestBody:
         content:
           application/json:
@@ -3221,11 +3228,12 @@ paths:
       description: Overwrite a specific dataset by ID.
       operationId: api_datasets_update
       parameters:
-        - in: path
+        - description: A unique integer value identifying this dataset.
+          in: path
           name: id
           required: true
           schema:
-            type: string
+            type: integer
       requestBody:
         content:
           application/json:
@@ -5346,12 +5354,20 @@ paths:
           required: false
           schema:
             type: integer
+        - in: query
+          name: scope
+          schema:
+            type: string
         - description: A search term.
           in: query
           name: search
           required: false
           schema:
             type: string
+        - in: query
+          name: workspace
+          schema:
+            type: integer
       responses:
         '200':
           content:
@@ -5418,11 +5434,12 @@ paths:
         Delete a saved interface.
       operationId: api_interfaces_destroy
       parameters:
-        - in: path
+        - description: A unique integer value identifying this interface.
+          in: path
           name: id
           required: true
           schema:
-            type: string
+            type: integer
       responses:
         '204':
           description: No response body
@@ -5446,11 +5463,12 @@ paths:
         Retrieve a saved interface by ID.
       operationId: api_interfaces_retrieve
       parameters:
-        - in: path
+        - description: A unique integer value identifying this interface.
+          in: path
           name: id
           required: true
           schema:
-            type: string
+            type: integer
       responses:
         '200':
           content:
@@ -5478,11 +5496,12 @@ paths:
         Partially update a saved interface.
       operationId: api_interfaces_partial_update
       parameters:
-        - in: path
+        - description: A unique integer value identifying this interface.
+          in: path
           name: id
           required: true
           schema:
-            type: string
+            type: integer
       requestBody:
         content:
           application/json:
@@ -5521,11 +5540,12 @@ paths:
         Update a saved interface.
       operationId: api_interfaces_update
       parameters:
-        - in: path
+        - description: A unique integer value identifying this interface.
+          in: path
           name: id
           required: true
           schema:
-            type: string
+            type: integer
       requestBody:
         content:
           application/json:
@@ -5566,11 +5586,12 @@ paths:
         Append one or more versions to a saved interface with server-assigned stable version IDs.
       operationId: api_interfaces_append_versions_create
       parameters:
-        - in: path
+        - description: A unique integer value identifying this interface.
+          in: path
           name: id
           required: true
           schema:
-            type: string
+            type: integer
       requestBody:
         content:
           application/json:
@@ -5611,11 +5632,12 @@ paths:
         Create a copy of an existing saved interface.
       operationId: api_interfaces_duplicate_create
       parameters:
-        - in: path
+        - description: A unique integer value identifying this interface.
+          in: path
           name: id
           required: true
           schema:
-            type: string
+            type: integer
       requestBody:
         content:
           application/json:
@@ -5656,11 +5678,12 @@ paths:
         Publish one saved interface version by stable version ID.
       operationId: api_interfaces_publish_create
       parameters:
-        - in: path
+        - description: A unique integer value identifying this interface.
+          in: path
           name: id
           required: true
           schema:
-            type: string
+            type: integer
       requestBody:
         content:
           application/json:
@@ -5701,11 +5724,12 @@ paths:
         Unpublish one saved interface version by stable version ID.
       operationId: api_interfaces_unpublish_create
       parameters:
-        - in: path
+        - description: A unique integer value identifying this interface.
+          in: path
           name: id
           required: true
           schema:
-            type: string
+            type: integer
       requestBody:
         content:
           application/json:
@@ -5746,11 +5770,12 @@ paths:
         Update the description for one saved interface version by stable version ID.
       operationId: api_interfaces_update_description_create
       parameters:
-        - in: path
+        - description: A unique integer value identifying this interface.
+          in: path
           name: id
           required: true
           schema:
-            type: string
+            type: integer
       requestBody:
         content:
           application/json:
@@ -5958,10 +5983,33 @@ paths:
       description: List label links for a specific label and project.
       operationId: api_label_links_list
       parameters:
+        - in: query
+          name: label__created_at
+          schema:
+            format: date-time
+            type: string
+        - in: query
+          name: label__created_at__gte
+          schema:
+            format: date-time
+            type: string
+        - in: query
+          name: label__created_at__lte
+          schema:
+            format: date-time
+            type: string
+        - in: query
+          name: label__created_by
+          schema:
+            type: integer
         - description: A page number within the paginated result set.
           in: query
           name: page
           required: false
+          schema:
+            type: integer
+        - in: query
+          name: project
           schema:
             type: integer
       responses:
@@ -6020,11 +6068,12 @@ paths:
       description: "\n        Remove a label link that links custom labels to your project labeling configuration. If you remove a label link,\n        the label stops being available for the project it was linked to. You can add a new label link at any time. \n        "
       operationId: api_label_links_destroy
       parameters:
-        - in: path
+        - description: A unique integer value identifying this label link.
+          in: path
           name: id
           required: true
           schema:
-            type: string
+            type: integer
       responses:
         '204':
           description: No response body
@@ -6043,11 +6092,12 @@ paths:
       description: 'Get label links for a specific project configuration. '
       operationId: api_label_links_retrieve
       parameters:
-        - in: path
+        - description: A unique integer value identifying this label link.
+          in: path
           name: id
           required: true
           schema:
-            type: string
+            type: integer
       responses:
         '200':
           content:
@@ -6070,11 +6120,12 @@ paths:
       description: "\n        Update a label link that links custom labels to a project labeling configuration, for example if the fromName,  \n        toName, or name parameters for a tag in the labeling configuration change. \n        "
       operationId: api_label_links_partial_update
       parameters:
-        - in: path
+        - description: A unique integer value identifying this label link.
+          in: path
           name: id
           required: true
           schema:
-            type: string
+            type: integer
       requestBody:
         content:
           application/json:
@@ -6210,11 +6261,12 @@ paths:
       description: Remove labels from your project without updating the labeling configuration.
       operationId: api_labels_destroy
       parameters:
-        - in: path
+        - description: A unique integer value identifying this label.
+          in: path
           name: id
           required: true
           schema:
-            type: string
+            type: integer
       responses:
         '204':
           description: No response body
@@ -6231,11 +6283,12 @@ paths:
       description: "\n        Retrieve a specific custom label used for your project by its ID.\n        "
       operationId: api_labels_retrieve
       parameters:
-        - in: path
+        - description: A unique integer value identifying this label.
+          in: path
           name: id
           required: true
           schema:
-            type: string
+            type: integer
       responses:
         '200':
           content:
@@ -6256,11 +6309,12 @@ paths:
       description: Update labels used for your project without updating the labeling configuration.
       operationId: api_labels_partial_update
       parameters:
-        - in: path
+        - description: A unique integer value identifying this label.
+          in: path
           name: id
           required: true
           schema:
-            type: string
+            type: integer
       requestBody:
         content:
           application/json:
@@ -6318,12 +6372,20 @@ paths:
           required: false
           schema:
             type: integer
+        - in: query
+          name: scope
+          schema:
+            type: string
         - description: A search term.
           in: query
           name: search
           required: false
           schema:
             type: string
+        - in: query
+          name: workspace
+          schema:
+            type: integer
       responses:
         '200':
           content:
@@ -6365,11 +6427,12 @@ paths:
     delete:
       operationId: api_learning_resources_destroy
       parameters:
-        - in: path
+        - description: A unique integer value identifying this learning resource.
+          in: path
           name: id
           required: true
           schema:
-            type: string
+            type: integer
       responses:
         '204':
           description: No response body
@@ -6381,11 +6444,12 @@ paths:
     get:
       operationId: api_learning_resources_retrieve
       parameters:
-        - in: path
+        - description: A unique integer value identifying this learning resource.
+          in: path
           name: id
           required: true
           schema:
-            type: string
+            type: integer
       responses:
         '200':
           content:
@@ -6401,11 +6465,12 @@ paths:
     patch:
       operationId: api_learning_resources_partial_update
       parameters:
-        - in: path
+        - description: A unique integer value identifying this learning resource.
+          in: path
           name: id
           required: true
           schema:
-            type: string
+            type: integer
       requestBody:
         content:
           application/json:
@@ -6441,11 +6506,12 @@ paths:
         List all certificates issued for a course.
       operationId: api_learning_resources_certificates_list
       parameters:
-        - in: path
+        - description: A unique integer value identifying this learning resource.
+          in: path
           name: id
           required: true
           schema:
-            type: string
+            type: integer
         - description: Which field to use when ordering the results.
           in: query
           name: ordering
@@ -6464,12 +6530,20 @@ paths:
           required: false
           schema:
             type: integer
+        - in: query
+          name: scope
+          schema:
+            type: string
         - description: A search term.
           in: query
           name: search
           required: false
           schema:
             type: string
+        - in: query
+          name: workspace
+          schema:
+            type: integer
       responses:
         '200':
           content:
@@ -6539,11 +6613,12 @@ paths:
         Create a copy of a learning resource.
       operationId: api_learning_resources_duplicate_create
       parameters:
-        - in: path
+        - description: A unique integer value identifying this learning resource.
+          in: path
           name: id
           required: true
           schema:
-            type: string
+            type: integer
       requestBody:
         content:
           application/json:
@@ -6579,11 +6654,12 @@ paths:
         Invalidate all learner progress for a learning resource.
       operationId: api_learning_resources_invalidate_progress_create
       parameters:
-        - in: path
+        - description: A unique integer value identifying this learning resource.
+          in: path
           name: id
           required: true
           schema:
-            type: string
+            type: integer
       requestBody:
         content:
           application/json:
@@ -6615,11 +6691,12 @@ paths:
         List or create modules for a learning resource.
       operationId: api_learning_resources_modules_list
       parameters:
-        - in: path
+        - description: A unique integer value identifying this learning resource.
+          in: path
           name: id
           required: true
           schema:
-            type: string
+            type: integer
         - description: Which field to use when ordering the results.
           in: query
           name: ordering
@@ -6638,12 +6715,20 @@ paths:
           required: false
           schema:
             type: integer
+        - in: query
+          name: scope
+          schema:
+            type: string
         - description: A search term.
           in: query
           name: search
           required: false
           schema:
             type: string
+        - in: query
+          name: workspace
+          schema:
+            type: integer
       responses:
         '200':
           content:
@@ -6673,11 +6758,12 @@ paths:
         List or create modules for a learning resource.
       operationId: api_learning_resources_modules_create
       parameters:
-        - in: path
+        - description: A unique integer value identifying this learning resource.
+          in: path
           name: id
           required: true
           schema:
-            type: string
+            type: integer
         - description: Which field to use when ordering the results.
           in: query
           name: ordering
@@ -6696,12 +6782,20 @@ paths:
           required: false
           schema:
             type: integer
+        - in: query
+          name: scope
+          schema:
+            type: string
         - description: A search term.
           in: query
           name: search
           required: false
           schema:
             type: string
+        - in: query
+          name: workspace
+          schema:
+            type: integer
       requestBody:
         content:
           application/json:
@@ -6743,11 +6837,12 @@ paths:
         Reorder modules for a learning resource.
       operationId: api_learning_resources_modules_reorder_create
       parameters:
-        - in: path
+        - description: A unique integer value identifying this learning resource.
+          in: path
           name: id
           required: true
           schema:
-            type: string
+            type: integer
         - description: Which field to use when ordering the results.
           in: query
           name: ordering
@@ -6766,12 +6861,20 @@ paths:
           required: false
           schema:
             type: integer
+        - in: query
+          name: scope
+          schema:
+            type: string
         - description: A search term.
           in: query
           name: search
           required: false
           schema:
             type: string
+        - in: query
+          name: workspace
+          schema:
+            type: integer
       requestBody:
         content:
           application/json:
@@ -6807,11 +6910,12 @@ paths:
         Update or delete a module in a learning resource.
       operationId: api_learning_resources_modules_destroy
       parameters:
-        - in: path
+        - description: A unique integer value identifying this learning resource.
+          in: path
           name: id
           required: true
           schema:
-            type: string
+            type: integer
         - in: path
           name: module_id
           required: true
@@ -6843,11 +6947,12 @@ paths:
         Update or delete a module in a learning resource.
       operationId: api_learning_resources_modules_partial_update
       parameters:
-        - in: path
+        - description: A unique integer value identifying this learning resource.
+          in: path
           name: id
           required: true
           schema:
-            type: string
+            type: integer
         - in: path
           name: module_id
           required: true
@@ -6891,11 +6996,12 @@ paths:
         Update the current user's progress on a learning resource.
       operationId: api_learning_resources_progress_create
       parameters:
-        - in: path
+        - description: A unique integer value identifying this learning resource.
+          in: path
           name: id
           required: true
           schema:
-            type: string
+            type: integer
       requestBody:
         content:
           application/json:
@@ -6924,11 +7030,12 @@ paths:
       description: Create project assignments for many projects in one request.
       operationId: api_learning_resources_project_assignments_create
       parameters:
-        - in: path
+        - description: A unique integer value identifying this learning resource.
+          in: path
           name: id
           required: true
           schema:
-            type: string
+            type: integer
       requestBody:
         content:
           application/json:
@@ -6965,11 +7072,12 @@ paths:
         Publish a learning resource to make it available to learners.
       operationId: api_learning_resources_publish_create
       parameters:
-        - in: path
+        - description: A unique integer value identifying this learning resource.
+          in: path
           name: id
           required: true
           schema:
-            type: string
+            type: integer
       requestBody:
         content:
           application/json:
@@ -7034,11 +7142,12 @@ paths:
         Unpublish a learning resource to hide it from learners.
       operationId: api_learning_resources_unpublish_create
       parameters:
-        - in: path
+        - description: A unique integer value identifying this learning resource.
+          in: path
           name: id
           required: true
           schema:
-            type: string
+            type: integer
       requestBody:
         content:
           application/json:
@@ -7074,11 +7183,12 @@ paths:
         Upload a file asset for use in a learning resource.
       operationId: api_learning_resources_upload_create
       parameters:
-        - in: path
+        - description: A unique integer value identifying this learning resource.
+          in: path
           name: id
           required: true
           schema:
-            type: string
+            type: integer
       requestBody:
         content:
           application/json:
@@ -7114,11 +7224,12 @@ paths:
         Paginated progress for users who started the course.
       operationId: api_learning_resources_user_progress_list
       parameters:
-        - in: path
+        - description: A unique integer value identifying this learning resource.
+          in: path
           name: id
           required: true
           schema:
-            type: string
+            type: integer
         - description: Which field to use when ordering the results.
           in: query
           name: ordering
@@ -7137,12 +7248,20 @@ paths:
           required: false
           schema:
             type: integer
+        - in: query
+          name: scope
+          schema:
+            type: string
         - description: A search term.
           in: query
           name: search
           required: false
           schema:
             type: string
+        - in: query
+          name: workspace
+          schema:
+            type: integer
       responses:
         '200':
           content:
@@ -7167,11 +7286,12 @@ paths:
         Delete multiple learners' progress on this course and revoke their certificates.
       operationId: api_learning_resources_user_progress_bulk_reset_create
       parameters:
-        - in: path
+        - description: A unique integer value identifying this learning resource.
+          in: path
           name: id
           required: true
           schema:
-            type: string
+            type: integer
       requestBody:
         content:
           application/json:
@@ -7211,11 +7331,12 @@ paths:
         Upload a CSV export to mark organization members as having completed the course.
       operationId: api_learning_resources_user_progress_import_create
       parameters:
-        - in: path
+        - description: A unique integer value identifying this learning resource.
+          in: path
           name: id
           required: true
           schema:
-            type: string
+            type: integer
       requestBody:
         content:
           multipart/form-data:
@@ -7249,11 +7370,12 @@ paths:
         Delete a learner's progress on this course and revoke their certificate so they must retake it.
       operationId: api_learning_resources_user_progress_reset_create
       parameters:
-        - in: path
+        - description: A unique integer value identifying this learning resource.
+          in: path
           name: id
           required: true
           schema:
-            type: string
+            type: integer
         - in: path
           name: user_id
           required: true
@@ -7397,6 +7519,10 @@ paths:
       description: "\n    List all configured ML backends for a specific project by ID.\n    Use the following cURL command:\n    ```bash\n    curl http://localhost:8000/api/ml?project={project_id} -H 'Authorization: Token abc123'\n    "
       operationId: api_ml_list
       parameters:
+        - in: query
+          name: is_interactive
+          schema:
+            type: boolean
         - description: Project ID
           in: query
           name: project
@@ -7887,11 +8013,12 @@ paths:
         Delete a model provider connection by ID
       operationId: api_model_provider_connections_destroy
       parameters:
-        - in: path
+        - description: A unique integer value identifying this model provider connection.
+          in: path
           name: id
           required: true
           schema:
-            type: string
+            type: integer
       responses:
         '204':
           description: No response body
@@ -7915,11 +8042,12 @@ paths:
         Retrieve a specific model provider connection.
       operationId: api_model_provider_connections_retrieve
       parameters:
-        - in: path
+        - description: A unique integer value identifying this model provider connection.
+          in: path
           name: id
           required: true
           schema:
-            type: string
+            type: integer
       responses:
         '200':
           content:
@@ -7947,11 +8075,12 @@ paths:
         Update a specific model provider connection by ID.
       operationId: api_model_provider_connections_partial_update
       parameters:
-        - in: path
+        - description: A unique integer value identifying this model provider connection.
+          in: path
           name: id
           required: true
           schema:
-            type: string
+            type: integer
       requestBody:
         content:
           application/json:
@@ -7990,11 +8119,12 @@ paths:
         Overwrite a specific model provider connection by ID.
       operationId: api_model_provider_connections_update
       parameters:
-        - in: path
+        - description: A unique integer value identifying this model provider connection.
+          in: path
           name: id
           required: true
           schema:
-            type: string
+            type: integer
       requestBody:
         content:
           application/json:
@@ -8831,6 +8961,10 @@ paths:
           required: true
           schema:
             type: integer
+        - in: query
+          name: is_deleted
+          schema:
+            type: boolean
         - description: Which field to use when ordering the results.
           in: query
           name: ordering
@@ -8887,6 +9021,25 @@ paths:
           name: tags
           schema:
             type: string
+        - in: query
+          name: user__last_activity__gte
+          schema:
+            format: date-time
+            type: string
+        - in: query
+          name: user__last_activity__lte
+          schema:
+            format: date-time
+            type: string
+        - description: Multiple values may be separated by commas.
+          explode: false
+          in: query
+          name: user_type
+          schema:
+            items:
+              type: string
+            type: array
+          style: form
       responses:
         '200':
           content:
@@ -9437,6 +9590,10 @@ paths:
         - description: Filter predictions by task ID
           in: query
           name: task
+          schema:
+            type: integer
+        - in: query
+          name: task__project
           schema:
             type: integer
       responses:
@@ -10729,6 +10886,18 @@ paths:
         List all annotation history items for the project with pagination.
       operationId: api_projects_annotation_history_list
       parameters:
+        - description: Filter for annotation history items created at or after the ISO 8601 formatted date (YYYY-MM-DDTHH:MM:SS)
+          in: query
+          name: created_at_from
+          schema:
+            format: date-time
+            type: string
+        - description: Filter for annotation history items created at or before the ISO 8601 formatted date (YYYY-MM-DDTHH:MM:SS)
+          in: query
+          name: created_at_to
+          schema:
+            format: date-time
+            type: string
         - in: path
           name: id
           required: true
@@ -12361,6 +12530,15 @@ paths:
           name: tags
           schema:
             type: string
+        - description: Multiple values may be separated by commas.
+          explode: false
+          in: query
+          name: user_type
+          schema:
+            items:
+              type: string
+            type: array
+          style: form
         - description: Include deleted members in the results
           in: query
           name: with_deleted
@@ -15082,11 +15260,12 @@ paths:
         Delete a specific pause by ID.
       operationId: api_projects_members_pauses_destroy
       parameters:
-        - in: path
+        - description: A unique integer value identifying this pause.
+          in: path
           name: id
           required: true
           schema:
-            type: string
+            type: integer
         - in: path
           name: project_pk
           required: true
@@ -15122,11 +15301,12 @@ paths:
         Retrieve a specific pause by ID.
       operationId: api_projects_members_pauses_retrieve
       parameters:
-        - in: path
+        - description: A unique integer value identifying this pause.
+          in: path
           name: id
           required: true
           schema:
-            type: string
+            type: integer
         - in: path
           name: project_pk
           required: true
@@ -15166,11 +15346,12 @@ paths:
         Partially update a pause entry by ID.
       operationId: api_projects_members_pauses_partial_update
       parameters:
-        - in: path
+        - description: A unique integer value identifying this pause.
+          in: path
           name: id
           required: true
           schema:
-            type: string
+            type: integer
         - in: path
           name: project_pk
           required: true
@@ -15221,11 +15402,12 @@ paths:
         Overwrite a pause entry by ID.
       operationId: api_projects_members_pauses_update
       parameters:
-        - in: path
+        - description: A unique integer value identifying this pause.
+          in: path
           name: id
           required: true
           schema:
-            type: string
+            type: integer
         - in: path
           name: project_pk
           required: true
@@ -15574,6 +15756,20 @@ paths:
       description: Retrieve a list of compatible project for prompt.
       operationId: api_prompts_compatible_projects_list
       parameters:
+        - description: Filter by projects that belong to archived workspaces
+          in: query
+          name: archived
+          schema:
+            type: boolean
+        - description: Multiple values may be separated by commas.
+          explode: false
+          in: query
+          name: ids
+          schema:
+            items:
+              type: integer
+            type: array
+          style: form
         - description: Which field to use when ordering the results.
           in: query
           name: ordering
@@ -15601,6 +15797,22 @@ paths:
               - NamedEntityRecognition
               - TextClassification
             type: string
+        - in: query
+          name: source_interface_id
+          schema:
+            type: number
+        - in: query
+          name: state
+          schema:
+            type: string
+        - in: query
+          name: title
+          schema:
+            type: string
+        - in: query
+          name: workspaces
+          schema:
+            type: integer
       responses:
         '200':
           content:
