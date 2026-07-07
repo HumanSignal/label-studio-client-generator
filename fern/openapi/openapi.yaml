@@ -17278,11 +17278,9 @@ paths:
             application/json:
               schema:
                 items:
-                  additionalProperties: {}
-                  description: Unspecified response body
                   type: object
                 type: array
-          description: ''
+          description: List of import storages of all types with their IDs.
       security:
         - Token: []
       summary: List all import storages from the project
@@ -18160,11 +18158,9 @@ paths:
             application/json:
               schema:
                 items:
-                  additionalProperties: {}
-                  description: Unspecified response body
                   type: object
                 type: array
-          description: ''
+          description: List of export storages of all types with their IDs.
       security:
         - Token: []
       summary: List all export storages from the project
@@ -23605,21 +23601,13 @@ paths:
         required: true
       responses:
         '204':
-          content:
-            application/json:
-              schema:
-                additionalProperties: {}
-                description: Unspecified response body
-                type: object
-          description: ''
+          description: Token was successfully blacklisted
         '404':
           content:
             application/json:
               schema:
-                additionalProperties: {}
-                description: Unspecified response body
-                type: object
-          description: ''
+                $ref: '#/components/schemas/TokenDetailError'
+          description: Token is already blacklisted
       summary: Blacklist a JWT refresh token
       tags:
         - JWT
@@ -23684,10 +23672,8 @@ paths:
           content:
             application/json:
               schema:
-                additionalProperties: {}
-                description: Unspecified response body
-                type: object
-          description: ''
+                $ref: '#/components/schemas/TokenDetailError'
+          description: Invalid token or token already blacklisted
       security:
         - Token: []
       summary: Rotate JWT refresh token
@@ -42950,6 +42936,13 @@ components:
         - prompt
         - provider_model_id
         - title
+      type: object
+    TokenDetailError:
+      properties:
+        detail:
+          type: string
+      required:
+        - detail
       type: object
     TokenRefreshRequest:
       properties:
