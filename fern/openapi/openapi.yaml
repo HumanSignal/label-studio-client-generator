@@ -37175,6 +37175,9 @@ components:
         project_role:
           readOnly: true
           type: string
+        project_role_source:
+          readOnly: true
+          type: string
         tags:
           items:
             $ref: '#/components/schemas/SimpleOrganizationMemberTag'
@@ -37198,6 +37201,7 @@ components:
         - organization_membership
         - pause
         - project_role
+        - project_role_source
         - tags
         - user_type
         - username
@@ -40456,12 +40460,16 @@ components:
           type: integer
         role:
           $ref: '#/components/schemas/Role9e7Enum'
+        role_source:
+          readOnly: true
+          type: string
         user:
           type: integer
       required:
         - id
         - project
         - role
+        - role_source
         - user
       type: object
     ProjectRoleRequest:
