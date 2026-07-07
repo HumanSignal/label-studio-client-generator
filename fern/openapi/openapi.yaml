@@ -100,7 +100,7 @@ paths:
   /api/analytics/kpis/:
     get:
       description: Returns metadata for all available KPI (Key Performance Indicator) classes. Each KPI includes its key, label, base class, dependencies, and configuration. This endpoint is useful for discovering available metrics and understanding their relationships and requirements.
-      operationId: api_analytics_kpis_retrieve
+      operationId: api_analytics_kpis_list
       responses:
         '200':
           content:
@@ -118,7 +118,7 @@ paths:
   /api/analytics/kpis/{kpi_key}:
     get:
       description: Retrieve data for a specific KPI with support for filtering and segmentation. Can segment by time (hourly, daily, weekly, monthly, yearly), by user, or both (2D matrix). If no segmentation is specified, returns a single total value. Supports filtering by projects, members, and date range. Date filters are interpreted in the specified timezone (required parameter). Maximum 50 projects allowed per request for performance reasons.
-      operationId: api_analytics_kpis_retrieve_2
+      operationId: api_analytics_kpis_retrieve
       parameters:
         - description: End date for filtering (ISO format)
           in: query
@@ -5252,7 +5252,7 @@ paths:
                 </p>
             </Card>
         Get key indicators for the Prompt dashboard.
-      operationId: api_inference_runs_indicators_retrieve
+      operationId: api_inference_runs_indicators_list
       parameters:
         - in: path
           name: id
@@ -5294,7 +5294,7 @@ paths:
                 </p>
             </Card>
         Get a specific key indicator for the Prompt dashboard.
-      operationId: api_inference_runs_indicators_retrieve_2
+      operationId: api_inference_runs_indicators_retrieve
       parameters:
         - in: path
           name: id
@@ -13959,7 +13959,7 @@ paths:
                 </p>
             </Card>
         Assign multiple users to a collection of tasks within a specific project.
-      operationId: api_projects_tasks_assignees_create
+      operationId: api_projects_tasks_assignees_bulk_create
       parameters:
         - in: path
           name: id
@@ -14313,7 +14313,7 @@ paths:
                 </p>
             </Card>
         Assign a user to a task in a specific project.
-      operationId: api_projects_tasks_assignees_create_2
+      operationId: api_projects_tasks_assignees_create
       parameters:
         - description: A unique integer value identifying this project.
           in: path
@@ -14417,7 +14417,7 @@ paths:
                 </p>
             </Card>
         Get prediction agreement statistics for multiple annotators within a project.
-      operationId: api_projects_user_stats_prediction_retrieve
+      operationId: api_projects_user_stats_prediction_list
       parameters:
         - in: path
           name: id
@@ -14476,7 +14476,7 @@ paths:
                 </p>
             </Card>
         Get review score and performance score statistics for multiple annotators within a project. Only allowed for accounts with reviewing features enabled.
-      operationId: api_projects_user_stats_review_score_retrieve
+      operationId: api_projects_user_stats_review_score_list
       parameters:
         - in: path
           name: id
@@ -14545,7 +14545,7 @@ paths:
                 </p>
             </Card>
         Get prediction agreement statistics for a specific user within a project.
-      operationId: api_projects_user_stats_prediction_retrieve_2
+      operationId: api_projects_user_stats_prediction_retrieve
       parameters:
         - in: path
           name: id
@@ -14599,7 +14599,7 @@ paths:
                 </p>
             </Card>
         Get review score statistics for a specific user within a project. Only allowed for accounts with reviewing features enabled.
-      operationId: api_projects_user_stats_review_score_retrieve_2
+      operationId: api_projects_user_stats_review_score_retrieve
       parameters:
         - in: path
           name: id
