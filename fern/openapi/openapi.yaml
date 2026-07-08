@@ -25030,30 +25030,6 @@ components:
       required:
         - code
       type: object
-    ActionEnum:
-      description: |-
-        * `prediction` - Created from prediction
-        * `propagated_annotation` - Created from another annotation
-        * `imported` - Imported
-        * `submitted` - Submitted
-        * `updated` - Updated
-        * `skipped` - Skipped
-        * `accepted` - Accepted
-        * `rejected` - Rejected
-        * `fixed_and_accepted` - Fixed and accepted
-        * `deleted_review` - Deleted review
-      enum:
-        - prediction
-        - propagated_annotation
-        - imported
-        - submitted
-        - updated
-        - skipped
-        - accepted
-        - rejected
-        - fixed_and_accepted
-        - deleted_review
-      type: string
     ActionsEnum:
       description: |-
         * `PROJECT_CREATED` - PROJECT_CREATED
@@ -25261,7 +25237,7 @@ components:
           type: string
         status:
           allOf:
-            - $ref: '#/components/schemas/StatusA47Enum'
+            - $ref: '#/components/schemas/FsmBackfillJobStatusEnum'
           description: |-
             Current status of the backfill job
 
@@ -25600,7 +25576,7 @@ components:
           type: integer
         sampling:
           allOf:
-            - $ref: '#/components/schemas/SamplingDe5Enum'
+            - $ref: '#/components/schemas/ProjectSamplingEnum'
           nullable: true
         show_annotation_history:
           description: Show Data Manager to Annotators
@@ -25773,14 +25749,6 @@ components:
       required:
         - name
       type: object
-    AnnotatedEnum:
-      description: |-
-        * `only` - only
-        * `exclude` - exclude
-        * `None` - None
-      enum:
-        - only
-        - exclude
     Annotation:
       description: |-
         Annotation Serializer with FSM state support.
@@ -25829,7 +25797,7 @@ components:
           type: integer
         last_action:
           allOf:
-            - $ref: '#/components/schemas/LastActionEnum'
+            - $ref: '#/components/schemas/AnnotationHistoryActionEnum'
           description: |-
             Action which was performed in the last annotation history item
 
@@ -25947,7 +25915,7 @@ components:
           type: integer
         last_action:
           allOf:
-            - $ref: '#/components/schemas/LastActionEnum'
+            - $ref: '#/components/schemas/AnnotationHistoryActionEnum'
           description: |-
             Action which was performed in the last annotation history item
 
@@ -26024,7 +25992,7 @@ components:
       properties:
         action:
           allOf:
-            - $ref: '#/components/schemas/ActionEnum'
+            - $ref: '#/components/schemas/AnnotationHistoryActionEnum'
           nullable: true
         annotation_id:
           description: Corresponding annotation for this historical annotation
@@ -26103,6 +26071,30 @@ components:
         - created_at
         - id
       type: object
+    AnnotationHistoryActionEnum:
+      description: |-
+        * `prediction` - Created from prediction
+        * `propagated_annotation` - Created from another annotation
+        * `imported` - Imported
+        * `submitted` - Submitted
+        * `updated` - Updated
+        * `skipped` - Skipped
+        * `accepted` - Accepted
+        * `rejected` - Rejected
+        * `fixed_and_accepted` - Fixed and accepted
+        * `deleted_review` - Deleted review
+      enum:
+        - prediction
+        - propagated_annotation
+        - imported
+        - submitted
+        - updated
+        - skipped
+        - accepted
+        - rejected
+        - fixed_and_accepted
+        - deleted_review
+      type: string
     AnnotationRequest:
       description: |-
         Annotation Serializer with FSM state support.
@@ -26133,7 +26125,7 @@ components:
           type: integer
         last_action:
           allOf:
-            - $ref: '#/components/schemas/LastActionEnum'
+            - $ref: '#/components/schemas/AnnotationHistoryActionEnum'
           description: |-
             Action which was performed in the last annotation history item
 
@@ -26426,7 +26418,7 @@ components:
           nullable: true
           type: string
         status:
-          $ref: '#/components/schemas/StatusC5aEnum'
+          $ref: '#/components/schemas/StorageStatusEnum'
         synchronizable:
           default: true
           type: boolean
@@ -26521,7 +26513,7 @@ components:
           nullable: true
           type: string
         status:
-          $ref: '#/components/schemas/StatusC5aEnum'
+          $ref: '#/components/schemas/StorageStatusEnum'
         synchronizable:
           default: true
           type: boolean
@@ -26625,7 +26617,7 @@ components:
           nullable: true
           type: string
         status:
-          $ref: '#/components/schemas/StatusC5aEnum'
+          $ref: '#/components/schemas/StorageStatusEnum'
         synced:
           description: Flag if dataset has been previously synced or not
           type: boolean
@@ -26720,7 +26712,7 @@ components:
           nullable: true
           type: string
         status:
-          $ref: '#/components/schemas/StatusC5aEnum'
+          $ref: '#/components/schemas/StorageStatusEnum'
         synced:
           description: Flag if dataset has been previously synced or not
           type: boolean
@@ -26807,7 +26799,7 @@ components:
           nullable: true
           type: string
         status:
-          $ref: '#/components/schemas/StatusC5aEnum'
+          $ref: '#/components/schemas/StorageStatusEnum'
         synchronizable:
           default: true
           type: boolean
@@ -26898,7 +26890,7 @@ components:
           nullable: true
           type: string
         status:
-          $ref: '#/components/schemas/StatusC5aEnum'
+          $ref: '#/components/schemas/StorageStatusEnum'
         synchronizable:
           default: true
           type: boolean
@@ -26998,7 +26990,7 @@ components:
           nullable: true
           type: string
         status:
-          $ref: '#/components/schemas/StatusC5aEnum'
+          $ref: '#/components/schemas/StorageStatusEnum'
         synchronizable:
           default: true
           type: boolean
@@ -27097,7 +27089,7 @@ components:
           nullable: true
           type: string
         status:
-          $ref: '#/components/schemas/StatusC5aEnum'
+          $ref: '#/components/schemas/StorageStatusEnum'
         synchronizable:
           default: true
           type: boolean
@@ -27825,7 +27817,7 @@ components:
       properties:
         default:
           items:
-            $ref: '#/components/schemas/Role9e7Enum'
+            $ref: '#/components/schemas/OrganizationRoleEnum'
           type: array
         group:
           type: string
@@ -27833,7 +27825,7 @@ components:
           type: string
         options:
           items:
-            $ref: '#/components/schemas/Role9e7Enum'
+            $ref: '#/components/schemas/OrganizationRoleEnum'
           type: array
         permission:
           type: string
@@ -27908,7 +27900,7 @@ components:
           readOnly: true
           type: integer
         status:
-          $ref: '#/components/schemas/Status7bfEnum'
+          $ref: '#/components/schemas/ProjectImportStatusEnum'
         traceback:
           description: Traceback report in case of errors
           nullable: true
@@ -27924,7 +27916,7 @@ components:
           minLength: 1
           type: string
         status:
-          $ref: '#/components/schemas/Status7bfEnum'
+          $ref: '#/components/schemas/ProjectImportStatusEnum'
         traceback:
           description: Traceback report in case of errors
           nullable: true
@@ -28034,6 +28026,14 @@ components:
         - overview
         - member_performance
       type: string
+    DataManagerFilterModeEnum:
+      description: |-
+        * `only` - only
+        * `exclude` - exclude
+        * `None` - None
+      enum:
+        - only
+        - exclude
     DataQualityAgreementConfusionMatrix:
       properties:
         labels:
@@ -28203,7 +28203,7 @@ components:
           description: UC schema name
           type: string
         status:
-          $ref: '#/components/schemas/StatusC5aEnum'
+          $ref: '#/components/schemas/StorageStatusEnum'
         stream_chunk_bytes:
           maximum: 2147483647
           minimum: 0
@@ -28321,7 +28321,7 @@ components:
           minLength: 1
           type: string
         status:
-          $ref: '#/components/schemas/StatusC5aEnum'
+          $ref: '#/components/schemas/StorageStatusEnum'
         stream_chunk_bytes:
           maximum: 2147483647
           minimum: 0
@@ -28445,7 +28445,7 @@ components:
           description: UC schema name
           type: string
         status:
-          $ref: '#/components/schemas/StatusC5aEnum'
+          $ref: '#/components/schemas/StorageStatusEnum'
         stream_chunk_bytes:
           maximum: 2147483647
           minimum: 0
@@ -28570,7 +28570,7 @@ components:
           minLength: 1
           type: string
         status:
-          $ref: '#/components/schemas/StatusC5aEnum'
+          $ref: '#/components/schemas/StorageStatusEnum'
         stream_chunk_bytes:
           maximum: 2147483647
           minimum: 0
@@ -28771,16 +28771,6 @@ components:
       required:
         - dataset
       type: object
-    Default165Enum:
-      enum:
-        - OW
-        - AD
-        - MA
-        - RE
-        - AN
-        - DI
-        - 'NO'
-      type: string
     DefaultRole:
       properties:
         annotator_reviewer_firewall_enabled_at:
@@ -28799,7 +28789,7 @@ components:
           type: string
         default_role:
           allOf:
-            - $ref: '#/components/schemas/Role9e7Enum'
+            - $ref: '#/components/schemas/OrganizationRoleEnum'
           description: |-
             Default membership role for invited users
 
@@ -29175,7 +29165,7 @@ components:
           type: string
         status:
           allOf:
-            - $ref: '#/components/schemas/Status7bfEnum'
+            - $ref: '#/components/schemas/ProjectImportStatusEnum'
           title: Export status
         title:
           maxLength: 2048
@@ -29398,14 +29388,20 @@ components:
         - operator
         - type
       type: object
-    FinishedEnum:
+    FsmBackfillJobStatusEnum:
       description: |-
-        * `only` - only
-        * `exclude` - exclude
-        * `None` - None
+        * `PENDING` - Pending
+        * `QUEUED` - Queued
+        * `RUNNING` - Running
+        * `COMPLETED` - Completed
+        * `FAILED` - Failed
       enum:
-        - only
-        - exclude
+        - PENDING
+        - QUEUED
+        - RUNNING
+        - COMPLETED
+        - FAILED
+      type: string
     GCPCustomFunctionUpdateRequest:
       description: Serializer for updating GCP Cloud Function custom metric.
       properties:
@@ -29502,7 +29498,7 @@ components:
           nullable: true
           type: string
         status:
-          $ref: '#/components/schemas/StatusC5aEnum'
+          $ref: '#/components/schemas/StorageStatusEnum'
         synced:
           description: Flag if dataset has been previously synced or not
           type: boolean
@@ -29597,7 +29593,7 @@ components:
           nullable: true
           type: string
         status:
-          $ref: '#/components/schemas/StatusC5aEnum'
+          $ref: '#/components/schemas/StorageStatusEnum'
         synced:
           description: Flag if dataset has been previously synced or not
           type: boolean
@@ -29680,7 +29676,7 @@ components:
           nullable: true
           type: string
         status:
-          $ref: '#/components/schemas/StatusC5aEnum'
+          $ref: '#/components/schemas/StorageStatusEnum'
         synchronizable:
           default: true
           type: boolean
@@ -29775,7 +29771,7 @@ components:
           nullable: true
           type: string
         status:
-          $ref: '#/components/schemas/StatusC5aEnum'
+          $ref: '#/components/schemas/StorageStatusEnum'
         synchronizable:
           default: true
           type: boolean
@@ -29858,7 +29854,7 @@ components:
           nullable: true
           type: string
         status:
-          $ref: '#/components/schemas/StatusC5aEnum'
+          $ref: '#/components/schemas/StorageStatusEnum'
         synchronizable:
           default: true
           type: boolean
@@ -29937,7 +29933,7 @@ components:
           nullable: true
           type: string
         status:
-          $ref: '#/components/schemas/StatusC5aEnum'
+          $ref: '#/components/schemas/StorageStatusEnum'
         synchronizable:
           default: true
           type: boolean
@@ -30025,7 +30021,7 @@ components:
           nullable: true
           type: string
         status:
-          $ref: '#/components/schemas/StatusC5aEnum'
+          $ref: '#/components/schemas/StorageStatusEnum'
         synchronizable:
           default: true
           type: boolean
@@ -30112,7 +30108,7 @@ components:
           nullable: true
           type: string
         status:
-          $ref: '#/components/schemas/StatusC5aEnum'
+          $ref: '#/components/schemas/StorageStatusEnum'
         synchronizable:
           default: true
           type: boolean
@@ -30213,7 +30209,7 @@ components:
           nullable: true
           type: string
         status:
-          $ref: '#/components/schemas/StatusC5aEnum'
+          $ref: '#/components/schemas/StorageStatusEnum'
         synchronizable:
           default: true
           type: boolean
@@ -30309,7 +30305,7 @@ components:
           nullable: true
           type: string
         status:
-          $ref: '#/components/schemas/StatusC5aEnum'
+          $ref: '#/components/schemas/StorageStatusEnum'
         synchronizable:
           default: true
           type: boolean
@@ -30414,7 +30410,7 @@ components:
           nullable: true
           type: string
         status:
-          $ref: '#/components/schemas/StatusC5aEnum'
+          $ref: '#/components/schemas/StorageStatusEnum'
         synchronizable:
           default: true
           type: boolean
@@ -30518,7 +30514,7 @@ components:
           nullable: true
           type: string
         status:
-          $ref: '#/components/schemas/StatusC5aEnum'
+          $ref: '#/components/schemas/StorageStatusEnum'
         synchronizable:
           default: true
           type: boolean
@@ -31377,30 +31373,6 @@ components:
         - auto_distribution
         - assigned_only
       type: string
-    LastActionEnum:
-      description: |-
-        * `prediction` - Created from prediction
-        * `propagated_annotation` - Created from another annotation
-        * `imported` - Imported
-        * `submitted` - Submitted
-        * `updated` - Updated
-        * `skipped` - Skipped
-        * `accepted` - Accepted
-        * `rejected` - Rejected
-        * `fixed_and_accepted` - Fixed and accepted
-        * `deleted_review` - Deleted review
-      enum:
-        - prediction
-        - propagated_annotation
-        - imported
-        - submitted
-        - updated
-        - skipped
-        - accepted
-        - rejected
-        - fixed_and_accepted
-        - deleted_review
-      type: string
     LearningProgressResponse:
       properties:
         completed_at:
@@ -31974,7 +31946,7 @@ components:
           nullable: true
           type: string
         status:
-          $ref: '#/components/schemas/StatusC5aEnum'
+          $ref: '#/components/schemas/StorageStatusEnum'
         synchronizable:
           default: true
           type: boolean
@@ -32049,7 +32021,7 @@ components:
           nullable: true
           type: string
         status:
-          $ref: '#/components/schemas/StatusC5aEnum'
+          $ref: '#/components/schemas/StorageStatusEnum'
         synchronizable:
           default: true
           type: boolean
@@ -32083,7 +32055,7 @@ components:
           type: boolean
         reviewed:
           allOf:
-            - $ref: '#/components/schemas/ReviewedEnum'
+            - $ref: '#/components/schemas/DataManagerFilterModeEnum'
           description: |-
             `only` - include all tasks with at least one not reviewed annotation<br>`exclude` - exclude with at least one not reviewed annotation
 
@@ -32109,7 +32081,7 @@ components:
           type: boolean
         reviewed:
           allOf:
-            - $ref: '#/components/schemas/ReviewedEnum'
+            - $ref: '#/components/schemas/DataManagerFilterModeEnum'
           description: |-
             `only` - include all tasks with at least one not reviewed annotation<br>`exclude` - exclude with at least one not reviewed annotation
 
@@ -32160,7 +32132,7 @@ components:
           $ref: '#/components/schemas/SerializationOptions'
         status:
           allOf:
-            - $ref: '#/components/schemas/Status7bfEnum'
+            - $ref: '#/components/schemas/ProjectImportStatusEnum'
           title: Export status
         task_filter_options:
           $ref: '#/components/schemas/LseTaskFilterOptions'
@@ -32197,7 +32169,7 @@ components:
           $ref: '#/components/schemas/SerializationOptionsRequest'
         status:
           allOf:
-            - $ref: '#/components/schemas/Status7bfEnum'
+            - $ref: '#/components/schemas/ProjectImportStatusEnum'
           title: Export status
         task_filter_options:
           $ref: '#/components/schemas/LseTaskFilterOptionsRequest'
@@ -32572,7 +32544,7 @@ components:
           type: string
         default_role:
           allOf:
-            - $ref: '#/components/schemas/Role9e7Enum'
+            - $ref: '#/components/schemas/OrganizationRoleEnum'
           description: |-
             Default membership role for invited users
 
@@ -32931,7 +32903,7 @@ components:
           type: string
         sampling:
           allOf:
-            - $ref: '#/components/schemas/SamplingDe5Enum'
+            - $ref: '#/components/schemas/ProjectSamplingEnum'
           nullable: true
         show_annotation_history:
           description: Show Data Manager to Annotators
@@ -33257,7 +33229,7 @@ components:
           type: boolean
         sampling:
           allOf:
-            - $ref: '#/components/schemas/SamplingDe5Enum'
+            - $ref: '#/components/schemas/ProjectSamplingEnum'
           nullable: true
         show_annotation_history:
           description: Show annotation history to annotator
@@ -33448,7 +33420,7 @@ components:
           type: boolean
         sampling:
           allOf:
-            - $ref: '#/components/schemas/SamplingDe5Enum'
+            - $ref: '#/components/schemas/ProjectSamplingEnum'
           nullable: true
         show_annotation_history:
           description: Show annotation history to annotator
@@ -33781,7 +33753,7 @@ components:
           type: integer
         sampling:
           allOf:
-            - $ref: '#/components/schemas/SamplingDe5Enum'
+            - $ref: '#/components/schemas/ProjectSamplingEnum'
           nullable: true
         show_annotation_history:
           description: Show Data Manager to Annotators
@@ -34118,7 +34090,7 @@ components:
           $ref: '#/components/schemas/ReviewSettings'
         sampling:
           allOf:
-            - $ref: '#/components/schemas/SamplingDe5Enum'
+            - $ref: '#/components/schemas/ProjectSamplingEnum'
           nullable: true
         show_annotation_history:
           description: Show Data Manager to Annotators
@@ -34323,7 +34295,7 @@ components:
           nullable: true
           type: string
         status:
-          $ref: '#/components/schemas/StatusC5aEnum'
+          $ref: '#/components/schemas/StorageStatusEnum'
         synchronizable:
           default: true
           type: boolean
@@ -34431,7 +34403,7 @@ components:
           nullable: true
           type: string
         status:
-          $ref: '#/components/schemas/StatusC5aEnum'
+          $ref: '#/components/schemas/StorageStatusEnum'
         synchronizable:
           default: true
           type: boolean
@@ -34546,7 +34518,7 @@ components:
           nullable: true
           type: string
         status:
-          $ref: '#/components/schemas/StatusC5aEnum'
+          $ref: '#/components/schemas/StorageStatusEnum'
         synchronizable:
           default: true
           type: boolean
@@ -34661,7 +34633,7 @@ components:
           nullable: true
           type: string
         status:
-          $ref: '#/components/schemas/StatusC5aEnum'
+          $ref: '#/components/schemas/StorageStatusEnum'
         synchronizable:
           default: true
           type: boolean
@@ -34945,7 +34917,7 @@ components:
       properties:
         annotated:
           allOf:
-            - $ref: '#/components/schemas/AnnotatedEnum'
+            - $ref: '#/components/schemas/DataManagerFilterModeEnum'
           description: |-
             `only` - include all tasks with at least one not skipped annotation<br>`exclude` - exclude all tasks with at least one not skipped annotation
 
@@ -34955,7 +34927,7 @@ components:
           nullable: true
         finished:
           allOf:
-            - $ref: '#/components/schemas/FinishedEnum'
+            - $ref: '#/components/schemas/DataManagerFilterModeEnum'
           description: |-
             `only` - include all finished tasks (is_labeled = true)<br>`exclude` - exclude all finished tasks
 
@@ -34968,7 +34940,7 @@ components:
           type: boolean
         reviewed:
           allOf:
-            - $ref: '#/components/schemas/ReviewedEnum'
+            - $ref: '#/components/schemas/DataManagerFilterModeEnum'
           description: |-
             `only` - include all reviewed tasks<br>`exclude` - exclude all reviewed tasks
 
@@ -34978,7 +34950,7 @@ components:
           nullable: true
         skipped:
           allOf:
-            - $ref: '#/components/schemas/SkippedEnum'
+            - $ref: '#/components/schemas/DataManagerFilterModeEnum'
           description: |-
             `only` - include all tasks with skipped annotations<br>`exclude` - exclude all tasks with skipped annotations
 
@@ -34994,7 +34966,7 @@ components:
       properties:
         annotated:
           allOf:
-            - $ref: '#/components/schemas/AnnotatedEnum'
+            - $ref: '#/components/schemas/DataManagerFilterModeEnum'
           description: |-
             `only` - include all tasks with at least one not skipped annotation<br>`exclude` - exclude all tasks with at least one not skipped annotation
 
@@ -35004,7 +34976,7 @@ components:
           nullable: true
         finished:
           allOf:
-            - $ref: '#/components/schemas/FinishedEnum'
+            - $ref: '#/components/schemas/DataManagerFilterModeEnum'
           description: |-
             `only` - include all finished tasks (is_labeled = true)<br>`exclude` - exclude all finished tasks
 
@@ -35017,7 +34989,7 @@ components:
           type: boolean
         reviewed:
           allOf:
-            - $ref: '#/components/schemas/ReviewedEnum'
+            - $ref: '#/components/schemas/DataManagerFilterModeEnum'
           description: |-
             `only` - include all reviewed tasks<br>`exclude` - exclude all reviewed tasks
 
@@ -35027,7 +34999,7 @@ components:
           nullable: true
         skipped:
           allOf:
-            - $ref: '#/components/schemas/SkippedEnum'
+            - $ref: '#/components/schemas/DataManagerFilterModeEnum'
           description: |-
             `only` - include all tasks with skipped annotations<br>`exclude` - exclude all tasks with skipped annotations
 
@@ -36433,16 +36405,6 @@ components:
         - gte
         - eq
       type: string
-    Options165Enum:
-      enum:
-        - OW
-        - AD
-        - MA
-        - RE
-        - AN
-        - DI
-        - 'NO'
-      type: string
     OrganizationBilling:
       properties:
         enforce_session_concurrency:
@@ -36698,7 +36660,7 @@ components:
       properties:
         default:
           items:
-            $ref: '#/components/schemas/Default165Enum'
+            $ref: '#/components/schemas/OrganizationPermissionRoleEnum'
           readOnly: true
           type: array
         group:
@@ -36714,7 +36676,7 @@ components:
           type: string
         options:
           items:
-            $ref: '#/components/schemas/Options165Enum'
+            $ref: '#/components/schemas/OrganizationPermissionRoleEnum'
           readOnly: true
           type: array
         organization:
@@ -36726,7 +36688,7 @@ components:
         roles:
           description: Organization roles
           items:
-            $ref: '#/components/schemas/Role9e7Enum'
+            $ref: '#/components/schemas/OrganizationRoleEnum'
           type: array
         tooltip:
           nullable: true
@@ -36751,11 +36713,39 @@ components:
         roles:
           description: Organization roles
           items:
-            $ref: '#/components/schemas/Role9e7Enum'
+            $ref: '#/components/schemas/OrganizationRoleEnum'
           type: array
       required:
         - permission
       type: object
+    OrganizationPermissionRoleEnum:
+      enum:
+        - OW
+        - AD
+        - MA
+        - RE
+        - AN
+        - DI
+        - 'NO'
+      type: string
+    OrganizationRoleEnum:
+      description: |-
+        * `OW` - Owner
+        * `AD` - Administrator
+        * `MA` - Manager
+        * `RE` - Reviewer
+        * `AN` - Annotator
+        * `DI` - Deactivated
+        * `NO` - Not Activated
+      enum:
+        - OW
+        - AD
+        - MA
+        - RE
+        - AN
+        - DI
+        - 'NO'
+      type: string
     PaginatedAllRolesProjectListList:
       properties:
         count:
@@ -37416,7 +37406,7 @@ components:
           nullable: true
           type: string
         status:
-          $ref: '#/components/schemas/StatusC5aEnum'
+          $ref: '#/components/schemas/StorageStatusEnum'
         synced:
           description: Flag if dataset has been previously synced or not
           type: boolean
@@ -37493,7 +37483,7 @@ components:
           nullable: true
           type: string
         status:
-          $ref: '#/components/schemas/StatusC5aEnum'
+          $ref: '#/components/schemas/StorageStatusEnum'
         synchronizable:
           default: true
           type: boolean
@@ -37583,7 +37573,7 @@ components:
           nullable: true
           type: string
         status:
-          $ref: '#/components/schemas/StatusC5aEnum'
+          $ref: '#/components/schemas/StorageStatusEnum'
         synchronizable:
           default: true
           type: boolean
@@ -37733,7 +37723,7 @@ components:
           minLength: 1
           type: string
         status:
-          $ref: '#/components/schemas/StatusC5aEnum'
+          $ref: '#/components/schemas/StorageStatusEnum'
         stream_chunk_bytes:
           maximum: 2147483647
           minimum: 0
@@ -37850,7 +37840,7 @@ components:
           minLength: 1
           type: string
         status:
-          $ref: '#/components/schemas/StatusC5aEnum'
+          $ref: '#/components/schemas/StorageStatusEnum'
         stream_chunk_bytes:
           maximum: 2147483647
           minimum: 0
@@ -37963,7 +37953,7 @@ components:
           type: string
         default_role:
           allOf:
-            - $ref: '#/components/schemas/Role9e7Enum'
+            - $ref: '#/components/schemas/OrganizationRoleEnum'
           description: |-
             Default membership role for invited users
 
@@ -38139,7 +38129,7 @@ components:
           nullable: true
           type: string
         status:
-          $ref: '#/components/schemas/StatusC5aEnum'
+          $ref: '#/components/schemas/StorageStatusEnum'
         synced:
           description: Flag if dataset has been previously synced or not
           type: boolean
@@ -38208,7 +38198,7 @@ components:
           nullable: true
           type: string
         status:
-          $ref: '#/components/schemas/StatusC5aEnum'
+          $ref: '#/components/schemas/StorageStatusEnum'
         synchronizable:
           default: true
           type: boolean
@@ -38286,7 +38276,7 @@ components:
           nullable: true
           type: string
         status:
-          $ref: '#/components/schemas/StatusC5aEnum'
+          $ref: '#/components/schemas/StorageStatusEnum'
         synchronizable:
           default: true
           type: boolean
@@ -38377,7 +38367,7 @@ components:
           nullable: true
           type: string
         status:
-          $ref: '#/components/schemas/StatusC5aEnum'
+          $ref: '#/components/schemas/StorageStatusEnum'
         synchronizable:
           default: true
           type: boolean
@@ -38472,7 +38462,7 @@ components:
           nullable: true
           type: string
         status:
-          $ref: '#/components/schemas/StatusC5aEnum'
+          $ref: '#/components/schemas/StorageStatusEnum'
         synchronizable:
           default: true
           type: boolean
@@ -38909,7 +38899,7 @@ components:
           $ref: '#/components/schemas/ReviewSettingsRequest'
         sampling:
           allOf:
-            - $ref: '#/components/schemas/SamplingDe5Enum'
+            - $ref: '#/components/schemas/ProjectSamplingEnum'
           nullable: true
         show_annotation_history:
           description: Show Data Manager to Annotators
@@ -39054,7 +39044,7 @@ components:
           nullable: true
           type: string
         status:
-          $ref: '#/components/schemas/StatusC5aEnum'
+          $ref: '#/components/schemas/StorageStatusEnum'
         synchronizable:
           default: true
           type: boolean
@@ -39159,7 +39149,7 @@ components:
           nullable: true
           type: string
         status:
-          $ref: '#/components/schemas/StatusC5aEnum'
+          $ref: '#/components/schemas/StorageStatusEnum'
         synchronizable:
           default: true
           type: boolean
@@ -39388,7 +39378,7 @@ components:
       properties:
         role:
           allOf:
-            - $ref: '#/components/schemas/Role9e7Enum'
+            - $ref: '#/components/schemas/OrganizationRoleEnum'
           description: |-
             Organization role
 
@@ -39420,7 +39410,7 @@ components:
         roles:
           description: Organization roles
           items:
-            $ref: '#/components/schemas/Role9e7Enum'
+            $ref: '#/components/schemas/OrganizationRoleEnum'
           type: array
       type: object
     PatchedPauseRequest:
@@ -39564,7 +39554,7 @@ components:
           nullable: true
           type: string
         status:
-          $ref: '#/components/schemas/StatusC5aEnum'
+          $ref: '#/components/schemas/StorageStatusEnum'
         synced:
           description: Flag if dataset has been previously synced or not
           type: boolean
@@ -40037,7 +40027,7 @@ components:
           type: boolean
         sampling:
           allOf:
-            - $ref: '#/components/schemas/SamplingDe5Enum'
+            - $ref: '#/components/schemas/ProjectSamplingEnum'
           nullable: true
         show_annotation_history:
           description: Show annotation history to annotator
@@ -40264,7 +40254,7 @@ components:
         return_task_ids:
           type: boolean
         status:
-          $ref: '#/components/schemas/Status7bfEnum'
+          $ref: '#/components/schemas/ProjectImportStatusEnum'
         task_count:
           maximum: 2147483647
           minimum: -2147483648
@@ -40287,6 +40277,18 @@ components:
         - id
         - updated_at
       type: object
+    ProjectImportStatusEnum:
+      description: |-
+        * `created` - Created
+        * `in_progress` - In progress
+        * `failed` - Failed
+        * `completed` - Completed
+      enum:
+        - created
+        - in_progress
+        - failed
+        - completed
+      type: string
     ProjectLabelConfig:
       properties:
         label_config:
@@ -40388,7 +40390,7 @@ components:
       properties:
         role:
           allOf:
-            - $ref: '#/components/schemas/Role9e7Enum'
+            - $ref: '#/components/schemas/OrganizationRoleEnum'
           description: |-
             Role
 
@@ -40443,7 +40445,7 @@ components:
           nullable: true
           type: integer
         status:
-          $ref: '#/components/schemas/Status7bfEnum'
+          $ref: '#/components/schemas/ProjectImportStatusEnum'
         task_count:
           maximum: 2147483647
           minimum: -2147483648
@@ -40459,7 +40461,7 @@ components:
         project:
           type: integer
         role:
-          $ref: '#/components/schemas/Role9e7Enum'
+          $ref: '#/components/schemas/OrganizationRoleEnum'
         role_source:
           readOnly: true
           type: string
@@ -40477,7 +40479,7 @@ components:
         project:
           type: integer
         role:
-          $ref: '#/components/schemas/Role9e7Enum'
+          $ref: '#/components/schemas/OrganizationRoleEnum'
         user:
           type: integer
       required:
@@ -40485,6 +40487,16 @@ components:
         - role
         - user
       type: object
+    ProjectSamplingEnum:
+      description: |-
+        * `Sequential sampling` - Tasks are ordered by Data manager ordering
+        * `Uniform sampling` - Tasks are chosen randomly
+        * `Uncertainty sampling` - Tasks are chosen according to model uncertainty scores (active learning mode)
+      enum:
+        - Sequential sampling
+        - Uniform sampling
+        - Uncertainty sampling
+      type: string
     ProjectSubsetEnum:
       description: |-
         * `All` - All
@@ -40819,7 +40831,7 @@ components:
           title: Port
           type: string
         status:
-          $ref: '#/components/schemas/StatusC5aEnum'
+          $ref: '#/components/schemas/StorageStatusEnum'
         synchronizable:
           default: true
           type: boolean
@@ -40908,7 +40920,7 @@ components:
           title: Port
           type: string
         status:
-          $ref: '#/components/schemas/StatusC5aEnum'
+          $ref: '#/components/schemas/StorageStatusEnum'
         synchronizable:
           default: true
           type: boolean
@@ -41258,14 +41270,6 @@ components:
         - task_id
         - random
       type: string
-    ReviewedEnum:
-      description: |-
-        * `only` - only
-        * `exclude` - exclude
-        * `None` - None
-      enum:
-        - only
-        - exclude
     RevokeCertificateRequest:
       properties:
         reason:
@@ -41281,24 +41285,6 @@ components:
       required:
         - email
       type: object
-    Role9e7Enum:
-      description: |-
-        * `OW` - Owner
-        * `AD` - Administrator
-        * `MA` - Manager
-        * `RE` - Reviewer
-        * `AN` - Annotator
-        * `DI` - Deactivated
-        * `NO` - Not Activated
-      enum:
-        - OW
-        - AD
-        - MA
-        - RE
-        - AN
-        - DI
-        - 'NO'
-      type: string
     RoleBasedTask:
       oneOf:
         - $ref: '#/components/schemas/LseTask'
@@ -41397,7 +41383,7 @@ components:
           nullable: true
           type: string
         status:
-          $ref: '#/components/schemas/StatusC5aEnum'
+          $ref: '#/components/schemas/StorageStatusEnum'
         synced:
           description: Flag if dataset has been previously synced or not
           type: boolean
@@ -41507,7 +41493,7 @@ components:
           nullable: true
           type: string
         status:
-          $ref: '#/components/schemas/StatusC5aEnum'
+          $ref: '#/components/schemas/StorageStatusEnum'
         synced:
           description: Flag if dataset has been previously synced or not
           type: boolean
@@ -41606,7 +41592,7 @@ components:
           nullable: true
           type: string
         status:
-          $ref: '#/components/schemas/StatusC5aEnum'
+          $ref: '#/components/schemas/StorageStatusEnum'
         synchronizable:
           default: true
           type: boolean
@@ -41716,7 +41702,7 @@ components:
           nullable: true
           type: string
         status:
-          $ref: '#/components/schemas/StatusC5aEnum'
+          $ref: '#/components/schemas/StorageStatusEnum'
         synchronizable:
           default: true
           type: boolean
@@ -41989,16 +41975,6 @@ components:
             type: array
           type: array
       type: object
-    SamplingDe5Enum:
-      description: |-
-        * `Sequential sampling` - Tasks are ordered by Data manager ordering
-        * `Uniform sampling` - Tasks are chosen randomly
-        * `Uncertainty sampling` - Tasks are chosen according to model uncertainty scores (active learning mode)
-      enum:
-        - Sequential sampling
-        - Uniform sampling
-        - Uncertainty sampling
-      type: string
     ScimSettings:
       properties:
         projects_groups:
@@ -42126,7 +42102,7 @@ components:
           type: array
         role:
           allOf:
-            - $ref: '#/components/schemas/Role9e7Enum'
+            - $ref: '#/components/schemas/OrganizationRoleEnum'
           description: |-
             Organization role
 
@@ -42262,14 +42238,6 @@ components:
         - REQUEUE_FOR_OTHERS
         - IGNORE_SKIPPED
       type: string
-    SkippedEnum:
-      description: |-
-        * `only` - only
-        * `exclude` - exclude
-        * `None` - None
-      enum:
-        - only
-        - exclude
     StateBackfillCancelResponse:
       properties:
         cancelled_count:
@@ -42521,33 +42489,7 @@ components:
         - email
         - id
       type: object
-    Status7bfEnum:
-      description: |-
-        * `created` - Created
-        * `in_progress` - In progress
-        * `failed` - Failed
-        * `completed` - Completed
-      enum:
-        - created
-        - in_progress
-        - failed
-        - completed
-      type: string
-    StatusA47Enum:
-      description: |-
-        * `PENDING` - Pending
-        * `QUEUED` - Queued
-        * `RUNNING` - Running
-        * `COMPLETED` - Completed
-        * `FAILED` - Failed
-      enum:
-        - PENDING
-        - QUEUED
-        - RUNNING
-        - COMPLETED
-        - FAILED
-      type: string
-    StatusC5aEnum:
+    StorageStatusEnum:
       description: |-
         * `initialized` - Initialized
         * `queued` - Queued
@@ -43207,7 +43149,7 @@ components:
           type: string
         status:
           allOf:
-            - $ref: '#/components/schemas/StatusA47Enum'
+            - $ref: '#/components/schemas/FsmBackfillJobStatusEnum'
           description: |-
             Current status of the backfill job
 
