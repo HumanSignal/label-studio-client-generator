@@ -25247,9 +25247,14 @@ components:
             * `COMPLETED` - Completed
             * `FAILED` - Failed
         triggered_by:
+          additionalProperties:
+            oneOf:
+              - type: integer
+              - type: string
           description: User who triggered the backfill
+          nullable: true
           readOnly: true
-          type: string
+          type: object
       required:
         - created_at
         - job_id
@@ -25468,7 +25473,7 @@ components:
           nullable: true
         is_dimensions_enabled:
           readOnly: true
-          type: string
+          type: boolean
         is_draft:
           description: Whether or not the project is in the middle of being created
           type: boolean
@@ -25491,8 +25496,11 @@ components:
           title: Maximum annotation number
           type: integer
         members:
+          items:
+            additionalProperties: {}
+            type: object
           readOnly: true
-          type: string
+          type: array
         members_count:
           readOnly: true
           type: integer
@@ -25535,8 +25543,12 @@ components:
           nullable: true
           type: string
         prompts:
+          items:
+            additionalProperties: {}
+            type: object
+          nullable: true
           readOnly: true
-          type: string
+          type: array
         queue_done:
           readOnly: true
           type: integer
@@ -25546,7 +25558,7 @@ components:
           type: integer
         queue_total:
           readOnly: true
-          type: string
+          type: integer
         ready:
           readOnly: true
           type: boolean
@@ -25607,8 +25619,9 @@ components:
             - $ref: '#/components/schemas/SkipQueueEnum'
           nullable: true
         skipped_annotations_number:
+          nullable: true
           readOnly: true
-          type: string
+          type: integer
         source_interface_id:
           nullable: true
           type: integer
@@ -25639,7 +25652,7 @@ components:
           type: string
         total_annotations_number:
           readOnly: true
-          type: string
+          type: integer
         total_predictions_number:
           readOnly: true
           type: integer
@@ -25652,8 +25665,9 @@ components:
           type: integer
         workspace:
           readOnly: true
-          type: string
+          type: integer
         workspace_title:
+          nullable: true
           readOnly: true
           type: string
       required:
@@ -27362,6 +27376,7 @@ components:
         project:
           type: integer
         share_id:
+          description: base64 encoded id
           readOnly: true
           type: string
         short_url:
@@ -27369,7 +27384,7 @@ components:
           type: string
         task_count:
           readOnly: true
-          type: string
+          type: integer
         title:
           description: Blueprint name. Must be between 3 and 50 characters long.
           maxLength: 50
@@ -27402,6 +27417,7 @@ components:
           readOnly: true
           type: integer
         share_id:
+          description: base64 encoded id
           readOnly: true
           type: string
         short_url:
@@ -27409,7 +27425,7 @@ components:
           type: string
         task_count:
           readOnly: true
-          type: string
+          type: integer
         title:
           description: Blueprint name. Must be between 3 and 50 characters long.
           maxLength: 50
@@ -27956,7 +27972,7 @@ components:
           type: boolean
         page_count:
           readOnly: true
-          type: string
+          type: integer
         sort_order:
           default: 0
           maximum: 2147483647
@@ -28850,9 +28866,10 @@ components:
         The project and created_by fields are set automatically from the request context.
       properties:
         allowed_metrics_with_params:
+          additionalProperties: true
           description: Dictionary mapping metric type names to their parameter schemas.
           readOnly: true
-          type: string
+          type: object
         control_tag:
           description: Name of the control tag this dimension is extracted from. Set automatically for system dimensions.
           nullable: true
@@ -28979,9 +28996,10 @@ components:
         Excludes detailed parameters for performance in list views.
       properties:
         allowed_metrics_with_params:
+          additionalProperties: true
           description: Dictionary mapping metric type names to their parameter schemas.
           readOnly: true
-          type: string
+          type: object
         control_tag:
           description: Name of the control tag this dimension is extracted from. Set automatically for system dimensions.
           nullable: true
@@ -29224,8 +29242,11 @@ components:
         annotation:
           type: integer
         annotation_result:
+          items:
+            additionalProperties: {}
+            type: object
           readOnly: true
-          type: string
+          type: array
         created_at:
           format: date-time
           readOnly: true
@@ -29240,8 +29261,9 @@ components:
         task:
           type: integer
         task_data:
+          additionalProperties: {}
           readOnly: true
-          type: string
+          type: object
       required:
         - annotation
         - annotation_result
@@ -31439,8 +31461,9 @@ components:
           nullable: true
           type: string
         content:
+          additionalProperties: {}
           readOnly: true
-          type: string
+          type: object
         content_version:
           readOnly: true
           type: integer
@@ -31495,25 +31518,25 @@ components:
           type: boolean
         learner_count:
           readOnly: true
-          type: string
+          type: integer
         learners_completed_count:
           readOnly: true
-          type: string
+          type: integer
         learners_started_count:
           readOnly: true
-          type: string
+          type: integer
         module_count:
           readOnly: true
-          type: string
+          type: integer
         organization:
           readOnly: true
           type: integer
         page_count:
           readOnly: true
-          type: string
+          type: integer
         project_count:
           readOnly: true
-          type: string
+          type: integer
         summary:
           type: string
         title:
@@ -31659,8 +31682,9 @@ components:
           nullable: true
           type: string
         content:
+          additionalProperties: {}
           readOnly: true
-          type: string
+          type: object
         content_version:
           readOnly: true
           type: integer
@@ -31720,16 +31744,16 @@ components:
           type: object
         learner_count:
           readOnly: true
-          type: string
+          type: integer
         learners_completed_count:
           readOnly: true
-          type: string
+          type: integer
         learners_started_count:
           readOnly: true
-          type: string
+          type: integer
         module_count:
           readOnly: true
-          type: string
+          type: integer
         modules:
           items:
             $ref: '#/components/schemas/CourseModule'
@@ -31740,24 +31764,31 @@ components:
           type: integer
         page_count:
           readOnly: true
-          type: string
+          type: integer
         progress:
+          additionalProperties: {}
+          nullable: true
           readOnly: true
-          type: string
+          type: object
         project_assignments:
+          items:
+            additionalProperties: {}
+            type: object
           readOnly: true
-          type: string
+          type: array
         project_count:
           readOnly: true
-          type: string
+          type: integer
         summary:
           type: string
         title:
           maxLength: 255
           type: string
         unpublished_module_ids:
+          items:
+            type: integer
           readOnly: true
-          type: string
+          type: array
         updated_at:
           format: date-time
           readOnly: true
@@ -32180,15 +32211,31 @@ components:
     LseFields:
       properties:
         email_notification_settings:
+          additionalProperties: {}
+          description: |-
+            Get email notification settings with organization-level filtering.
+
+            Use the model's getter method to ensure all notification types are included
+            with proper defaults for any missing types. Transform the output to include
+            both value and label for each notification type.
+
+            Filter notifications based on organization's allowed notifications if user
+            belongs to exactly one organization.
+
+            Role-based filtering: not_activated_user_login is only available to users
+            who are admins or owners in at least one organization.
           readOnly: true
-          type: string
+          type: object
         invite_activated:
           nullable: true
           type: boolean
         invite_expired:
+          nullable: true
           readOnly: true
-          type: string
+          type: boolean
         invite_expired_at:
+          format: date-time
+          nullable: true
           readOnly: true
           type: string
         invited_at:
@@ -32452,8 +32499,11 @@ components:
           readOnly: true
           type: string
         versions:
+          items:
+            additionalProperties: {}
+            type: object
           readOnly: true
-          type: string
+          type: array
         workspace:
           nullable: true
           type: integer
@@ -32541,7 +32591,7 @@ components:
           type: boolean
         custom_scripts_enabled:
           readOnly: true
-          type: string
+          type: boolean
         default_role:
           allOf:
             - $ref: '#/components/schemas/OrganizationRoleEnum'
@@ -32556,8 +32606,28 @@ components:
             * `DI` - Deactivated
             * `NO` - Not Activated
         email_notification_settings:
+          additionalProperties: {}
+          description: |-
+            Get email notification settings with default values for all notification types.
+
+            Returns a dictionary with the following structure:
+            {
+                'notifications_allowed': {
+                    'notification_type': bool
+                },
+                'notification_types': [
+                    {'value': str, 'label': str}
+                ]
+            }
+
+            Excludes blocklisted notification types and ensures all valid types are included
+            with proper defaults for any missing types.
+
+            When organization's email_notification_settings is null or empty, all notifications
+            are shown as enabled (True) by default. When organization has some settings,
+            unconfigured notifications default to False.
           readOnly: true
-          type: string
+          type: object
         embed_domains:
           description: 'List of objects: {"domain": "example.com"}. Used for CSP header on /embed routes.'
           nullable: true
@@ -32579,8 +32649,9 @@ components:
           description: 'Security settings for custom interfaces: CSP allowlists, script origins, iframe permissions.'
           nullable: true
         react_code_settings:
+          additionalProperties: {}
           readOnly: true
-          type: string
+          type: object
         title:
           readOnly: true
           type: string
@@ -32603,8 +32674,10 @@ components:
         which fields should be displayed.
       properties:
         concurrency:
+          additionalProperties: {}
+          nullable: true
           readOnly: true
-          type: string
+          type: object
         contributed_to_projects:
           items:
             properties:
@@ -32653,6 +32726,7 @@ components:
         user:
           $ref: '#/components/schemas/LseUserOrganizationMemberList'
         user_type:
+          nullable: true
           readOnly: true
           type: string
       required:
@@ -32811,7 +32885,7 @@ components:
           nullable: true
         is_dimensions_enabled:
           readOnly: true
-          type: string
+          type: boolean
         is_draft:
           description: Whether or not the project is in the middle of being created
           type: boolean
@@ -32834,8 +32908,11 @@ components:
           title: Maximum annotation number
           type: integer
         members:
+          items:
+            additionalProperties: {}
+            type: object
           readOnly: true
-          type: string
+          type: array
         members_count:
           readOnly: true
           type: integer
@@ -32878,17 +32955,21 @@ components:
           nullable: true
           type: string
         prompts:
+          items:
+            additionalProperties: {}
+            type: object
+          nullable: true
           readOnly: true
-          type: string
+          type: array
         queue_done:
           readOnly: true
-          type: string
+          type: integer
         queue_left:
           readOnly: true
-          type: string
+          type: integer
         queue_total:
           readOnly: true
-          type: string
+          type: integer
         require_comment_on_skip:
           default: false
           description: Require comment to skip
@@ -32900,7 +32981,7 @@ components:
           $ref: '#/components/schemas/ReviewSettings'
         reviewer_queue_total:
           readOnly: true
-          type: string
+          type: integer
         sampling:
           allOf:
             - $ref: '#/components/schemas/ProjectSamplingEnum'
@@ -32992,8 +33073,9 @@ components:
           type: integer
         workspace:
           readOnly: true
-          type: string
+          type: integer
         workspace_title:
+          nullable: true
           readOnly: true
           type: string
       required:
@@ -33054,7 +33136,7 @@ components:
           type: integer
         queue_total:
           readOnly: true
-          type: string
+          type: integer
         rejected:
           readOnly: true
           type: integer
@@ -33067,15 +33149,16 @@ components:
           readOnly: true
           type: integer
         skipped_annotations_number:
+          nullable: true
           readOnly: true
-          type: string
+          type: integer
         task_number:
           description: Total task number in project
           readOnly: true
           type: integer
         total_annotations_number:
           readOnly: true
-          type: string
+          type: integer
         total_predictions_number:
           readOnly: true
           type: integer
@@ -33650,7 +33733,7 @@ components:
           nullable: true
         is_dimensions_enabled:
           readOnly: true
-          type: string
+          type: boolean
         is_draft:
           description: Whether or not the project is in the middle of being created
           type: boolean
@@ -33673,8 +33756,11 @@ components:
           title: Maximum annotation number
           type: integer
         members:
+          items:
+            additionalProperties: {}
+            type: object
           readOnly: true
-          type: string
+          type: array
         members_count:
           readOnly: true
           type: integer
@@ -33716,8 +33802,12 @@ components:
           nullable: true
           type: string
         prompts:
+          items:
+            additionalProperties: {}
+            type: object
+          nullable: true
           readOnly: true
-          type: string
+          type: array
         queue_done:
           readOnly: true
           type: integer
@@ -33840,8 +33930,9 @@ components:
           type: integer
         workspace:
           readOnly: true
-          type: string
+          type: integer
         workspace_title:
+          nullable: true
           readOnly: true
           type: string
       required:
@@ -34071,8 +34162,12 @@ components:
           nullable: true
           type: string
         prompts:
+          items:
+            additionalProperties: {}
+            type: object
+          nullable: true
           readOnly: true
-          type: string
+          type: array
         queue_done:
           readOnly: true
           type: integer
@@ -34181,6 +34276,7 @@ components:
           description: Workspace
           type: integer
         workspace_title:
+          nullable: true
           readOnly: true
           type: string
       required:
@@ -34657,11 +34753,13 @@ components:
       description: Data Manager Task Serializer with FSM state support.
       properties:
         agreement:
+          format: double
           readOnly: true
-          type: string
+          type: number
         agreement_selected:
+          format: double
           readOnly: true
-          type: string
+          type: number
         allow_skip:
           description: Whether this task can be skipped. Set to False to make task unskippable.
           nullable: true
@@ -34671,8 +34769,14 @@ components:
           readOnly: true
           type: integer
         annotations:
+          description: |-
+            Return annotations for the task.
+
+            If annotations_stub=True is in context (via feature flag
+            fflag_fix_all_fit_720_lazy_load_annotations), returns lightweight
+            annotation stubs without result data for improved performance.
           items:
-            title: Annotation
+            additionalProperties: {}
             type: object
           readOnly: true
           type: array
@@ -34754,6 +34858,7 @@ components:
           title: Annotation drafts
           type: array
         file_upload:
+          nullable: true
           readOnly: true
           type: string
         ground_truth:
@@ -34861,6 +34966,7 @@ components:
           readOnly: true
           type: string
         storage_filename:
+          nullable: true
           readOnly: true
           type: string
         total_annotations:
@@ -35095,8 +35201,14 @@ components:
       properties:
         annotations:
           default: []
+          description: |-
+            Return annotations for the task.
+
+            If annotations_stub=True is in context (via feature flag
+            fflag_fix_all_fit_720_lazy_load_annotations), returns lightweight
+            annotation stubs without result data for improved performance.
           items:
-            title: Annotation
+            additionalProperties: {}
             type: object
           readOnly: true
           type: array
@@ -35225,11 +35337,13 @@ components:
       description: Data Manager Task Serializer with FSM state support.
       properties:
         agreement:
+          format: double
           readOnly: true
-          type: string
+          type: number
         agreement_selected:
+          format: double
           readOnly: true
-          type: string
+          type: number
         allow_skip:
           description: Whether this task can be skipped. Set to False to make task unskippable.
           nullable: true
@@ -35239,8 +35353,14 @@ components:
           readOnly: true
           type: integer
         annotations:
+          description: |-
+            Return annotations for the task.
+
+            If annotations_stub=True is in context (via feature flag
+            fflag_fix_all_fit_720_lazy_load_annotations), returns lightweight
+            annotation stubs without result data for improved performance.
           items:
-            title: Annotation
+            additionalProperties: {}
             type: object
           readOnly: true
           type: array
@@ -35322,6 +35442,7 @@ components:
           title: Annotation drafts
           type: array
         file_upload:
+          nullable: true
           readOnly: true
           type: string
         ground_truth:
@@ -35429,6 +35550,7 @@ components:
           readOnly: true
           type: string
         storage_filename:
+          nullable: true
           readOnly: true
           type: string
         total_annotations:
@@ -35492,13 +35614,16 @@ components:
           nullable: true
           type: integer
         active_organization_meta:
+          additionalProperties:
+            type: string
           readOnly: true
-          type: string
+          type: object
         allow_newsletters:
           description: Allow sending newsletters to user
           nullable: true
           type: boolean
         avatar:
+          nullable: true
           readOnly: true
           type: string
         custom_hotkeys:
@@ -35544,8 +35669,10 @@ components:
             - $ref: '#/components/schemas/OrganizationMembership'
           readOnly: true
         pause:
+          additionalProperties: {}
+          nullable: true
           readOnly: true
-          type: string
+          type: object
         phone:
           maxLength: 256
           type: string
@@ -35575,13 +35702,16 @@ components:
           nullable: true
           type: integer
         active_organization_meta:
+          additionalProperties:
+            type: string
           readOnly: true
-          type: string
+          type: object
         allow_newsletters:
           description: Allow sending newsletters to user
           nullable: true
           type: boolean
         avatar:
+          nullable: true
           readOnly: true
           type: string
         custom_hotkeys:
@@ -35653,6 +35783,7 @@ components:
           nullable: true
           type: boolean
         avatar:
+          nullable: true
           readOnly: true
           type: string
         contributed_to_projects:
@@ -35718,8 +35849,10 @@ components:
             - $ref: '#/components/schemas/LseFields'
           readOnly: true
         pause:
+          additionalProperties: {}
+          nullable: true
           readOnly: true
-          type: string
+          type: object
         phone:
           maxLength: 256
           type: string
@@ -35882,11 +36015,12 @@ components:
       properties:
         agreement_threshold:
           deprecated: true
+          nullable: true
           readOnly: true
-          type: string
+          type: integer
         allowed:
           readOnly: true
-          type: string
+          type: boolean
         max_additional_annotators_assignable:
           deprecated: true
           description: Maximum number of additional annotators that can be assigned to a low agreement task
@@ -36138,9 +36272,10 @@ components:
           nullable: true
           type: boolean
         model_params:
+          additionalProperties: {}
           description: JSON schema for the model parameters available for the provider
           readOnly: true
-          type: string
+          type: object
         organization:
           nullable: true
           readOnly: true
@@ -36409,19 +36544,19 @@ components:
       properties:
         enforce_session_concurrency:
           readOnly: true
-          type: string
+          type: boolean
         manual_role_management:
           readOnly: true
-          type: string
+          type: boolean
         manual_workspace_management:
           readOnly: true
-          type: string
+          type: boolean
         max_parallel_sessions:
           readOnly: true
-          type: string
+          type: integer
         session_concurrency_window_seconds:
           readOnly: true
-          type: string
+          type: integer
       required:
         - enforce_session_concurrency
         - manual_role_management
@@ -36636,7 +36771,7 @@ components:
       properties:
         active:
           readOnly: true
-          type: string
+          type: boolean
         organization_id:
           description: Organization ID
           readOnly: true
@@ -37102,13 +37237,16 @@ components:
           nullable: true
           type: integer
         active_organization_meta:
+          additionalProperties:
+            type: string
           readOnly: true
-          type: string
+          type: object
         allow_newsletters:
           description: Allow sending newsletters to user
           nullable: true
           type: boolean
         avatar:
+          nullable: true
           readOnly: true
           type: string
         custom_hotkeys:
@@ -37157,8 +37295,10 @@ components:
             - $ref: '#/components/schemas/OrganizationMembership'
           readOnly: true
         pause:
+          additionalProperties: {}
+          nullable: true
           readOnly: true
-          type: string
+          type: object
         phone:
           maxLength: 256
           type: string
@@ -37174,6 +37314,7 @@ components:
           readOnly: true
           type: array
         user_type:
+          nullable: true
           readOnly: true
           type: string
         username:
@@ -42793,6 +42934,7 @@ components:
           nullable: true
           type: integer
         model_display_name:
+          description: Human-readable model name derived from provider_model_id.
           readOnly: true
           type: string
         model_provider_connection:
@@ -42825,8 +42967,10 @@ components:
           maxLength: 255
           type: string
         score:
+          format: double
+          nullable: true
           readOnly: true
-          type: string
+          type: number
         title:
           description: Model name
           maxLength: 500
@@ -42985,12 +43129,15 @@ components:
           readOnly: true
           type: boolean
         last_module_title:
+          nullable: true
           readOnly: true
           type: string
         last_page_id:
+          nullable: true
           readOnly: true
           type: string
         last_page_title:
+          nullable: true
           readOnly: true
           type: string
         pages_visited:
@@ -42999,14 +43146,16 @@ components:
           readOnly: true
           type: array
         progress_percent:
+          format: double
           readOnly: true
-          type: string
+          type: number
         quiz_summary:
+          additionalProperties: {}
           readOnly: true
-          type: string
+          type: object
         requires_retake:
           readOnly: true
-          type: string
+          type: boolean
         started_at:
           format: date-time
           nullable: true
@@ -43046,6 +43195,7 @@ components:
         values with complex, nested serializations
       properties:
         avatar:
+          nullable: true
           readOnly: true
           type: string
         email:
@@ -43159,9 +43309,14 @@ components:
             * `COMPLETED` - Completed
             * `FAILED` - Failed
         triggered_by:
+          additionalProperties:
+            oneOf:
+              - type: integer
+              - type: string
           description: User who triggered the backfill
+          nullable: true
           readOnly: true
-          type: string
+          type: object
       required:
         - created_at
         - job_id
@@ -43445,15 +43600,31 @@ components:
           readOnly: true
           type: string
         email_notification_settings:
+          additionalProperties: {}
+          description: |-
+            Get email notification settings with organization-level filtering.
+
+            Use the model's getter method to ensure all notification types are included
+            with proper defaults for any missing types. Transform the output to include
+            both value and label for each notification type.
+
+            Filter notifications based on organization's allowed notifications if user
+            belongs to exactly one organization.
+
+            Role-based filtering: not_activated_user_login is only available to users
+            who are admins or owners in at least one organization.
           readOnly: true
-          type: string
+          type: object
         invite_activated:
           nullable: true
           type: boolean
         invite_expired:
+          nullable: true
           readOnly: true
-          type: string
+          type: boolean
         invite_expired_at:
+          format: date-time
+          nullable: true
           readOnly: true
           type: string
         invited_at:
@@ -43516,13 +43687,16 @@ components:
           nullable: true
           type: integer
         active_organization_meta:
+          additionalProperties:
+            type: string
           readOnly: true
-          type: string
+          type: object
         allow_newsletters:
           description: Allow sending newsletters to user
           nullable: true
           type: boolean
         avatar:
+          nullable: true
           readOnly: true
           type: string
         custom_hotkeys:
@@ -43568,8 +43742,10 @@ components:
             - $ref: '#/components/schemas/OrganizationMembership'
           readOnly: true
         pause:
+          additionalProperties: {}
+          nullable: true
           readOnly: true
-          type: string
+          type: object
         permissions:
           items:
             type: string
@@ -43617,8 +43793,11 @@ components:
           readOnly: true
           type: integer
         created_by_user:
+          additionalProperties: {}
+          description: Return created_by user details when include_all_workspaces is enabled.
+          nullable: true
           readOnly: true
-          type: string
+          type: object
         description:
           description: Workspace description
           nullable: true
@@ -43635,8 +43814,10 @@ components:
           title: Personal
           type: boolean
         membership:
+          additionalProperties: {}
+          nullable: true
           readOnly: true
-          type: string
+          type: object
         projects_count:
           nullable: true
           readOnly: true
