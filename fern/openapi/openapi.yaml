@@ -2168,7 +2168,11 @@ paths:
             type: integer
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DatasetStorageColumnsResponse'
+          description: ''
       security:
         - Token: []
       summary: Get data column names from storage
@@ -2422,7 +2426,11 @@ paths:
             type: integer
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DatasetStorageColumnsResponse'
+          description: ''
       security:
         - Token: []
       summary: Get data column names from storage
@@ -2676,7 +2684,11 @@ paths:
             type: integer
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DatasetStorageColumnsResponse'
+          description: ''
       security:
         - Token: []
       summary: Get data column names from storage
@@ -2802,7 +2814,11 @@ paths:
             type: integer
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DatasetColumnsResponse'
+          description: ''
       security:
         - Token: []
       summary: Get data explorer columns
@@ -2825,9 +2841,27 @@ paths:
           name: signal
           schema:
             type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                job_id:
+                  type: integer
+                signal:
+                  description: Operation type.
+                  type: string
+              required:
+                - job_id
+                - signal
+              type: object
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DatasetImportCandidatesResponse'
+          description: ''
       security:
         - Token: []
       summary: Export candidate tasks to project
@@ -2872,9 +2906,25 @@ paths:
           name: view
           schema:
             type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DatasetImportCandidatesCreateRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/DatasetImportCandidatesCreateRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/DatasetImportCandidatesCreateRequest'
+        required: true
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DatasetImportCandidatesResponse'
+          description: ''
       security:
         - Token: []
       summary: Export candidate tasks to project
@@ -2953,7 +3003,11 @@ paths:
             type: string
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DatasetTasksMetadataResponse'
+          description: ''
       security:
         - Token: []
       summary: Get Candidate task metadata
@@ -4126,7 +4180,11 @@ paths:
       operationId: api_dm_project_retrieve
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LseProjectStateResponse'
+          description: ''
       security:
         - Token: []
       summary: Get project state
@@ -4786,18 +4844,16 @@ paths:
               schema:
                 $ref: '#/components/schemas/StateBackfillCancelResponse'
           description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StateBackfillErrorResponse'
+          description: ''
         '403':
-          content:
-            application/json:
-              schema:
-                description: Permission denied
-          description: ''
+          description: Permission denied
         '404':
-          content:
-            application/json:
-              schema:
-                description: Organization not found
-          description: ''
+          description: Organization not found
       security:
         - Token: []
       summary: ✨ Cancel state backfill jobs
@@ -4834,20 +4890,12 @@ paths:
           content:
             application/json:
               schema:
-                description: Validation error (job already running, feature flag disabled, etc.)
+                $ref: '#/components/schemas/StateBackfillErrorResponse'
           description: ''
         '403':
-          content:
-            application/json:
-              schema:
-                description: Permission denied
-          description: ''
+          description: Permission denied
         '404':
-          content:
-            application/json:
-              schema:
-                description: Organization not found
-          description: ''
+          description: Organization not found
       security:
         - Token: []
       summary: ✨ Trigger state backfill for organization
@@ -5187,7 +5235,11 @@ paths:
       operationId: api_inference_runs_bulk_indicators_retrieve
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BulkIndicatorsResponse'
+          description: ''
       security:
         - Token: []
       summary: ✨ Bulk fetch indicators for inference runs
@@ -5238,7 +5290,11 @@ paths:
       operationId: api_inference_runs_regressions_retrieve
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegressionsResponse'
+          description: ''
       security:
         - Token: []
       summary: ✨ Compare correctness transitions between inference runs
@@ -10742,7 +10798,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/LseProjectUpdate'
+                $ref: '#/components/schemas/LseProjectResponse'
           description: ''
       security:
         - Token: []
@@ -14759,7 +14815,11 @@ paths:
             type: integer
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectAnnotationsBrowseResponse'
+          description: ''
       security:
         - Token: []
       summary: ✨ Browse annotations for few-shot examples
@@ -15046,7 +15106,7 @@ paths:
                 </p>
             </Card>
         List all learning resource assignments for a project.
-      operationId: api_projects_learning_assignments_retrieve
+      operationId: api_projects_learning_assignments_list
       parameters:
         - in: path
           name: project_pk
@@ -15055,7 +15115,13 @@ paths:
             type: integer
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ProjectLearningAssignment'
+                type: array
+          description: ''
       security:
         - Token: []
       summary: ✨ List learning assignments for a project
@@ -15077,9 +15143,25 @@ paths:
           required: true
           schema:
             type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectLearningAssignmentCreateRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ProjectLearningAssignmentCreateRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ProjectLearningAssignmentCreateRequest'
+        required: true
       responses:
         '201':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectLearningAssignment'
+          description: ''
       security:
         - Token: []
       summary: ✨ Assign a learning resource to a project
@@ -15102,6 +15184,17 @@ paths:
           required: true
           schema:
             type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedProjectLearningAssignmentRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedProjectLearningAssignmentRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedProjectLearningAssignmentRequest'
       responses:
         '200':
           content:
@@ -16035,7 +16128,11 @@ paths:
             type: integer
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultModelVersionNameResponse'
+          description: ''
       security:
         - Token: []
       summary: ✨ Get default prompt version name
@@ -16756,7 +16853,11 @@ paths:
             type: integer
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PredictionCountResponse'
+          description: ''
       security:
         - Token: []
       summary: ✨ Get prediction count for a prompt version
@@ -16779,7 +16880,11 @@ paths:
             type: integer
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PromptPreviewResponse'
+          description: ''
       security:
         - Token: []
       summary: ✨ Preview assembled prompt
@@ -16911,9 +17016,25 @@ paths:
           required: true
           schema:
             type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TryTaskRequestRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TryTaskRequestRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TryTaskRequestRequest'
+        required: true
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TryTaskResponse'
+          description: ''
       security:
         - Token: []
       summary: ✨ Try prompt on a single task
@@ -27475,6 +27596,54 @@ components:
         - Monthly
         - Yearly
       type: string
+    BulkIndicatorRun:
+      properties:
+        completed_at:
+          nullable: true
+          type: string
+        created_at:
+          type: string
+        indicators: {}
+        model_display_name:
+          nullable: true
+          type: string
+        model_version_id:
+          type: integer
+        model_version_title:
+          type: string
+        project_subset:
+          type: string
+        run_id:
+          type: integer
+        status:
+          type: string
+        total_correct_predictions:
+          nullable: true
+          type: integer
+        total_predictions:
+          nullable: true
+          type: integer
+        total_tasks:
+          nullable: true
+          type: integer
+      required:
+        - created_at
+        - indicators
+        - model_version_id
+        - model_version_title
+        - project_subset
+        - run_id
+        - status
+      type: object
+    BulkIndicatorsResponse:
+      properties:
+        results:
+          items:
+            $ref: '#/components/schemas/BulkIndicatorRun'
+          type: array
+      required:
+        - results
+      type: object
     BulkOrganizationMemberTagAssignmentRequest:
       properties:
         all:
@@ -28676,6 +28845,77 @@ components:
         - title
         - updated_at
       type: object
+    DatasetColumn:
+      properties:
+        children:
+          items:
+            type: string
+          type: array
+        id:
+          type: string
+        parent:
+          type: string
+        target:
+          type: string
+        title:
+          type: string
+        type:
+          type: string
+        visibility_defaults:
+          $ref: '#/components/schemas/DatasetColumnVisibilityDefaults'
+      required:
+        - id
+        - target
+        - title
+        - type
+      type: object
+    DatasetColumnVisibilityDefaults:
+      properties:
+        explore:
+          type: boolean
+        filter:
+          type: boolean
+      type: object
+    DatasetColumnsResponse:
+      properties:
+        columns:
+          items:
+            $ref: '#/components/schemas/DatasetColumn'
+          type: array
+      required:
+        - columns
+      type: object
+    DatasetImportCandidatesCreateRequest:
+      properties:
+        additional_filters:
+          default: {}
+        dataset:
+          type: integer
+        excluded:
+          default: {}
+        included:
+          default: {}
+        project:
+          type: integer
+        view:
+          default: ''
+          type: integer
+      required:
+        - dataset
+      type: object
+    DatasetImportCandidatesResponse:
+      properties:
+        detail:
+          type: string
+        job:
+          type: integer
+        project_tasks:
+          type: integer
+        skipped:
+          type: integer
+        total:
+          type: integer
+      type: object
     DatasetMember:
       properties:
         user:
@@ -28724,6 +28964,53 @@ components:
           type: string
       required:
         - title
+      type: object
+    DatasetStorageAvailableDataType:
+      properties:
+        display_name:
+          type: string
+        indexable:
+          type: boolean
+        internal_name:
+          type: string
+        short_display_name:
+          type: string
+      required:
+        - display_name
+        - indexable
+        - internal_name
+        - short_display_name
+      type: object
+    DatasetStorageColumnType:
+      properties:
+        name:
+          type: string
+        type:
+          nullable: true
+          type: string
+      type: object
+    DatasetStorageColumnsResponse:
+      properties:
+        available_data_types:
+          items:
+            $ref: '#/components/schemas/DatasetStorageAvailableDataType'
+          type: array
+        columns_with_types:
+          items:
+            $ref: '#/components/schemas/DatasetStorageColumnType'
+          type: array
+      required:
+        - available_data_types
+        - columns_with_types
+      type: object
+    DatasetTasksMetadataResponse:
+      properties:
+        candidate_task_id:
+          type: string
+        metadata: {}
+      required:
+        - candidate_task_id
+        - metadata
       type: object
     DatasetView:
       properties:
@@ -28786,6 +29073,13 @@ components:
           type: integer
       required:
         - dataset
+      type: object
+    DefaultModelVersionNameResponse:
+      properties:
+        default_model_version_name:
+          type: string
+        message:
+          type: string
       type: object
     DefaultRole:
       properties:
@@ -33970,338 +34264,33 @@ components:
         - workspace
         - workspace_title
       type: object
-    LseProjectUpdate:
-      description: |-
-        Serializer get numbers from project queryset annotation,
-        make sure, that you use correct one(Project.objects.with_counts())
+    LseProjectStateResponse:
       properties:
-        agreement_methodology:
-          allOf:
-            - $ref: '#/components/schemas/AgreementMethodologyEnum'
-          default: pairwise
-          description: |-
-            Methodology (Consensus / Pairwise Averaging)
-
-            * `consensus` - Consensus
-            * `pairwise` - Pairwise Averaging
-        agreement_threshold:
-          description: Agreement threshold
-          format: decimal
-          nullable: true
-          pattern: ^-?\d{0,1}(?:\.\d{0,2})?$
-          type: string
-        annotation_limit_count:
-          description: Limit by number of tasks
-          minimum: 1
-          nullable: true
+        annotation_count:
           type: integer
-        annotation_limit_percent:
-          description: Limit by percentage of tasks
-          format: decimal
-          nullable: true
-          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
-          type: string
-        annotator_evaluation_continuous_tasks:
-          default: 0
-          description: 'Continuous Evaluation: Required tasks'
-          minimum: 0
-          type: integer
-        annotator_evaluation_enabled:
-          description: Evaluate all annotators against ground truth
+        can_delete_tasks:
           type: boolean
-        annotator_evaluation_minimum_score:
-          default: '95.00'
-          description: Score required to pass evaluation
-          format: decimal
-          nullable: true
-          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
-          type: string
-        annotator_evaluation_minimum_tasks:
-          default: 10
-          description: Number of tasks for evaluation
-          minimum: 0
-          nullable: true
-          type: integer
-        annotator_evaluation_onboarding_tasks:
-          default: 0
-          description: 'Onboarding Evaluation: Required tasks'
-          minimum: 0
-          type: integer
-        assignment_settings:
-          $ref: '#/components/schemas/AssignmentSettings'
-        color:
-          description: Color
-          maxLength: 16
-          nullable: true
-          type: string
-        comment_classification_config:
-          type: string
+        can_manage_annotations:
+          type: boolean
+        can_manage_tasks:
+          type: boolean
         config_has_control_tags:
-          description: Flag to detect is project ready for labeling
-          readOnly: true
           type: boolean
-        config_suitable_for_bulk_annotation:
-          description: Flag to detect is project ready for bulk annotation
-          readOnly: true
+        source_syncing:
           type: boolean
-        control_weights:
-          additionalProperties:
-            $ref: '#/components/schemas/ControlTagWeight'
-          description: Dict of weights for each control tag in metric calculation. Keys are control tag names from the labeling config. At least one tag must have a non-zero overall weight.
-          nullable: true
-          type: object
-        created_at:
-          format: date-time
-          readOnly: true
-          type: string
-        created_by:
-          allOf:
-            - $ref: '#/components/schemas/UserSimple'
-          description: Project owner
-        custom_interface_code:
-          nullable: true
-          type: string
-        custom_interface_compiled:
-          nullable: true
-          type: string
-        custom_interface_params:
-          nullable: true
-        custom_script:
-          description: Plugins
-          type: string
-        custom_task_lock_ttl:
-          description: Task reservation time. TTL in seconds (UI displays and edits this value in minutes).
-          maximum: 86400
-          minimum: 1
-          nullable: true
-          type: integer
-        description:
-          description: Description
-          nullable: true
-          type: string
-        enable_empty_annotation:
-          description: Allow empty annotations
+        target_syncing:
           type: boolean
-        evaluate_predictions_automatically:
-          description: Retrieve and display predictions when loading a task
-          type: boolean
-        expert_instruction:
-          description: Instructions
-          nullable: true
-          type: string
-        finished_task_number:
-          description: Finished tasks
-          readOnly: true
+        task_count:
           type: integer
-        ground_truth_number:
-          description: Honeypot annotation number in project
-          readOnly: true
-          type: integer
-        id:
-          readOnly: true
-          type: integer
-        input_schema:
-          nullable: true
-        is_draft:
-          description: Whether or not the project is in the middle of being created
-          type: boolean
-        is_published:
-          description: Whether or not the project is published to annotators
-          title: Published
-          type: boolean
-        label_config:
-          description: Labeling Configuration
-          nullable: true
-          type: string
-        max_additional_annotators_assignable:
-          description: Maximum additional annotators
-          nullable: true
-          type: integer
-        maximum_annotations:
-          description: Annotations per task
-          maximum: 2147483647
-          minimum: -2147483648
-          title: Maximum annotation number
-          type: integer
-        min_annotations_to_start_training:
-          description: Minimum number of completed tasks after which model training is started
-          maximum: 2147483647
-          minimum: -2147483648
-          type: integer
-        model_version:
-          description: Machine learning model version
-          nullable: true
-          type: string
-        num_tasks_with_annotations:
-          description: Tasks with annotations count
-          readOnly: true
-          type: integer
-        organization:
-          nullable: true
-          type: integer
-        output_schema:
-          nullable: true
-        overlap_cohort_percentage:
-          description: Annotations per task coverage
-          maximum: 2147483647
-          minimum: -2147483648
-          type: integer
-        parsed_label_config:
-          additionalProperties: true
-          description: JSON-formatted labeling configuration
-          readOnly: true
-          type: object
-        pause_on_failed_annotator_evaluation:
-          default: false
-          description: Pause annotator on failed evaluation
-          nullable: true
-          type: boolean
-        pinned_at:
-          description: Pinned date and time
-          format: date-time
-          nullable: true
-          type: string
-        prompts:
-          items:
-            additionalProperties: {}
-            type: object
-          nullable: true
-          readOnly: true
-          type: array
-        queue_done:
-          readOnly: true
-          type: integer
-        queue_total:
-          readOnly: true
-          type: integer
-        require_comment_on_skip:
-          default: false
-          description: Require comment to skip
-          type: boolean
-        reveal_preannotations_interactively:
-          description: Reveal pre-annotations interactively
-          type: boolean
-        review_settings:
-          $ref: '#/components/schemas/ReviewSettings'
-        sampling:
-          allOf:
-            - $ref: '#/components/schemas/ProjectSamplingEnum'
-          nullable: true
-        show_annotation_history:
-          description: Show Data Manager to Annotators
-          type: boolean
-        show_collab_predictions:
-          description: Use predictions to pre-label Tasks
-          title: Show predictions to annotator
-          type: boolean
-        show_ground_truth_first:
-          deprecated: true
-          description: 'Onboarding mode (true): show ground truth tasks first in the labeling stream'
-          type: boolean
-        show_instruction:
-          description: Show instructions before labeling
-          type: boolean
-        show_overlap_first:
-          description: Show tasks with overlap first
-          type: boolean
-        show_skip_button:
-          description: Allow skipping tasks
-          type: boolean
-        show_unused_data_columns_to_annotators:
-          description: 'Show only columns used in labeling configuration to Annotators. API uses inverse field semantics here: set false to show only used columns, set true to show all task.data columns.'
-          nullable: true
-          type: boolean
-        skip_queue:
-          allOf:
-            - $ref: '#/components/schemas/SkipQueueEnum'
-          nullable: true
-        skipped_annotations_number:
-          description: Skipped by collaborators annotation number in project
-          readOnly: true
-          type: integer
-        source_interface_id:
-          nullable: true
-          type: integer
-        source_interface_version:
-          description: Stable version ID of the saved interface snapshot used by this project.
-          nullable: true
-          type: integer
-        start_training_on_annotation_update:
-          description: Start model training after any annotations are submitted or updated
-          readOnly: true
-          type: boolean
-        state:
-          readOnly: true
-          type: string
-        strict_task_overlap:
-          default: true
-          description: Enforce strict overlap limit
-          type: boolean
-        task_data_login:
-          description: Login
-          maxLength: 256
-          nullable: true
-          type: string
-        task_data_password:
-          description: Password
-          maxLength: 256
-          nullable: true
-          type: string
-        task_number:
-          description: Total task number in project
-          readOnly: true
-          type: integer
-        title:
-          description: Project Name
-          maxLength: 50
-          minLength: 3
-          nullable: true
-          type: string
-        total_annotations_number:
-          description: Total annotations number in project including skipped_annotations_number and ground_truth_number.
-          readOnly: true
-          type: integer
-        total_predictions_number:
-          description: Total predictions number in project including skipped_annotations_number, ground_truth_number, and useful_annotation_number.
-          readOnly: true
-          type: integer
-        use_custom_interface:
-          default: false
-          type: boolean
-        useful_annotation_number:
-          description: Useful annotation number in project not including skipped_annotations_number and ground_truth_number. Total annotations = annotation_number + skipped_annotations_number + ground_truth_number
-          readOnly: true
-          type: integer
-        workspace:
-          description: Workspace
-          type: integer
-        workspace_title:
-          nullable: true
-          readOnly: true
-          type: string
       required:
-        - assignment_settings
+        - annotation_count
+        - can_delete_tasks
+        - can_manage_annotations
+        - can_manage_tasks
         - config_has_control_tags
-        - config_suitable_for_bulk_annotation
-        - created_at
-        - finished_task_number
-        - ground_truth_number
-        - id
-        - num_tasks_with_annotations
-        - parsed_label_config
-        - prompts
-        - queue_done
-        - queue_total
-        - review_settings
-        - skipped_annotations_number
-        - start_training_on_annotation_update
-        - state
-        - task_number
-        - total_annotations_number
-        - total_predictions_number
-        - useful_annotation_number
-        - workspace
-        - workspace_title
+        - source_syncing
+        - target_syncing
+        - task_count
       type: object
     LseS3ExportStorage:
       properties:
@@ -39577,6 +39566,33 @@ components:
           nullable: true
           type: string
       type: object
+    PatchedProjectLearningAssignmentRequest:
+      properties:
+        allow_manual_access:
+          type: boolean
+        gate_annotator_data_manager:
+          nullable: true
+          type: boolean
+        gate_annotator_label_stream:
+          nullable: true
+          type: boolean
+        gate_reviewer_data_manager:
+          nullable: true
+          type: boolean
+        gate_reviewer_label_stream:
+          nullable: true
+          type: boolean
+        gate_reviewer_review_stream:
+          nullable: true
+          type: boolean
+        learning_resource_id:
+          type: integer
+          writeOnly: true
+        sort_order:
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+      type: object
     PatchedProjectTemplateRequest:
       properties:
         assignment_settings:
@@ -40003,6 +40019,19 @@ components:
         - task
         - updated_at
       type: object
+    PredictionCountResponse:
+      properties:
+        existing_predictions:
+          type: integer
+        tasks_to_run:
+          type: integer
+        total_tasks:
+          type: integer
+      required:
+        - existing_predictions
+        - tasks_to_run
+        - total_tasks
+      type: object
     PredictionRequest:
       properties:
         cluster:
@@ -40255,6 +40284,46 @@ components:
         - total_predictions_number
         - useful_annotation_number
       type: object
+    ProjectAnnotationsBrowseItem:
+      properties:
+        annotator:
+          type: string
+        annotator_id:
+          nullable: true
+          type: integer
+        created_at:
+          type: string
+        ground_truth:
+          type: boolean
+        id:
+          type: integer
+        result: {}
+        task_id:
+          type: integer
+        title:
+          type: string
+      required:
+        - annotator
+        - annotator_id
+        - created_at
+        - ground_truth
+        - id
+        - result
+        - task_id
+        - title
+      type: object
+    ProjectAnnotationsBrowseResponse:
+      properties:
+        annotations:
+          items:
+            $ref: '#/components/schemas/ProjectAnnotationsBrowseItem'
+          type: array
+        count:
+          type: integer
+      required:
+        - annotations
+        - count
+      type: object
     ProjectDuplicateModeEnum:
       description: |-
         * `settings` - Only settings
@@ -40494,6 +40563,31 @@ components:
         - learning_resource
         - project
         - updated_at
+      type: object
+    ProjectLearningAssignmentCreateRequest:
+      properties:
+        allow_manual_access:
+          type: boolean
+        gate_annotator_data_manager:
+          type: boolean
+        gate_annotator_label_stream:
+          type: boolean
+        gate_reviewer_data_manager:
+          type: boolean
+        gate_reviewer_label_stream:
+          type: boolean
+        gate_reviewer_review_stream:
+          type: boolean
+        insert_after_id:
+          type: integer
+        insert_before_id:
+          type: integer
+        learning_resource_id:
+          type: integer
+        sort_order:
+          type: integer
+      required:
+        - learning_resource_id
       type: object
     ProjectMember:
       properties:
@@ -40794,6 +40888,13 @@ components:
       required:
         - name
         - project_id
+      type: object
+    PromptPreviewResponse:
+      properties:
+        rendered_prompt:
+          type: string
+      required:
+        - rendered_prompt
       type: object
     PromptsStatusEnum:
       description: |-
@@ -41142,6 +41243,65 @@ components:
         - refinement_status
         - title
         - total_cost
+      type: object
+    RegressionSummary:
+      properties:
+        improvements:
+          type: integer
+        new:
+          type: integer
+        regressions:
+          type: integer
+        removed:
+          type: integer
+        stable_correct:
+          type: integer
+        stable_incorrect:
+          type: integer
+      required:
+        - improvements
+        - new
+        - regressions
+        - removed
+        - stable_correct
+        - stable_incorrect
+      type: object
+    RegressionsResponse:
+      properties:
+        improvements:
+          items: {}
+          type: array
+        new:
+          items: {}
+          type: array
+        regressions:
+          items: {}
+          type: array
+        removed:
+          items: {}
+          type: array
+        run_a:
+          type: integer
+        run_b:
+          type: integer
+        stable_correct:
+          items: {}
+          type: array
+        stable_incorrect:
+          items: {}
+          type: array
+        summary:
+          $ref: '#/components/schemas/RegressionSummary'
+      required:
+        - improvements
+        - new
+        - regressions
+        - removed
+        - run_a
+        - run_b
+        - stable_correct
+        - stable_incorrect
+        - summary
       type: object
     RequeueRejectedTasksModeEnum:
       description: |-
@@ -42391,6 +42551,13 @@ components:
         - cancelled_count
         - message
       type: object
+    StateBackfillErrorResponse:
+      properties:
+        error:
+          type: string
+      required:
+        - error
+      type: object
     StateBackfillJobItem:
       properties:
         job_id:
@@ -43104,6 +43271,36 @@ components:
           type: integer
       required:
         - id
+      type: object
+    TryTaskRequestRequest:
+      properties:
+        project_id:
+          type: integer
+        prompt_override:
+          type: string
+        task_id:
+          type: integer
+      required:
+        - project_id
+        - task_id
+      type: object
+    TryTaskResponse:
+      properties:
+        annotation_result:
+          items: {}
+          type: array
+        parsed_result:
+          nullable: true
+        raw_response:
+          type: string
+        task_id:
+          type: integer
+        usage: {}
+      required:
+        - annotation_result
+        - raw_response
+        - task_id
+        - usage
       type: object
     TypeEnum:
       description: |-
