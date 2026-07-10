@@ -25559,7 +25559,7 @@ components:
           readOnly: true
           type: object
         description:
-          description: Description
+          description: Description (Public)
           nullable: true
           type: string
         description_short:
@@ -25592,6 +25592,16 @@ components:
           type: integer
         input_schema:
           nullable: true
+        internal_description:
+          description: Description (Internal)
+          items: {}
+          nullable: true
+          readOnly: true
+          type: array
+        internal_description_short:
+          nullable: true
+          readOnly: true
+          type: string
         is_dimensions_enabled:
           readOnly: true
           type: boolean
@@ -25803,6 +25813,8 @@ components:
         - finished_task_number
         - ground_truth_number
         - id
+        - internal_description
+        - internal_description_short
         - is_dimensions_enabled
         - members
         - members_count
@@ -33146,7 +33158,7 @@ components:
           readOnly: true
           type: object
         description:
-          description: Description
+          description: Description (Public)
           nullable: true
           type: string
         duplication_done:
@@ -33177,6 +33189,12 @@ components:
           type: integer
         input_schema:
           nullable: true
+        internal_description:
+          description: Description (Internal)
+          items: {}
+          nullable: true
+          readOnly: true
+          type: array
         is_dimensions_enabled:
           readOnly: true
           type: boolean
@@ -33381,6 +33399,7 @@ components:
         - finished_task_number
         - ground_truth_number
         - id
+        - internal_description
         - is_dimensions_enabled
         - members
         - members_count
@@ -33520,7 +33539,7 @@ components:
         custom_interface_params:
           nullable: true
         description:
-          description: Project Description
+          description: Description (Public)
           nullable: true
           type: string
         enable_empty_annotation:
@@ -33545,6 +33564,9 @@ components:
           readOnly: true
           type: integer
         input_schema:
+          nullable: true
+        internal_description:
+          description: Description (Internal)
           nullable: true
         is_draft:
           description: Whether or not the project is in the middle of being created
@@ -33737,7 +33759,7 @@ components:
         custom_interface_params:
           nullable: true
         description:
-          description: Project Description
+          description: Description (Public)
           nullable: true
           type: string
         enable_empty_annotation:
@@ -33751,6 +33773,9 @@ components:
           nullable: true
           type: string
         input_schema:
+          nullable: true
+        internal_description:
+          description: Description (Internal)
           nullable: true
         is_draft:
           description: Whether or not the project is in the middle of being created
@@ -33994,7 +34019,7 @@ components:
           readOnly: true
           type: object
         description:
-          description: Description
+          description: Description (Public)
           nullable: true
           type: string
         duplication_done:
@@ -34025,6 +34050,12 @@ components:
           type: integer
         input_schema:
           nullable: true
+        internal_description:
+          description: Description (Internal)
+          items: {}
+          nullable: true
+          readOnly: true
+          type: array
         is_dimensions_enabled:
           readOnly: true
           type: boolean
@@ -34239,6 +34270,7 @@ components:
         - finished_task_number
         - ground_truth_number
         - id
+        - internal_description
         - is_dimensions_enabled
         - members
         - members_count
@@ -38953,7 +38985,7 @@ components:
           nullable: true
           type: integer
         description:
-          description: Description
+          description: Description (Public)
           nullable: true
           type: string
         enable_empty_annotation:
@@ -38967,6 +38999,9 @@ components:
           nullable: true
           type: string
         input_schema:
+          nullable: true
+        internal_description:
+          description: Description (Internal)
           nullable: true
         is_draft:
           description: Whether or not the project is in the middle of being created
