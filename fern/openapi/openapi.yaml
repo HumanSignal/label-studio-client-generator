@@ -9388,7 +9388,7 @@ paths:
         - organizations
         - permissions
       x-fern-sdk-method-name: get_options
-  /api/organizations/{id}/permissions/{permission}:
+  /api/organizations/{id}/permissions/{permission_key}:
     delete:
       description: |-
         <Card href="https://humansignal.com/goenterprise">
@@ -9406,7 +9406,7 @@ paths:
           schema:
             type: integer
         - in: path
-          name: permission
+          name: permission_key
           required: true
           schema:
             type: string
@@ -9446,7 +9446,7 @@ paths:
           schema:
             type: integer
         - in: path
-          name: permission
+          name: permission_key
           required: true
           schema:
             type: string
@@ -9489,8 +9489,9 @@ paths:
           required: true
           schema:
             type: integer
-        - in: path
-          name: permission
+        - description: Permission key to update within the organization.
+          in: path
+          name: permission_key
           required: true
           schema:
             type: string
@@ -9549,7 +9550,7 @@ paths:
             type: integer
         - description: Permission key to update within the organization.
           in: path
-          name: permission
+          name: permission_key
           required: true
           schema:
             type: string
@@ -24000,6 +24001,7 @@ paths:
                 id:
                   description: User ID
                   type: integer
+                  x-fern-property-name: request_user_id
                 initials:
                   description: Initials of the user
                   type: string
