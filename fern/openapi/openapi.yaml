@@ -5892,7 +5892,7 @@ paths:
       description: Reset the token used in the invitation link to invite someone to an organization.
       operationId: api_invite_reset_token_create
       responses:
-        '200':
+        '201':
           content:
             application/json:
               schema:
@@ -6300,9 +6300,25 @@ paths:
     post:
       description: "\n        If you want to update the labels in saved annotations, use this endpoint.\n        "
       operationId: api_labels_bulk_create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LabelBulkUpdateRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/LabelBulkUpdateRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/LabelBulkUpdateRequest'
+        required: true
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LabelBulkUpdateResponse'
+          description: ''
       security:
         - Token: []
       summary: Bulk update labels
@@ -31454,6 +31470,23 @@ components:
         - title
         - updated_at
         - value
+      type: object
+    LabelBulkUpdateRequest:
+      properties:
+        new_label: {}
+        old_label: {}
+        project:
+          type: integer
+      required:
+        - new_label
+        - old_label
+      type: object
+    LabelBulkUpdateResponse:
+      properties:
+        annotations_updated:
+          type: integer
+      required:
+        - annotations_updated
       type: object
     LabelCreate:
       properties:
