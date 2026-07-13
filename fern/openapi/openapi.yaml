@@ -31205,7 +31205,9 @@ components:
           description: Array of KPI values, one per project (parallel to projects array). Can be numbers or strings depending on KPI type.
           items:
             nullable: true
-            type: string
+            oneOf:
+              - type: number
+              - type: string
           type: array
       required:
         - projects
@@ -37326,9 +37328,11 @@ components:
           maxLength: 256
           type: string
         project_role:
+          nullable: true
           readOnly: true
           type: string
         project_role_source:
+          nullable: true
           readOnly: true
           type: string
         tags:
