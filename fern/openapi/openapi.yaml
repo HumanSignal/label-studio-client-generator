@@ -31675,6 +31675,9 @@ components:
           items:
             type: string
           type: array
+        dimension_id:
+          description: Dimension primary key used by Dimension-backed Data Manager result filters.
+          type: integer
         name:
           description: Original from_name from labeling config or observed annotation results.
           type: string
