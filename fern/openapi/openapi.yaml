@@ -29055,6 +29055,19 @@ components:
         id:
           readOnly: true
           type: integer
+        is_locked:
+          description: Whether this data manager tab is locked against configuration changes
+          nullable: true
+          type: boolean
+        locked_at:
+          description: Time when this view was locked
+          format: date-time
+          nullable: true
+          type: string
+        locked_by:
+          description: User who locked this view
+          nullable: true
+          type: integer
         order:
           description: Position of the tab, starting at the left in data manager and increasing as the tabs go left to right
           maximum: 2147483647
@@ -29085,6 +29098,19 @@ components:
           type: integer
         filter_group:
           $ref: '#/components/schemas/FilterGroupRequest'
+        is_locked:
+          description: Whether this data manager tab is locked against configuration changes
+          nullable: true
+          type: boolean
+        locked_at:
+          description: Time when this view was locked
+          format: date-time
+          nullable: true
+          type: string
+        locked_by:
+          description: User who locked this view
+          nullable: true
+          type: integer
         order:
           description: Position of the tab, starting at the left in data manager and increasing as the tabs go left to right
           maximum: 2147483647
@@ -38119,6 +38145,19 @@ components:
           type: integer
         filter_group:
           $ref: '#/components/schemas/FilterGroupRequest'
+        is_locked:
+          description: Whether this data manager tab is locked against configuration changes
+          nullable: true
+          type: boolean
+        locked_at:
+          description: Time when this view was locked
+          format: date-time
+          nullable: true
+          type: string
+        locked_by:
+          description: User who locked this view
+          nullable: true
+          type: integer
         order:
           description: Position of the tab, starting at the left in data manager and increasing as the tabs go left to right
           maximum: 2147483647
@@ -43642,6 +43681,19 @@ components:
           $ref: '#/components/schemas/FilterGroup'
         id:
           readOnly: true
+          type: integer
+        is_locked:
+          description: Whether this data manager tab is locked against configuration changes
+          nullable: true
+          type: boolean
+        locked_at:
+          description: Time when this view was locked
+          format: date-time
+          nullable: true
+          type: string
+        locked_by:
+          description: User who locked this view
+          nullable: true
           type: integer
         order:
           description: Position of the tab, starting at the left in data manager and increasing as the tabs go left to right
