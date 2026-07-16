@@ -29065,9 +29065,21 @@ components:
           nullable: true
           type: string
         locked_by:
-          description: User who locked this view
           nullable: true
-          type: integer
+          properties:
+            email:
+              format: email
+              title: Email
+              type: string
+            id:
+              title: User ID
+              type: integer
+            name:
+              title: Display name
+              type: string
+          readOnly: true
+          title: Locked by user
+          type: object
         order:
           description: Position of the tab, starting at the left in data manager and increasing as the tabs go left to right
           maximum: 2147483647
@@ -29087,6 +29099,7 @@ components:
       required:
         - dataset
         - id
+        - locked_by
       type: object
     DatasetViewRequest:
       properties:
@@ -29107,10 +29120,6 @@ components:
           format: date-time
           nullable: true
           type: string
-        locked_by:
-          description: User who locked this view
-          nullable: true
-          type: integer
         order:
           description: Position of the tab, starting at the left in data manager and increasing as the tabs go left to right
           maximum: 2147483647
@@ -38157,10 +38166,6 @@ components:
           format: date-time
           nullable: true
           type: string
-        locked_by:
-          description: User who locked this view
-          nullable: true
-          type: integer
         order:
           description: Position of the tab, starting at the left in data manager and increasing as the tabs go left to right
           maximum: 2147483647
@@ -43695,9 +43700,21 @@ components:
           nullable: true
           type: string
         locked_by:
-          description: User who locked this view
           nullable: true
-          type: integer
+          properties:
+            email:
+              format: email
+              title: Email
+              type: string
+            id:
+              title: User ID
+              type: integer
+            name:
+              title: Display name
+              type: string
+          readOnly: true
+          title: Locked by user
+          type: object
         order:
           description: Position of the tab, starting at the left in data manager and increasing as the tabs go left to right
           maximum: 2147483647
@@ -43719,6 +43736,7 @@ components:
           type: integer
       required:
         - id
+        - locked_by
         - project
       type: object
     ViewOrderRequest:
