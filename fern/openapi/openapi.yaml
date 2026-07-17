@@ -43759,6 +43759,9 @@ components:
           items:
             $ref: '#/components/schemas/ActionsEnum'
           type: array
+        consecutive_failures:
+          readOnly: true
+          type: integer
         created_at:
           description: Creation time
           format: date-time
@@ -43800,6 +43803,7 @@ components:
           title: URL of webhook
           type: string
       required:
+        - consecutive_failures
         - created_at
         - id
         - organization
@@ -43852,6 +43856,9 @@ components:
           items:
             $ref: '#/components/schemas/ActionsEnum'
           type: array
+        consecutive_failures:
+          readOnly: true
+          type: integer
         created_at:
           description: Creation time
           format: date-time
@@ -43894,6 +43901,7 @@ components:
           title: URL of webhook
           type: string
       required:
+        - consecutive_failures
         - created_at
         - id
         - organization
