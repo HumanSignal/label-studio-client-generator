@@ -17292,6 +17292,41 @@ paths:
         - sso
         - saml
       x-fern-sdk-method-name: update
+  /api/saml/settings/validate-domain:
+    post:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Validate a single SSO email domain (reject public/free domains and domains already claimed by another organization) without saving. Used by the SSO wizard Add Domain modal.
+      operationId: api_saml_settings_validate_domain_create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ValidateSamlDomainRequestRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ValidateSamlDomainRequestRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ValidateSamlDomainRequestRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidateSamlDomainResponse'
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Validate SAML Domain
+      tags:
+        - SSO
   /api/saml/settings/validate-metadata-url:
     post:
       description: |-
@@ -43648,6 +43683,21 @@ components:
           type: string
       required:
         - username
+      type: object
+    ValidateSamlDomainRequestRequest:
+      properties:
+        domain:
+          minLength: 1
+          type: string
+      required:
+        - domain
+      type: object
+    ValidateSamlDomainResponse:
+      properties:
+        valid:
+          type: boolean
+      required:
+        - valid
       type: object
     ValidateSamlMetadataUrlRequestRequest:
       properties:
