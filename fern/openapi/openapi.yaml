@@ -26574,6 +26574,24 @@ components:
       required:
         - annotation
       type: object
+    AssignableOrganizationRoleEnum:
+      description: |-
+        * `OW` - Owner
+        * `AD` - Administrator
+        * `MA` - Manager
+        * `RE` - Reviewer
+        * `AN` - Annotator
+        * `DI` - Deactivated
+        * `NO` - Not Activated
+      enum:
+        - OW
+        - AD
+        - MA
+        - RE
+        - AN
+        - DI
+        - 'NO'
+      type: string
     AssignmentSettings:
       properties:
         id:
@@ -28156,7 +28174,7 @@ components:
       properties:
         default:
           items:
-            $ref: '#/components/schemas/OrganizationRoleEnum'
+            $ref: '#/components/schemas/AssignableOrganizationRoleEnum'
           type: array
         group:
           type: string
@@ -28164,7 +28182,7 @@ components:
           type: string
         options:
           items:
-            $ref: '#/components/schemas/OrganizationRoleEnum'
+            $ref: '#/components/schemas/AssignableOrganizationRoleEnum'
           type: array
         permission:
           type: string
@@ -29299,6 +29317,7 @@ components:
             * `AN` - Annotator
             * `DI` - Deactivated
             * `NO` - Not Activated
+            * `VO` - View Only
         email_notification_settings:
           description: 'Email notification settings for this organization. Controls which email notifications users can receive. Structure: {"notifications_allowed": {"notification_type": bool}}'
           nullable: true
@@ -33110,6 +33129,7 @@ components:
             * `AN` - Annotator
             * `DI` - Deactivated
             * `NO` - Not Activated
+            * `VO` - View Only
         email_notification_settings:
           additionalProperties: {}
           description: |-
@@ -37082,6 +37102,7 @@ components:
         - AN
         - DI
         - 'NO'
+        - VO
       type: string
     OrganizationRoleEnum:
       description: |-
@@ -37092,6 +37113,7 @@ components:
         * `AN` - Annotator
         * `DI` - Deactivated
         * `NO` - Not Activated
+        * `VO` - View Only
       enum:
         - OW
         - AD
@@ -37100,6 +37122,7 @@ components:
         - AN
         - DI
         - 'NO'
+        - VO
       type: string
     PaginatedAllRolesProjectListList:
       properties:
@@ -38336,6 +38359,7 @@ components:
             * `AN` - Annotator
             * `DI` - Deactivated
             * `NO` - Not Activated
+            * `VO` - View Only
         email_notification_settings:
           description: 'Email notification settings for this organization. Controls which email notifications users can receive. Structure: {"notifications_allowed": {"notification_type": bool}}'
           nullable: true
@@ -39753,7 +39777,7 @@ components:
       properties:
         role:
           allOf:
-            - $ref: '#/components/schemas/OrganizationRoleEnum'
+            - $ref: '#/components/schemas/AssignableOrganizationRoleEnum'
           description: |-
             Organization role
 
@@ -40882,7 +40906,7 @@ components:
       properties:
         role:
           allOf:
-            - $ref: '#/components/schemas/OrganizationRoleEnum'
+            - $ref: '#/components/schemas/AssignableOrganizationRoleEnum'
           description: |-
             Role
 
@@ -40962,7 +40986,7 @@ components:
         project:
           type: integer
         role:
-          $ref: '#/components/schemas/OrganizationRoleEnum'
+          $ref: '#/components/schemas/AssignableOrganizationRoleEnum'
         role_source:
           readOnly: true
           type: string
@@ -40980,7 +41004,7 @@ components:
         project:
           type: integer
         role:
-          $ref: '#/components/schemas/OrganizationRoleEnum'
+          $ref: '#/components/schemas/AssignableOrganizationRoleEnum'
         user:
           type: integer
       required:
@@ -42669,7 +42693,7 @@ components:
           type: array
         role:
           allOf:
-            - $ref: '#/components/schemas/OrganizationRoleEnum'
+            - $ref: '#/components/schemas/AssignableOrganizationRoleEnum'
           description: |-
             Organization role
 
