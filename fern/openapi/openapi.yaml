@@ -26592,6 +26592,14 @@ components:
         - DI
         - 'NO'
       type: string
+    AssignableUserTypeEnum:
+      description: |-
+        * `standard` - Standard
+        * `viewonly` - View Only
+      enum:
+        - standard
+        - viewonly
+      type: string
     AssignmentSettings:
       properties:
         id:
@@ -39791,6 +39799,13 @@ components:
         user_id:
           description: Member
           type: integer
+        user_type:
+          allOf:
+            - $ref: '#/components/schemas/StandardUserTypeEnum'
+          description: |-
+            Membership seat type. Assigning a working role to a View-Only member upgrades them to a paid Standard seat. View-Only is not accepted because paid-to-View-Only downgrade is not supported.
+
+            * `standard` - Standard
       type: object
     PatchedOrganizationMemberTagRequest:
       properties:
@@ -42695,7 +42710,7 @@ components:
           allOf:
             - $ref: '#/components/schemas/AssignableOrganizationRoleEnum'
           description: |-
-            Organization role
+            Organization role. Required unless user_type is viewonly.
 
             * `OW` - Owner
             * `AD` - Administrator
@@ -42704,6 +42719,16 @@ components:
             * `AN` - Annotator
             * `DI` - Deactivated
             * `NO` - Not Activated
+          nullable: true
+        user_type:
+          allOf:
+            - $ref: '#/components/schemas/AssignableUserTypeEnum'
+          default: standard
+          description: |-
+            Seat type for the invited members. View-Only members are free read-only seats scoped to the invited projects/workspaces and cannot be combined with a role.
+
+            * `standard` - Standard
+            * `viewonly` - View Only
         workspaces:
           description: Workspace IDs to grant access to
           items:
@@ -42711,7 +42736,6 @@ components:
           type: array
       required:
         - emails
-        - role
       type: object
     SerializationOption:
       properties:
@@ -42828,6 +42852,11 @@ components:
         - REQUEUE_FOR_ME
         - REQUEUE_FOR_OTHERS
         - IGNORE_SKIPPED
+      type: string
+    StandardUserTypeEnum:
+      description: '* `standard` - Standard'
+      enum:
+        - standard
       type: string
     StateBackfillCancelResponse:
       properties:
