@@ -789,7 +789,7 @@ paths:
         - internal
   /api/annotations/bulk-delete/:
     post:
-      description: Delete multiple annotations by their IDs. The deletion is processed synchronously. Returns the count of deleted annotations in the response.
+      description: Delete multiple annotations by their IDs. At most 100 annotation IDs can be submitted in one request. The deletion is processed synchronously. Returns the count of deleted annotations in the response.
       operationId: api_annotations_bulk_delete_create
       requestBody:
         content:
@@ -26161,7 +26161,7 @@ components:
       description: Serializer for bulk annotation deletion by IDs.
       properties:
         ids:
-          description: List of annotation IDs to delete
+          description: List of annotation IDs to delete. Maximum 100 IDs per request.
           items:
             minimum: 1
             type: integer
