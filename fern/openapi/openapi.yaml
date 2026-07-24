@@ -5269,6 +5269,15 @@ paths:
           name: user_id
           schema:
             type: integer
+        - description: Filter by user type (e.g. standard, service, viewonly).
+          in: query
+          name: user_type
+          schema:
+            enum:
+              - service
+              - standard
+              - viewonly
+            type: string
       responses:
         '200':
           content:
