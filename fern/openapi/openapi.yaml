@@ -5139,6 +5139,414 @@ paths:
         - public
       x-fern-sdk-group-name: states
       x-fern-sdk-method-name: execute_transition
+  /api/fsm/organizations/{org_id}/idp-assignments-history/:
+    get:
+      description: Read-only state history for IdP group assignments, scoped to the active organization (admin/owner only).
+      operationId: api_fsm_organizations_idp_assignments_history_list
+      parameters:
+        - description: Filter by IdP group name.
+          in: query
+          name: group_name
+          schema:
+            type: string
+        - description: Which group-assignment scope to return state history for. Defaults to workspace.
+          in: query
+          name: kind
+          schema:
+            enum:
+              - organization
+              - project
+              - workspace
+            type: string
+        - description: Which field to use when ordering the results.
+          in: query
+          name: ordering
+          required: false
+          schema:
+            type: string
+        - in: path
+          name: org_id
+          required: true
+          schema:
+            type: integer
+        - description: A page number within the paginated result set.
+          in: query
+          name: page
+          required: false
+          schema:
+            type: integer
+        - description: Number of results to return per page.
+          in: query
+          name: page_size
+          required: false
+          schema:
+            type: integer
+        - description: Only include state rows recorded at or after this ISO 8601 timestamp.
+          in: query
+          name: since
+          schema:
+            format: date-time
+            type: string
+        - description: Only include state rows recorded at or before this ISO 8601 timestamp.
+          in: query
+          name: until
+          schema:
+            format: date-time
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedStateModelList'
+          description: ''
+      security:
+        - Token: []
+      summary: Get organization IdP group assignment history
+      tags:
+        - States
+      x-fern-audiences:
+        - internal
+      x-fern-pagination:
+        offset: $request.page
+        results: $response.results
+      x-fern-sdk-group-name: states
+      x-fern-sdk-method-name: organization_idp_assignments_history
+  /api/fsm/organizations/{org_id}/membership-history/:
+    get:
+      description: Read-only state history for organization memberships, scoped to the active organization (admin/owner only).
+      operationId: api_fsm_organizations_membership_history_list
+      parameters:
+        - description: Which field to use when ordering the results.
+          in: query
+          name: ordering
+          required: false
+          schema:
+            type: string
+        - in: path
+          name: org_id
+          required: true
+          schema:
+            type: integer
+        - description: A page number within the paginated result set.
+          in: query
+          name: page
+          required: false
+          schema:
+            type: integer
+        - description: Number of results to return per page.
+          in: query
+          name: page_size
+          required: false
+          schema:
+            type: integer
+        - description: Only include state rows recorded at or after this ISO 8601 timestamp.
+          in: query
+          name: since
+          schema:
+            format: date-time
+            type: string
+        - description: Filter by role source (e.g. manual, saml, scim, ldap, api, billing).
+          in: query
+          name: source
+          schema:
+            enum:
+              - api
+              - billing
+              - ldap
+              - manual
+              - saml
+              - scim
+            type: string
+        - description: Only include state rows recorded at or before this ISO 8601 timestamp.
+          in: query
+          name: until
+          schema:
+            format: date-time
+            type: string
+        - description: Filter the history to a single user.
+          in: query
+          name: user_id
+          schema:
+            type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedStateModelList'
+          description: ''
+      security:
+        - Token: []
+      summary: Get organization membership history
+      tags:
+        - States
+      x-fern-audiences:
+        - internal
+      x-fern-pagination:
+        offset: $request.page
+        results: $response.results
+      x-fern-sdk-group-name: states
+      x-fern-sdk-method-name: organization_membership_history
+  /api/fsm/organizations/{org_id}/settings-history/:
+    get:
+      description: Read-only state history for organization SAML/SCIM settings, scoped to the active organization (admin/owner only).
+      operationId: api_fsm_organizations_settings_history_list
+      parameters:
+        - description: Which settings to return state history for. Defaults to saml.
+          in: query
+          name: kind
+          schema:
+            enum:
+              - saml
+              - scim
+            type: string
+        - description: Which field to use when ordering the results.
+          in: query
+          name: ordering
+          required: false
+          schema:
+            type: string
+        - in: path
+          name: org_id
+          required: true
+          schema:
+            type: integer
+        - description: A page number within the paginated result set.
+          in: query
+          name: page
+          required: false
+          schema:
+            type: integer
+        - description: Number of results to return per page.
+          in: query
+          name: page_size
+          required: false
+          schema:
+            type: integer
+        - description: Only include state rows recorded at or after this ISO 8601 timestamp.
+          in: query
+          name: since
+          schema:
+            format: date-time
+            type: string
+        - description: Only include state rows recorded at or before this ISO 8601 timestamp.
+          in: query
+          name: until
+          schema:
+            format: date-time
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedStateModelList'
+          description: ''
+      security:
+        - Token: []
+      summary: Get organization settings history
+      tags:
+        - States
+      x-fern-audiences:
+        - internal
+      x-fern-pagination:
+        offset: $request.page
+        results: $response.results
+      x-fern-sdk-group-name: states
+      x-fern-sdk-method-name: organization_settings_history
+  /api/fsm/projects/{project_id}/membership-history/:
+    get:
+      description: Read-only state history for project memberships (admin/owner of the project organization only).
+      operationId: api_fsm_projects_membership_history_list
+      parameters:
+        - description: Which field to use when ordering the results.
+          in: query
+          name: ordering
+          required: false
+          schema:
+            type: string
+        - description: A page number within the paginated result set.
+          in: query
+          name: page
+          required: false
+          schema:
+            type: integer
+        - description: Number of results to return per page.
+          in: query
+          name: page_size
+          required: false
+          schema:
+            type: integer
+        - in: path
+          name: project_id
+          required: true
+          schema:
+            type: integer
+        - description: Only include state rows recorded at or after this ISO 8601 timestamp.
+          in: query
+          name: since
+          schema:
+            format: date-time
+            type: string
+        - description: Only include state rows recorded at or before this ISO 8601 timestamp.
+          in: query
+          name: until
+          schema:
+            format: date-time
+            type: string
+        - description: Filter the history to a single user.
+          in: query
+          name: user_id
+          schema:
+            type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedStateModelList'
+          description: ''
+      security:
+        - Token: []
+      summary: Get project membership history
+      tags:
+        - States
+      x-fern-audiences:
+        - internal
+      x-fern-pagination:
+        offset: $request.page
+        results: $response.results
+      x-fern-sdk-group-name: states
+      x-fern-sdk-method-name: project_membership_history
+  /api/fsm/projects/{project_id}/role-history/:
+    get:
+      description: Read-only state history for project role assignments (admin/owner of the project organization only).
+      operationId: api_fsm_projects_role_history_list
+      parameters:
+        - description: Which field to use when ordering the results.
+          in: query
+          name: ordering
+          required: false
+          schema:
+            type: string
+        - description: A page number within the paginated result set.
+          in: query
+          name: page
+          required: false
+          schema:
+            type: integer
+        - description: Number of results to return per page.
+          in: query
+          name: page_size
+          required: false
+          schema:
+            type: integer
+        - in: path
+          name: project_id
+          required: true
+          schema:
+            type: integer
+        - description: Only include state rows recorded at or after this ISO 8601 timestamp.
+          in: query
+          name: since
+          schema:
+            format: date-time
+            type: string
+        - description: Only include state rows recorded at or before this ISO 8601 timestamp.
+          in: query
+          name: until
+          schema:
+            format: date-time
+            type: string
+        - description: Filter the history to a single user.
+          in: query
+          name: user_id
+          schema:
+            type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedStateModelList'
+          description: ''
+      security:
+        - Token: []
+      summary: Get project role history
+      tags:
+        - States
+      x-fern-audiences:
+        - internal
+      x-fern-pagination:
+        offset: $request.page
+        results: $response.results
+      x-fern-sdk-group-name: states
+      x-fern-sdk-method-name: project_role_history
+  /api/fsm/workspaces/{workspace_id}/membership-history/:
+    get:
+      description: Read-only state history for workspace memberships (admin/owner of the workspace organization only).
+      operationId: api_fsm_workspaces_membership_history_list
+      parameters:
+        - description: Which field to use when ordering the results.
+          in: query
+          name: ordering
+          required: false
+          schema:
+            type: string
+        - description: A page number within the paginated result set.
+          in: query
+          name: page
+          required: false
+          schema:
+            type: integer
+        - description: Number of results to return per page.
+          in: query
+          name: page_size
+          required: false
+          schema:
+            type: integer
+        - description: Only include state rows recorded at or after this ISO 8601 timestamp.
+          in: query
+          name: since
+          schema:
+            format: date-time
+            type: string
+        - description: Only include state rows recorded at or before this ISO 8601 timestamp.
+          in: query
+          name: until
+          schema:
+            format: date-time
+            type: string
+        - description: Filter the history to a single user.
+          in: query
+          name: user_id
+          schema:
+            type: integer
+        - in: path
+          name: workspace_id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedStateModelList'
+          description: ''
+      security:
+        - Token: []
+      summary: Get workspace membership history
+      tags:
+        - States
+      x-fern-audiences:
+        - internal
+      x-fern-pagination:
+        offset: $request.page
+        results: $response.results
+      x-fern-sdk-group-name: states
+      x-fern-sdk-method-name: workspace_membership_history
   /api/import/file-upload/{id}:
     delete:
       description: Delete a specific uploaded file.
