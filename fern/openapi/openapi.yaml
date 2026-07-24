@@ -33488,6 +33488,11 @@ components:
           description: Pause annotator on failed evaluation
           nullable: true
           type: boolean
+        permissions:
+          items:
+            type: string
+          readOnly: true
+          type: array
         pinned_at:
           description: Pinned date and time
           format: date-time
@@ -33632,6 +33637,7 @@ components:
         - members_count
         - num_tasks_with_annotations
         - parsed_label_config
+        - permissions
         - prompts
         - queue_done
         - queue_left
@@ -34348,6 +34354,11 @@ components:
           description: Pause annotator on failed evaluation
           nullable: true
           type: boolean
+        permissions:
+          items:
+            type: string
+          readOnly: true
+          type: array
         pinned_at:
           description: Pinned date and time
           format: date-time
@@ -34503,6 +34514,7 @@ components:
         - members_count
         - num_tasks_with_annotations
         - parsed_label_config
+        - permissions
         - prompts
         - queue_done
         - queue_left
