@@ -10024,6 +10024,90 @@ paths:
         - organizations
         - permissions
       x-fern-sdk-method-name: replace
+  /api/organizations/{id}/seat-report:
+    get:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        For each member of the organization: whether they occupy a standard (paid) seat, the effective organization role, what set that role, and every identity-provider group assignment behind it.
+
+        Only *organization role* assignments can put a user on a paid seat. Project role and workspace access assignments never affect the seat count.
+
+        Use `?email=` to look up a single member, or `?has_stale_role_assignments=true` to find members kept on a seat by leftover group assignments.
+      operationId: api_organizations_seat_report_list
+      parameters:
+        - description: Only members who do (or do not) occupy a paid seat
+          in: query
+          name: counts_toward_seat_limit
+          schema:
+            type: boolean
+        - description: Exact email (case-insensitive)
+          in: query
+          name: email
+          schema:
+            type: string
+        - description: Only members with orphaned/incomplete role assignments
+          in: query
+          name: has_stale_role_assignments
+          schema:
+            type: boolean
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - description: Adds a `seat_usage` object to the response envelope (`{count, total, limit, reached, scope}`, mirroring the billing counters). Off by default because it is a heavier count.
+          in: query
+          name: include_seat_usage
+          schema:
+            type: boolean
+        - description: Which field to use when ordering the results.
+          in: query
+          name: ordering
+          required: false
+          schema:
+            type: string
+        - description: A page number within the paginated result set.
+          in: query
+          name: page
+          required: false
+          schema:
+            type: integer
+        - description: Number of results to return per page.
+          in: query
+          name: page_size
+          required: false
+          schema:
+            type: integer
+        - description: Multiple values may be separated by commas. (comma-separated values)
+          in: query
+          name: role_source
+          schema:
+            type: string
+        - description: A search term.
+          in: query
+          name: search
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedSeatReportList'
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Seat report
+      tags:
+        - Organizations
+      x-fern-audiences:
+        - internal
   /api/organizations/{id}/set-default-role:
     patch:
       description: |-
@@ -36684,6 +36768,16 @@ components:
       required:
         - task
       type: object
+    MappingStatusEnum:
+      description: |-
+        * `configured` - Configured
+        * `orphaned` - Orphaned
+        * `missing_membership` - Missing membership
+      enum:
+        - configured
+        - orphaned
+        - missing_membership
+      type: string
     MaybeExpandedComment:
       oneOf:
         - $ref: '#/components/schemas/Comment'
@@ -37541,6 +37635,51 @@ components:
         - 'NO'
         - VO
       type: string
+    OrganizationRoleAssignment:
+      description: An organization-role assignment — the only kind that can put a user on a paid seat.
+      properties:
+        assigned_role:
+          description: Role code this group is mapped to
+          nullable: true
+          type: string
+        assigned_role_display:
+          nullable: true
+          type: string
+        assignment_id:
+          description: Primary key of the assignment record
+          type: integer
+        created_at:
+          format: date-time
+          type: string
+        identity_provider_group:
+          description: Name of the group in the identity provider (Okta/Entra) that created this record
+          nullable: true
+          type: string
+        linked_membership_id:
+          description: Membership this assignment is attached to; null means an incomplete record
+          nullable: true
+          type: integer
+        mapping_status:
+          allOf:
+            - $ref: '#/components/schemas/MappingStatusEnum'
+          description: |-
+            configured = the group is still mapped in SCIM settings; orphaned = the mapping is gone but the record remains; missing_membership = the record is not linked to a membership
+
+            * `configured` - Configured
+            * `orphaned` - Orphaned
+            * `missing_membership` - Missing membership
+        mapping_status_display:
+          type: string
+      required:
+        - assigned_role
+        - assigned_role_display
+        - assignment_id
+        - created_at
+        - identity_provider_group
+        - linked_membership_id
+        - mapping_status
+        - mapping_status_display
+      type: object
     OrganizationRoleEnum:
       description: |-
         * `OW` - Owner
@@ -38065,6 +38204,29 @@ components:
         - total
         - total_annotations
         - total_predictions
+      type: object
+    PaginatedSeatReportList:
+      properties:
+        count:
+          example: 123
+          type: integer
+        next:
+          example: http://api.example.org/accounts/?page=4
+          format: uri
+          nullable: true
+          type: string
+        previous:
+          example: http://api.example.org/accounts/?page=2
+          format: uri
+          nullable: true
+          type: string
+        results:
+          items:
+            $ref: '#/components/schemas/SeatReport'
+          type: array
+      required:
+        - count
+        - results
       type: object
     PaginatedStateModelList:
       properties:
@@ -41443,6 +41605,60 @@ components:
         - role_source
         - user
       type: object
+    ProjectRoleAssignment:
+      description: A project-scoped role assignment. Project roles never affect the seat count.
+      properties:
+        assigned_role:
+          description: Role code this group is mapped to
+          nullable: true
+          type: string
+        assigned_role_display:
+          nullable: true
+          type: string
+        assignment_id:
+          description: Primary key of the assignment record
+          type: integer
+        created_at:
+          format: date-time
+          type: string
+        identity_provider_group:
+          description: Name of the group in the identity provider (Okta/Entra) that created this record
+          nullable: true
+          type: string
+        linked_membership_id:
+          description: Membership this assignment is attached to; null means an incomplete record
+          nullable: true
+          type: integer
+        mapping_status:
+          allOf:
+            - $ref: '#/components/schemas/MappingStatusEnum'
+          description: |-
+            configured = the group is still mapped in SCIM settings; orphaned = the mapping is gone but the record remains; missing_membership = the record is not linked to a membership
+
+            * `configured` - Configured
+            * `orphaned` - Orphaned
+            * `missing_membership` - Missing membership
+        mapping_status_display:
+          type: string
+        project_id:
+          description: Null when the record has no linked membership
+          nullable: true
+          type: integer
+        project_title:
+          nullable: true
+          type: string
+      required:
+        - assigned_role
+        - assigned_role_display
+        - assignment_id
+        - created_at
+        - identity_provider_group
+        - linked_membership_id
+        - mapping_status
+        - mapping_status_display
+        - project_id
+        - project_title
+      type: object
     ProjectRoleRequest:
       properties:
         project:
@@ -43091,6 +43307,97 @@ components:
         - User
         - Model
       type: string
+    SeatReport:
+      description: |-
+        One organization member, with the reason they do or do not occupy a paid seat.
+
+        Serializes an ``OrganizationMember`` annotated with ``counts_toward_seat_limit`` and
+        ``has_stale_role_assignments``; assignment records come from the batch-loaded
+        ``assignment_index`` in the serializer context (never queried per row).
+      properties:
+        account_is_active:
+          description: Whether the account can log in. Does NOT by itself decide the seat — the organization role does.
+          type: boolean
+        counts_toward_seat_limit:
+          description: Whether this membership occupies a standard (paid) seat, using the same predicate as billing. Service accounts and View-Only seats are licensed separately and do not count here. Note this is per membership, while the licence counts distinct users (instance-wide on-prem), so summing this column is an upper bound on the invoice, not the invoice.
+          readOnly: true
+          type: boolean
+        email:
+          format: email
+          type: string
+        first_name:
+          type: string
+        has_stale_role_assignments:
+          description: True when any role assignment is orphaned or missing its membership link — the usual cause of stale seats
+          readOnly: true
+          type: boolean
+        last_name:
+          type: string
+        organization_role:
+          description: Effective organization role code
+          nullable: true
+          readOnly: true
+          type: string
+        organization_role_assignments:
+          description: Group assignments that can put this user on an organization role (and therefore a seat)
+          items:
+            $ref: '#/components/schemas/OrganizationRoleAssignment'
+          readOnly: true
+          type: array
+        organization_role_display:
+          nullable: true
+          readOnly: true
+          type: string
+        project_role_assignments:
+          description: Group assignments scoped to a project. Never affect the seat count.
+          items:
+            $ref: '#/components/schemas/ProjectRoleAssignment'
+          readOnly: true
+          type: array
+        role_source:
+          description: 'What set the role: manual, saml, scim, ldap, api, billing'
+          nullable: true
+          readOnly: true
+          type: string
+        role_source_display:
+          nullable: true
+          readOnly: true
+          type: string
+        user_id:
+          type: integer
+        user_type:
+          description: standard, service or viewonly
+          nullable: true
+          readOnly: true
+          type: string
+        user_type_display:
+          nullable: true
+          readOnly: true
+          type: string
+        workspace_access_assignments:
+          description: Group assignments granting workspace access only. Never affect the seat count.
+          items:
+            $ref: '#/components/schemas/WorkspaceAccessAssignment'
+          readOnly: true
+          type: array
+      required:
+        - account_is_active
+        - counts_toward_seat_limit
+        - email
+        - first_name
+        - has_stale_role_assignments
+        - last_name
+        - organization_role
+        - organization_role_assignments
+        - organization_role_display
+        - project_role_assignments
+        - role_source
+        - role_source_display
+        - user_id
+        - user_type
+        - user_type_display
+        - workspace_access_assignments
+      type: object
     SegmentationEnum:
       description: |-
         * `none` - none
@@ -44827,6 +45134,38 @@ components:
         - membership
         - projects_count
         - title
+      type: object
+    WorkspaceAccessAssignment:
+      description: Workspace access granted by a group. Carries no role and never affects the seat count.
+      properties:
+        assignment_id:
+          description: Primary key of the assignment record
+          type: integer
+        created_at:
+          format: date-time
+          type: string
+        identity_provider_group:
+          description: Name of the group in the identity provider (Okta/Entra) that created this record
+          nullable: true
+          type: string
+        linked_membership_id:
+          description: Membership this assignment is attached to; null means an incomplete record
+          nullable: true
+          type: integer
+        workspace_id:
+          description: Null when the record has no linked membership
+          nullable: true
+          type: integer
+        workspace_title:
+          nullable: true
+          type: string
+      required:
+        - assignment_id
+        - created_at
+        - identity_provider_group
+        - linked_membership_id
+        - workspace_id
+        - workspace_title
       type: object
     WorkspaceMemberBulkAssignRequest:
       properties:
