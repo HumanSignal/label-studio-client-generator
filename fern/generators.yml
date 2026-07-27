@@ -49,7 +49,7 @@ groups:
             requests-mock: '1.12.1'
             numpy: '>=2.2,<3.0.0'
             opencv-python-headless: '^4.12.0,<4.13' # https://github.com/opencv/opencv-python/issues/1213
-            datamodel-code-generator: '0.26.1'
+            datamodel-code-generator: '>=0.70.0'
             doclang: '>=0.7.1'
             jsf: '^0.11.2'
             pyjwt: '^2.13.0'
