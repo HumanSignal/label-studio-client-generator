@@ -26519,6 +26519,17 @@ components:
         annotator_evaluation_enabled:
           description: Evaluate all annotators against ground truth
           type: boolean
+        annotator_evaluation_metric:
+          allOf:
+            - $ref: '#/components/schemas/AnnotatorEvaluationMetricEnum'
+          default: gt_agreement
+          description: |-
+            Metric used to evaluate annotators. Defaults to gt_agreement.
+
+            * `gt_agreement` - Ground truth agreement
+            * `acceptance_score` - Acceptance score
+            * `rejection_rate` - Rejection rate
+          nullable: true
         annotator_evaluation_minimum_score:
           default: '95.00'
           description: Score required to pass evaluation
@@ -27469,6 +27480,16 @@ components:
       required:
         - annotation
       type: object
+    AnnotatorEvaluationMetricEnum:
+      description: |-
+        * `gt_agreement` - Ground truth agreement
+        * `acceptance_score` - Acceptance score
+        * `rejection_rate` - Rejection rate
+      enum:
+        - gt_agreement
+        - acceptance_score
+        - rejection_rate
+      type: string
     AssignableOrganizationRoleEnum:
       description: |-
         * `OW` - Owner
@@ -34212,6 +34233,17 @@ components:
         annotator_evaluation_enabled:
           description: Evaluate all annotators against ground truth
           type: boolean
+        annotator_evaluation_metric:
+          allOf:
+            - $ref: '#/components/schemas/AnnotatorEvaluationMetricEnum'
+          default: gt_agreement
+          description: |-
+            Metric used to evaluate annotators. Defaults to gt_agreement.
+
+            * `gt_agreement` - Ground truth agreement
+            * `acceptance_score` - Acceptance score
+            * `rejection_rate` - Rejection rate
+          nullable: true
         annotator_evaluation_minimum_score:
           default: '95.00'
           description: Score required to pass evaluation
@@ -35079,6 +35111,17 @@ components:
         annotator_evaluation_enabled:
           description: Evaluate all annotators against ground truth
           type: boolean
+        annotator_evaluation_metric:
+          allOf:
+            - $ref: '#/components/schemas/AnnotatorEvaluationMetricEnum'
+          default: gt_agreement
+          description: |-
+            Metric used to evaluate annotators. Defaults to gt_agreement.
+
+            * `gt_agreement` - Ground truth agreement
+            * `acceptance_score` - Acceptance score
+            * `rejection_rate` - Rejection rate
+          nullable: true
         annotator_evaluation_minimum_score:
           default: '95.00'
           description: Score required to pass evaluation
@@ -40161,6 +40204,17 @@ components:
         annotator_evaluation_enabled:
           description: Evaluate all annotators against ground truth
           type: boolean
+        annotator_evaluation_metric:
+          allOf:
+            - $ref: '#/components/schemas/AnnotatorEvaluationMetricEnum'
+          default: gt_agreement
+          description: |-
+            Metric used to evaluate annotators. Defaults to gt_agreement.
+
+            * `gt_agreement` - Ground truth agreement
+            * `acceptance_score` - Acceptance score
+            * `rejection_rate` - Rejection rate
+          nullable: true
         annotator_evaluation_minimum_score:
           default: '95.00'
           description: Score required to pass evaluation
