@@ -5606,6 +5606,7 @@ paths:
           name: user_type
           schema:
             enum:
+              - flex
               - service
               - standard
               - viewonly
@@ -27636,9 +27637,11 @@ components:
     AssignableUserTypeEnum:
       description: |-
         * `standard` - Standard
+        * `flex` - Flex
         * `viewonly` - View Only
       enum:
         - standard
+        - flex
         - viewonly
       type: string
     AssignmentSettings:
@@ -44204,6 +44207,7 @@ components:
             Seat type for the invited members. View-Only members are free read-only seats scoped to the invited projects/workspaces and cannot be combined with a role.
 
             * `standard` - Standard
+            * `flex` - Flex
             * `viewonly` - View Only
         workspaces:
           description: Workspace IDs to grant access to
