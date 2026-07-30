@@ -7807,6 +7807,89 @@ paths:
       summary: ✨ Update or delete a module
       tags:
         - Learning Resources
+  /api/learning-resources/{id}/modules/{module_id}/pages/{page_id}/:
+    patch:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Replace only the supplied keys of a single page. Rejects a stale `page_version` with 409 `page_version_conflict`, and a page that moved to another module with 410 `page_moved`.
+      operationId: api_learning_resources_modules_pages_partial_update
+      parameters:
+        - description: A unique integer value identifying this learning resource.
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: module_id
+          required: true
+          schema:
+            pattern: ^\d+$
+            type: string
+        - description: Page ID, stored inside the module content JSON rather than as its own model field.
+          in: path
+          name: page_id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedCoursePageUpdateRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedCoursePageUpdateRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedCoursePageUpdateRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CoursePageSaveResponse'
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Save one page of a module
+      tags:
+        - Learning Resources
+  /api/learning-resources/{id}/outline/:
+    get:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Module and page identity, titles and page versions without any block content.
+      operationId: api_learning_resources_outline_retrieve
+      parameters:
+        - description: A unique integer value identifying this learning resource.
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CourseOutline'
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Get the structure outline of a course
+      tags:
+        - Learning Resources
   /api/learning-resources/{id}/progress/:
     post:
       description: |-
@@ -7922,6 +8005,48 @@ paths:
       security:
         - Token: []
       summary: ✨ Publish a learning resource
+      tags:
+        - Learning Resources
+  /api/learning-resources/{id}/structure/:
+    post:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Apply a semantic structural operation (add/delete/duplicate/reorder/move page or module, rename module) to current server state under a compare-and-swap on `structure_version`. A stale version returns 409 `structure_version_conflict` with the fresh outline so the client can resync and retry.
+      operationId: api_learning_resources_structure_create
+      parameters:
+        - description: A unique integer value identifying this learning resource.
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CourseStructureOpRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CourseStructureOpRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CourseStructureOpRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CourseStructureOpResponse'
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Apply a structural change to a course
       tags:
         - Learning Resources
   /api/learning-resources/{id}/take/:
@@ -29262,6 +29387,67 @@ components:
         - updated_at
         - updated_by
       type: object
+    CourseOutline:
+      properties:
+        modules:
+          items:
+            $ref: '#/components/schemas/CourseOutlineModule'
+          type: array
+        structure_version:
+          type: integer
+      required:
+        - modules
+        - structure_version
+      type: object
+    CourseOutlineModule:
+      properties:
+        id:
+          type: integer
+        marked_stale:
+          type: boolean
+        pages:
+          items:
+            $ref: '#/components/schemas/CourseOutlinePage'
+          type: array
+        sort_order:
+          type: integer
+        title:
+          type: string
+        updated_by:
+          allOf:
+            - $ref: '#/components/schemas/UserSimple'
+          nullable: true
+      required:
+        - id
+        - marked_stale
+        - pages
+        - sort_order
+        - title
+        - updated_by
+      type: object
+    CourseOutlinePage:
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        version:
+          type: integer
+      required:
+        - id
+        - title
+        - version
+      type: object
+    CoursePageSaveResponse:
+      properties:
+        page_version:
+          type: integer
+        structure_version:
+          type: integer
+      required:
+        - page_version
+        - structure_version
+      type: object
     CourseProgressImportResult:
       properties:
         imported_count:
@@ -29290,6 +29476,61 @@ components:
         - skipped_invalid
         - skipped_not_completed
         - skipped_not_in_org
+      type: object
+    CourseStructureOpRequest:
+      properties:
+        dest_index:
+          minimum: 0
+          type: integer
+        dest_module_id:
+          type: integer
+        module_id:
+          type: integer
+        module_ids:
+          items:
+            type: integer
+          minItems: 1
+          type: array
+        op:
+          $ref: '#/components/schemas/OpEnum'
+        page_id:
+          minLength: 1
+          type: string
+        source_module_id:
+          type: integer
+        structure_version:
+          minimum: 1
+          type: integer
+        title:
+          maxLength: 255
+          type: string
+        to_index:
+          minimum: 0
+          type: integer
+      required:
+        - op
+        - structure_version
+      type: object
+    CourseStructureOpResponse:
+      properties:
+        module_id:
+          nullable: true
+          type: integer
+        modules:
+          items:
+            $ref: '#/components/schemas/CourseModule'
+          type: array
+        outline:
+          $ref: '#/components/schemas/CourseOutline'
+        page_id:
+          nullable: true
+          type: string
+        structure_version:
+          type: integer
+      required:
+        - modules
+        - outline
+        - structure_version
       type: object
     CustomFunctionCodeRequestRequest:
       properties:
@@ -32989,6 +33230,9 @@ components:
         project_count:
           readOnly: true
           type: integer
+        structure_version:
+          readOnly: true
+          type: integer
         summary:
           type: string
         title:
@@ -33020,6 +33264,7 @@ components:
         - organization
         - page_count
         - project_count
+        - structure_version
         - updated_at
         - updated_by
       type: object
@@ -33231,6 +33476,9 @@ components:
         project_count:
           readOnly: true
           type: integer
+        structure_version:
+          readOnly: true
+          type: integer
         summary:
           type: string
         title:
@@ -33271,6 +33519,7 @@ components:
         - progress
         - project_assignments
         - project_count
+        - structure_version
         - unpublished_module_ids
         - updated_at
         - updated_by
@@ -37738,6 +37987,30 @@ components:
         - in_app_guidance
         - complete
       type: string
+    OpEnum:
+      description: |-
+        * `add_page` - add_page
+        * `delete_page` - delete_page
+        * `duplicate_page` - duplicate_page
+        * `reorder_pages` - reorder_pages
+        * `move_page` - move_page
+        * `add_module` - add_module
+        * `delete_module` - delete_module
+        * `duplicate_module` - duplicate_module
+        * `reorder_modules` - reorder_modules
+        * `rename_module` - rename_module
+      enum:
+        - add_page
+        - delete_page
+        - duplicate_page
+        - reorder_pages
+        - move_page
+        - add_module
+        - delete_module
+        - duplicate_module
+        - reorder_modules
+        - rename_module
+      type: string
     OperatorEnum:
       description: |-
         * `lt` - <
@@ -39072,6 +39345,21 @@ components:
         text:
           description: Reviewer or annotator comment
           nullable: true
+          type: string
+      type: object
+    PatchedCoursePageUpdateRequest:
+      description: 'Page-scoped content save: only the supplied keys are replaced.'
+      properties:
+        blocks:
+          items: {}
+          type: array
+        page_version:
+          minimum: 0
+          type: integer
+        summary:
+          type: string
+        title:
+          maxLength: 255
           type: string
       type: object
     PatchedDatabricksExportStorageRequest:
