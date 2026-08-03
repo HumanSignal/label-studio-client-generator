@@ -99,7 +99,14 @@ paths:
       x-fern-sdk-method-name: list
   /api/analytics/kpis/:
     get:
-      description: Returns metadata for all available KPI (Key Performance Indicator) classes. Each KPI includes its key, label, base class, dependencies, and configuration. This endpoint is useful for discovering available metrics and understanding their relationships and requirements.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Returns metadata for all available KPI (Key Performance Indicator) classes. Each KPI includes its key, label, base class, dependencies, and configuration. This endpoint is useful for discovering available metrics and understanding their relationships and requirements.
       operationId: api_analytics_kpis_list
       responses:
         '200':
@@ -112,12 +119,25 @@ paths:
           description: List of available KPIs with metadata
       security:
         - Token: []
-      summary: List all available KPIs
+      summary: ✨ List all available KPIs
       tags:
         - Analytics
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - analytics
+        - kpis
+      x-fern-sdk-method-name: list
   /api/analytics/kpis/{kpi_key}:
     get:
-      description: Retrieve data for a specific KPI with support for filtering and segmentation. Can segment by time (hourly, daily, weekly, monthly, yearly), by user, or both (2D matrix). If no segmentation is specified, returns a single total value. Supports filtering by projects, members, and date range. Date filters are interpreted in the specified timezone (required parameter). Maximum 50 projects allowed per request for performance reasons.
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Retrieve data for a specific KPI with support for filtering and segmentation. Can segment by time (hourly, daily, weekly, monthly, yearly), by user, or both (2D matrix). If no segmentation is specified, returns a single total value. Supports filtering by projects, members, and date range. Date filters are interpreted in the specified timezone (required parameter). Maximum 50 projects allowed per request for performance reasons.
       operationId: api_analytics_kpis_retrieve
       parameters:
         - description: End date for filtering (ISO format)
@@ -147,12 +167,18 @@ paths:
           name: segment_by_project
           schema:
             type: boolean
-        - description: 'Time granularity: hourly, daily, weekly, monthly, yearly'
+        - description: Time granularity for segmentation
           in: query
           name: segment_by_time
           schema:
+            enum:
+              - daily
+              - hourly
+              - monthly
+              - weekly
+              - yearly
             type: string
-        - description: 'Whether to segment results by user '
+        - description: Whether to segment results by user
           in: query
           name: segment_by_user
           schema:
@@ -182,9 +208,15 @@ paths:
           description: KPI not found or organization not found
       security:
         - Token: []
-      summary: Get KPI data with optional segmentation
+      summary: ✨ Get KPI data with optional segmentation
       tags:
         - Analytics
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - analytics
+        - kpis
+      x-fern-sdk-method-name: get
   /api/analytics/views/:
     get:
       description: |-
