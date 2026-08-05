@@ -7498,6 +7498,81 @@ paths:
       summary: ✨ Duplicate a learning resource
       tags:
         - Learning Resources
+  /api/learning-resources/{id}/editing-session/:
+    delete:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        POST claims or refreshes presence on a (module, page). A bare heartbeat only tracks presence — it never claims the write lock. Pass `wants_to_edit` to actually claim it: the first session on a free page to ask becomes the writer, later ones stay read-only unless `takeover` is set (which itself implies `wants_to_edit`). Sessions expire 60 seconds after the last heartbeat. DELETE releases the caller's own session.
+      operationId: api_learning_resources_editing_session_destroy
+      parameters:
+        - description: A unique integer value identifying this learning resource.
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CourseEditingSessionResponse'
+          description: ''
+        '204':
+          description: No response body
+      security:
+        - Token: []
+      summary: ✨ Heartbeat or release an editing session for a learning resource
+      tags:
+        - Learning Resources
+    post:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        POST claims or refreshes presence on a (module, page). A bare heartbeat only tracks presence — it never claims the write lock. Pass `wants_to_edit` to actually claim it: the first session on a free page to ask becomes the writer, later ones stay read-only unless `takeover` is set (which itself implies `wants_to_edit`). Sessions expire 60 seconds after the last heartbeat. DELETE releases the caller's own session.
+      operationId: api_learning_resources_editing_session_create
+      parameters:
+        - description: A unique integer value identifying this learning resource.
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CourseEditingSessionHeartbeatRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CourseEditingSessionHeartbeatRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CourseEditingSessionHeartbeatRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CourseEditingSessionResponse'
+          description: ''
+        '204':
+          description: No response body
+      security:
+        - Token: []
+      summary: ✨ Heartbeat or release an editing session for a learning resource
+      tags:
+        - Learning Resources
   /api/learning-resources/{id}/invalidate-progress/:
     post:
       description: |-
@@ -7849,7 +7924,7 @@ paths:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Replace only the supplied keys of a single page. Rejects a stale `page_version` with 409 `page_version_conflict`, and a page that moved to another module with 410 `page_moved`.
+        Replace only the supplied keys of a single page. Rejects a write to a page another author holds the editing lock on with 409 `page_in_use`, a stale `page_version` with 409 `page_version_conflict`, and a page that moved to another module with 410 `page_moved`.
       operationId: api_learning_resources_modules_pages_partial_update
       parameters:
         - description: A unique integer value identifying this learning resource.
@@ -29379,6 +29454,53 @@ components:
         - count
         - limit
         - reached
+      type: object
+    CourseEditingSession:
+      properties:
+        is_writer:
+          type: boolean
+        module_id:
+          nullable: true
+          type: integer
+        page_id:
+          type: string
+        user:
+          allOf:
+            - $ref: '#/components/schemas/UserSimple'
+          readOnly: true
+      required:
+        - is_writer
+        - module_id
+        - page_id
+        - user
+      type: object
+    CourseEditingSessionHeartbeatRequest:
+      properties:
+        module_id:
+          nullable: true
+          type: integer
+        page_id:
+          type: string
+        takeover:
+          default: false
+          type: boolean
+        wants_to_edit:
+          default: false
+          type: boolean
+      required:
+        - page_id
+      type: object
+    CourseEditingSessionResponse:
+      properties:
+        sessions:
+          items:
+            $ref: '#/components/schemas/CourseEditingSession'
+          type: array
+        structure_version:
+          type: integer
+      required:
+        - sessions
+        - structure_version
       type: object
     CourseModule:
       properties:
