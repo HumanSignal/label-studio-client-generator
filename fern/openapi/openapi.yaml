@@ -34565,6 +34565,12 @@ components:
           nullable: true
           readOnly: true
           type: array
+        flex:
+          additionalProperties: {}
+          description: Per-member Flex claim/window state for Members UI (FIT-2339).
+          nullable: true
+          readOnly: true
+          type: object
         id:
           readOnly: true
           type: integer
@@ -34592,6 +34598,7 @@ components:
         - concurrency
         - contributed_to_projects
         - created_projects
+        - flex
         - id
         - organization
         - role
@@ -38414,16 +38421,28 @@ components:
         active:
           readOnly: true
           type: boolean
+        flex:
+          additionalProperties: {}
+          description: Flex claim/window state for FE expired-seat UX (FIT-2339). Non-Flex → null.
+          nullable: true
+          readOnly: true
+          type: object
         organization_id:
           description: Organization ID
           readOnly: true
           type: integer
         role:
           type: string
+        user_type:
+          nullable: true
+          readOnly: true
+          type: string
       required:
         - active
+        - flex
         - organization_id
         - role
+        - user_type
       type: object
     OrganizationMembershipRequest:
       properties:
