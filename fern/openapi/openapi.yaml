@@ -1791,8 +1791,14 @@ paths:
       x-fern-sdk-method-name: update_current_user
   /api/current-user/hotkeys/:
     get:
-      description: Retrieve the custom hotkeys configuration for the current user.
+      description: Retrieve the current user’s account hotkeys, or their stored personal override for the optional project scope.
       operationId: api_current_user_hotkeys_retrieve
+      parameters:
+        - description: Project ID for a personal project-specific hotkey override. Omit for account defaults.
+          in: query
+          name: project
+          schema:
+            type: integer
       responses:
         '200':
           content:
@@ -1800,6 +1806,16 @@ paths:
               schema:
                 $ref: '#/components/schemas/Hotkeys'
           description: ''
+        '400':
+          description: The project parameter is invalid.
+        '401':
+          description: Authentication credentials were not provided or are invalid.
+        '403':
+          description: The user does not have access to the requested project.
+        '404':
+          description: The project does not exist in the user’s active organization.
+        '500':
+          description: An unexpected server error occurred.
       security:
         - Token: []
       summary: Get user hotkeys
@@ -1810,8 +1826,14 @@ paths:
       x-fern-sdk-group-name: users
       x-fern-sdk-method-name: get_hotkeys
     patch:
-      description: Update the custom hotkeys configuration for the current user.
+      description: Update the current user’s account hotkeys, or their personal override for the optional project scope.
       operationId: api_current_user_hotkeys_partial_update
+      parameters:
+        - description: Project ID for a personal project-specific hotkey override. Omit for account defaults.
+          in: query
+          name: project
+          schema:
+            type: integer
       requestBody:
         content:
           application/json:
@@ -1830,6 +1852,16 @@ paths:
               schema:
                 $ref: '#/components/schemas/Hotkeys'
           description: ''
+        '400':
+          description: The project parameter or hotkey payload is invalid.
+        '401':
+          description: Authentication credentials were not provided or are invalid.
+        '403':
+          description: The user does not have access to the requested project.
+        '404':
+          description: The project does not exist in the user’s active organization.
+        '500':
+          description: An unexpected server error occurred.
       security:
         - Token: []
       summary: Update user hotkeys
