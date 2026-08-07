@@ -60,7 +60,9 @@ fern docs dev
 
 ## Add custom docs
 
-Go to `fern/openapi/overrides.yaml` and modify fields keeping the structure as in `fern/openapi/openapi.yaml`. For example
+Go to `fern/openapi/overrides.yaml` and modify fields keeping the structure as in `fern/openapi/openapi.yaml`. Use this file for Fern SDK collision renames (`x-fern-property-name`, e.g. path/body `id` or `permission` collisions) — not for maintaining full request field lists; those must come from DRF serializers (see FIT-2366 / `htx/tests/test_openapi_request_schema_parity.py`).
+
+For example
 
 ```
 paths:
