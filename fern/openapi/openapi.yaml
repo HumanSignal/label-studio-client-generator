@@ -43069,6 +43069,11 @@ components:
       type: object
     ReviewSettings:
       properties:
+        annotator_batch_percent:
+          description: Percent of an annotator’s work to review before moving to another annotator
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
+          type: string
         anonymize_annotations:
           description: Hide annotator names from annotations while review
           type: boolean
@@ -43123,10 +43128,11 @@ components:
           allOf:
             - $ref: '#/components/schemas/ReviewSettingsSamplingEnum'
           description: |-
-            By Task ID / Random
+            By Task ID / Random / By Annotator
 
             * `task_id` - By Task ID
             * `random` - Random
+            * `by_annotator` - By Annotator
           nullable: true
         show_agreement_to_reviewers:
           description: Show agreement to reviewers in the Data Manager
@@ -43147,6 +43153,11 @@ components:
       type: object
     ReviewSettingsRequest:
       properties:
+        annotator_batch_percent:
+          description: Percent of an annotator’s work to review before moving to another annotator
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
+          type: string
         anonymize_annotations:
           description: Hide annotator names from annotations while review
           type: boolean
@@ -43195,10 +43206,11 @@ components:
           allOf:
             - $ref: '#/components/schemas/ReviewSettingsSamplingEnum'
           description: |-
-            By Task ID / Random
+            By Task ID / Random / By Annotator
 
             * `task_id` - By Task ID
             * `random` - Random
+            * `by_annotator` - By Annotator
           nullable: true
         show_agreement_to_reviewers:
           description: Show agreement to reviewers in the Data Manager
@@ -43218,9 +43230,11 @@ components:
       description: |-
         * `task_id` - By Task ID
         * `random` - Random
+        * `by_annotator` - By Annotator
       enum:
         - task_id
         - random
+        - by_annotator
       type: string
     RevokeCertificateRequest:
       properties:
