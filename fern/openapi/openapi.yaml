@@ -222,10 +222,9 @@ paths:
       description: |-
         CRUD endpoints for per-user analytics saved views.
 
-        All routes are gated behind the ``fflag_feat_fit_1424_analytics_saved_views``
-        feature flag AND the same ``should_check_analytics_permission`` helper used
-        by the KPI endpoints, so a user who cannot access the analytics dashboard
-        cannot read view metadata even via a shared link.
+        All routes are gated behind the same ``should_check_analytics_permission``
+        helper used by the KPI endpoints, so a user who cannot access the analytics
+        dashboard cannot read view metadata even via a shared link.
 
         Lookup uses ``uuid`` (not PK) so the primary key is never exposed.
 
@@ -260,10 +259,9 @@ paths:
       description: |-
         CRUD endpoints for per-user analytics saved views.
 
-        All routes are gated behind the ``fflag_feat_fit_1424_analytics_saved_views``
-        feature flag AND the same ``should_check_analytics_permission`` helper used
-        by the KPI endpoints, so a user who cannot access the analytics dashboard
-        cannot read view metadata even via a shared link.
+        All routes are gated behind the same ``should_check_analytics_permission``
+        helper used by the KPI endpoints, so a user who cannot access the analytics
+        dashboard cannot read view metadata even via a shared link.
 
         Lookup uses ``uuid`` (not PK) so the primary key is never exposed.
 
@@ -302,10 +300,9 @@ paths:
       description: |-
         CRUD endpoints for per-user analytics saved views.
 
-        All routes are gated behind the ``fflag_feat_fit_1424_analytics_saved_views``
-        feature flag AND the same ``should_check_analytics_permission`` helper used
-        by the KPI endpoints, so a user who cannot access the analytics dashboard
-        cannot read view metadata even via a shared link.
+        All routes are gated behind the same ``should_check_analytics_permission``
+        helper used by the KPI endpoints, so a user who cannot access the analytics
+        dashboard cannot read view metadata even via a shared link.
 
         Lookup uses ``uuid`` (not PK) so the primary key is never exposed.
 
@@ -334,10 +331,9 @@ paths:
       description: |-
         CRUD endpoints for per-user analytics saved views.
 
-        All routes are gated behind the ``fflag_feat_fit_1424_analytics_saved_views``
-        feature flag AND the same ``should_check_analytics_permission`` helper used
-        by the KPI endpoints, so a user who cannot access the analytics dashboard
-        cannot read view metadata even via a shared link.
+        All routes are gated behind the same ``should_check_analytics_permission``
+        helper used by the KPI endpoints, so a user who cannot access the analytics
+        dashboard cannot read view metadata even via a shared link.
 
         Lookup uses ``uuid`` (not PK) so the primary key is never exposed.
 
@@ -370,10 +366,9 @@ paths:
       description: |-
         CRUD endpoints for per-user analytics saved views.
 
-        All routes are gated behind the ``fflag_feat_fit_1424_analytics_saved_views``
-        feature flag AND the same ``should_check_analytics_permission`` helper used
-        by the KPI endpoints, so a user who cannot access the analytics dashboard
-        cannot read view metadata even via a shared link.
+        All routes are gated behind the same ``should_check_analytics_permission``
+        helper used by the KPI endpoints, so a user who cannot access the analytics
+        dashboard cannot read view metadata even via a shared link.
 
         Lookup uses ``uuid`` (not PK) so the primary key is never exposed.
 
@@ -417,10 +412,9 @@ paths:
       description: |-
         CRUD endpoints for per-user analytics saved views.
 
-        All routes are gated behind the ``fflag_feat_fit_1424_analytics_saved_views``
-        feature flag AND the same ``should_check_analytics_permission`` helper used
-        by the KPI endpoints, so a user who cannot access the analytics dashboard
-        cannot read view metadata even via a shared link.
+        All routes are gated behind the same ``should_check_analytics_permission``
+        helper used by the KPI endpoints, so a user who cannot access the analytics
+        dashboard cannot read view metadata even via a shared link.
 
         Lookup uses ``uuid`` (not PK) so the primary key is never exposed.
 
