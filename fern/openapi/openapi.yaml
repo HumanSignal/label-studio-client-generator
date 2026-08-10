@@ -33145,11 +33145,14 @@ components:
           description: Organization ID
           type: integer
         role:
+          allOf:
+            - $ref: '#/components/schemas/OrganizationRoleEnum'
           readOnly: true
-          type: string
         role_source:
+          allOf:
+            - $ref: '#/components/schemas/RoleSourceEnum'
+          nullable: true
           readOnly: true
-          type: string
         tags:
           items:
             $ref: '#/components/schemas/SimpleOrganizationMemberTag'
@@ -42085,8 +42088,10 @@ components:
         role:
           $ref: '#/components/schemas/AssignableOrganizationRoleEnum'
         role_source:
+          allOf:
+            - $ref: '#/components/schemas/RoleSourceEnum'
+          nullable: true
           readOnly: true
-          type: string
         user:
           type: integer
       required:
@@ -43256,6 +43261,22 @@ components:
         - $ref: '#/components/schemas/LseTask'
         - $ref: '#/components/schemas/LseTaskSerializerForReviewers'
         - $ref: '#/components/schemas/LseTaskSerializerForAnnotators'
+    RoleSourceEnum:
+      description: |-
+        * `manual` - Manual
+        * `saml` - SAML
+        * `scim` - SCIM
+        * `ldap` - LDAP
+        * `api` - API
+        * `billing` - Billing
+      enum:
+        - manual
+        - saml
+        - scim
+        - ldap
+        - api
+        - billing
+      type: string
     S3DatasetStorage:
       properties:
         aws_access_key_id:
