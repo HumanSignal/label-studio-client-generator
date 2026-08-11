@@ -140,6 +140,11 @@ paths:
         Retrieve data for a specific KPI with support for filtering and segmentation. Can segment by time (hourly, daily, weekly, monthly, yearly), by user, or both (2D matrix). If no segmentation is specified, returns a single total value. Supports filtering by projects, members, and date range. Date filters are interpreted in the specified timezone (required parameter). Maximum 50 projects allowed per request for performance reasons.
       operationId: api_analytics_kpis_retrieve
       parameters:
+        - description: When true with segment_by_user, return only members with performance data (capped). Used by Member Performance Select All discovery.
+          in: query
+          name: all
+          schema:
+            type: boolean
         - description: End date for filtering (ISO format)
           in: query
           name: end
@@ -31199,6 +31204,9 @@ components:
         Serializer for user-segmented KPI data (compact format).
         Returns parallel arrays: users and values.
       properties:
+        total:
+          description: When all=true, total members with performance data before the breakdown cap.
+          type: integer
         users:
           description: Array of user information
           items:
