@@ -33581,6 +33581,8 @@ components:
         Serializer get numbers from project queryset annotation,
         make sure, that you use correct one(Project.objects.with_counts())
       properties:
+        duplication_status:
+          type: string
         finished_task_number:
           readOnly: true
           type: integer
