@@ -31855,7 +31855,16 @@ components:
         - updated_by
       type: object
     LearningResourceAssignmentSummary:
+      description: |-
+        Lean nested resource for project assignment lists (gating / on-demand UI).
+
+        Includes the current user's progress so clients can evaluate gates without
+        N extra GET /learning-resources/:id/ detail calls.
       properties:
+        color:
+          nullable: true
+          readOnly: true
+          type: string
         default_allow_manual_access:
           readOnly: true
           type: boolean
@@ -31885,10 +31894,16 @@ components:
         is_published:
           readOnly: true
           type: boolean
+        progress:
+          allOf:
+            - $ref: '#/components/schemas/UserLearningProgress'
+          nullable: true
+          readOnly: true
         title:
           readOnly: true
           type: string
       required:
+        - color
         - default_allow_manual_access
         - default_gate_annotator_data_manager
         - default_gate_annotator_label_stream
@@ -31897,6 +31912,7 @@ components:
         - default_gate_reviewer_review_stream
         - id
         - is_published
+        - progress
         - title
       type: object
     LearningResourceCreate:
@@ -42979,6 +42995,14 @@ components:
         - remove
         - flexible
       type: string
+    RetakeReasonEnum:
+      description: |-
+        * `manual` - Manual invalidation
+        * `gt_agreement` - Ground truth / agreement threshold
+      enum:
+        - manual
+        - gt_agreement
+      type: string
     RetakeScopeEnum:
       description: |-
         * `none` - none
@@ -45372,6 +45396,57 @@ components:
         - raw_response
         - task_id
         - usage
+      type: object
+    UserLearningProgress:
+      properties:
+        completed_at:
+          format: date-time
+          nullable: true
+          readOnly: true
+          type: string
+        imported_at:
+          format: date-time
+          nullable: true
+          readOnly: true
+          type: string
+        invalidated_at:
+          format: date-time
+          nullable: true
+          readOnly: true
+          type: string
+        is_stale:
+          readOnly: true
+          type: boolean
+        pages_visited:
+          readOnly: true
+        quiz_results:
+          readOnly: true
+        resource_version:
+          readOnly: true
+          type: integer
+        retake_reason:
+          allOf:
+            - $ref: '#/components/schemas/RetakeReasonEnum'
+          readOnly: true
+        started_at:
+          format: date-time
+          nullable: true
+          readOnly: true
+          type: string
+        time_spent_seconds:
+          readOnly: true
+          type: integer
+      required:
+        - completed_at
+        - imported_at
+        - invalidated_at
+        - is_stale
+        - pages_visited
+        - quiz_results
+        - resource_version
+        - retake_reason
+        - started_at
+        - time_spent_seconds
       type: object
     UserLearningProgressList:
       properties:
