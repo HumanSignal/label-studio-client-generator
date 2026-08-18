@@ -6347,6 +6347,36 @@ paths:
       summary: ✨ Create a learning resource
       tags:
         - Learning Resources
+  /api/learning-resources/counts/:
+    get:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Return page and learner progress counts for up to 100 learning resource ids (same org/workspace scope as list).
+      operationId: api_learning_resources_counts_retrieve
+      parameters:
+        - description: Comma-separated learning resource ids (max 100).
+          in: query
+          name: ids
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LearningResourceCountsResponse'
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Batch learning resource counts
+      tags:
+        - Learning Resources
   /api/learning-resources/{id}/:
     delete:
       operationId: api_learning_resources_destroy
@@ -31920,6 +31950,34 @@ components:
         - progress
         - title
       type: object
+    LearningResourceCountsItem:
+      properties:
+        id:
+          type: integer
+        learner_count:
+          type: integer
+        learners_completed_count:
+          type: integer
+        learners_started_count:
+          type: integer
+        page_count:
+          type: integer
+      required:
+        - id
+        - learner_count
+        - learners_completed_count
+        - learners_started_count
+        - page_count
+      type: object
+    LearningResourceCountsResponse:
+      properties:
+        results:
+          items:
+            $ref: '#/components/schemas/LearningResourceCountsItem'
+          type: array
+      required:
+        - results
+      type: object
     LearningResourceCreate:
       properties:
         default_allow_manual_access:
@@ -32132,7 +32190,11 @@ components:
         - updated_by
       type: object
     LearningResourceList:
-      description: 'Admin list payload: metadata and counts, without aggregated page content.'
+      description: |-
+        Admin list payload: core metadata + cheap annotated counts (no page content).
+
+        Learner progress counts and page_count are deferred to GET .../counts/?ids=... so the
+        list path stays flat as modules/learners grow. Those fields are null here for FE skeletons.
       properties:
         allow_standalone:
           type: boolean
@@ -32193,12 +32255,15 @@ components:
           readOnly: true
           type: boolean
         learner_count:
+          nullable: true
           readOnly: true
           type: integer
         learners_completed_count:
+          nullable: true
           readOnly: true
           type: integer
         learners_started_count:
+          nullable: true
           readOnly: true
           type: integer
         module_count:
@@ -32208,6 +32273,7 @@ components:
           readOnly: true
           type: integer
         page_count:
+          nullable: true
           readOnly: true
           type: integer
         project_count:
