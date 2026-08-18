@@ -14048,6 +14048,11 @@ paths:
                     type: integer
                   async:
                     type: boolean
+                  task_ids:
+                    description: Task IDs included in this assignment request.
+                    items:
+                      type: integer
+                    type: array
                 type: object
           description: Success
         '400':
