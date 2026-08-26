@@ -31857,6 +31857,9 @@ components:
         project_count:
           readOnly: true
           type: integer
+        single_page_review:
+          nullable: true
+          type: boolean
         structure_version:
           readOnly: true
           type: integer
@@ -32147,6 +32150,9 @@ components:
         project_count:
           readOnly: true
           type: integer
+        single_page_review:
+          nullable: true
+          type: boolean
         structure_version:
           readOnly: true
           type: integer
@@ -32285,6 +32291,9 @@ components:
         project_count:
           readOnly: true
           type: integer
+        single_page_review:
+          nullable: true
+          type: boolean
         structure_version:
           readOnly: true
           type: integer
@@ -32361,6 +32370,9 @@ components:
           type: boolean
         hide_completed_quizzes:
           type: boolean
+        single_page_review:
+          nullable: true
+          type: boolean
         summary:
           type: string
         title:
@@ -32409,6 +32421,9 @@ components:
         generate_certificate_on_completion:
           type: boolean
         hide_completed_quizzes:
+          type: boolean
+        single_page_review:
+          nullable: true
           type: boolean
         summary:
           type: string
@@ -39614,6 +39629,9 @@ components:
           type: boolean
         hide_completed_quizzes:
           type: boolean
+        single_page_review:
+          nullable: true
+          type: boolean
         summary:
           type: string
         title:
@@ -39662,6 +39680,9 @@ components:
         generate_certificate_on_completion:
           type: boolean
         hide_completed_quizzes:
+          type: boolean
+        single_page_review:
+          nullable: true
           type: boolean
         summary:
           type: string
