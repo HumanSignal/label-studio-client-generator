@@ -7479,6 +7479,62 @@ paths:
       summary: ✨ Bulk reset user progress on a learning resource
       tags:
         - Learning Resources
+  /api/learning-resources/{id}/user-progress/export/:
+    get:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Export filtered course learner progress as CSV.
+      operationId: api_learning_resources_user_progress_export_retrieve
+      parameters:
+        - description: Comma-separated learner table column identifiers to export.
+          in: query
+          name: columns
+          schema:
+            type: string
+        - description: A unique integer value identifying this learning resource.
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - description: Learner ordering; prefix a field with "-" for descending order.
+          in: query
+          name: ordering
+          schema:
+            type: string
+        - description: Filter learners by email, first name, or last name.
+          in: query
+          name: search
+          schema:
+            type: string
+        - description: Comma-separated course progress statuses.
+          in: query
+          name: status
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                format: binary
+                type: string
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Export user progress for a learning resource
+      tags:
+        - Learning Resources
+      x-fern-audiences:
+        - internal
+      x-fern-sdk-group-name:
+        - learning_resources
+      x-fern-sdk-method-name: export_user_progress_csv
   /api/learning-resources/{id}/user-progress/import/:
     post:
       description: |-
