@@ -1106,6 +1106,7 @@ paths:
                       allow_activity_log: true
                       allow_ai: true
                       allow_ask_ai: true
+                      allow_ask_ai_screenshots: null
                       allow_data_credentials: true
                       allow_invite_people: true
                       allow_invite_project_experts: true
@@ -1114,6 +1115,7 @@ paths:
                       allow_reviewing: true
                       allow_sso: false
                       allow_storage_proxy: true
+                      ask_ai_screenshots: false
                       automax_enabled: true
                       automax_token_exists: false
                       cloud_instance: true
@@ -1178,6 +1180,7 @@ paths:
                       allow_activity_log: true
                       allow_ai: false
                       allow_ask_ai: true
+                      allow_ask_ai_screenshots: null
                       allow_data_credentials: true
                       allow_invite_people: true
                       allow_invite_project_experts: true
@@ -1186,6 +1189,7 @@ paths:
                       allow_reviewing: true
                       allow_sso: true
                       allow_storage_proxy: true
+                      ask_ai_screenshots: false
                       automax_enabled: true
                       automax_token_exists: true
                       cloud_instance: false
@@ -1250,6 +1254,7 @@ paths:
                       allow_activity_log: true
                       allow_ai: true
                       allow_ask_ai: true
+                      allow_ask_ai_screenshots: null
                       allow_data_credentials: false
                       allow_invite_people: true
                       allow_invite_project_experts: true
@@ -1258,6 +1263,7 @@ paths:
                       allow_reviewing: true
                       allow_sso: true
                       allow_storage_proxy: true
+                      ask_ai_screenshots: false
                       automax_enabled: true
                       automax_token_exists: true
                       cloud_instance: true
@@ -26700,6 +26706,9 @@ components:
           type: boolean
         allow_ask_ai:
           type: boolean
+        allow_ask_ai_screenshots:
+          nullable: true
+          type: boolean
         allow_data_credentials:
           type: boolean
         allow_invite_people:
@@ -26715,6 +26724,8 @@ components:
         allow_sso:
           type: boolean
         allow_storage_proxy:
+          type: boolean
+        ask_ai_screenshots:
           type: boolean
         automax_enabled:
           type: boolean
@@ -26756,6 +26767,7 @@ components:
         - allow_activity_log
         - allow_ai
         - allow_ask_ai
+        - allow_ask_ai_screenshots
         - allow_data_credentials
         - allow_invite_people
         - allow_invite_project_experts
@@ -26764,6 +26776,7 @@ components:
         - allow_reviewing
         - allow_sso
         - allow_storage_proxy
+        - ask_ai_screenshots
         - automax_enabled
         - automax_token_exists
         - cloud_instance
