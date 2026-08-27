@@ -24506,6 +24506,11 @@ components:
             $ref: '#/components/schemas/BlueprintList'
           readOnly: true
           type: array
+        collection_mode:
+          description: Data Collection project mode (assigned/open); null for non-collection projects. Set at creation only.
+          nullable: true
+          readOnly: true
+          type: string
         color:
           description: Color
           maxLength: 16
@@ -24812,6 +24817,7 @@ components:
         - allow_stream
         - assignment_settings
         - blueprints
+        - collection_mode
         - config_has_control_tags
         - config_suitable_for_bulk_annotation
         - created_at
@@ -27257,6 +27263,14 @@ components:
         - operator
         - type
       type: object
+    CollectionModeEnum:
+      description: |-
+        * `assigned` - Assigned
+        * `open` - Open
+      enum:
+        - assigned
+        - open
+      type: string
     Comment:
       description: |-
         Comment Serializer with FSM state support.
@@ -33496,6 +33510,11 @@ components:
           type: integer
         assignment_settings:
           $ref: '#/components/schemas/AssignmentSettings'
+        collection_mode:
+          description: Data Collection project mode (assigned/open); null for non-collection projects. Set at creation only.
+          nullable: true
+          readOnly: true
+          type: string
         color:
           description: Color
           maxLength: 16
@@ -33791,6 +33810,7 @@ components:
           type: string
       required:
         - assignment_settings
+        - collection_mode
         - config_has_control_tags
         - config_suitable_for_bulk_annotation
         - created_at
@@ -33913,6 +33933,15 @@ components:
         annotator_evaluation_enabled:
           description: Enable annotator evaluation for the project
           type: boolean
+        collection_mode:
+          allOf:
+            - $ref: '#/components/schemas/CollectionModeEnum'
+          description: |-
+            Data Collection project mode (assigned or open). Set only at creation; immutable afterwards. Requires use_custom_interface.
+
+            * `assigned` - Assigned
+            * `open` - Open
+          nullable: true
         color:
           maxLength: 16
           nullable: true
@@ -34145,6 +34174,15 @@ components:
         annotator_evaluation_enabled:
           description: Enable annotator evaluation for the project
           type: boolean
+        collection_mode:
+          allOf:
+            - $ref: '#/components/schemas/CollectionModeEnum'
+          description: |-
+            Data Collection project mode (assigned or open). Set only at creation; immutable afterwards. Requires use_custom_interface.
+
+            * `assigned` - Assigned
+            * `open` - Open
+          nullable: true
         color:
           maxLength: 16
           nullable: true
@@ -34387,6 +34425,11 @@ components:
           type: integer
         assignment_settings:
           $ref: '#/components/schemas/AssignmentSettings'
+        collection_mode:
+          description: Data Collection project mode (assigned/open); null for non-collection projects. Set at creation only.
+          nullable: true
+          readOnly: true
+          type: string
         color:
           description: Color
           maxLength: 16
@@ -34699,6 +34742,7 @@ components:
       required:
         - allow_stream
         - assignment_settings
+        - collection_mode
         - config_has_control_tags
         - config_suitable_for_bulk_annotation
         - created_at
