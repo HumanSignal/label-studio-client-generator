@@ -35540,6 +35540,16 @@ components:
           nullable: true
           readOnly: true
           type: string
+        submission:
+          additionalProperties: {}
+          description: |-
+            The file of the latest SUBMITTED annotation, for the collection grid.
+
+            Read from the annotation (the submission's source of truth); the task
+            itself carries only the brief.
+          nullable: true
+          readOnly: true
+          type: object
         total_annotations:
           type: integer
         total_predictions:
@@ -35587,6 +35597,7 @@ components:
         - reviewers_count
         - state
         - storage_filename
+        - submission
         - updated_at
         - updated_by
       type: object
@@ -36124,6 +36135,16 @@ components:
           nullable: true
           readOnly: true
           type: string
+        submission:
+          additionalProperties: {}
+          description: |-
+            The file of the latest SUBMITTED annotation, for the collection grid.
+
+            Read from the annotation (the submission's source of truth); the task
+            itself carries only the brief.
+          nullable: true
+          readOnly: true
+          type: object
         total_annotations:
           type: integer
         total_predictions:
@@ -36171,6 +36192,7 @@ components:
         - reviewers_count
         - state
         - storage_filename
+        - submission
         - updated_at
         - updated_by
       type: object
