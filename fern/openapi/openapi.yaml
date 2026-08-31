@@ -33213,6 +33213,10 @@ components:
       type: object
     LseInterfaceList:
       properties:
+        accepts_submissions:
+          description: Whether this interface can receive an uploaded file as a submission.
+          readOnly: true
+          type: boolean
         created_at:
           format: date-time
           readOnly: true
@@ -33265,6 +33269,7 @@ components:
           nullable: true
           type: integer
       required:
+        - accepts_submissions
         - created_at
         - created_by
         - id
@@ -35543,10 +35548,15 @@ components:
         submission:
           additionalProperties: {}
           description: |-
-            The file of the latest SUBMITTED annotation, for the collection grid.
+            The contributor's own submitted file, for the collection grid.
 
             Read from the annotation (the submission's source of truth); the task
-            itself carries only the brief.
+            itself is untouched input.
+
+            Scoped to the requester, exactly as ``get_annotations`` scopes the
+            annotation list: a contributor sees the file they submitted and never
+            another contributor's media. The column is only offered to annotators,
+            so this is also the only case that renders.
           nullable: true
           readOnly: true
           type: object
@@ -35894,6 +35904,21 @@ components:
         state:
           readOnly: true
           type: string
+        submission:
+          additionalProperties: {}
+          description: |-
+            The contributor's own submitted file, for the collection grid.
+
+            Read from the annotation (the submission's source of truth); the task
+            itself is untouched input.
+
+            Scoped to the requester, exactly as ``get_annotations`` scopes the
+            annotation list: a contributor sees the file they submitted and never
+            another contributor's media. The column is only offered to annotators,
+            so this is also the only case that renders.
+          nullable: true
+          readOnly: true
+          type: object
         total_annotations:
           type: integer
         total_predictions:
@@ -35913,6 +35938,7 @@ components:
         - predictions
         - predictions_results
         - state
+        - submission
         - unresolved_comment_count
       type: object
     LseTaskSerializerForReviewers:
@@ -36138,10 +36164,15 @@ components:
         submission:
           additionalProperties: {}
           description: |-
-            The file of the latest SUBMITTED annotation, for the collection grid.
+            The contributor's own submitted file, for the collection grid.
 
             Read from the annotation (the submission's source of truth); the task
-            itself carries only the brief.
+            itself is untouched input.
+
+            Scoped to the requester, exactly as ``get_annotations`` scopes the
+            annotation list: a contributor sees the file they submitted and never
+            another contributor's media. The column is only offered to annotators,
+            so this is also the only case that renders.
           nullable: true
           readOnly: true
           type: object
