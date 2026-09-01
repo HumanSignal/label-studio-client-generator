@@ -31818,12 +31818,22 @@ components:
           format: date-time
           nullable: true
           type: string
+        completed_page_versions:
+          additionalProperties:
+            type: integer
+          type: object
+        content_updated_at:
+          format: date-time
+          nullable: true
+          type: string
         course_reset:
           default: false
           type: boolean
         gating:
           additionalProperties: {}
           type: object
+        has_completed_page_versions:
+          type: boolean
         is_stale:
           type: boolean
         module_progress:
@@ -31840,14 +31850,22 @@ components:
           type: integer
         time_spent_seconds:
           type: integer
+        updated_page_ids:
+          items:
+            type: string
+          type: array
       required:
         - completed_at
+        - completed_page_versions
+        - content_updated_at
         - gating
+        - has_completed_page_versions
         - is_stale
         - pages_visited
         - quiz_results
         - resource_version
         - time_spent_seconds
+        - updated_page_ids
       type: object
     LearningProgressUpdateRequest:
       properties:
@@ -31862,6 +31880,9 @@ components:
         page_id:
           minLength: 1
           type: string
+        page_version:
+          minimum: 0
+          type: integer
         quiz_id:
           minLength: 1
           type: string
@@ -45827,6 +45848,18 @@ components:
           nullable: true
           readOnly: true
           type: string
+        completed_page_versions:
+          additionalProperties:
+            type: integer
+          readOnly: true
+          type: object
+        content_updated_at:
+          nullable: true
+          readOnly: true
+          type: string
+        has_completed_page_versions:
+          readOnly: true
+          type: boolean
         imported_at:
           format: date-time
           nullable: true
@@ -45859,8 +45892,16 @@ components:
         time_spent_seconds:
           readOnly: true
           type: integer
+        updated_page_ids:
+          items:
+            type: string
+          readOnly: true
+          type: array
       required:
         - completed_at
+        - completed_page_versions
+        - content_updated_at
+        - has_completed_page_versions
         - imported_at
         - invalidated_at
         - is_stale
@@ -45870,6 +45911,7 @@ components:
         - retake_reason
         - started_at
         - time_spent_seconds
+        - updated_page_ids
       type: object
     UserLearningProgressList:
       properties:
