@@ -25482,6 +25482,10 @@ components:
           nullable: true
           readOnly: true
           type: integer
+        reject_action:
+          allOf:
+            - $ref: '#/components/schemas/RejectActionEnum'
+          nullable: true
         remove_from_queue:
           nullable: true
           type: boolean
@@ -25528,6 +25532,10 @@ components:
         last_annotation_history:
           nullable: true
           type: integer
+        reject_action:
+          allOf:
+            - $ref: '#/components/schemas/RejectActionEnum'
+          nullable: true
         remove_from_queue:
           nullable: true
           type: boolean
@@ -38430,6 +38438,10 @@ components:
         last_annotation_history:
           nullable: true
           type: integer
+        reject_action:
+          allOf:
+            - $ref: '#/components/schemas/RejectActionEnum'
+          nullable: true
         remove_from_queue:
           nullable: true
           type: boolean
@@ -43426,6 +43438,16 @@ components:
         - stable_incorrect
         - summary
       type: object
+    RejectActionEnum:
+      description: |-
+        * `remove` - Remove
+        * `requeue` - Requeue
+        * `redistribute` - Redistribute
+      enum:
+        - remove
+        - requeue
+        - redistribute
+      type: string
     RequeueRejectedTasksModeEnum:
       description: |-
         * `requeue` - Requeue
@@ -43549,6 +43571,10 @@ components:
       type: object
     ReviewSettings:
       properties:
+        allowed_reject_actions:
+          items:
+            $ref: '#/components/schemas/RejectActionEnum'
+          type: array
         annotator_batch_percent:
           description: Percent of an annotator’s work to review before moving to another annotator
           format: decimal
@@ -43557,6 +43583,15 @@ components:
         anonymize_annotations:
           description: Hide annotator names from annotations while review
           type: boolean
+        default_reject_action:
+          allOf:
+            - $ref: '#/components/schemas/RejectActionEnum'
+          description: |-
+            Reject action a reviewer triggers in one click, without opening the reject options menu
+
+            * `remove` - Remove
+            * `requeue` - Requeue
+            * `redistribute` - Redistribute
         id:
           readOnly: true
           type: integer
@@ -43574,13 +43609,14 @@ components:
           allOf:
             - $ref: '#/components/schemas/RequeueRejectedTasksModeEnum'
           description: |-
-            Remove rejected annotations from labeling queue / Requeue rejected annotations back to annotators / Allow reviewer to decide: Remove or Requeue
+            Deprecated. Prefer allowed_reject_actions. Remove rejected annotations from labeling queue / Requeue rejected annotations back to annotators / Allow reviewer to decide: Remove or Requeue
 
             * `requeue` - Requeue
             * `remove` - Remove
             * `flexible` - Flexible
           nullable: true
         requeue_rejected_tasks_to_annotator:
+          description: Deprecated. Prefer allowed_reject_actions. If set, the rejected task is requeued to the annotator
           readOnly: true
           type: boolean
         require_comment_on_reject:
@@ -43633,6 +43669,10 @@ components:
       type: object
     ReviewSettingsRequest:
       properties:
+        allowed_reject_actions:
+          items:
+            $ref: '#/components/schemas/RejectActionEnum'
+          type: array
         annotator_batch_percent:
           description: Percent of an annotator’s work to review before moving to another annotator
           format: decimal
@@ -43641,6 +43681,15 @@ components:
         anonymize_annotations:
           description: Hide annotator names from annotations while review
           type: boolean
+        default_reject_action:
+          allOf:
+            - $ref: '#/components/schemas/RejectActionEnum'
+          description: |-
+            Reject action a reviewer triggers in one click, without opening the reject options menu
+
+            * `remove` - Remove
+            * `requeue` - Requeue
+            * `redistribute` - Redistribute
         instruction:
           description: Instructions
           nullable: true
@@ -43655,7 +43704,7 @@ components:
           allOf:
             - $ref: '#/components/schemas/RequeueRejectedTasksModeEnum'
           description: |-
-            Remove rejected annotations from labeling queue / Requeue rejected annotations back to annotators / Allow reviewer to decide: Remove or Requeue
+            Deprecated. Prefer allowed_reject_actions. Remove rejected annotations from labeling queue / Requeue rejected annotations back to annotators / Allow reviewer to decide: Remove or Requeue
 
             * `requeue` - Requeue
             * `remove` - Remove
