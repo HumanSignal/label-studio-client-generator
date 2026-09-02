@@ -45907,6 +45907,7 @@ components:
           readOnly: true
           type: string
         has_completed_page_versions:
+          description: True only when the baseline covers the outline, so the client can list edited pages.
           readOnly: true
           type: boolean
         imported_at:
