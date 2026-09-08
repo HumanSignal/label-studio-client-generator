@@ -44601,6 +44601,21 @@ components:
         token:
           maxLength: 256
           type: string
+        user_type_capacities:
+          additionalProperties:
+            additionalProperties: {}
+            type: object
+          description: Live seat usage and limits by seat type (Standard, View Only, Flex).
+          readOnly: true
+          type: object
+        user_type_groups:
+          description: Seat Types to Groups Mapping. List of [seat_type, group_name] pairs.
+          items:
+            items:
+              type: string
+            type: array
+          nullable: true
+          type: array
         workspaces_groups:
           description: Workspaces to Groups Mapping. List of [workspace_title, group_name] pairs.
           items:
@@ -44615,6 +44630,7 @@ components:
         - logout_url
         - metadata_xml_url
         - nameid_format
+        - user_type_capacities
       type: object
     SamlSettingsUpdate:
       description: Serializer for updating SAML settings (POST requests).
@@ -44673,6 +44689,13 @@ components:
           type: array
         roles_groups:
           description: Organization Roles to Groups Mapping. List of [role_name, group_name] pairs.
+          items:
+            items:
+              type: string
+            type: array
+          type: array
+        user_type_groups:
+          description: Seat Types to Groups Mapping. List of [seat_type, group_name] pairs.
           items:
             items:
               type: string
@@ -44749,6 +44772,14 @@ components:
               type: string
             type: array
           type: array
+        user_type_groups:
+          description: Seat Types to Groups Mapping. List of [seat_type, group_name] pairs.
+          items:
+            items:
+              minLength: 1
+              type: string
+            type: array
+          type: array
         workspaces_groups:
           description: Workspaces to Groups Mapping. List of [workspace_title, group_name] pairs.
           items:
@@ -44774,6 +44805,21 @@ components:
             type: array
           nullable: true
           type: array
+        user_type_capacities:
+          additionalProperties:
+            additionalProperties: {}
+            type: object
+          description: Live seat usage and limits by seat type (Standard, View Only, Flex).
+          readOnly: true
+          type: object
+        user_type_groups:
+          description: Seat Types to Groups Mapping. List of [seat_type, group_name] pairs.
+          items:
+            items:
+              type: string
+            type: array
+          nullable: true
+          type: array
         workspaces_groups:
           description: Workspaces to Groups Mapping. List of [workspace_title, group_name] pairs.
           items:
@@ -44782,6 +44828,8 @@ components:
             type: array
           nullable: true
           type: array
+      required:
+        - user_type_capacities
       type: object
     ScimSettingsUpdate:
       properties:
@@ -44792,6 +44840,13 @@ components:
           type: array
         roles_groups:
           description: Organization Roles to Groups Mapping. List of [role_name, group_name] pairs.
+          items:
+            items:
+              type: string
+            type: array
+          type: array
+        user_type_groups:
+          description: Seat Types to Groups Mapping. List of [seat_type, group_name] pairs.
           items:
             items:
               type: string
@@ -44814,6 +44869,14 @@ components:
           type: array
         roles_groups:
           description: Organization Roles to Groups Mapping. List of [role_name, group_name] pairs.
+          items:
+            items:
+              minLength: 1
+              type: string
+            type: array
+          type: array
+        user_type_groups:
+          description: Seat Types to Groups Mapping. List of [seat_type, group_name] pairs.
           items:
             items:
               minLength: 1
