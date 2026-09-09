@@ -9237,6 +9237,241 @@ paths:
         - organizations
         - members
       x-fern-sdk-method-name: update
+  /api/organizations/{id}/memberships/filter-options/membership:
+    get:
+      description: Return the actor-accessible workspaces, each with its projects, plus unparented projects.
+      operationId: api_organizations_memberships_filter_options_membership_list
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - description: Optional case-insensitive option label search.
+          in: query
+          name: search
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/OrganizationMemberMembershipOption'
+                type: array
+          description: ''
+      security:
+        - Token: []
+      summary: List organization member membership filter options
+      tags:
+        - Organizations
+      x-fern-audiences:
+        - public
+  /api/organizations/{id}/memberships/filter-options/skills:
+    get:
+      description: Return self-reported Skills values with Contributor Setup display metadata.
+      operationId: api_organizations_memberships_filter_options_skills_list
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - description: Optional case-insensitive option label search.
+          in: query
+          name: search
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/OrganizationMemberSkillsOption'
+                type: array
+          description: ''
+      security:
+        - Token: []
+      summary: List organization member Skills filter options
+      tags:
+        - Organizations
+      x-fern-audiences:
+        - public
+  /api/organizations/{id}/memberships/filter-schema:
+    get:
+      description: Return the filter dimensions enabled for the current organization and actor.
+      operationId: api_organizations_memberships_filter_schema_retrieve
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationMemberFilterSchema'
+          description: ''
+      security:
+        - Token: []
+      summary: Get organization member filter capabilities
+      tags:
+        - Organizations
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - organizations
+        - members
+      x-fern-sdk-method-name: get_filter_schema
+  /api/organizations/{id}/memberships/search:
+    get:
+      description: Retrieve a paginated organization-member list using the versioned `filters` query parameter.
+      operationId: api_organizations_memberships_search_list
+      parameters:
+        - in: query
+          name: exclude_project_id
+          schema:
+            type: number
+        - in: query
+          name: exclude_workspace_id
+          schema:
+            type: number
+        - description: Versioned JSON organization-member filter payload.
+          in: query
+          name: filters
+          schema:
+            type: string
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - in: query
+          name: is_deleted
+          schema:
+            type: boolean
+        - description: Which field to use when ordering the results.
+          in: query
+          name: ordering
+          required: false
+          schema:
+            type: string
+        - description: A page number within the paginated result set.
+          in: query
+          name: page
+          required: false
+          schema:
+            type: integer
+        - description: Number of results to return per page.
+          in: query
+          name: page_size
+          required: false
+          schema:
+            type: integer
+        - description: Multiple values may be separated by commas.
+          explode: false
+          in: query
+          name: role
+          schema:
+            items:
+              type: string
+            type: array
+          style: form
+        - description: A search term.
+          in: query
+          name: search
+          required: false
+          schema:
+            type: string
+        - description: Multiple values may be separated by commas.
+          explode: false
+          in: query
+          name: tags
+          schema:
+            items:
+              type: integer
+            type: array
+          style: form
+        - in: query
+          name: user__last_activity__gte
+          schema:
+            format: date-time
+            type: string
+        - in: query
+          name: user__last_activity__lte
+          schema:
+            format: date-time
+            type: string
+        - description: Multiple values may be separated by commas.
+          explode: false
+          in: query
+          name: user_type
+          schema:
+            items:
+              type: string
+            type: array
+          style: form
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedLseOrganizationMemberListList'
+          description: ''
+      security:
+        - Token: []
+      summary: List organization members using reusable filters
+      tags:
+        - Organizations
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - organizations
+        - members
+      x-fern-sdk-method-name: list_filtered
+    post:
+      description: POST transport for the versioned organization-member filter payload.
+      operationId: api_organizations_memberships_search_create
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrganizationMemberFilterRequestRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/OrganizationMemberFilterRequestRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/OrganizationMemberFilterRequestRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LseOrganizationMemberList'
+          description: ''
+      security:
+        - Token: []
+      summary: Search organization members using reusable filters
+      tags:
+        - Organizations
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - organizations
+        - members
+      x-fern-sdk-method-name: search
   /api/organizations/{id}/memberships/{user_pk}/:
     delete:
       description: Soft delete a member from the organization.
@@ -37445,6 +37680,108 @@ components:
         - created_projects
         - organization
         - user
+      type: object
+    OrganizationMemberFilterRequestRequest:
+      description: Versioned, transport-neutral reusable organization-member filter payload.
+      properties:
+        filters: {}
+      required:
+        - filters
+      type: object
+    OrganizationMemberFilterSchema:
+      description: Backend capabilities for the organization-member filter UI.
+      properties:
+        filters:
+          items:
+            additionalProperties: {}
+            type: object
+          type: array
+        version:
+          type: integer
+      required:
+        - filters
+        - version
+      type: object
+    OrganizationMemberMembershipOption:
+      description: |-
+        A membership target available to the current actor.
+
+        Workspaces carry their accessible projects; a project with no accessible parent
+        workspace is returned as a top-level node without ``projects``.
+      properties:
+        id:
+          type: integer
+        kind:
+          $ref: '#/components/schemas/OrganizationMemberMembershipOptionKindEnum'
+        label:
+          type: string
+        projects:
+          items:
+            $ref: '#/components/schemas/OrganizationMemberMembershipProjectOption'
+          type: array
+      required:
+        - id
+        - kind
+        - label
+      type: object
+    OrganizationMemberMembershipOptionKindEnum:
+      description: |-
+        * `project` - project
+        * `workspace` - workspace
+      enum:
+        - project
+        - workspace
+      type: string
+    OrganizationMemberMembershipProjectOption:
+      description: A project nested under one of the actor's accessible workspaces.
+      properties:
+        id:
+          type: integer
+        kind:
+          $ref: '#/components/schemas/OrganizationMemberMembershipProjectOptionKindEnum'
+        label:
+          type: string
+      required:
+        - id
+        - kind
+        - label
+      type: object
+    OrganizationMemberMembershipProjectOptionKindEnum:
+      description: '* `project` - project'
+      enum:
+        - project
+      type: string
+    OrganizationMemberSkillsOption:
+      description: |-
+        An enumerable Contributor Setup answer available to the Skills filter.
+
+        ``section_key`` / ``field_key`` / ``code`` are the filter identity. Titles are live
+        Contributor Setup names. ``parent_code`` is set only when that ancestor is also an
+        option on the same question, matching ``OrganizationTaxonomyNodeSerializer``.
+      properties:
+        code:
+          type: string
+        field_key:
+          type: string
+        field_label:
+          type: string
+        label:
+          type: string
+        parent_code:
+          nullable: true
+          type: string
+        section_key:
+          type: string
+        section_title:
+          type: string
+      required:
+        - code
+        - field_key
+        - field_label
+        - label
+        - parent_code
+        - section_key
+        - section_title
       type: object
     OrganizationMemberTag:
       properties:
