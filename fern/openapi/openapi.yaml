@@ -40039,9 +40039,6 @@ components:
           maxLength: 254
           nullable: true
           type: string
-        created_by:
-          nullable: true
-          type: integer
         custom_interfaces_enabled:
           description: Enable or disable custom interfaces for this organization
           type: boolean
