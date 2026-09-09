@@ -45934,6 +45934,11 @@ components:
           description: Annotation ID associated with this event
           nullable: true
           type: integer
+        annotation_draft:
+          description: Draft annotation ID associated with this event (alias for annotation_draft_id)
+          nullable: true
+          type: integer
+          writeOnly: true
         annotation_draft_id:
           description: Draft annotation ID associated with this event
           nullable: true
