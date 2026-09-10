@@ -25895,6 +25895,14 @@ components:
         - NONE
         - BASIC_AUTH
       type: string
+    AuthModeEnum:
+      description: |-
+        * `service_principal` - Service Principal
+        * `workload_identity` - Workload identity
+      enum:
+        - service_principal
+        - workload_identity
+      type: string
     AuthTypeEnum:
       description: |-
         * `pat` - Personal Access Token
@@ -26498,6 +26506,15 @@ components:
           description: Azure Blob account name
           nullable: true
           type: string
+        auth_mode:
+          allOf:
+            - $ref: '#/components/schemas/AuthModeEnum'
+          description: |-
+            Authentication mode. service_principal uses a client secret. workload_identity uses secretless DefaultAzureCredential (workload identity and managed identity only). Defaults to service_principal.
+
+            * `service_principal` - Service Principal
+            * `workload_identity` - Workload identity
+          nullable: true
         can_delete_objects:
           description: Deletion from storage enabled
           nullable: true
@@ -26597,6 +26614,15 @@ components:
           description: Azure Blob account name
           nullable: true
           type: string
+        auth_mode:
+          allOf:
+            - $ref: '#/components/schemas/AuthModeEnum'
+          description: |-
+            Authentication mode. service_principal uses a client secret. workload_identity uses secretless DefaultAzureCredential (workload identity and managed identity only). Defaults to service_principal.
+
+            * `service_principal` - Service Principal
+            * `workload_identity` - Workload identity
+          nullable: true
         can_delete_objects:
           description: Deletion from storage enabled
           nullable: true
@@ -26681,6 +26707,15 @@ components:
           description: Azure Blob account name
           nullable: true
           type: string
+        auth_mode:
+          allOf:
+            - $ref: '#/components/schemas/AuthModeEnum'
+          description: |-
+            Authentication mode. service_principal uses a client secret. workload_identity uses secretless DefaultAzureCredential (workload identity and managed identity only). Defaults to service_principal.
+
+            * `service_principal` - Service Principal
+            * `workload_identity` - Workload identity
+          nullable: true
         client_id:
           description: Azure Blob Service Principal Client ID
           nullable: true
@@ -26788,6 +26823,15 @@ components:
           description: Azure Blob account name
           nullable: true
           type: string
+        auth_mode:
+          allOf:
+            - $ref: '#/components/schemas/AuthModeEnum'
+          description: |-
+            Authentication mode. service_principal uses a client secret. workload_identity uses secretless DefaultAzureCredential (workload identity and managed identity only). Defaults to service_principal.
+
+            * `service_principal` - Service Principal
+            * `workload_identity` - Workload identity
+          nullable: true
         client_id:
           description: Azure Blob Service Principal Client ID
           nullable: true
@@ -39047,6 +39091,15 @@ components:
           description: Azure Blob account name
           nullable: true
           type: string
+        auth_mode:
+          allOf:
+            - $ref: '#/components/schemas/AuthModeEnum'
+          description: |-
+            Authentication mode. service_principal uses a client secret. workload_identity uses secretless DefaultAzureCredential (workload identity and managed identity only). Defaults to service_principal.
+
+            * `service_principal` - Service Principal
+            * `workload_identity` - Workload identity
+          nullable: true
         can_delete_objects:
           description: Deletion from storage enabled
           nullable: true
@@ -39129,6 +39182,15 @@ components:
           description: Azure Blob account name
           nullable: true
           type: string
+        auth_mode:
+          allOf:
+            - $ref: '#/components/schemas/AuthModeEnum'
+          description: |-
+            Authentication mode. service_principal uses a client secret. workload_identity uses secretless DefaultAzureCredential (workload identity and managed identity only). Defaults to service_principal.
+
+            * `service_principal` - Service Principal
+            * `workload_identity` - Workload identity
+          nullable: true
         client_id:
           description: Azure Blob Service Principal Client ID
           nullable: true
