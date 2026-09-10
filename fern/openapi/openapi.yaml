@@ -5250,6 +5250,10 @@ paths:
         List saved interfaces for the current organization.
       operationId: api_interfaces_list
       parameters:
+        - in: query
+          name: has_published_versions
+          schema:
+            type: boolean
         - description: Which field to use when ordering the results.
           in: query
           name: ordering
