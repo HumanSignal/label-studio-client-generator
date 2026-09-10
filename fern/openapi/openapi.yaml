@@ -25004,6 +25004,7 @@ components:
           readOnly: true
           type: boolean
         rejected:
+          description: 'Annotator-only: this user''s annotations rejected by reviewers.'
           readOnly: true
           type: integer
         require_comment_on_skip:
@@ -34329,6 +34330,7 @@ components:
           readOnly: true
           type: integer
         rejected:
+          description: 'Annotator-only: this user''s annotations rejected by reviewers.'
           readOnly: true
           type: integer
         review_total_tasks:
@@ -35070,6 +35072,7 @@ components:
           readOnly: true
           type: boolean
         rejected:
+          description: 'Annotator-only: this user''s annotations rejected by reviewers.'
           readOnly: true
           type: integer
         require_comment_on_skip:
