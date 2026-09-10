@@ -26928,6 +26928,8 @@ components:
       properties:
         export_storages:
           $ref: '#/components/schemas/CountLimit'
+        flex:
+          $ref: '#/components/schemas/FlexChecks'
         import_storages:
           $ref: '#/components/schemas/CountLimit'
         is_license_expired:
@@ -29834,6 +29836,69 @@ components:
         - column
         - operator
         - type
+      type: object
+    FlexActiveBlock:
+      properties:
+        claim_mode:
+          type: string
+        ends_at:
+          type: string
+        id:
+          type: string
+        max_concurrent:
+          type: integer
+        starts_at:
+          type: string
+        status:
+          type: string
+      required:
+        - claim_mode
+        - ends_at
+        - id
+        - max_concurrent
+        - starts_at
+        - status
+      type: object
+    FlexChecks:
+      description: |-
+        Flex entitlement snapshot for License & Usage (FIT-2340).
+
+        ``enabled`` is False for Starter/non-Enterprise, flag-off, or absent/expired
+        windows so the UI can hide Flex licensing lines.
+      properties:
+        active_blocks:
+          items:
+            $ref: '#/components/schemas/FlexActiveBlock'
+          type: array
+        capacity:
+          type: integer
+        claim_mode:
+          nullable: true
+          type: string
+        enabled:
+          type: boolean
+        ends_at:
+          nullable: true
+          type: string
+        live_claims:
+          type: integer
+        peak_concurrent:
+          type: integer
+        roster_count:
+          type: integer
+        starts_at:
+          nullable: true
+          type: string
+      required:
+        - active_blocks
+        - capacity
+        - claim_mode
+        - enabled
+        - ends_at
+        - live_claims
+        - peak_concurrent
+        - roster_count
+        - starts_at
       type: object
     FsmBackfillJobStatusEnum:
       description: |-
