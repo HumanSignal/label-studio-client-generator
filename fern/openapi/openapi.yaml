@@ -32106,6 +32106,15 @@ components:
           items:
             $ref: '#/components/schemas/LabelDistributionStructureDimension'
           type: array
+        has_predictions:
+          description: True when the project has at least one Prediction row.
+          type: boolean
+        prediction_filters_supported:
+          description: True when the UI may offer prediction-scoped filters (prediction identity ready and the project has predictions).
+          type: boolean
+        prediction_identity_ready:
+          description: True when dimension value-counts cache is at prediction-identity version 2. Prediction-scoped Label Distribution filters require this.
+          type: boolean
       required:
         - choice_keys
         - dimensions
