@@ -17912,7 +17912,7 @@ paths:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Create Azure import storage with Service Principal authentication.
+        Create Azure import storage with Service Principal or workload-identity authentication. Supports auth_mode=service_principal (default; requires tenant_id, client_id, and client_secret) and auth_mode=workload_identity (secretless; client_secret must be omitted, tenant_id is not required, optional client_id selects a user-assigned managed identity). GET responses never include client_secret.
       operationId: api_storages_azure_spi_create
       requestBody:
         content:
@@ -17953,7 +17953,7 @@ paths:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Validate a specific Azure import storage connection that was set up with Service Principal authentication.
+        Validate a specific Azure import storage connection (Service Principal or workload-identity). Supports auth_mode=service_principal (default; requires tenant_id, client_id, and client_secret) and auth_mode=workload_identity (secretless; client_secret must be omitted, tenant_id is not required, optional client_id selects a user-assigned managed identity). GET responses never include client_secret.
       operationId: api_storages_azure_spi_validate_create
       requestBody:
         content:
@@ -18054,7 +18054,7 @@ paths:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Update a specific Azure import storage connection that was set up with Service Principal authentication.
+        Update a specific Azure import storage connection (Service Principal or workload-identity). Supports auth_mode=service_principal (default; requires tenant_id, client_id, and client_secret) and auth_mode=workload_identity (secretless; client_secret must be omitted, tenant_id is not required, optional client_id selects a user-assigned managed identity). GET responses never include client_secret.
       operationId: api_storages_azure_spi_partial_update
       parameters:
         - in: path
@@ -18691,7 +18691,7 @@ paths:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Create an Azure export storage connection with Service Principal authentication to store annotations.
+        Create an Azure export storage connection with Service Principal or workload-identity authentication to store annotations. Supports auth_mode=service_principal (default; requires tenant_id, client_id, and client_secret) and auth_mode=workload_identity (secretless; client_secret must be omitted, tenant_id is not required, optional client_id selects a user-assigned managed identity). GET responses never include client_secret.
       operationId: api_storages_export_azure_spi_create
       requestBody:
         content:
@@ -18732,7 +18732,7 @@ paths:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Validate a specific Azure export storage connection that was set up with Service Principal authentication.
+        Validate a specific Azure export storage connection (Service Principal or workload-identity). Supports auth_mode=service_principal (default; requires tenant_id, client_id, and client_secret) and auth_mode=workload_identity (secretless; client_secret must be omitted, tenant_id is not required, optional client_id selects a user-assigned managed identity). GET responses never include client_secret.
       operationId: api_storages_export_azure_spi_validate_create
       requestBody:
         content:
@@ -18833,7 +18833,7 @@ paths:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Update a specific Azure export storage connection that was set up with Service Principal authentication.
+        Update a specific Azure export storage connection (Service Principal or workload-identity). Supports auth_mode=service_principal (default; requires tenant_id, client_id, and client_secret) and auth_mode=workload_identity (secretless; client_secret must be omitted, tenant_id is not required, optional client_id selects a user-assigned managed identity). GET responses never include client_secret.
       operationId: api_storages_export_azure_spi_partial_update
       parameters:
         - in: path
@@ -26502,6 +26502,7 @@ components:
         - dataset
       type: object
     AzureServicePrincipalExportStorage:
+      description: Mode-aware auth validation shared by import and export Azure SPI serializers.
       properties:
         account_name:
           description: Azure Blob account name
@@ -26511,7 +26512,7 @@ components:
           allOf:
             - $ref: '#/components/schemas/AuthModeEnum'
           description: |-
-            Authentication mode. service_principal uses a client secret. workload_identity uses secretless DefaultAzureCredential (workload identity and managed identity only). Defaults to service_principal.
+            Authentication mode. service_principal uses a client secret. workload_identity uses constrained DefaultAzureCredential (workload identity + managed identity only). Defaults to service_principal.
 
             * `service_principal` - Service Principal
             * `workload_identity` - Workload identity
@@ -26521,11 +26522,11 @@ components:
           nullable: true
           type: boolean
         client_id:
-          description: Azure Blob Service Principal Client ID
+          description: 'For service_principal: Azure app registration client ID. For workload_identity: optional user-assigned managed identity client ID.'
           nullable: true
           type: string
         client_secret:
-          description: Azure Blob Service Principal Client Secret
+          description: Azure Blob Service Principal client secret. Required when auth_mode is service_principal (or omitted). Must be omitted when auth_mode is workload_identity.
           nullable: true
           type: string
         container:
@@ -26580,7 +26581,7 @@ components:
           default: true
           type: boolean
         tenant_id:
-          description: Azure Tenant ID
+          description: Azure Tenant ID. Required for service_principal; not used for workload_identity.
           nullable: true
           type: string
         title:
@@ -26610,6 +26611,7 @@ components:
         - type
       type: object
     AzureServicePrincipalExportStorageRequest:
+      description: Mode-aware auth validation shared by import and export Azure SPI serializers.
       properties:
         account_name:
           description: Azure Blob account name
@@ -26619,7 +26621,7 @@ components:
           allOf:
             - $ref: '#/components/schemas/AuthModeEnum'
           description: |-
-            Authentication mode. service_principal uses a client secret. workload_identity uses secretless DefaultAzureCredential (workload identity and managed identity only). Defaults to service_principal.
+            Authentication mode. service_principal uses a client secret. workload_identity uses constrained DefaultAzureCredential (workload identity + managed identity only). Defaults to service_principal.
 
             * `service_principal` - Service Principal
             * `workload_identity` - Workload identity
@@ -26629,11 +26631,11 @@ components:
           nullable: true
           type: boolean
         client_id:
-          description: Azure Blob Service Principal Client ID
+          description: 'For service_principal: Azure app registration client ID. For workload_identity: optional user-assigned managed identity client ID.'
           nullable: true
           type: string
         client_secret:
-          description: Azure Blob Service Principal Client Secret
+          description: Azure Blob Service Principal client secret. Required when auth_mode is service_principal (or omitted). Must be omitted when auth_mode is workload_identity.
           nullable: true
           type: string
         container:
@@ -26680,7 +26682,7 @@ components:
           default: true
           type: boolean
         tenant_id:
-          description: Azure Tenant ID
+          description: Azure Tenant ID. Required for service_principal; not used for workload_identity.
           nullable: true
           type: string
         title:
@@ -26703,6 +26705,7 @@ components:
         - project
       type: object
     AzureServicePrincipalImportStorage:
+      description: Mode-aware auth validation shared by import and export Azure SPI serializers.
       properties:
         account_name:
           description: Azure Blob account name
@@ -26712,17 +26715,17 @@ components:
           allOf:
             - $ref: '#/components/schemas/AuthModeEnum'
           description: |-
-            Authentication mode. service_principal uses a client secret. workload_identity uses secretless DefaultAzureCredential (workload identity and managed identity only). Defaults to service_principal.
+            Authentication mode. service_principal uses a client secret. workload_identity uses constrained DefaultAzureCredential (workload identity + managed identity only). Defaults to service_principal.
 
             * `service_principal` - Service Principal
             * `workload_identity` - Workload identity
           nullable: true
         client_id:
-          description: Azure Blob Service Principal Client ID
+          description: 'For service_principal: Azure app registration client ID. For workload_identity: optional user-assigned managed identity client ID.'
           nullable: true
           type: string
         client_secret:
-          description: Azure Blob Service Principal Client Secret
+          description: Azure Blob Service Principal client secret. Required when auth_mode is service_principal (or omitted). Must be omitted when auth_mode is workload_identity.
           nullable: true
           type: string
         container:
@@ -26789,7 +26792,7 @@ components:
           default: true
           type: boolean
         tenant_id:
-          description: Azure Tenant ID
+          description: Azure Tenant ID. Required for service_principal; not used for workload_identity.
           nullable: true
           type: string
         title:
@@ -26819,6 +26822,7 @@ components:
         - type
       type: object
     AzureServicePrincipalImportStorageRequest:
+      description: Mode-aware auth validation shared by import and export Azure SPI serializers.
       properties:
         account_name:
           description: Azure Blob account name
@@ -26828,17 +26832,17 @@ components:
           allOf:
             - $ref: '#/components/schemas/AuthModeEnum'
           description: |-
-            Authentication mode. service_principal uses a client secret. workload_identity uses secretless DefaultAzureCredential (workload identity and managed identity only). Defaults to service_principal.
+            Authentication mode. service_principal uses a client secret. workload_identity uses constrained DefaultAzureCredential (workload identity + managed identity only). Defaults to service_principal.
 
             * `service_principal` - Service Principal
             * `workload_identity` - Workload identity
           nullable: true
         client_id:
-          description: Azure Blob Service Principal Client ID
+          description: 'For service_principal: Azure app registration client ID. For workload_identity: optional user-assigned managed identity client ID.'
           nullable: true
           type: string
         client_secret:
-          description: Azure Blob Service Principal Client Secret
+          description: Azure Blob Service Principal client secret. Required when auth_mode is service_principal (or omitted). Must be omitted when auth_mode is workload_identity.
           nullable: true
           type: string
         container:
@@ -26897,7 +26901,7 @@ components:
           default: true
           type: boolean
         tenant_id:
-          description: Azure Tenant ID
+          description: Azure Tenant ID. Required for service_principal; not used for workload_identity.
           nullable: true
           type: string
         title:
@@ -39098,6 +39102,7 @@ components:
           type: boolean
       type: object
     PatchedAzureServicePrincipalExportStorageRequest:
+      description: Mode-aware auth validation shared by import and export Azure SPI serializers.
       properties:
         account_name:
           description: Azure Blob account name
@@ -39107,7 +39112,7 @@ components:
           allOf:
             - $ref: '#/components/schemas/AuthModeEnum'
           description: |-
-            Authentication mode. service_principal uses a client secret. workload_identity uses secretless DefaultAzureCredential (workload identity and managed identity only). Defaults to service_principal.
+            Authentication mode. service_principal uses a client secret. workload_identity uses constrained DefaultAzureCredential (workload identity + managed identity only). Defaults to service_principal.
 
             * `service_principal` - Service Principal
             * `workload_identity` - Workload identity
@@ -39117,11 +39122,11 @@ components:
           nullable: true
           type: boolean
         client_id:
-          description: Azure Blob Service Principal Client ID
+          description: 'For service_principal: Azure app registration client ID. For workload_identity: optional user-assigned managed identity client ID.'
           nullable: true
           type: string
         client_secret:
-          description: Azure Blob Service Principal Client Secret
+          description: Azure Blob Service Principal client secret. Required when auth_mode is service_principal (or omitted). Must be omitted when auth_mode is workload_identity.
           nullable: true
           type: string
         container:
@@ -39168,7 +39173,7 @@ components:
           default: true
           type: boolean
         tenant_id:
-          description: Azure Tenant ID
+          description: Azure Tenant ID. Required for service_principal; not used for workload_identity.
           nullable: true
           type: string
         title:
@@ -39189,6 +39194,7 @@ components:
           type: string
       type: object
     PatchedAzureServicePrincipalImportStorageRequest:
+      description: Mode-aware auth validation shared by import and export Azure SPI serializers.
       properties:
         account_name:
           description: Azure Blob account name
@@ -39198,17 +39204,17 @@ components:
           allOf:
             - $ref: '#/components/schemas/AuthModeEnum'
           description: |-
-            Authentication mode. service_principal uses a client secret. workload_identity uses secretless DefaultAzureCredential (workload identity and managed identity only). Defaults to service_principal.
+            Authentication mode. service_principal uses a client secret. workload_identity uses constrained DefaultAzureCredential (workload identity + managed identity only). Defaults to service_principal.
 
             * `service_principal` - Service Principal
             * `workload_identity` - Workload identity
           nullable: true
         client_id:
-          description: Azure Blob Service Principal Client ID
+          description: 'For service_principal: Azure app registration client ID. For workload_identity: optional user-assigned managed identity client ID.'
           nullable: true
           type: string
         client_secret:
-          description: Azure Blob Service Principal Client Secret
+          description: Azure Blob Service Principal client secret. Required when auth_mode is service_principal (or omitted). Must be omitted when auth_mode is workload_identity.
           nullable: true
           type: string
         container:
@@ -39267,7 +39273,7 @@ components:
           default: true
           type: boolean
         tenant_id:
-          description: Azure Tenant ID
+          description: Azure Tenant ID. Required for service_principal; not used for workload_identity.
           nullable: true
           type: string
         title:
