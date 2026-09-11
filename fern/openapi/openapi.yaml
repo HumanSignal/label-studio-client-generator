@@ -13858,7 +13858,7 @@ paths:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Returns counts and percentages for requested label choices, from both annotations and predictions. Supports either pagination (`limit`, `offset`) or targeted fetches via explicit `choice_keys`.
+        Returns counts and percentages for requested label choices, from both annotations and predictions. Supports either pagination (`limit`, `offset`) or targeted fetches via explicit `choice_keys`. Omitting `filters` preserves the unfiltered cached-count behavior.
       operationId: api_projects_stats_label_distribution_counts_retrieve
       parameters:
         - description: 'Explicit choice keys to fetch, joined by "___PIPE___" (for example: "label___SEP___pos___PIPE___quality___SEP___4"). When provided, pagination params are ignored.'
@@ -13866,12 +13866,15 @@ paths:
           name: choice_keys
           schema:
             type: string
-        - description: 'Optional JSON-encoded Data Manager Filters object (`conjunction` + `items[]`). Label Distribution accepts AND-only plans (no nested `child_filters`) with curated fields: `filter:tasks:id`, `filter:tasks:inner_id`, `filter:tasks:data.*`, `filter:tasks:annotators`, `filter:tasks:ground_truth`, `filter:tasks:reviews_accepted`, `filter:tasks:reviews_rejected`, `filter:tasks:reviewed`, `filter:tasks:predictions_model_versions`, `filter:tasks:annotations_updated_at`, and `filter:tasks:predictions_updated_at`. Source updated-at fields require an inclusive timezone-aware Datetime range (`operator: "in"`, `value: {"min": ..., "max": ...}`). An empty `items` list is treated as unfiltered.'
+        - description: Optional JSON-encoded string containing a curated filter plan (not an exploded object). Pass one JSON string query value (for example `json.dumps(Filters.create(...))` from `label_studio_sdk.data_manager`); do not pass a nested object or Fern will explode `filters[...]` keys. The plan uses normalized AND semantics (`conjunction` must be `"and"`), contains at most 20 items, does not permit nested `child_filters`, and treats an empty `items` list as unfiltered. Supported filter fields are `filter:tasks:id`, `filter:tasks:inner_id`, `filter:tasks:data.*`, `filter:tasks:annotators`, `filter:tasks:ground_truth`, `filter:tasks:reviews_accepted`, `filter:tasks:reviews_rejected`, `filter:tasks:reviewed`, `filter:tasks:predictions_model_versions`, `filter:tasks:annotations_updated_at`, and `filter:tasks:predictions_updated_at`. Each item requires `filter`, `operator`, `type`, and `value`. Annotator filters require one or more positive integer IDs. Model-version filters require 1-100 non-empty strings. Source updated-at filters require an inclusive, ordered, timezone-aware range object with string `min` and `max` timestamps.
+          examples:
+            AnnotatorAndGround-truthFilterPlan:
+              summary: Annotator and ground-truth filter plan
+              value: '{"conjunction":"and","items":[{"filter":"filter:tasks:annotators","operator":"contains","type":"List","value":[7]},{"filter":"filter:tasks:ground_truth","operator":"equal","type":"Boolean","value":true}]}'
           in: query
           name: filters
           schema:
-            additionalProperties: {}
-            type: object
+            type: string
         - in: path
           name: id
           required: true
@@ -13881,12 +13884,14 @@ paths:
           in: query
           name: limit
           schema:
+            minimum: 1
             type: integer
         - description: Zero-based offset into the structure `choice_keys` list. Used only when `choice_keys` is not provided.
           in: query
           name: offset
           schema:
             default: 0
+            minimum: 0
             type: integer
       responses:
         '200':
@@ -13921,6 +13926,38 @@ paths:
               schema:
                 $ref: '#/components/schemas/LabelDistributionCountsResponse'
           description: Label distribution counts
+        '400':
+          content:
+            application/json:
+              examples:
+                InvalidLabelDistributionFilterPlan:
+                  summary: Invalid Label Distribution filter plan
+                  value:
+                    detail: Validation error
+                    exc_info: null
+                    id: 76debad4-00fd-4b4e-93af-4daeb8076e9b
+                    status_code: 400
+                    validation_errors:
+                      filters: Label Distribution supports only AND filter plans.
+                    version: 2.37.0
+              schema:
+                $ref: '#/components/schemas/LabelDistributionValidationError'
+          description: Invalid JSON or filter plan. Plans use AND semantics, reject OR/nested filters, and require field-compatible values including timezone-aware source timestamp ranges.
+        '409':
+          content:
+            application/json:
+              examples:
+                FilteredLabelDistributionUnavailable:
+                  summary: Filtered Label Distribution unavailable
+                  value:
+                    detail: Filtered Label Distribution source readiness is incomplete.
+                    exc_info: null
+                    id: ff6af402-a312-4389-9ba1-a02236473e78
+                    status_code: 409
+                    version: 2.37.0
+              schema:
+                $ref: '#/components/schemas/FilteredLabelDistributionUnavailable'
+          description: Filtered Label Distribution is temporarily unavailable because dimension source readiness is incomplete. Retry later or omit `filters` to request unfiltered cached counts.
       security:
         - Token: []
       summary: ✨ Get label distribution counts
@@ -29890,6 +29927,30 @@ components:
         - operator
         - type
       type: object
+    FilteredLabelDistributionUnavailable:
+      properties:
+        detail:
+          description: Human-readable error summary.
+          type: string
+        exc_info:
+          description: Debug exception information when enabled; otherwise null.
+          nullable: true
+        id:
+          description: Unique error identifier.
+          format: uuid
+          type: string
+        status_code:
+          description: HTTP status code.
+          type: integer
+        version:
+          description: Label Studio backend version.
+          type: string
+      required:
+        - detail
+        - id
+        - status_code
+        - version
+      type: object
     FlexActiveBlock:
       properties:
         claim_mode:
@@ -32122,6 +32183,45 @@ components:
       required:
         - choice_keys
         - dimensions
+      type: object
+    LabelDistributionValidationError:
+      properties:
+        detail:
+          description: Human-readable error summary.
+          type: string
+        exc_info:
+          description: Debug exception information when enabled; otherwise null.
+          nullable: true
+        id:
+          description: Unique error identifier.
+          format: uuid
+          type: string
+        status_code:
+          description: HTTP status code.
+          type: integer
+        validation_errors:
+          $ref: '#/components/schemas/LabelDistributionValidationErrors'
+        version:
+          description: Label Studio backend version.
+          type: string
+      required:
+        - detail
+        - id
+        - status_code
+        - validation_errors
+        - version
+      type: object
+    LabelDistributionValidationErrors:
+      properties:
+        filters:
+          description: Filter-plan parsing or validation messages.
+          oneOf:
+            - type: string
+            - items:
+                type: string
+              type: array
+      required:
+        - filters
       type: object
     LabelLink:
       description: |-
