@@ -12868,6 +12868,11 @@ paths:
           name: no_annotators
           schema:
             type: boolean
+        - description: Exclude view-only users from the results
+          in: query
+          name: no_view_only
+          schema:
+            type: boolean
         - description: |-
             Ordering field. Prefix with "-" for descending order. Allowed fields: id, email, first_name, last_name, username, last_activity, role, date_joined
 
