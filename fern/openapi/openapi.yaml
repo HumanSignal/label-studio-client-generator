@@ -36766,6 +36766,7 @@ components:
           type: string
         last_activity:
           format: date-time
+          nullable: true
           readOnly: true
           type: string
         last_name:
@@ -36854,6 +36855,7 @@ components:
           type: string
         last_activity:
           format: date-time
+          nullable: true
           readOnly: true
           type: string
         last_name:
@@ -36956,6 +36958,7 @@ components:
           type: string
         last_activity:
           format: date-time
+          nullable: true
           readOnly: true
           type: string
         last_name:
@@ -38692,6 +38695,7 @@ components:
           type: string
         last_activity:
           format: date-time
+          nullable: true
           readOnly: true
           type: string
         last_name:
@@ -47293,6 +47297,7 @@ components:
           type: string
         last_activity:
           format: date-time
+          nullable: true
           readOnly: true
           type: string
         last_name:
