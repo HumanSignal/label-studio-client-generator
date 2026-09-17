@@ -13619,7 +13619,7 @@ paths:
           required: true
           schema:
             type: string
-        - description: Per label
+        - description: Calculate agreement per label. Not supported for projects using dimension-based agreement (Agreement V2), which returns HTTP 400.
           in: query
           name: per_label
           schema:
@@ -14318,6 +14318,8 @@ paths:
           description: Total agreement
         '204':
           description: No data to compute agreement
+        '400':
+          description: Agreement V1 API is not supported for Agreement V2 projects
       security:
         - Token: []
       summary: ✨ Get total agreement for project
@@ -14955,10 +14957,11 @@ paths:
           required: true
           schema:
             type: integer
-        - description: Calculate agreement per label
+        - description: Calculate agreement per label. Not supported for projects using dimension-based agreement (Agreement V2), which returns HTTP 400.
           in: query
           name: per_label
           schema:
+            default: false
             type: boolean
         - in: path
           name: user_pk
