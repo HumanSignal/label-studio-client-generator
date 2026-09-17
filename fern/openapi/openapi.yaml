@@ -36023,6 +36023,10 @@ components:
           type: integer
         reviewed:
           type: boolean
+        reviewed_at:
+          format: date-time
+          nullable: true
+          type: string
         reviewers:
           items:
             additionalProperties: {}
@@ -36639,6 +36643,10 @@ components:
           type: integer
         reviewed:
           type: boolean
+        reviewed_at:
+          format: date-time
+          nullable: true
+          type: string
         reviewers:
           items:
             additionalProperties: {}
@@ -41195,6 +41203,10 @@ components:
           type: integer
         reviewed:
           type: boolean
+        reviewed_at:
+          format: date-time
+          nullable: true
+          type: string
         reviews_accepted:
           type: integer
         reviews_rejected:
