@@ -24915,6 +24915,46 @@ components:
         description_short:
           readOnly: true
           type: string
+        dm_column_defaults:
+          additionalProperties: false
+          description: Soft Data Manager column visibility and order defaults. Returned on project reads for every role so Data Manager can apply them at runtime; Managers and above may set this. explore is the main grid (shared order, role-keyed visible lists). labeling is reserved for independent Quick View defaults. On update, omitted surfaces keep their stored values; send null to clear both surfaces.
+          nullable: true
+          properties:
+            explore:
+              additionalProperties: false
+              description: Main Data Manager grid.
+              properties:
+                order:
+                  description: Shared column id order for this surface.
+                  items:
+                    type: string
+                  type: array
+                visible:
+                  additionalProperties:
+                    items:
+                      type: string
+                    type: array
+                  description: Public organization role to visible column ids.
+                  type: object
+              type: object
+            labeling:
+              additionalProperties: false
+              description: Quick View (reserved).
+              properties:
+                order:
+                  description: Shared column id order for this surface.
+                  items:
+                    type: string
+                  type: array
+                visible:
+                  additionalProperties:
+                    items:
+                      type: string
+                    type: array
+                  description: Public organization role to visible column ids.
+                  type: object
+              type: object
+          type: object
         duplication_done:
           default: false
           type: boolean
@@ -34143,6 +34183,46 @@ components:
           description: Description (Public)
           nullable: true
           type: string
+        dm_column_defaults:
+          additionalProperties: false
+          description: Soft Data Manager column visibility and order defaults. Returned on project reads for every role so Data Manager can apply them at runtime; Managers and above may set this. explore is the main grid (shared order, role-keyed visible lists). labeling is reserved for independent Quick View defaults. On update, omitted surfaces keep their stored values; send null to clear both surfaces.
+          nullable: true
+          properties:
+            explore:
+              additionalProperties: false
+              description: Main Data Manager grid.
+              properties:
+                order:
+                  description: Shared column id order for this surface.
+                  items:
+                    type: string
+                  type: array
+                visible:
+                  additionalProperties:
+                    items:
+                      type: string
+                    type: array
+                  description: Public organization role to visible column ids.
+                  type: object
+              type: object
+            labeling:
+              additionalProperties: false
+              description: Quick View (reserved).
+              properties:
+                order:
+                  description: Shared column id order for this surface.
+                  items:
+                    type: string
+                  type: array
+                visible:
+                  additionalProperties:
+                    items:
+                      type: string
+                    type: array
+                  description: Public organization role to visible column ids.
+                  type: object
+              type: object
+          type: object
         duplication_done:
           default: false
           type: boolean
@@ -34554,6 +34634,46 @@ components:
           description: Description (Public)
           nullable: true
           type: string
+        dm_column_defaults:
+          additionalProperties: false
+          description: Soft Data Manager column visibility and order defaults. Returned on project reads for every role so Data Manager can apply them at runtime; Managers and above may set this. explore is the main grid (shared order, role-keyed visible lists). labeling is reserved for independent Quick View defaults. On update, omitted surfaces keep their stored values; send null to clear both surfaces.
+          nullable: true
+          properties:
+            explore:
+              additionalProperties: false
+              description: Main Data Manager grid.
+              properties:
+                order:
+                  description: Shared column id order for this surface.
+                  items:
+                    type: string
+                  type: array
+                visible:
+                  additionalProperties:
+                    items:
+                      type: string
+                    type: array
+                  description: Public organization role to visible column ids.
+                  type: object
+              type: object
+            labeling:
+              additionalProperties: false
+              description: Quick View (reserved).
+              properties:
+                order:
+                  description: Shared column id order for this surface.
+                  items:
+                    type: string
+                  type: array
+                visible:
+                  additionalProperties:
+                    items:
+                      type: string
+                    type: array
+                  description: Public organization role to visible column ids.
+                  type: object
+              type: object
+          type: object
         enable_empty_annotation:
           description: Allow annotators to submit empty annotations
           type: boolean
@@ -34783,6 +34903,46 @@ components:
           description: Description (Public)
           nullable: true
           type: string
+        dm_column_defaults:
+          additionalProperties: false
+          description: Soft Data Manager column visibility and order defaults. Returned on project reads for every role so Data Manager can apply them at runtime; Managers and above may set this. explore is the main grid (shared order, role-keyed visible lists). labeling is reserved for independent Quick View defaults. On update, omitted surfaces keep their stored values; send null to clear both surfaces.
+          nullable: true
+          properties:
+            explore:
+              additionalProperties: false
+              description: Main Data Manager grid.
+              properties:
+                order:
+                  description: Shared column id order for this surface.
+                  items:
+                    type: string
+                  type: array
+                visible:
+                  additionalProperties:
+                    items:
+                      type: string
+                    type: array
+                  description: Public organization role to visible column ids.
+                  type: object
+              type: object
+            labeling:
+              additionalProperties: false
+              description: Quick View (reserved).
+              properties:
+                order:
+                  description: Shared column id order for this surface.
+                  items:
+                    type: string
+                  type: array
+                visible:
+                  additionalProperties:
+                    items:
+                      type: string
+                    type: array
+                  description: Public organization role to visible column ids.
+                  type: object
+              type: object
+          type: object
         enable_empty_annotation:
           description: Allow annotators to submit empty annotations
           type: boolean
@@ -35059,6 +35219,46 @@ components:
           description: Description (Public)
           nullable: true
           type: string
+        dm_column_defaults:
+          additionalProperties: false
+          description: Soft Data Manager column visibility and order defaults. Returned on project reads for every role so Data Manager can apply them at runtime; Managers and above may set this. explore is the main grid (shared order, role-keyed visible lists). labeling is reserved for independent Quick View defaults. On update, omitted surfaces keep their stored values; send null to clear both surfaces.
+          nullable: true
+          properties:
+            explore:
+              additionalProperties: false
+              description: Main Data Manager grid.
+              properties:
+                order:
+                  description: Shared column id order for this surface.
+                  items:
+                    type: string
+                  type: array
+                visible:
+                  additionalProperties:
+                    items:
+                      type: string
+                    type: array
+                  description: Public organization role to visible column ids.
+                  type: object
+              type: object
+            labeling:
+              additionalProperties: false
+              description: Quick View (reserved).
+              properties:
+                order:
+                  description: Shared column id order for this surface.
+                  items:
+                    type: string
+                  type: array
+                visible:
+                  additionalProperties:
+                    items:
+                      type: string
+                    type: array
+                  description: Public organization role to visible column ids.
+                  type: object
+              type: object
+          type: object
         duplication_done:
           default: false
           type: boolean
@@ -40803,6 +41003,46 @@ components:
           description: Description (Public)
           nullable: true
           type: string
+        dm_column_defaults:
+          additionalProperties: false
+          description: Soft Data Manager column visibility and order defaults. Returned on project reads for every role so Data Manager can apply them at runtime; Managers and above may set this. explore is the main grid (shared order, role-keyed visible lists). labeling is reserved for independent Quick View defaults. On update, omitted surfaces keep their stored values; send null to clear both surfaces.
+          nullable: true
+          properties:
+            explore:
+              additionalProperties: false
+              description: Main Data Manager grid.
+              properties:
+                order:
+                  description: Shared column id order for this surface.
+                  items:
+                    type: string
+                  type: array
+                visible:
+                  additionalProperties:
+                    items:
+                      type: string
+                    type: array
+                  description: Public organization role to visible column ids.
+                  type: object
+              type: object
+            labeling:
+              additionalProperties: false
+              description: Quick View (reserved).
+              properties:
+                order:
+                  description: Shared column id order for this surface.
+                  items:
+                    type: string
+                  type: array
+                visible:
+                  additionalProperties:
+                    items:
+                      type: string
+                    type: array
+                  description: Public organization role to visible column ids.
+                  type: object
+              type: object
+          type: object
         enable_empty_annotation:
           description: Allow empty annotations
           type: boolean
