@@ -1,0 +1,3 @@
+# Intentional operationId changes accepted by .github/helpers/compare_operation_ids.py (FIT-2939).
+# One finding line per entry, copied verbatim from the CI log, followed by "# <TICKET>".
+# Every entry breaks re-import into API gateways for on-prem customers: list it in the release notes.

@@ -7642,71 +7642,65 @@ paths:
           content:
             application/json:
               schema:
-                content:
-                  application/json:
-                    properties:
-                      choices:
-                        description: Array of completion choices
-                        items:
+                properties:
+                  choices:
+                    description: Array of completion choices
+                    items:
+                      properties:
+                        finish_reason:
+                          description: The reason the completion finished
+                          type: string
+                        index:
+                          description: The index of the choice
+                          type: integer
+                        message:
                           properties:
-                            finish_reason:
-                              description: The reason the completion finished
+                            content:
+                              description: The content of the message
                               type: string
-                            index:
-                              description: The index of the choice
-                              type: integer
-                            message:
-                              properties:
-                                content:
-                                  description: The content of the message
-                                  type: string
-                                role:
-                                  description: The role of the message author
-                                  type: string
-                              type: object
+                            role:
+                              description: The role of the message author
+                              type: string
                           type: object
-                        type: array
-                      created:
-                        description: Unix timestamp of when the completion was created
+                      type: object
+                    type: array
+                  created:
+                    description: Unix timestamp of when the completion was created
+                    type: integer
+                  id:
+                    description: Unique identifier for the chat completion
+                    type: string
+                  model:
+                    description: The model used for the completion
+                    type: string
+                  object:
+                    description: Object type, always "chat.completion"
+                    type: string
+                  usage:
+                    description: Token usage statistics
+                    properties:
+                      completion_tokens:
+                        description: Number of tokens in the completion
                         type: integer
-                      id:
-                        description: Unique identifier for the chat completion
-                        type: string
-                      model:
-                        description: The model used for the completion
-                        type: string
-                      object:
-                        description: Object type, always "chat.completion"
-                        type: string
-                      usage:
-                        description: Token usage statistics
-                        properties:
-                          completion_tokens:
-                            description: Number of tokens in the completion
-                            type: integer
-                          prompt_tokens:
-                            description: Number of tokens in the prompt
-                            type: integer
-                          total_tokens:
-                            description: Total number of tokens used
-                            type: integer
-                        type: object
+                      prompt_tokens:
+                        description: Number of tokens in the prompt
+                        type: integer
+                      total_tokens:
+                        description: Total number of tokens used
+                        type: integer
                     type: object
-                description: Chat completion response
-          description: ''
+                type: object
+          description: Chat completion response
         '400':
           content:
             application/json:
               schema:
-                content:
-                  application/json:
-                    properties:
-                      detail:
-                        description: Error message describing the issue
-                        type: string
-                    type: object
-                description: Bad request - missing required fields or invalid provider
-          description: ''
+                properties:
+                  detail:
+                    description: Error message describing the issue
+                    type: string
+                type: object
+          description: Bad request - missing required fields or invalid provider
       security:
         - Token: []
       summary: Proxy to OpenAI-Compatible Chat Completions
@@ -29129,7 +29123,6 @@ components:
         project:
           type: integer
         view:
-          default: ''
           type: integer
       required:
         - dataset
