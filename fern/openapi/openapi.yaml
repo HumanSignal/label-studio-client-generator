@@ -8484,6 +8484,120 @@ paths:
       x-fern-sdk-group-name:
         - organizations
       x-fern-sdk-method-name: update
+  /api/organizations/{id}/jobs/:
+    get:
+      description: Bounded, cursor-paginated list of background jobs for the active organization, sourced from the FIT-2919 per-organization indexes. Internal only.
+      operationId: api_organizations_jobs_list
+      parameters:
+        - description: Opaque pagination cursor from a previous response.
+          in: query
+          name: cursor
+          schema:
+            type: string
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - description: Case-insensitive substring match on the job function path (e.g. `export`).
+          in: query
+          name: job_function
+          schema:
+            type: string
+        - description: Results per page (max 1000, default 50).
+          in: query
+          name: page_size
+          schema:
+            type: integer
+        - description: Only include jobs whose index timestamp (enqueued_at for waiting,
+            started_at for running, failed_at for failed) is at or after this ISO-8601
+            datetime.
+          in: query
+          name: since
+          schema:
+            format: date-time
+            type: string
+        - description: Job status to list.
+          in: query
+          name: status
+          required: true
+          schema:
+            enum:
+              - failed
+              - running
+              - waiting
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobsListResponse'
+          description: ''
+      security:
+        - Token: []
+      summary: List organization background jobs
+      tags:
+        - Background Jobs
+      x-fern-audiences:
+        - internal
+  /api/organizations/{id}/jobs/summary/:
+    get:
+      description: Running/waiting/failed-24h counts and per-queue quota usage for the active organization, sourced from the FIT-2919 per-organization indexes. No per-project breakdown. Internal only.
+      operationId: api_organizations_jobs_summary_retrieve
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobsSummary'
+          description: ''
+        '404':
+          description: Not found
+      security:
+        - Token: []
+      summary: Get organization background job summary
+      tags:
+        - Background Jobs
+      x-fern-audiences:
+        - internal
+  /api/organizations/{id}/jobs/{job_id}/:
+    get:
+      description: Detail for a single active-organization background job. Failed jobs include redacted exception info (class, message, last 8 repo-relative frames — never args/kwargs). Internal only.
+      operationId: api_organizations_jobs_retrieve
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: job_id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobDetail'
+          description: ''
+        '404':
+          description: Not found
+      security:
+        - Token: []
+      summary: Get organization background job detail
+      tags:
+        - Background Jobs
+      x-fern-audiences:
+        - internal
   /api/organizations/{id}/member-tags:
     get:
       description: |-
@@ -31531,6 +31645,146 @@ components:
           description: Total cost of the inference (in USD)
           nullable: true
           type: string
+      type: object
+    JobDetail:
+      properties:
+        enqueued_at:
+          nullable: true
+          type: string
+        exception:
+          $ref: '#/components/schemas/JobException'
+        failed_at:
+          nullable: true
+          type: string
+        id:
+          type: string
+        job_func:
+          nullable: true
+          type: string
+        lane:
+          additionalProperties: {}
+          type: object
+        lease:
+          additionalProperties: {}
+          type: object
+        queue:
+          nullable: true
+          type: string
+        started_at:
+          nullable: true
+          type: string
+        status:
+          type: string
+      required:
+        - enqueued_at
+        - id
+        - job_func
+        - queue
+        - status
+      type: object
+    JobException:
+      properties:
+        exception_class:
+          nullable: true
+          type: string
+        frames:
+          items:
+            type: string
+          type: array
+        message:
+          nullable: true
+          type: string
+      required:
+        - exception_class
+        - frames
+        - message
+      type: object
+    JobListEntry:
+      properties:
+        enqueued_at:
+          nullable: true
+          type: string
+        execution_key:
+          nullable: true
+          type: string
+        failed_at:
+          nullable: true
+          type: string
+        id:
+          type: string
+        job_func:
+          nullable: true
+          type: string
+        lane:
+          additionalProperties: {}
+          type: object
+        lease:
+          additionalProperties: {}
+          type: object
+        queue:
+          nullable: true
+          type: string
+        started_at:
+          nullable: true
+          type: string
+        status:
+          type: string
+      required:
+        - enqueued_at
+        - id
+        - job_func
+        - queue
+        - status
+      type: object
+    JobQuota:
+      properties:
+        per_queue_limits:
+          additionalProperties:
+            nullable: true
+            type: integer
+          description: Max concurrent jobs per RQ queue name.
+          type: object
+        used:
+          additionalProperties:
+            type: integer
+          description: Jobs running now per queue name (from the running index).
+          type: object
+      required:
+        - per_queue_limits
+        - used
+      type: object
+    JobsListResponse:
+      properties:
+        next_cursor:
+          nullable: true
+          type: string
+        results:
+          items:
+            $ref: '#/components/schemas/JobListEntry'
+          type: array
+      required:
+        - next_cursor
+        - results
+      type: object
+    JobsSummary:
+      properties:
+        failed_24h:
+          type: integer
+        observed_at:
+          format: date-time
+          type: string
+        quota:
+          $ref: '#/components/schemas/JobQuota'
+        running:
+          type: integer
+        waiting:
+          type: integer
+      required:
+        - failed_24h
+        - observed_at
+        - quota
+        - running
+        - waiting
       type: object
     KPIDetailResponse:
       description: |-
