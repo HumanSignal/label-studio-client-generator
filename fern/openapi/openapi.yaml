@@ -8509,9 +8509,7 @@ paths:
           name: page_size
           schema:
             type: integer
-        - description: Only include jobs whose index timestamp (enqueued_at for waiting,
-            started_at for running, failed_at for failed) is at or after this ISO-8601
-            datetime.
+        - description: Only include jobs whose index timestamp (enqueued_at for waiting, started_at for running, failed_at for failed) is at or after this ISO-8601 datetime.
           in: query
           name: since
           schema:
@@ -34127,6 +34125,9 @@ components:
       type: object
     LseOrganization:
       properties:
+        allow_unsafe_instruction_tags:
+          readOnly: true
+          type: boolean
         billing:
           $ref: '#/components/schemas/OrganizationBilling'
         created_at:
@@ -34208,6 +34209,7 @@ components:
           readOnly: true
           type: string
       required:
+        - allow_unsafe_instruction_tags
         - billing
         - created_at
         - custom_scripts_enabled
@@ -41087,6 +41089,10 @@ components:
         A serializer mixin that takes an additional `fields` argument that controls
         which fields should be displayed.
       properties:
+        allow_unsafe_instruction_tags:
+          description: Keep script, iframe, style and other active tags in project instructions
+          type: boolean
+          writeOnly: true
         contact_info:
           format: email
           maxLength: 254
