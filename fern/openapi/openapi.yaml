@@ -32599,6 +32599,9 @@ components:
           type: boolean
         is_stale:
           type: boolean
+        max_attempts_exceeded:
+          default: false
+          type: boolean
         module_progress:
           additionalProperties: {}
           type: object
@@ -47091,6 +47094,9 @@ components:
         is_stale:
           readOnly: true
           type: boolean
+        max_attempts_exceeded:
+          readOnly: true
+          type: boolean
         pages_visited:
           readOnly: true
         quiz_results:
@@ -47123,6 +47129,7 @@ components:
         - imported_at
         - invalidated_at
         - is_stale
+        - max_attempts_exceeded
         - pages_visited
         - quiz_results
         - resource_version
