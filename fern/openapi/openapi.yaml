@@ -5340,6 +5340,34 @@ paths:
         - public
       x-fern-sdk-group-name: interfaces
       x-fern-sdk-method-name: create
+  /api/interfaces/classic-replacements/:
+    get:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Map each classic labeling template (keyed by "<category>/<name>") to the system interface template and preset parameters that replace it. Empty when modern interface components are not available to the caller.
+      operationId: api_interfaces_classic_replacements_retrieve
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: {}
+                type: object
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ List classic template replacements
+      tags:
+        - Interfaces
+      x-fern-audiences:
+        - internal
+      x-fern-sdk-group-name: interfaces
+      x-fern-sdk-method-name: classic_replacements
   /api/interfaces/{id}/:
     delete:
       description: |-
@@ -5560,16 +5588,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/LseInterfaceRequest'
+              $ref: '#/components/schemas/LseInterfaceDuplicateRequestRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/LseInterfaceRequest'
+              $ref: '#/components/schemas/LseInterfaceDuplicateRequestRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/LseInterfaceRequest'
-        required: true
+              $ref: '#/components/schemas/LseInterfaceDuplicateRequestRequest'
       responses:
-        '200':
+        '201':
           content:
             application/json:
               schema:
@@ -33997,6 +34024,47 @@ components:
           type: array
       required:
         - versions
+      type: object
+    LseInterfaceDuplicateRequestModeEnum:
+      description: |-
+        * `last` - last
+        * `all` - all
+      enum:
+        - last
+        - all
+      type: string
+    LseInterfaceDuplicateRequestRequest:
+      description: |-
+        Request body for ``POST /api/interfaces/{id}/duplicate/`` (OpenAPI/SDK only — the view reads raw data).
+
+        Every field is optional; an empty body duplicates the latest state into the shared (no workspace) scope.
+      properties:
+        compiled:
+          description: Client-compiled bundle, accepted only when the source has none stored (system templates).
+          nullable: true
+          type: string
+        description:
+          description: Description for the copy. Defaults to the source interface's description.
+          nullable: true
+          type: string
+        mode:
+          allOf:
+            - $ref: '#/components/schemas/LseInterfaceDuplicateRequestModeEnum'
+          description: |-
+            'last' (default) copies only the current state; 'all' carries the full version history.
+
+            * `last` - last
+            * `all` - all
+        params:
+          description: Initial screen params (an object) seeded on the copy. Can't be combined with mode='all'.
+          nullable: true
+        title:
+          description: Title for the copy. Defaults to "<source title> (Copy)" when omitted or blank.
+          type: string
+        workspace:
+          description: Workspace ID to duplicate into. Omit or null for no workspace.
+          nullable: true
+          type: integer
       type: object
     LseInterfaceList:
       properties:
