@@ -52,7 +52,7 @@ groups:
             datamodel-code-generator: '>=0.70.0'
             doclang: '>=0.7.1'
             jsf: '>=0.11.2,<0.12.0'
-            pyjwt: '>=2.13.0,<2.14.0'
+            pyjwt: '>=2.14.0,<3.0.0'
             urllib3: '>=2.5.0'
             typer: '>=0.12.3'
             watchfiles: '>=0.21.0'
