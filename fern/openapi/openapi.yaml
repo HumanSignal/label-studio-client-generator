@@ -33947,6 +33947,9 @@ components:
           default: 0
           readOnly: true
           type: integer
+        scenarios:
+          nullable: true
+          type: string
         title:
           maxLength: 500
           type: string
@@ -33993,6 +33996,9 @@ components:
           nullable: true
         paramsSchema:
           nullable: true
+        scenarios:
+          nullable: true
+          type: string
         screenParams:
           nullable: true
         unpublished:
@@ -34015,6 +34021,9 @@ components:
         messages: {}
         metadata: {}
         output_schema: {}
+        scenarios:
+          nullable: true
+          type: string
         title:
           minLength: 1
           type: string
@@ -34082,6 +34091,10 @@ components:
           readOnly: true
         description:
           type: string
+        has_scenarios:
+          description: Whether this interface has browser scenarios available to run.
+          readOnly: true
+          type: boolean
         id:
           readOnly: true
           type: integer
@@ -34127,6 +34140,7 @@ components:
         - accepts_submissions
         - created_at
         - created_by
+        - has_scenarios
         - id
         - is_system
         - projects_count
@@ -34158,6 +34172,9 @@ components:
           nullable: true
         output_schema:
           description: JSON Schema declaring the annotation output fields this interface produces (for Prompter/auto-labeling)
+        scenarios:
+          nullable: true
+          type: string
         title:
           maxLength: 500
           minLength: 1
@@ -41145,6 +41162,9 @@ components:
           nullable: true
         output_schema:
           description: JSON Schema declaring the annotation output fields this interface produces (for Prompter/auto-labeling)
+        scenarios:
+          nullable: true
+          type: string
         title:
           maxLength: 500
           minLength: 1
