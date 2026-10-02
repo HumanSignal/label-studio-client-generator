@@ -12528,18 +12528,66 @@ paths:
         - public
       x-fern-sdk-group-name: projects
       x-fern-sdk-method-name: import_predictions
-  /api/projects/{id}/imports/{import_pk}/:
+  /api/projects/{id}/imports/:
     get:
-      description: "\n            Poll the status of an asynchronous project import operation.\n            \n            **Usage:**\n            1. When you POST to `/api/projects/{project_id}/import`, you'll receive a response like `{\"import\": <import_id>}`\n            2. Use that `import_id` with this GET endpoint to check the import status\n            3. Poll this endpoint to see if the import has completed, is still processing, or has failed\n            4. **Import errors and failures will only be visible in this GET response**, not in the original POST request\n            \n            This endpoint returns detailed information about the import including task counts, status, and any error messages.\n        "
-      operationId: api_projects_imports_retrieve
+      description: List asynchronous import jobs for a project (paginated). Optionally filter by `status`. Use `page` / `page_size` query params.
+      operationId: api_projects_imports_list
       parameters:
-        - description: A unique integer value identifying this project import.
+        - description: A unique integer value identifying this project.
           in: path
           name: id
           required: true
           schema:
             type: integer
-        - in: path
+        - description: Page number within the paginated result set.
+          in: query
+          name: page
+          schema:
+            type: integer
+        - description: Number of results per page (max 100).
+          in: query
+          name: page_size
+          schema:
+            type: integer
+        - description: Filter by import status (created, in_progress, failed, completed).
+          in: query
+          name: status
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedProjectImportListList'
+          description: ''
+      security:
+        - Token: []
+      summary: List project imports
+      tags:
+        - Projects
+      x-fern-audiences:
+        - public
+      x-fern-pagination:
+        offset: $request.page
+        results: $response.results
+      x-fern-sdk-group-name:
+        - projects
+        - imports
+      x-fern-sdk-method-name: list
+  /api/projects/{id}/imports/{import_pk}/:
+    get:
+      description: "\n            Poll the status of an asynchronous project import operation.\n            \n            **Usage:**\n            1. When you POST to `/api/projects/{project_id}/import`, you'll receive a response like `{\"import\": <import_id>}`\n            2. Use that `import_id` with this GET endpoint to check the import status\n            3. Poll this endpoint to see if the import has completed, is still processing, or has failed\n            4. **Import errors and failures will only be visible in this GET response**, not in the original POST request\n            \n            This endpoint returns detailed information about the import including task counts, status, and any error messages.\n            While an import is running, `task_count` / annotation / prediction counts update as batches commit.\n            Counts are cumulative so far; there is no expected total, so percent-complete / ETA is not available from this API.\n        "
+      operationId: api_projects_imports_retrieve
+      parameters:
+        - description: A unique integer value identifying this project.
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - description: A unique integer value identifying this project import.
+          in: path
           name: import_pk
           required: true
           schema:
@@ -12553,7 +12601,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: 'Get project import status '
+      summary: Get project import status
       tags:
         - Projects
       x-fern-audiences:
@@ -13418,18 +13466,66 @@ paths:
         - projects
         - annotator_weights
       x-fern-sdk-method-name: create
-  /api/projects/{id}/reimports/{reimport_pk}/:
+  /api/projects/{id}/reimports/:
     get:
-      description: "\n            Poll the status of an asynchronous project reimport operation.\n            \n            **Usage:**\n            1. When you POST to reimport tasks, you'll receive a response with a reimport ID\n            2. Use that `reimport_id` with this GET endpoint to check the reimport status\n            3. Poll this endpoint to see if the reimport has completed, is still processing, or has failed\n            4. **Reimport errors and failures will only be visible in this GET response**, not in the original POST request\n            \n            This endpoint returns detailed information about the reimport including task counts, status, and any error messages.\n        "
-      operationId: api_projects_reimports_retrieve
+      description: List asynchronous reimport jobs for a project (paginated). Optionally filter by `status`. Use `page` / `page_size` query params.
+      operationId: api_projects_reimports_list
       parameters:
-        - description: A unique integer value identifying this project reimport.
+        - description: A unique integer value identifying this project.
           in: path
           name: id
           required: true
           schema:
             type: integer
-        - in: path
+        - description: Page number within the paginated result set.
+          in: query
+          name: page
+          schema:
+            type: integer
+        - description: Number of results per page (max 100).
+          in: query
+          name: page_size
+          schema:
+            type: integer
+        - description: Filter by reimport status (created, in_progress, failed, completed).
+          in: query
+          name: status
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedProjectReimportListList'
+          description: ''
+      security:
+        - Token: []
+      summary: List project reimports
+      tags:
+        - Projects
+      x-fern-audiences:
+        - public
+      x-fern-pagination:
+        offset: $request.page
+        results: $response.results
+      x-fern-sdk-group-name:
+        - projects
+        - reimports
+      x-fern-sdk-method-name: list
+  /api/projects/{id}/reimports/{reimport_pk}/:
+    get:
+      description: "\n            Poll the status of an asynchronous project reimport operation.\n            \n            **Usage:**\n            1. When you POST to reimport tasks, you'll receive a response with a reimport ID\n            2. Use that `reimport_id` with this GET endpoint to check the reimport status\n            3. Poll this endpoint to see if the reimport has completed, is still processing, or has failed\n            4. **Reimport errors and failures will only be visible in this GET response**, not in the original POST request\n            \n            This endpoint returns detailed information about the reimport including task counts, status, and any error messages.\n            While a reimport is running, `task_count` / annotation / prediction counts update as batches commit.\n            Counts are cumulative so far; there is no expected total, so percent-complete / ETA is not available from this API.\n        "
+      operationId: api_projects_reimports_retrieve
+      parameters:
+        - description: A unique integer value identifying this project.
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - description: A unique integer value identifying this project reimport.
+          in: path
           name: reimport_pk
           required: true
           schema:
@@ -13447,7 +13543,11 @@ paths:
       tags:
         - Projects
       x-fern-audiences:
-        - internal
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - reimports
+      x-fern-sdk-method-name: get
   /api/projects/{id}/review-routing-rules/:
     get:
       description: |-
@@ -39199,6 +39299,29 @@ components:
         - count
         - results
       type: object
+    PaginatedProjectImportListList:
+      properties:
+        count:
+          example: 123
+          type: integer
+        next:
+          example: http://api.example.org/accounts/?page=4
+          format: uri
+          nullable: true
+          type: string
+        previous:
+          example: http://api.example.org/accounts/?page=2
+          format: uri
+          nullable: true
+          type: string
+        results:
+          items:
+            $ref: '#/components/schemas/ProjectImportList'
+          type: array
+      required:
+        - count
+        - results
+      type: object
     PaginatedProjectMember:
       description: |-
         A ModelSerializer that takes additional arguments for
@@ -39312,6 +39435,29 @@ components:
         - tags
         - user_type
         - username
+      type: object
+    PaginatedProjectReimportListList:
+      properties:
+        count:
+          example: 123
+          type: integer
+        next:
+          example: http://api.example.org/accounts/?page=4
+          format: uri
+          nullable: true
+          type: string
+        previous:
+          example: http://api.example.org/accounts/?page=2
+          format: uri
+          nullable: true
+          type: string
+        results:
+          items:
+            $ref: '#/components/schemas/ProjectReimportList'
+          type: array
+      required:
+        - count
+        - results
       type: object
     PaginatedProjectSubsetTasksResponseList:
       properties:
@@ -43458,6 +43604,12 @@ components:
         - Reviewer
       type: string
     ProjectImport:
+      description: |-
+        Detail serializer for async project imports.
+
+        Note: ``tasks`` (raw request payload) is intentionally omitted from the public
+        API for payload size and data-exposure safety. Use ``task_ids`` when
+        ``return_task_ids`` was requested on create.
       properties:
         annotation_count:
           maximum: 2147483647
@@ -43509,13 +43661,10 @@ components:
           minimum: -2147483648
           type: integer
         task_ids: {}
-        tasks:
-          nullable: true
         updated_at:
-          description: Updated time
+          description: Last time import progress or terminal status was updated
           format: date-time
           nullable: true
-          readOnly: true
           type: string
         url:
           maxLength: 2048
@@ -43524,7 +43673,59 @@ components:
       required:
         - created_at
         - id
-        - updated_at
+      type: object
+    ProjectImportList:
+      description: Slim list serializer — excludes large fields like task_ids.
+      properties:
+        annotation_count:
+          maximum: 2147483647
+          minimum: -2147483648
+          type: integer
+        commit_to_project:
+          type: boolean
+        created_at:
+          description: Creation time
+          format: date-time
+          nullable: true
+          readOnly: true
+          type: string
+        duration:
+          maximum: 2147483647
+          minimum: -2147483648
+          type: integer
+        error:
+          nullable: true
+          type: string
+        file_upload_ids: {}
+        finished_at:
+          description: Complete or fail time
+          format: date-time
+          nullable: true
+          type: string
+        id:
+          readOnly: true
+          type: integer
+        prediction_count:
+          maximum: 2147483647
+          minimum: -2147483648
+          type: integer
+        project:
+          nullable: true
+          type: integer
+        status:
+          $ref: '#/components/schemas/ProjectImportStatusEnum'
+        task_count:
+          maximum: 2147483647
+          minimum: -2147483648
+          type: integer
+        updated_at:
+          description: Last time import progress or terminal status was updated
+          format: date-time
+          nullable: true
+          type: string
+      required:
+        - created_at
+        - id
       type: object
     ProjectImportStatusEnum:
       description: |-
@@ -43717,6 +43918,12 @@ components:
           maximum: 2147483647
           minimum: -2147483648
           type: integer
+        created_at:
+          description: Creation time
+          format: date-time
+          nullable: true
+          readOnly: true
+          type: string
         data_columns: {}
         duration:
           maximum: 2147483647
@@ -43728,6 +43935,11 @@ components:
         file_upload_ids: {}
         files_as_tasks_list:
           type: boolean
+        finished_at:
+          description: Complete or fail time
+          format: date-time
+          nullable: true
+          type: string
         found_formats: {}
         id:
           readOnly: true
@@ -43745,7 +43957,63 @@ components:
           maximum: 2147483647
           minimum: -2147483648
           type: integer
+        updated_at:
+          description: Last time reimport progress or terminal status was updated
+          format: date-time
+          nullable: true
+          type: string
       required:
+        - created_at
+        - id
+      type: object
+    ProjectReimportList:
+      properties:
+        annotation_count:
+          maximum: 2147483647
+          minimum: -2147483648
+          type: integer
+        created_at:
+          description: Creation time
+          format: date-time
+          nullable: true
+          readOnly: true
+          type: string
+        duration:
+          maximum: 2147483647
+          minimum: -2147483648
+          type: integer
+        error:
+          nullable: true
+          type: string
+        file_upload_ids: {}
+        finished_at:
+          description: Complete or fail time
+          format: date-time
+          nullable: true
+          type: string
+        id:
+          readOnly: true
+          type: integer
+        prediction_count:
+          maximum: 2147483647
+          minimum: -2147483648
+          type: integer
+        project:
+          nullable: true
+          type: integer
+        status:
+          $ref: '#/components/schemas/ProjectImportStatusEnum'
+        task_count:
+          maximum: 2147483647
+          minimum: -2147483648
+          type: integer
+        updated_at:
+          description: Last time reimport progress or terminal status was updated
+          format: date-time
+          nullable: true
+          type: string
+      required:
+        - created_at
         - id
       type: object
     ProjectRole:
