@@ -34620,6 +34620,9 @@ components:
           description: Description (Public)
           nullable: true
           type: string
+        dm_column_access:
+          description: Effective Annotator/Reviewer column deny lists. Managers+ see both roles.
+          readOnly: true
         dm_column_defaults:
           additionalProperties: false
           description: Soft Data Manager column visibility and order defaults. Returned on project reads for every role so Data Manager can apply them at runtime; Managers and above may set this. explore is the main grid (shared order, role-keyed visible lists). labeling is reserved for independent Quick View defaults. On update, omitted surfaces keep their stored values; send null to clear both surfaces.
@@ -34905,6 +34908,7 @@ components:
         - config_suitable_for_bulk_annotation
         - created_at
         - data_types
+        - dm_column_access
         - finished_task_number
         - ground_truth_number
         - id
@@ -35071,6 +35075,9 @@ components:
           description: Description (Public)
           nullable: true
           type: string
+        dm_column_access:
+          description: Effective Annotator/Reviewer column deny lists. Managers+ see both roles.
+          readOnly: true
         dm_column_defaults:
           additionalProperties: false
           description: Soft Data Manager column visibility and order defaults. Returned on project reads for every role so Data Manager can apply them at runtime; Managers and above may set this. explore is the main grid (shared order, role-keyed visible lists). labeling is reserved for independent Quick View defaults. On update, omitted surfaces keep their stored values; send null to clear both surfaces.
@@ -35282,6 +35289,7 @@ components:
         - config_has_control_tags
         - config_suitable_for_bulk_annotation
         - created_at
+        - dm_column_access
         - finished_task_number
         - ground_truth_number
         - id
@@ -35302,6 +35310,20 @@ components:
         Serializer get numbers from project queryset annotation,
         make sure, that you use correct one(Project.objects.with_counts())
       properties:
+        annotator_column_access_grant:
+          description: Bulk column ids to grant or revoke Annotator/Reviewer Data Manager access in one request. Omitted or empty arrays are no-ops. Unknown ids are ignored. Managers+ only.
+          items:
+            minLength: 1
+            type: string
+          type: array
+          writeOnly: true
+        annotator_column_access_revoke:
+          description: Bulk column ids to grant or revoke Annotator/Reviewer Data Manager access in one request. Omitted or empty arrays are no-ops. Unknown ids are ignored. Managers+ only.
+          items:
+            minLength: 1
+            type: string
+          type: array
+          writeOnly: true
         annotator_evaluation_enabled:
           description: Enable annotator evaluation for the project
           type: boolean
@@ -35438,6 +35460,20 @@ components:
         reveal_preannotations_interactively:
           description: Reveal pre-annotations interactively
           type: boolean
+        reviewer_column_access_grant:
+          description: Bulk column ids to grant or revoke Annotator/Reviewer Data Manager access in one request. Omitted or empty arrays are no-ops. Unknown ids are ignored. Managers+ only.
+          items:
+            minLength: 1
+            type: string
+          type: array
+          writeOnly: true
+        reviewer_column_access_revoke:
+          description: Bulk column ids to grant or revoke Annotator/Reviewer Data Manager access in one request. Omitted or empty arrays are no-ops. Unknown ids are ignored. Managers+ only.
+          items:
+            minLength: 1
+            type: string
+          type: array
+          writeOnly: true
         sampling:
           allOf:
             - $ref: '#/components/schemas/ProjectSamplingEnum'
@@ -35656,6 +35692,9 @@ components:
           description: Description (Public)
           nullable: true
           type: string
+        dm_column_access:
+          description: Effective Annotator/Reviewer column deny lists. Managers+ see both roles.
+          readOnly: true
         dm_column_defaults:
           additionalProperties: false
           description: Soft Data Manager column visibility and order defaults. Returned on project reads for every role so Data Manager can apply them at runtime; Managers and above may set this. explore is the main grid (shared order, role-keyed visible lists). labeling is reserved for independent Quick View defaults. On update, omitted surfaces keep their stored values; send null to clear both surfaces.
@@ -35959,6 +35998,7 @@ components:
         - config_suitable_for_bulk_annotation
         - created_at
         - data_types
+        - dm_column_access
         - finished_task_number
         - ground_truth_number
         - id
@@ -41416,6 +41456,20 @@ components:
           nullable: true
           pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
           type: string
+        annotator_column_access_grant:
+          description: Bulk column ids to grant or revoke Annotator/Reviewer Data Manager access in one request. Omitted or empty arrays are no-ops. Unknown ids are ignored. Managers+ only.
+          items:
+            minLength: 1
+            type: string
+          type: array
+          writeOnly: true
+        annotator_column_access_revoke:
+          description: Bulk column ids to grant or revoke Annotator/Reviewer Data Manager access in one request. Omitted or empty arrays are no-ops. Unknown ids are ignored. Managers+ only.
+          items:
+            minLength: 1
+            type: string
+          type: array
+          writeOnly: true
         annotator_evaluation_continuous_tasks:
           default: 0
           description: 'Continuous Evaluation: Required tasks'
@@ -41607,6 +41661,20 @@ components:
           type: boolean
         review_settings:
           $ref: '#/components/schemas/ReviewSettingsRequest'
+        reviewer_column_access_grant:
+          description: Bulk column ids to grant or revoke Annotator/Reviewer Data Manager access in one request. Omitted or empty arrays are no-ops. Unknown ids are ignored. Managers+ only.
+          items:
+            minLength: 1
+            type: string
+          type: array
+          writeOnly: true
+        reviewer_column_access_revoke:
+          description: Bulk column ids to grant or revoke Annotator/Reviewer Data Manager access in one request. Omitted or empty arrays are no-ops. Unknown ids are ignored. Managers+ only.
+          items:
+            minLength: 1
+            type: string
+          type: array
+          writeOnly: true
         sampling:
           allOf:
             - $ref: '#/components/schemas/ProjectSamplingEnum'
