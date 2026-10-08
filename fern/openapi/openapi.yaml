@@ -25044,6 +25044,7 @@ components:
         annotator_evaluation_continuous_tasks:
           default: 0
           description: 'Continuous Evaluation: Required tasks'
+          maximum: 2147483647
           minimum: 0
           type: integer
         annotator_evaluation_enabled:
@@ -25070,12 +25071,14 @@ components:
         annotator_evaluation_minimum_tasks:
           default: 10
           description: Number of tasks for evaluation
+          maximum: 2147483647
           minimum: 0
           nullable: true
           type: integer
         annotator_evaluation_onboarding_tasks:
           default: 0
           description: 'Onboarding Evaluation: Required tasks'
+          maximum: 2147483647
           minimum: 0
           type: integer
         assignment_settings:
@@ -34524,6 +34527,7 @@ components:
         annotator_evaluation_continuous_tasks:
           default: 0
           description: 'Continuous Evaluation: Required tasks'
+          maximum: 2147483647
           minimum: 0
           type: integer
         annotator_evaluation_enabled:
@@ -34550,12 +34554,14 @@ components:
         annotator_evaluation_minimum_tasks:
           default: 10
           description: Number of tasks for evaluation
+          maximum: 2147483647
           minimum: 0
           nullable: true
           type: integer
         annotator_evaluation_onboarding_tasks:
           default: 0
           description: 'Onboarding Evaluation: Required tasks'
+          maximum: 2147483647
           minimum: 0
           type: integer
         assignment_settings:
@@ -35596,6 +35602,7 @@ components:
         annotator_evaluation_continuous_tasks:
           default: 0
           description: 'Continuous Evaluation: Required tasks'
+          maximum: 2147483647
           minimum: 0
           type: integer
         annotator_evaluation_enabled:
@@ -35622,12 +35629,14 @@ components:
         annotator_evaluation_minimum_tasks:
           default: 10
           description: Number of tasks for evaluation
+          maximum: 2147483647
           minimum: 0
           nullable: true
           type: integer
         annotator_evaluation_onboarding_tasks:
           default: 0
           description: 'Onboarding Evaluation: Required tasks'
+          maximum: 2147483647
           minimum: 0
           type: integer
         assignment_settings:
@@ -41473,6 +41482,7 @@ components:
         annotator_evaluation_continuous_tasks:
           default: 0
           description: 'Continuous Evaluation: Required tasks'
+          maximum: 2147483647
           minimum: 0
           type: integer
         annotator_evaluation_enabled:
@@ -41499,12 +41509,14 @@ components:
         annotator_evaluation_minimum_tasks:
           default: 10
           description: Number of tasks for evaluation
+          maximum: 2147483647
           minimum: 0
           nullable: true
           type: integer
         annotator_evaluation_onboarding_tasks:
           default: 0
           description: 'Onboarding Evaluation: Required tasks'
+          maximum: 2147483647
           minimum: 0
           type: integer
         assignment_settings:
