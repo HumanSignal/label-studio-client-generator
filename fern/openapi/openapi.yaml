@@ -137,7 +137,7 @@ paths:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Retrieve data for a specific KPI with support for filtering and segmentation. Can segment by time (hourly, daily, weekly, monthly, yearly), by user, or both (2D matrix). If no segmentation is specified, returns a single total value. Supports filtering by projects, members, and date range. Date filters are interpreted in the specified timezone (required parameter). Maximum 50 projects allowed per request for performance reasons.
+        Retrieve data for a specific KPI with support for filtering and segmentation. Can segment by time (hourly, daily, weekly, monthly, yearly), by user, or both (2D matrix). Combining segment_by_user and segment_by_project returns a sparse user × project breakdown. If no segmentation is specified, returns a single total value. Supports filtering by projects, members, and date range. Date filters are interpreted in the specified timezone (required parameter). Maximum 50 projects allowed per request for performance reasons.
       operationId: api_analytics_kpis_retrieve
       parameters:
         - description: When true with segment_by_user, return only members with performance data (capped). Used by Member Performance Select All discovery.
@@ -167,7 +167,7 @@ paths:
           name: projects
           schema:
             type: string
-        - description: Whether to segment results by project
+        - description: Whether to segment results by project. Combine with segment_by_user for a user × project breakdown.
           in: query
           name: segment_by_project
           schema:
@@ -31929,6 +31929,11 @@ components:
             - $ref: '#/components/schemas/KPIUserSegment'
           description: User-segmented data (compact format with parallel arrays)
           nullable: true
+        by_user_project:
+          allOf:
+            - $ref: '#/components/schemas/KPIUserProjectSegment'
+          description: Sparse 2D segmentation (user × project)
+          nullable: true
         kpi_key:
           description: KPI identifier
           type: string
@@ -31958,6 +31963,7 @@ components:
             * `project` - project
             * `matrix` - matrix
             * `project_matrix` - project_matrix
+            * `user_project` - user_project
         time_series:
           allOf:
             - $ref: '#/components/schemas/KPITimeSegment'
@@ -32181,6 +32187,78 @@ components:
         - user_email
         - user_id
         - username
+      type: object
+    KPIUserProjectInfo:
+      description: Project information for user × project segmentation, with display colors.
+      properties:
+        project_color:
+          description: Project color (hex)
+          nullable: true
+          type: string
+        project_id:
+          description: Project ID
+          type: integer
+        project_name:
+          description: Project name
+          type: string
+        workspace_color:
+          description: Workspace color (hex)
+          nullable: true
+          type: string
+        workspace_id:
+          description: Shared workspace ID, if any
+          nullable: true
+          type: integer
+        workspace_name:
+          description: Shared workspace name, if any
+          nullable: true
+          type: string
+      required:
+        - project_color
+        - project_id
+        - project_name
+        - workspace_color
+        - workspace_id
+        - workspace_name
+      type: object
+    KPIUserProjectSegment:
+      description: |-
+        Serializer for 2D segmentation (user × project) in sparse compact format.
+        Only non-empty cells are returned: user_ids[i], project_ids[i] and values[i] describe one cell.
+      properties:
+        project_ids:
+          description: Project ID of each cell
+          items:
+            type: integer
+          type: array
+        projects:
+          description: Projects that appear in at least one cell
+          items:
+            $ref: '#/components/schemas/KPIUserProjectInfo'
+          type: array
+        user_ids:
+          description: User ID of each cell
+          items:
+            type: integer
+          type: array
+        users:
+          description: Users that appear in at least one cell
+          items:
+            $ref: '#/components/schemas/KPIUserInfo'
+          type: array
+        values:
+          description: KPI value of each cell (parallel to user_ids and project_ids)
+          items:
+            format: double
+            nullable: true
+            type: number
+          type: array
+      required:
+        - project_ids
+        - projects
+        - user_ids
+        - users
+        - values
       type: object
     KPIUserSegment:
       description: |-
@@ -46540,6 +46618,7 @@ components:
         * `project` - project
         * `matrix` - matrix
         * `project_matrix` - project_matrix
+        * `user_project` - user_project
       enum:
         - none
         - time
@@ -46547,6 +46626,7 @@ components:
         - project
         - matrix
         - project_matrix
+        - user_project
       type: string
     SendInviteRequest:
       properties:
