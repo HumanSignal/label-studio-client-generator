@@ -12791,6 +12791,11 @@ paths:
           name: tags
           schema:
             type: string
+        - description: 'How the `tags` ids combine: `any` (at least one tag), `all` (every tag, the default), `none` (no selected tag). Ignored without `tags`.'
+          in: query
+          name: tags_operator
+          schema:
+            type: string
         - description: Multiple values may be separated by commas. (comma-separated values)
           in: query
           name: user_type
@@ -12873,6 +12878,11 @@ paths:
         - description: Multiple values may be separated by commas. (comma-separated values)
           in: query
           name: tags
+          schema:
+            type: string
+        - description: 'How the `tags` ids combine: `any` (at least one tag), `all` (every tag, the default), `none` (no selected tag). Ignored without `tags`.'
+          in: query
+          name: tags_operator
           schema:
             type: string
         - description: Multiple values may be separated by commas. (comma-separated values)
@@ -12966,6 +12976,11 @@ paths:
         - description: Multiple values may be separated by commas. (comma-separated values)
           in: query
           name: tags
+          schema:
+            type: string
+        - description: 'How the `tags` ids combine: `any` (at least one tag), `all` (every tag, the default), `none` (no selected tag). Ignored without `tags`.'
+          in: query
+          name: tags_operator
           schema:
             type: string
         - description: Multiple values may be separated by commas. (comma-separated values)
@@ -13112,6 +13127,15 @@ paths:
           in: query
           name: tags
           schema:
+            type: string
+        - description: 'How the `tags` ids combine: `any` (at least one tag), `all` (every tag, the default), `none` (no selected tag).'
+          in: query
+          name: tags_operator
+          schema:
+            enum:
+              - all
+              - any
+              - none
             type: string
         - description: Multiple values may be separated by commas.
           explode: false
