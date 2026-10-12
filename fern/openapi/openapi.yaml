@@ -42857,9 +42857,6 @@ components:
         model_provider_connection:
           nullable: true
           type: integer
-        organization:
-          nullable: true
-          type: integer
         parent_model:
           description: Parent model interface ID
           type: integer
@@ -47408,6 +47405,7 @@ components:
           type: integer
         organization:
           nullable: true
+          readOnly: true
           type: integer
         parent_model:
           description: Parent model interface ID
@@ -47450,6 +47448,7 @@ components:
         - created_by
         - id
         - model_display_name
+        - organization
         - prompt
         - provider_model_id
         - score
@@ -47465,9 +47464,6 @@ components:
           nullable: true
           type: integer
         model_provider_connection:
-          nullable: true
-          type: integer
-        organization:
           nullable: true
           type: integer
         parent_model:
