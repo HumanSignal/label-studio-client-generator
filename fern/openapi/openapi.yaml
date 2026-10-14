@@ -28176,6 +28176,9 @@ components:
           type: array
         permission:
           type: string
+        requires:
+          description: Permission a role must also hold for this permission to take effect.
+          type: string
         tooltip:
           type: string
       required:
