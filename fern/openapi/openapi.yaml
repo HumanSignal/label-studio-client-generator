@@ -10787,6 +10787,11 @@ paths:
           name: include
           schema:
             type: string
+        - description: Filter by skill assessments
+          in: query
+          name: is_skill_assessment
+          schema:
+            type: boolean
         - description: Maximum number of members to return
           in: query
           name: members_limit
@@ -10911,6 +10916,11 @@ paths:
           name: include
           schema:
             type: string
+        - description: Filter by skill assessments
+          in: query
+          name: is_skill_assessment
+          schema:
+            type: boolean
         - description: Which field to use when ordering the results.
           in: query
           name: ordering
@@ -16355,6 +16365,11 @@ paths:
               type: integer
             type: array
           style: form
+        - description: Filter by skill assessments
+          in: query
+          name: is_skill_assessment
+          schema:
+            type: boolean
         - description: Which field to use when ordering the results.
           in: query
           name: ordering
@@ -25262,6 +25277,9 @@ components:
         is_published:
           description: Whether or not the project is published to annotators
           title: Published
+          type: boolean
+        is_skill_assessment:
+          description: 'Skill assessment: tests contributors instead of producing work'
           type: boolean
         label_config:
           description: Labeling Configuration
@@ -34818,6 +34836,9 @@ components:
           description: Whether or not the project is published to annotators
           title: Published
           type: boolean
+        is_skill_assessment:
+          description: 'Skill assessment: tests contributors instead of producing work'
+          type: boolean
         label_config:
           description: Labeling Configuration
           nullable: true
@@ -35892,6 +35913,9 @@ components:
         is_published:
           description: Whether or not the project is published to annotators
           title: Published
+          type: boolean
+        is_skill_assessment:
+          description: 'Skill assessment: tests contributors instead of producing work'
           type: boolean
         label_config:
           description: Labeling Configuration
@@ -41725,6 +41749,9 @@ components:
         is_published:
           description: Whether or not the project is published to annotators
           title: Published
+          type: boolean
+        is_skill_assessment:
+          description: 'Skill assessment: tests contributors instead of producing work'
           type: boolean
         label_config:
           description: Labeling Configuration
