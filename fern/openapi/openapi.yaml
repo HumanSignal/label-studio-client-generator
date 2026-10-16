@@ -38934,6 +38934,14 @@ components:
       type: object
     OrganizationInvite:
       properties:
+        expired:
+          description: True once the invite link has expired; reset the token to issue a new link
+          type: boolean
+        expires_at:
+          description: When the invite link expires; null if no expiry was recorded
+          format: date-time
+          nullable: true
+          type: string
         invite_url:
           type: string
         token:
@@ -41813,6 +41821,11 @@ components:
           writeOnly: true
         token:
           maxLength: 256
+          nullable: true
+          type: string
+        token_expires_at:
+          description: When the current invite link stops working; null works only while expiration is disabled
+          format: date-time
           nullable: true
           type: string
       type: object
