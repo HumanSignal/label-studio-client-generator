@@ -5611,6 +5611,52 @@ paths:
         - public
       x-fern-sdk-group-name: interfaces
       x-fern-sdk-method-name: duplicate
+  /api/interfaces/{id}/move/:
+    post:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Move a saved interface to a workspace, your Personal Sandbox, or Shared (`workspace: null`). A workspace-scoped interface can only be used by projects in its workspace, so connected projects move with it when needed. Send `dry_run: true` first to get the move plan, then confirm with `dry_run: false` and the `expected_project_ids` from that plan. The response is the plan in every case; a blocked move or a changed plan returns 409 with the fresh plan.
+      operationId: api_interfaces_move_create
+      parameters:
+        - description: A unique integer value identifying this interface.
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LseInterfaceMoveRequestRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/LseInterfaceMoveRequestRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/LseInterfaceMoveRequestRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LseInterfaceMovePlan'
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Move a saved interface to another workspace
+      tags:
+        - Interfaces
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: interfaces
+      x-fern-sdk-method-name: move
   /api/interfaces/{id}/publish/:
     post:
       description: |-
@@ -31819,6 +31865,62 @@ components:
           nullable: true
           type: string
       type: object
+    InterfaceMoveBlockerEnum:
+      description: |-
+        * `published_projects` - Published projects
+        * `projects_cannot_move` - Projects cannot move
+        * `inaccessible_projects` - Inaccessible projects
+        * `project_limit` - Project limit
+      enum:
+        - published_projects
+        - projects_cannot_move
+        - inaccessible_projects
+        - project_limit
+      type: string
+    InterfaceMoveBlockingReasonEnum:
+      description: |-
+        * `cannot_move` - Cannot move
+        * `published` - Published
+      enum:
+        - cannot_move
+        - published
+      type: string
+    InterfaceMoveCodeEnum:
+      description: |-
+        * `interface_move_blocked` - Interface move blocked
+        * `interface_move_plan_changed` - Interface move plan changed
+        * `interface_move_requires_confirmation` - Interface move requires confirmation
+      enum:
+        - interface_move_blocked
+        - interface_move_plan_changed
+        - interface_move_requires_confirmation
+      type: string
+    InterfaceMoveNoticeEnum:
+      description: |-
+        * `target_shared` - Target shared
+        * `projects_stay_private` - Projects stay private
+        * `target_private` - Target private
+        * `target_workspace_visible` - Target workspace visible
+        * `restricted_to_target` - Restricted to target
+      enum:
+        - target_shared
+        - projects_stay_private
+        - target_private
+        - target_workspace_visible
+        - restricted_to_target
+      type: string
+    InterfaceMoveOutcomeEnum:
+      description: |-
+        * `move` - Move
+        * `already_in_target` - Already in target
+        * `stay` - Stay
+        * `cannot_move` - Cannot move
+      enum:
+        - move
+        - already_in_target
+        - stay
+        - cannot_move
+      type: string
     JobDetail:
       properties:
         enqueued_at:
@@ -34136,6 +34238,10 @@ components:
       properties:
         artifacts:
           description: AI-produced code snapshots for session continuity
+        can_edit:
+          description: 'Whether the current user can change this interface: edit, delete, publish versions or move it.'
+          readOnly: true
+          type: boolean
         code:
           description: JSX source code for the interface screen module
           type: string
@@ -34189,6 +34295,7 @@ components:
           nullable: true
           type: integer
       required:
+        - can_edit
         - code
         - compiled
         - created_at
@@ -34307,6 +34414,10 @@ components:
           description: Whether this interface can receive an uploaded file as a submission.
           readOnly: true
           type: boolean
+        can_edit:
+          description: 'Whether the current user can change this interface: edit, delete, publish versions or move it.'
+          readOnly: true
+          type: boolean
         created_at:
           format: date-time
           readOnly: true
@@ -34364,6 +34475,7 @@ components:
           type: integer
       required:
         - accepts_submissions
+        - can_edit
         - created_at
         - created_by
         - has_scenarios
@@ -34373,6 +34485,147 @@ components:
         - title
         - updated_at
         - versions
+      type: object
+    LseInterfaceMovePlan:
+      description: |-
+        Move plan returned by dry runs, executed moves and move-related 409 responses.
+
+        Inaccessible connected projects only ever appear as ``inaccessible_projects_count``.
+      properties:
+        allowed:
+          type: boolean
+        blockers:
+          items:
+            $ref: '#/components/schemas/InterfaceMoveBlockerEnum'
+          type: array
+        cannot_move_projects_count:
+          type: integer
+        code:
+          allOf:
+            - $ref: '#/components/schemas/InterfaceMoveCodeEnum'
+          description: |-
+            Present on 409 responses.
+
+            * `interface_move_blocked` - Interface move blocked
+            * `interface_move_plan_changed` - Interface move plan changed
+            * `interface_move_requires_confirmation` - Interface move requires confirmation
+        connected_projects_count:
+          description: All connected projects, inaccessible ones included.
+          type: integer
+        detail:
+          description: Present on 409 responses.
+          type: string
+        inaccessible_projects_count:
+          type: integer
+        moving_projects_count:
+          type: integer
+        notices:
+          items:
+            $ref: '#/components/schemas/InterfaceMoveNoticeEnum'
+          type: array
+        published_projects_count:
+          type: integer
+        target:
+          allOf:
+            - $ref: '#/components/schemas/LseInterfaceMoveWorkspace'
+          description: Target workspace, or null for Shared.
+          nullable: true
+        workspaces:
+          description: Accessible connected projects grouped by workspace.
+          items:
+            $ref: '#/components/schemas/LseInterfaceMoveWorkspaceGroup'
+          type: array
+      required:
+        - allowed
+        - blockers
+        - cannot_move_projects_count
+        - connected_projects_count
+        - inaccessible_projects_count
+        - moving_projects_count
+        - notices
+        - published_projects_count
+        - target
+        - workspaces
+      type: object
+    LseInterfaceMoveProject:
+      properties:
+        blocking_reasons:
+          description: Why this project stops the move. Empty when it does not.
+          items:
+            $ref: '#/components/schemas/InterfaceMoveBlockingReasonEnum'
+          type: array
+        id:
+          type: integer
+        is_published:
+          type: boolean
+        title:
+          nullable: true
+          type: string
+      required:
+        - blocking_reasons
+        - id
+        - is_published
+        - title
+      type: object
+    LseInterfaceMoveRequestRequest:
+      properties:
+        dry_run:
+          default: false
+          description: Return the move plan without changing anything.
+          type: boolean
+        expected_project_ids:
+          description: 'Required when dry_run is false: IDs of the projects in workspace groups with outcome "move" from the dry run you confirmed. If the server computes a different set, it responds with 409 "interface_move_plan_changed" and the fresh plan.'
+          items:
+            type: integer
+          type: array
+        workspace:
+          description: Target workspace ID, or null to make the interface Shared.
+          nullable: true
+          type: integer
+      required:
+        - workspace
+      type: object
+    LseInterfaceMoveWorkspace:
+      properties:
+        color:
+          nullable: true
+          type: string
+        id:
+          type: integer
+        is_personal:
+          type: boolean
+        title:
+          type: string
+      required:
+        - color
+        - id
+        - is_personal
+        - title
+      type: object
+    LseInterfaceMoveWorkspaceGroup:
+      properties:
+        outcome:
+          $ref: '#/components/schemas/InterfaceMoveOutcomeEnum'
+        outside_interface_workspace:
+          description: The projects sit in a different workspace from the interface's workspace.
+          type: boolean
+        projects:
+          items:
+            $ref: '#/components/schemas/LseInterfaceMoveProject'
+          type: array
+        published_projects_count:
+          description: Published projects in this workspace group that stop a move into a Personal Sandbox.
+          type: integer
+        workspace:
+          allOf:
+            - $ref: '#/components/schemas/LseInterfaceMoveWorkspace'
+          nullable: true
+      required:
+        - outcome
+        - outside_interface_workspace
+        - projects
+        - published_projects_count
+        - workspace
       type: object
     LseInterfaceRequest:
       properties:
@@ -48467,6 +48720,11 @@ components:
         id:
           readOnly: true
           type: integer
+        interfaces_count:
+          description: Saved interfaces in the workspace. A workspace with interfaces cannot be deleted.
+          nullable: true
+          readOnly: true
+          type: integer
         is_archived:
           description: Workspace is archived
           title: Archived
@@ -48492,6 +48750,7 @@ components:
         - created_by
         - created_by_user
         - id
+        - interfaces_count
         - membership
         - projects_count
         - title
