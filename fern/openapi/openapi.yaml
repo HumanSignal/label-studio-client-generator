@@ -32570,6 +32570,7 @@ components:
           type: string
         created_by:
           description: User who made this label
+          readOnly: true
           type: integer
         description:
           description: Label description
@@ -32584,6 +32585,7 @@ components:
           readOnly: true
           type: array
         organization:
+          readOnly: true
           type: integer
         projects:
           items:
@@ -41536,15 +41538,10 @@ components:
           description: User who approved this label
           nullable: true
           type: integer
-        created_by:
-          description: User who made this label
-          type: integer
         description:
           description: Label description
           nullable: true
           type: string
-        organization:
-          type: integer
         title:
           description: Label title
           maxLength: 2048
@@ -42757,9 +42754,6 @@ components:
       properties:
         assignment_settings:
           description: general dict serialized assignment settings
-        created_by:
-          nullable: true
-          type: integer
         custom_script:
           description: custom script (Plugin) for projects created from this template
           minLength: 1
@@ -42773,9 +42767,6 @@ components:
           maxLength: 1000
           minLength: 1
           type: string
-        organization:
-          nullable: true
-          type: integer
         project_id:
           type: integer
           writeOnly: true
@@ -44669,6 +44660,7 @@ components:
           type: string
         created_by:
           nullable: true
+          readOnly: true
           type: integer
         custom_script:
           description: custom script (Plugin) for projects created from this template
@@ -44685,6 +44677,7 @@ components:
           type: string
         organization:
           nullable: true
+          readOnly: true
           type: integer
         project_settings:
           description: general dict serialized project settings
@@ -44703,17 +44696,16 @@ components:
           type: string
       required:
         - created_at
+        - created_by
         - id
         - name
+        - organization
         - updated_at
       type: object
     ProjectTemplateRequest:
       properties:
         assignment_settings:
           description: general dict serialized assignment settings
-        created_by:
-          nullable: true
-          type: integer
         custom_script:
           description: custom script (Plugin) for projects created from this template
           minLength: 1
@@ -44727,9 +44719,6 @@ components:
           maxLength: 1000
           minLength: 1
           type: string
-        organization:
-          nullable: true
-          type: integer
         project_id:
           type: integer
           writeOnly: true
