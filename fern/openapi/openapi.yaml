@@ -25320,6 +25320,10 @@ components:
         is_draft:
           description: Whether or not the project is in the middle of being created
           type: boolean
+        is_onboarding_project:
+          description: 'Onboarding project: contributors must pass it before identity verification'
+          readOnly: true
+          type: boolean
         is_published:
           description: Whether or not the project is published to annotators
           title: Published
@@ -25540,6 +25544,7 @@ components:
         - internal_description
         - internal_description_short
         - is_dimensions_enabled
+        - is_onboarding_project
         - members
         - members_count
         - num_tasks_with_annotations
