@@ -28235,6 +28235,9 @@ components:
           items:
             $ref: '#/components/schemas/AssignableOrganizationRoleEnum'
           type: array
+        excluded_by:
+          description: Broader permission that supersedes this one; it only takes effect for roles without it.
+          type: string
         group:
           type: string
         label:
