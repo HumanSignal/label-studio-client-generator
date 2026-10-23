@@ -12817,6 +12817,11 @@ paths:
           required: true
           schema:
             type: integer
+        - description: Filter id by in list
+          in: query
+          name: ids
+          schema:
+            type: string
         - description: Comma-separated list of user IDs to unassign when `all=false`.
           in: query
           name: included
@@ -12906,6 +12911,11 @@ paths:
         Assign project members in bulk.
       operationId: api_projects_members_bulk_create
       parameters:
+        - description: Versioned JSON member-filter payload, the same one the organization members list accepts. Only when all=True. When advanced member filtering is enabled, do not also supply role, user_type, tags, or last-activity legacy filter parameters.
+          in: query
+          name: filters
+          schema:
+            type: string
         - in: path
           name: id
           required: true
@@ -12921,12 +12931,12 @@ paths:
           name: last_activity__lte
           schema:
             type: string
-        - description: Filter by role, project roles take precedence over organization roles. Only when all=True. (comma-separated values)
+        - description: Filter by organization role. Only when all=True. (comma-separated values)
           in: query
           name: role
           schema:
             type: string
-        - description: Search term for filtering members by name, email, or username. Only when all=True.
+        - description: Search members by first name, last name, email, or an enabled optional member-list column. Only when all=True.
           in: query
           name: search
           schema:
@@ -12939,6 +12949,16 @@ paths:
         - description: 'How the `tags` ids combine: `any` (at least one tag), `all` (every tag, the default), `none` (no selected tag). Ignored without `tags`.'
           in: query
           name: tags_operator
+          schema:
+            type: string
+        - description: Filter user__last_activity by greater than or equal to
+          in: query
+          name: user__last_activity__gte
+          schema:
+            type: string
+        - description: Filter user__last_activity by less than or equal to
+          in: query
+          name: user__last_activity__lte
           schema:
             type: string
         - description: Multiple values may be separated by commas. (comma-separated values)
@@ -24545,11 +24565,46 @@ paths:
         Assign workspace members in bulk.
       operationId: api_workspaces_memberships_bulk_create
       parameters:
+        - description: Versioned JSON member-filter payload, the same one the organization members list accepts. Only when all=True. When advanced member filtering is enabled, do not also supply role, user_type, tags, or last-activity legacy filter parameters.
+          in: query
+          name: filters
+          schema:
+            type: string
         - in: path
           name: id
           required: true
           schema:
             type: integer
+        - description: Multiple values may be separated by commas. (comma-separated values)
+          in: query
+          name: role
+          schema:
+            type: string
+        - description: Search members by first name, last name, email, or an enabled optional member-list column. Only when all=True.
+          in: query
+          name: search
+          schema:
+            type: string
+        - description: Multiple values may be separated by commas. (comma-separated values)
+          in: query
+          name: tags
+          schema:
+            type: string
+        - description: Filter user__last_activity by greater than or equal to
+          in: query
+          name: user__last_activity__gte
+          schema:
+            type: string
+        - description: Filter user__last_activity by less than or equal to
+          in: query
+          name: user__last_activity__lte
+          schema:
+            type: string
+        - description: Multiple values may be separated by commas. (comma-separated values)
+          in: query
+          name: user_type
+          schema:
+            type: string
       requestBody:
         content:
           application/json:
