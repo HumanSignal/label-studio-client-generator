@@ -9453,7 +9453,7 @@ paths:
         - public
   /api/organizations/{id}/memberships/filter-options/skills:
     get:
-      description: Return self-reported Skills values with Contributor Setup display metadata.
+      description: Return Skills values held by members, self-reported or set by a skill assessment, with Contributor Setup display metadata. Owners, Administrators and Managers only.
       operationId: api_organizations_memberships_filter_options_skills_list
       parameters:
         - in: path
@@ -9533,6 +9533,11 @@ paths:
           required: true
           schema:
             type: integer
+        - description: 'Add `skills` to each row: the member''s skills with their status, those the `filters` payload matched first. Owners, Administrators and Managers only; ignored for other roles.'
+          in: query
+          name: include_skills
+          schema:
+            type: boolean
         - in: query
           name: is_deleted
           schema:
@@ -9625,6 +9630,11 @@ paths:
           required: true
           schema:
             type: integer
+        - description: 'Add `skills` to each row: the member''s skills with their status, those the `filters` payload matched first. Owners, Administrators and Managers only; ignored for other roles.'
+          in: query
+          name: include_skills
+          schema:
+            type: boolean
       requestBody:
         content:
           application/json:
@@ -13121,6 +13131,11 @@ paths:
         - description: Include/Exclude implicit project members in the results. If not provided, explicit + implicit members are returned.
           in: query
           name: implicit
+          schema:
+            type: boolean
+        - description: 'Add `skills` to each row: the member''s skills with their status, those the `filters` payload matched first. Owners, Administrators and Managers only; ignored for other roles.'
+          in: query
+          name: include_skills
           schema:
             type: boolean
         - description: Filter by last activity time (ISO 8601 datetime). Returns users with last activity greater than or equal to this time.
@@ -34910,6 +34925,10 @@ components:
             - $ref: '#/components/schemas/RoleSourceEnum'
           nullable: true
           readOnly: true
+        skills:
+          items:
+            $ref: '#/components/schemas/MemberSkill'
+          type: array
         tags:
           items:
             $ref: '#/components/schemas/SimpleOrganizationMemberTag'
@@ -38390,6 +38409,29 @@ components:
       oneOf:
         - $ref: '#/components/schemas/Comment'
         - $ref: '#/components/schemas/CommentSerializerWithExpandedUser'
+    MemberSkill:
+      properties:
+        code:
+          type: string
+        label:
+          type: string
+        status:
+          $ref: '#/components/schemas/MemberSkillStatusEnum'
+      required:
+        - code
+        - label
+        - status
+      type: object
+    MemberSkillStatusEnum:
+      description: |-
+        * `verified` - verified
+        * `self_reported` - self_reported
+        * `failed` - failed
+      enum:
+        - verified
+        - self_reported
+        - failed
+      type: string
     MetricParam:
       properties:
         agreement_threshold:
@@ -39911,6 +39953,10 @@ components:
           nullable: true
           readOnly: true
           type: string
+        skills:
+          items:
+            $ref: '#/components/schemas/MemberSkill'
+          type: array
         tags:
           items:
             $ref: '#/components/schemas/SimpleOrganizationMemberTag'
