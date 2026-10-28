@@ -12643,7 +12643,7 @@ paths:
       x-fern-sdk-method-name: list
   /api/projects/{id}/imports/{import_pk}/:
     get:
-      description: "\n            Poll the status of an asynchronous project import operation.\n            \n            **Usage:**\n            1. When you POST to `/api/projects/{project_id}/import`, you'll receive a response like `{\"import\": <import_id>}`\n            2. Use that `import_id` with this GET endpoint to check the import status\n            3. Poll this endpoint to see if the import has completed, is still processing, or has failed\n            4. **Import errors and failures will only be visible in this GET response**, not in the original POST request\n            \n            This endpoint returns detailed information about the import including task counts, status, and any error messages.\n            While an import is running, `task_count` / annotation / prediction counts update as batches commit.\n            Counts are cumulative so far; there is no expected total, so percent-complete / ETA is not available from this API.\n        "
+      description: "\n            Poll the status of an asynchronous project import operation.\n\n            *Note*: this endpoint is also accessible as `client.tasks.create_many_status`, its historical location.\n            \n            **Usage:**\n            1. When you POST to `/api/projects/{project_id}/import`, you'll receive a response like `{\"import\": <import_id>}`\n            2. Use that `import_id` with this GET endpoint to check the import status\n            3. Poll this endpoint to see if the import has completed, is still processing, or has failed\n            4. **Import errors and failures will only be visible in this GET response**, not in the original POST request\n            \n            This endpoint returns detailed information about the import including task counts, status, and any error messages.\n            While an import is running, `task_count` / annotation / prediction counts update as batches commit.\n            Counts are cumulative so far; there is no expected total, so percent-complete / ETA is not available from this API.\n        "
       operationId: api_projects_imports_retrieve
       parameters:
         - description: A unique integer value identifying this project.
@@ -12672,8 +12672,10 @@ paths:
         - Projects
       x-fern-audiences:
         - public
-      x-fern-sdk-group-name: tasks
-      x-fern-sdk-method-name: create_many_status
+      x-fern-sdk-group-name:
+        - projects
+        - imports
+      x-fern-sdk-method-name: get
   /api/projects/{id}/members/:
     delete:
       description: |-
