@@ -44452,17 +44452,12 @@ components:
       properties:
         role:
           allOf:
-            - $ref: '#/components/schemas/AssignableOrganizationRoleEnum'
+            - $ref: '#/components/schemas/ProjectMemberBulkAssignRolesRoleEnum'
           description: |-
             Role
 
-            * `OW` - Owner
-            * `AD` - Administrator
-            * `MA` - Manager
             * `RE` - Reviewer
             * `AN` - Annotator
-            * `DI` - Deactivated
-            * `NO` - Not Activated
         user_id:
           description: User ID
           minimum: 1
@@ -44471,6 +44466,14 @@ components:
         - role
         - user_id
       type: object
+    ProjectMemberBulkAssignRolesRoleEnum:
+      description: |-
+        * `RE` - Reviewer
+        * `AN` - Annotator
+      enum:
+        - RE
+        - AN
+      type: string
     ProjectMemberIdentityVerificationError:
       properties:
         skipped_user_ids:
