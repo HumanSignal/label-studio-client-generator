@@ -7651,6 +7651,44 @@ paths:
       summary: ✨ Import completed learner progress from CSV
       tags:
         - Learning Resources
+  /api/learning-resources/{id}/user-progress/{user_id}/quiz-attempts/:
+    get:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        View every quiz submission by one learner on this course, including answers and correct-answer keys. Restricted to roles with learning.manage permission.
+      operationId: api_learning_resources_user_progress_quiz_attempts_retrieve
+      parameters:
+        - description: A unique integer value identifying this learning resource.
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: user_id
+          required: true
+          schema:
+            pattern: ^\d+$
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuizAttemptHistory'
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Get quiz attempt history for a learner
+      tags:
+        - Learning Resources
+      x-fern-audiences:
+        - internal
   /api/learning-resources/{id}/user-progress/{user_id}/reset/:
     post:
       description: |-
@@ -44903,6 +44941,131 @@ components:
           allOf:
             - $ref: '#/components/schemas/RetakeScopeEnum'
           default: none
+      type: object
+    QuizAttempt:
+      properties:
+        attempt_number:
+          type: integer
+        passed:
+          type: boolean
+        questions:
+          items:
+            $ref: '#/components/schemas/QuizAttemptQuestion'
+          type: array
+        retake_cycle:
+          type: integer
+        score_percent:
+          type: integer
+        submitted_at:
+          format: date-time
+          type: string
+      required:
+        - attempt_number
+        - passed
+        - questions
+        - retake_cycle
+        - score_percent
+        - submitted_at
+      type: object
+    QuizAttemptHistory:
+      properties:
+        quizzes:
+          items:
+            $ref: '#/components/schemas/QuizAttemptHistoryQuiz'
+          type: array
+        user_id:
+          type: integer
+      required:
+        - quizzes
+        - user_id
+      type: object
+    QuizAttemptHistoryQuiz:
+      properties:
+        attempts:
+          items:
+            $ref: '#/components/schemas/QuizAttempt'
+          type: array
+        legacy_result:
+          allOf:
+            - $ref: '#/components/schemas/QuizLegacyResult'
+          nullable: true
+        page_title:
+          type: string
+        quiz_id:
+          type: string
+        removed:
+          type: boolean
+        title:
+          type: string
+        unrecorded_attempts:
+          type: integer
+      required:
+        - attempts
+        - legacy_result
+        - page_title
+        - quiz_id
+        - removed
+        - title
+        - unrecorded_attempts
+      type: object
+    QuizAttemptQuestion:
+      description: One question as the learner saw it, with their answer and the correct-answer key.
+      properties:
+        answer:
+          nullable: true
+        blocksJson:
+          nullable: true
+          type: string
+        choices:
+          items:
+            additionalProperties: {}
+            type: object
+          type: array
+        correct:
+          type: boolean
+        correctAnswerIds:
+          nullable: true
+        id:
+          type: string
+        pairs:
+          items:
+            additionalProperties: {}
+            type: object
+          type: array
+        type:
+          nullable: true
+          type: string
+      required:
+        - answer
+        - correct
+        - correctAnswerIds
+        - id
+        - type
+      type: object
+    QuizLegacyResult:
+      description: 'Last result for attempts made before attempt recording existed: no answers, correct/incorrect only.'
+      properties:
+        attempts:
+          type: integer
+        last_attempt:
+          nullable: true
+          type: string
+        passed:
+          nullable: true
+          type: boolean
+        question_results:
+          additionalProperties:
+            additionalProperties: {}
+            type: object
+          type: object
+        score_percent:
+          type: integer
+      required:
+        - attempts
+        - last_attempt
+        - passed
+        - question_results
+        - score_percent
       type: object
     ReEvaluate:
       properties:
