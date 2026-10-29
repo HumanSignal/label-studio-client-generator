@@ -24235,6 +24235,11 @@ paths:
           name: include_all_workspaces
           schema:
             type: boolean
+        - description: 'Only workspaces you can save an interface into: the workspaces you may manage, plus your Personal Sandbox if interfaces are allowed there.'
+          in: query
+          name: interface_targets
+          schema:
+            type: boolean
         - description: Filter by archived status. Set to false to exclude archived workspaces.
           in: query
           name: is_archived
