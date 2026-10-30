@@ -556,7 +556,7 @@ paths:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Get one annotation history item by ID with full result. Used when FIT-720 lazy load is on and the user clicks a stubbed history item to hydrate it.
+        Get one annotation history item by ID with full result. Used when the user clicks a stubbed history item to hydrate it.
       operationId: api_annotation_history_retrieve
       parameters:
         - in: path
@@ -37046,8 +37046,7 @@ components:
           description: |-
             Return annotations for the task.
 
-            If annotations_stub=True is in context (via feature flag
-            fflag_fix_all_fit_720_lazy_load_annotations), returns lightweight
+            If annotations_stub=True is in context, returns lightweight
             annotation stubs without result data for improved performance.
           items:
             additionalProperties: {}
@@ -37498,8 +37497,7 @@ components:
           description: |-
             Return annotations for the task.
 
-            If annotations_stub=True is in context (via feature flag
-            fflag_fix_all_fit_720_lazy_load_annotations), returns lightweight
+            If annotations_stub=True is in context, returns lightweight
             annotation stubs without result data for improved performance.
           items:
             additionalProperties: {}
@@ -37666,8 +37664,7 @@ components:
           description: |-
             Return annotations for the task.
 
-            If annotations_stub=True is in context (via feature flag
-            fflag_fix_all_fit_720_lazy_load_annotations), returns lightweight
+            If annotations_stub=True is in context, returns lightweight
             annotation stubs without result data for improved performance.
           items:
             additionalProperties: {}
