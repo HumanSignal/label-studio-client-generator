@@ -40103,10 +40103,6 @@ components:
         phone:
           maxLength: 256
           type: string
-        username:
-          maxLength: 256
-          minLength: 1
-          type: string
       type: object
     PatchedMLBackendRequestRequest:
       description: OpenAPI/SDK request body for ML backend create/update. Runtime still uses MLBackendSerializer.
