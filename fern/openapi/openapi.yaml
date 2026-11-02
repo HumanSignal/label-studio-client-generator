@@ -6487,6 +6487,11 @@ paths:
           required: true
           schema:
             type: integer
+        - description: Comma-separated response fields to leave out, e.g. `content,modules`. `content`, `learner_content` and `modules` each carry the whole course, so leave out the ones you do not read.
+          in: query
+          name: omit
+          schema:
+            type: string
       responses:
         '200':
           content:
@@ -7355,6 +7360,11 @@ paths:
           required: true
           schema:
             type: integer
+        - description: Comma-separated response fields to leave out, e.g. `content,modules`. `content`, `learner_content` and `modules` each carry the whole course, so leave out the ones you do not read.
+          in: query
+          name: omit
+          schema:
+            type: string
       responses:
         '200':
           content:
@@ -33389,6 +33399,9 @@ components:
           type: integer
       type: object
     LearningResourceDetail:
+      description: |-
+        Full course payload. `content`, `learner_content` and `modules` each carry the whole course, so clients pass
+        `omit` for the ones they do not read: an omitted field is never computed.
       properties:
         allow_standalone:
           type: boolean
