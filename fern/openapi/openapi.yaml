@@ -34411,8 +34411,9 @@ components:
           nullable: true
           type: string
         external_id:
-          description: AWS ExternalId
+          description: AWS ExternalId. Set by the server; read-only.
           nullable: true
+          readOnly: true
           title: ExternalID
           type: string
         id:
@@ -34485,6 +34486,7 @@ components:
           type: boolean
       required:
         - created_at
+        - external_id
         - id
         - project
         - role_arn
@@ -34519,11 +34521,6 @@ components:
         description:
           description: Cloud storage description
           nullable: true
-          type: string
-        external_id:
-          description: AWS ExternalId
-          nullable: true
-          title: ExternalID
           type: string
         last_sync:
           description: Last sync finished time
@@ -34623,8 +34620,9 @@ components:
           nullable: true
           type: string
         external_id:
-          description: AWS ExternalId
+          description: AWS ExternalId. Set by the server; read-only.
           nullable: true
+          readOnly: true
           title: ExternalID
           type: string
         id:
@@ -34708,6 +34706,7 @@ components:
           type: boolean
       required:
         - created_at
+        - external_id
         - id
         - project
         - role_arn
@@ -34738,11 +34737,6 @@ components:
         description:
           description: Cloud storage description
           nullable: true
-          type: string
-        external_id:
-          description: AWS ExternalId
-          nullable: true
-          title: ExternalID
           type: string
         last_sync:
           description: Last sync finished time
@@ -39871,11 +39865,6 @@ components:
           description: Cloud storage description
           nullable: true
           type: string
-        external_id:
-          description: AWS ExternalId
-          nullable: true
-          title: ExternalID
-          type: string
         last_sync:
           description: Last sync finished time
           format: date-time
@@ -39964,11 +39953,6 @@ components:
         description:
           description: Cloud storage description
           nullable: true
-          type: string
-        external_id:
-          description: AWS ExternalId
-          nullable: true
-          title: ExternalID
           type: string
         last_sync:
           description: Last sync finished time
