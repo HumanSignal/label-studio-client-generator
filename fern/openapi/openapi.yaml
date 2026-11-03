@@ -24152,6 +24152,24 @@ components:
         state:
           readOnly: true
           type: string
+        state_marked_done_at:
+          description: When the project was marked as Done. Null unless state_source is "manual". Managers+ only.
+          format: date-time
+          nullable: true
+          readOnly: true
+          type: string
+        state_marked_done_by:
+          allOf:
+            - $ref: '#/components/schemas/UserSimple'
+          description: User who marked the project as Done. Null unless state_source is "manual". Managers+ only.
+          nullable: true
+          readOnly: true
+        state_source:
+          allOf:
+            - $ref: '#/components/schemas/StateSourceEnum'
+          description: '"manual" while a Manager+ has marked the project as Done, "auto" while the state is calculated from tasks. Null when project states are not available.'
+          nullable: true
+          readOnly: true
         strict_task_overlap:
           default: true
           description: Enforce strict overlap limit
@@ -24220,6 +24238,9 @@ components:
         - skipped_annotations_number
         - start_training_on_annotation_update
         - state
+        - state_marked_done_at
+        - state_marked_done_by
+        - state_source
         - task_number
         - total_annotations_number
         - total_predictions_number
@@ -33104,6 +33125,24 @@ components:
         state:
           readOnly: true
           type: string
+        state_marked_done_at:
+          description: When the project was marked as Done. Null unless state_source is "manual". Managers+ only.
+          format: date-time
+          nullable: true
+          readOnly: true
+          type: string
+        state_marked_done_by:
+          allOf:
+            - $ref: '#/components/schemas/UserSimple'
+          description: User who marked the project as Done. Null unless state_source is "manual". Managers+ only.
+          nullable: true
+          readOnly: true
+        state_source:
+          allOf:
+            - $ref: '#/components/schemas/StateSourceEnum'
+          description: '"manual" while a Manager+ has marked the project as Done, "auto" while the state is calculated from tasks. Null when project states are not available.'
+          nullable: true
+          readOnly: true
         strict_task_overlap:
           default: true
           description: Enforce strict overlap limit
@@ -33177,6 +33216,9 @@ components:
         - skipped_annotations_number
         - start_training_on_annotation_update
         - state
+        - state_marked_done_at
+        - state_marked_done_by
+        - state_source
         - task_number
         - total_annotations_number
         - total_predictions_number
@@ -34200,6 +34242,24 @@ components:
         state:
           readOnly: true
           type: string
+        state_marked_done_at:
+          description: When the project was marked as Done. Null unless state_source is "manual". Managers+ only.
+          format: date-time
+          nullable: true
+          readOnly: true
+          type: string
+        state_marked_done_by:
+          allOf:
+            - $ref: '#/components/schemas/UserSimple'
+          description: User who marked the project as Done. Null unless state_source is "manual". Managers+ only.
+          nullable: true
+          readOnly: true
+        state_source:
+          allOf:
+            - $ref: '#/components/schemas/StateSourceEnum'
+          description: '"manual" while a Manager+ has marked the project as Done, "auto" while the state is calculated from tasks. Null when project states are not available.'
+          nullable: true
+          readOnly: true
         strict_task_overlap:
           default: true
           description: Enforce strict overlap limit
@@ -34277,6 +34337,9 @@ components:
         - skipped_annotations_number
         - start_training_on_annotation_update
         - state
+        - state_marked_done_at
+        - state_marked_done_by
+        - state_source
         - task_number
         - total_annotations_number
         - total_predictions_number
@@ -44774,6 +44837,11 @@ components:
         - transition_name
         - triggered_by
       type: object
+    StateSourceEnum:
+      enum:
+        - manual
+        - auto
+      type: string
     StateTriggeredBy:
       properties:
         email:
