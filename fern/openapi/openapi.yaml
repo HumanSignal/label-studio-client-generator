@@ -6063,7 +6063,7 @@ paths:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Delete multiple learners' progress on this course and revoke their certificates.
+        Delete multiple learners' progress on this course and revoke their certificates. Pass `user_ids`, or `select_all` with the Learners tab `filters` to reset every matching learner. Responds 409 when `expected_count` no longer matches the filtered learners.
       operationId: api_learning_resources_user_progress_bulk_reset_create
       parameters:
         - description: A unique integer value identifying this learning resource.
@@ -6083,7 +6083,6 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/BulkResetCourseProgressRequest'
-        required: true
       responses:
         '200':
           content:
@@ -26255,15 +26254,53 @@ components:
       required:
         - project_ids
       type: object
-    BulkResetCourseProgressRequest:
+    BulkResetCourseProgressFiltersRequest:
+      description: |-
+        Learners-tab filters, named and formatted like the `user-progress` list query string.
+
+        Unlike the list (which ignores invalid values), a bad value is an error here: a dropped filter
+        would widen a destructive reset.
       properties:
+        course_completed_after:
+          description: ISO datetime.
+          type: string
+        course_completed_before:
+          description: ISO datetime.
+          type: string
+        course_completed_never:
+          description: true/false/1/0/yes/no.
+          type: string
+        course_started_after:
+          description: ISO datetime.
+          type: string
+        course_started_before:
+          description: ISO datetime.
+          type: string
+        search:
+          type: string
+        status:
+          description: Comma-separated course statuses.
+          type: string
+      type: object
+    BulkResetCourseProgressRequest:
+      description: Reset by explicit `user_ids`, or by `select_all` over the filtered learners. Exactly one mode.
+      properties:
+        expected_count:
+          description: Only with `select_all`. If the filters now match a different number of learners, respond 409.
+          minimum: 0
+          type: integer
+        filters:
+          allOf:
+            - $ref: '#/components/schemas/BulkResetCourseProgressFiltersRequest'
+          description: Learners-tab filters; only with `select_all`. Omit for all learners.
+        select_all:
+          description: Reset every learner matching `filters` (boolean true only).
+          type: boolean
         user_ids:
           items:
             minimum: 1
             type: integer
           type: array
-      required:
-        - user_ids
       type: object
     BulkTaskAssigneesRequestRequest:
       properties:
