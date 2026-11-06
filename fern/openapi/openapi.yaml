@@ -6051,7 +6051,7 @@ paths:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Upload a file asset for use in a learning resource.
+        Upload a new file, or import media already reachable elsewhere (an asset from another course, a project upload, or — with `allow_external` — any http(s) URL) as a CourseAsset served from this origin. Exactly one of `file`/`url` is required; `allow_external` and `dry_run` are only valid with `url`. `dry_run` classifies the URL without creating anything. A source that does not exist and one you may not read both answer 403.
       operationId: api_learning_resources_upload_create
       parameters:
         - description: A unique integer value identifying this learning resource.
@@ -6062,15 +6062,19 @@ paths:
             type: integer
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/LearningResourceRequest'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/LearningResourceRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/LearningResourceRequest'
+              properties:
+                allow_external:
+                  type: boolean
+                dry_run:
+                  type: boolean
+                file:
+                  format: binary
+                  type: string
+                url:
+                  type: string
+              type: object
       responses:
         '200':
           content:
@@ -6080,7 +6084,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: ✨ Upload a file for a learning resource
+      summary: ✨ Upload or import a file for a learning resource
       tags:
         - Learning Resources
   /api/learning-resources/{id}/user-progress/:
@@ -31845,12 +31849,29 @@ components:
       type: object
     LearningResourceUploadResponse:
       properties:
+        status:
+          $ref: '#/components/schemas/LearningResourceUploadResponseStatusEnum'
         url:
           format: uri
           type: string
       required:
+        - status
         - url
       type: object
+    LearningResourceUploadResponseStatusEnum:
+      description: |-
+        * `uploaded` - uploaded
+        * `imported` - imported
+        * `unchanged` - unchanged
+        * `importable` - importable
+        * `external` - external
+      enum:
+        - uploaded
+        - imported
+        - unchanged
+        - importable
+        - external
+      type: string
     LocalFilesExportStorage:
       properties:
         can_delete_objects:
