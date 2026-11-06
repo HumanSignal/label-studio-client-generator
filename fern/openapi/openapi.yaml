@@ -40430,6 +40430,11 @@ components:
           description: Allow sending newsletters to user
           nullable: true
           type: boolean
+        current_password:
+          description: Your current password. Required when you change your own password.
+          minLength: 1
+          type: string
+          writeOnly: true
         custom_hotkeys:
           description: Custom keyboard shortcuts configuration for the user interface
           nullable: true
