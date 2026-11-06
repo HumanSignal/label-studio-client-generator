@@ -5002,7 +5002,7 @@ paths:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Create an unpublished course in a workspace from an exported course file. Asset ids are only valid in the organization and instance the file was exported from. In that case asset URLs are kept and `unresolved_asset_ids` lists the ones that do not exist in this organization. For any other file (another organization or instance, or no source recorded) every asset id is listed as unresolved and the asset URLs are detached so they cannot resolve to an asset here.
+        Create an unpublished course in a workspace from an exported course file: the JSON payload, or the zip bundle that also carries its files. Files in a bundle become the new course's own assets. Other asset ids are only valid in the organization and instance the file was exported from. In that case asset URLs are kept and `unresolved_asset_ids` lists the ones that do not exist in this organization. For any other file (another organization or instance, or no source recorded) every asset id that is not bundled is listed as unresolved and its URL is detached so it cannot resolve to an asset here.
       operationId: api_learning_resources_import_create
       requestBody:
         content:
@@ -5340,7 +5340,7 @@ paths:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Return the draft course (settings, modules, pages) as a portable JSON payload for Import.
+        Return the draft course (settings, modules, pages) as a portable JSON payload for Import. With any of `include_images`, `include_audio_video` and `include_other` the response is a zip instead: `course.json` (the same payload), `assets.json` and the referenced files under `assets/`. References that cannot be bundled are counted in the `X-Course-Export-Skipped-Assets` header.
       operationId: api_learning_resources_export_retrieve
       parameters:
         - description: A unique integer value identifying this learning resource.
@@ -5349,12 +5349,34 @@ paths:
           required: true
           schema:
             type: integer
+        - description: Bundle the audio and video files the course references. Returns a zip.
+          in: query
+          name: include_audio_video
+          schema:
+            default: false
+            type: boolean
+        - description: Bundle the images the course references. Returns a zip.
+          in: query
+          name: include_images
+          schema:
+            default: false
+            type: boolean
+        - description: Bundle the other files (documents, etc.) the course references. Returns a zip.
+          in: query
+          name: include_other
+          schema:
+            default: false
+            type: boolean
       responses:
         '200':
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/CourseExportPayload'
+            application/zip:
+              schema:
+                format: binary
+                type: string
           description: ''
       security:
         - Token: []
