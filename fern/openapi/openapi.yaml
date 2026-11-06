@@ -4993,6 +4993,45 @@ paths:
       summary: ✨ Batch learning resource counts
       tags:
         - Learning Resources
+  /api/learning-resources/import/:
+    post:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Create an unpublished course in a workspace from an exported course file. Asset ids are only valid in the organization and instance the file was exported from. In that case asset URLs are kept and `unresolved_asset_ids` lists the ones that do not exist in this organization. For any other file (another organization or instance, or no source recorded) every asset id is listed as unresolved and the asset URLs are detached so they cannot resolve to an asset here.
+      operationId: api_learning_resources_import_create
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              properties:
+                file:
+                  format: binary
+                  type: string
+                title:
+                  type: string
+                workspace:
+                  type: integer
+              required:
+                - file
+                - workspace
+              type: object
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CourseImportResponse'
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Import a learning resource
+      tags:
+        - Learning Resources
   /api/learning-resources/{id}/:
     delete:
       operationId: api_learning_resources_destroy
@@ -5290,6 +5329,36 @@ paths:
       security:
         - Token: []
       summary: ✨ Heartbeat or release an editing session for a learning resource
+      tags:
+        - Learning Resources
+  /api/learning-resources/{id}/export/:
+    get:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Return the draft course (settings, modules, pages) as a portable JSON payload for Import.
+      operationId: api_learning_resources_export_retrieve
+      parameters:
+        - description: A unique integer value identifying this learning resource.
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CourseExportPayload'
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Export a learning resource
       tags:
         - Learning Resources
   /api/learning-resources/{id}/invalidate-progress/:
@@ -26878,6 +26947,167 @@ components:
       required:
         - sessions
         - structure_version
+      type: object
+    CourseExportPayload:
+      description: OpenAPI shape of GET /learning-resources/{id}/export/ (also the file Import accepts).
+      properties:
+        course:
+          additionalProperties: {}
+          type: object
+        exported_at:
+          format: date-time
+          type: string
+        format:
+          type: string
+        format_version:
+          type: integer
+        modules:
+          items:
+            additionalProperties: {}
+            type: object
+          type: array
+        source:
+          additionalProperties: {}
+          nullable: true
+          type: object
+      required:
+        - course
+        - exported_at
+        - format
+        - format_version
+        - modules
+        - source
+      type: object
+    CourseImportResponse:
+      properties:
+        allow_standalone:
+          type: boolean
+        color:
+          maxLength: 16
+          nullable: true
+          type: string
+        content:
+          additionalProperties: {}
+          readOnly: true
+          type: object
+        content_version:
+          readOnly: true
+          type: integer
+        cover_image_url:
+          maxLength: 1024
+          type: string
+        created_at:
+          format: date-time
+          readOnly: true
+          type: string
+        created_by:
+          allOf:
+            - $ref: '#/components/schemas/UserSimple'
+          readOnly: true
+        default_allow_manual_access:
+          type: boolean
+        default_gate_annotator_data_manager:
+          nullable: true
+          type: boolean
+        default_gate_annotator_label_stream:
+          nullable: true
+          type: boolean
+        default_gate_reviewer_data_manager:
+          nullable: true
+          type: boolean
+        default_gate_reviewer_label_stream:
+          nullable: true
+          type: boolean
+        default_gate_reviewer_review_stream:
+          nullable: true
+          type: boolean
+        estimated_duration_unit:
+          $ref: '#/components/schemas/EstimatedDurationUnitEnum'
+        estimated_duration_value:
+          maximum: 2147483647
+          minimum: 0
+          nullable: true
+          type: integer
+        generate_certificate_on_completion:
+          type: boolean
+        has_unpublished_changes:
+          nullable: true
+          readOnly: true
+          type: boolean
+        hide_completed_quizzes:
+          type: boolean
+        id:
+          readOnly: true
+          type: integer
+        is_published:
+          readOnly: true
+          type: boolean
+        learner_count:
+          readOnly: true
+          type: integer
+        learners_completed_count:
+          readOnly: true
+          type: integer
+        learners_started_count:
+          readOnly: true
+          type: integer
+        module_count:
+          readOnly: true
+          type: integer
+        organization:
+          readOnly: true
+          type: integer
+        page_count:
+          readOnly: true
+          type: integer
+        project_count:
+          readOnly: true
+          type: integer
+        single_page_review:
+          nullable: true
+          type: boolean
+        structure_version:
+          readOnly: true
+          type: integer
+        summary:
+          type: string
+        title:
+          maxLength: 255
+          type: string
+        unresolved_asset_ids:
+          items:
+            type: integer
+          type: array
+        updated_at:
+          format: date-time
+          readOnly: true
+          type: string
+        updated_by:
+          allOf:
+            - $ref: '#/components/schemas/UserSimple'
+          readOnly: true
+        workspace:
+          nullable: true
+          type: integer
+      required:
+        - content
+        - content_version
+        - created_at
+        - created_by
+        - has_unpublished_changes
+        - id
+        - is_published
+        - learner_count
+        - learners_completed_count
+        - learners_started_count
+        - module_count
+        - organization
+        - page_count
+        - project_count
+        - structure_version
+        - unresolved_asset_ids
+        - updated_at
+        - updated_by
       type: object
     CourseModule:
       properties:
