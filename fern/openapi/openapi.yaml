@@ -22144,6 +22144,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/TokenDetailError'
           description: Token is already blacklisted
+      security:
+        - Token: []
       summary: Blacklist a JWT refresh token
       tags:
         - JWT
