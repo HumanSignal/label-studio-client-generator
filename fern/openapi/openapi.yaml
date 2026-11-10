@@ -36599,12 +36599,24 @@ components:
         - $ref: '#/components/schemas/CommentSerializerWithExpandedUser'
     MemberSkill:
       properties:
+        claimed_level:
+          type: string
         code:
+          type: string
+        failed_level:
           type: string
         label:
           type: string
+        levels:
+          items:
+            additionalProperties:
+              type: string
+            type: object
+          type: array
         status:
           $ref: '#/components/schemas/MemberSkillStatusEnum'
+        verified_level:
+          type: string
       required:
         - code
         - label
@@ -37386,6 +37398,12 @@ components:
           type: string
         label:
           type: string
+        levels:
+          items:
+            additionalProperties:
+              type: string
+            type: object
+          type: array
         parent_code:
           nullable: true
           type: string
