@@ -26164,7 +26164,7 @@ components:
         project:
           type: integer
         share_id:
-          description: base64 encoded id
+          description: Public identifier used in share links (the random share token).
           readOnly: true
           type: string
         short_url:
@@ -26205,7 +26205,7 @@ components:
           readOnly: true
           type: integer
         share_id:
-          description: base64 encoded id
+          description: Public identifier used in share links (the random share token).
           readOnly: true
           type: string
         short_url:
