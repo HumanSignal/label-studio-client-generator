@@ -26518,9 +26518,13 @@ components:
           description: Model identifier in format "provider/model-name" (e.g., "openai/gpt-4")
           minLength: 1
           type: string
+        project:
+          description: ID of a project the caller can access whose labeling config contains a Chat tag
+          type: integer
       required:
         - messages
         - model
+        - project
       type: object
     ChatMessageRequest:
       description: |-
