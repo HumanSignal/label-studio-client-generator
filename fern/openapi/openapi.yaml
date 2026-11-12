@@ -24123,7 +24123,7 @@ components:
           readOnly: true
           type: integer
         organization:
-          nullable: true
+          readOnly: true
           type: integer
         output_schema:
           nullable: true
@@ -24320,6 +24320,7 @@ components:
         - members
         - members_count
         - num_tasks_with_annotations
+        - organization
         - parsed_label_config
         - prompts
         - queue_done
@@ -33372,7 +33373,7 @@ components:
           readOnly: true
           type: integer
         organization:
-          nullable: true
+          readOnly: true
           type: integer
         output_schema:
           nullable: true
@@ -33563,6 +33564,7 @@ components:
         - members
         - members_count
         - num_tasks_with_annotations
+        - organization
         - parsed_label_config
         - permissions
         - prompts
@@ -33824,7 +33826,7 @@ components:
           readOnly: true
           type: integer
         organization:
-          nullable: true
+          readOnly: true
           type: integer
         output_schema:
           nullable: true
@@ -33943,6 +33945,7 @@ components:
         - ground_truth_number
         - id
         - num_tasks_with_annotations
+        - organization
         - parsed_label_config
         - queue_done
         - queue_total
@@ -34092,9 +34095,6 @@ components:
           description: Machine learning model version
           nullable: true
           type: string
-        organization:
-          nullable: true
-          type: integer
         output_schema:
           nullable: true
         overlap_cohort_percentage:
@@ -34471,7 +34471,7 @@ components:
           readOnly: true
           type: integer
         organization:
-          nullable: true
+          readOnly: true
           type: integer
         output_schema:
           nullable: true
@@ -34680,6 +34680,7 @@ components:
         - members
         - members_count
         - num_tasks_with_annotations
+        - organization
         - parsed_label_config
         - permissions
         - prompts
@@ -40102,9 +40103,6 @@ components:
           description: Machine learning model version
           nullable: true
           type: string
-        organization:
-          nullable: true
-          type: integer
         output_schema:
           nullable: true
         overlap_cohort_percentage:
@@ -41775,7 +41773,7 @@ components:
           readOnly: true
           type: integer
         organization:
-          nullable: true
+          readOnly: true
           type: integer
         overlap_cohort_percentage:
           maximum: 2147483647
@@ -41878,6 +41876,7 @@ components:
         - ground_truth_number
         - id
         - num_tasks_with_annotations
+        - organization
         - parsed_label_config
         - queue_done
         - queue_total
