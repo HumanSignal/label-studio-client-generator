@@ -10653,7 +10653,7 @@ paths:
   /api/projects/{id}/export/formats:
     get:
       deprecated: true
-      description: |-
+      description: |2-
 
                 This endpoint is deprecated in Enterprise. Use the async export API instead:
                 POST /api/projects/{{id}}/exports/ (see [Create new export](api:POST/api/projects/{id}/exports/)).
