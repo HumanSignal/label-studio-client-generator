@@ -28167,8 +28167,14 @@ components:
           format: date-time
           nullable: true
           type: string
+        slug:
+          description: DNS-safe organization slug used to build the default primary domain (<slug>.<ORG_DOMAIN_BASE>). Nullable until the org domains backfill runs (FIT-2959).
+          nullable: true
+          readOnly: true
+          type: string
       required:
         - organization
+        - slug
       type: object
     Dimension:
       description: |-
