@@ -10653,7 +10653,7 @@ paths:
   /api/projects/{id}/export/formats:
     get:
       deprecated: true
-      description: |2-
+      description: |-
 
                 This endpoint is deprecated in Enterprise. Use the async export API instead:
                 POST /api/projects/{{id}}/exports/ (see [Create new export](api:POST/api/projects/{id}/exports/)).
@@ -28100,82 +28100,34 @@ components:
       type: object
     DefaultRole:
       properties:
-        annotator_reviewer_firewall_enabled_at:
-          description: Set to current time to restrict data sharing between annotators and reviewers in the label stream, review stream, and notifications (which will be disabled). In these settings, information about annotator and reviewer identity is suppressed in the UI.
-          format: date-time
-          nullable: true
-          type: string
-        custom_interfaces_enabled:
-          description: Enable custom interfaces for this organization. When disabled, projects with use_custom_interface=True will not render custom interfaces anywhere in the product (label stream, embed, data manager, interfaces dashboard).
-          nullable: true
-          type: boolean
-        custom_scripts_enabled_at:
-          description: Set to current time to enable custom scripts (Plugins) for this organization. Can only be enabled if no organization members are active members of any other organizations; otherwise an error will be raised. If this occurs, contact the LEAP team for assistance with enabling custom scripts (Plugins).
-          format: date-time
-          nullable: true
-          type: string
         default_role:
           allOf:
-            - $ref: '#/components/schemas/OrganizationRoleEnum'
+            - $ref: '#/components/schemas/DefaultRoleDefaultRoleEnum'
           description: |-
             Default membership role for invited users
 
-            * `OW` - Owner
             * `AD` - Administrator
             * `MA` - Manager
             * `RE` - Reviewer
             * `AN` - Annotator
-            * `DI` - Deactivated
             * `NO` - Not Activated
-            * `VO` - View Only
-        email_notification_settings:
-          description: 'Email notification settings for this organization. Controls which email notifications users can receive. Structure: {"notifications_allowed": {"notification_type": bool}}'
-          nullable: true
-        embed_domains:
-          description: 'List of objects: {"domain": "example.com"}. Used for CSP header on /embed routes.'
-          nullable: true
-        embed_enabled:
-          description: Enable embed functionality for this organization
-          nullable: true
-          type: boolean
-        embed_settings:
-          description: Embed settings for this organization
-          nullable: true
-        external_id:
-          description: External ID to uniquely identify this organization
-          nullable: true
-          type: string
-        extra_data_on_activity_logs:
-          type: boolean
-        interface_settings:
-          description: 'Security settings for custom interfaces: CSP allowlists, script origins, iframe permissions.'
-          nullable: true
-        label_stream_navigation_disabled_at:
-          description: Set to current time to disable the label stream navigation for this organization. This will prevent users from going back in the label stream to view previous labels.
-          format: date-time
-          nullable: true
-          type: string
-        organization:
-          description: A unique integer value identifying this organization.
-          type: integer
-        react_code_settings:
-          description: 'ReactCode tag security settings. Structure: {"mode": "disabled"|"src_only"|"everything", "allowed_origins": ["https://..."], "allowed_permissions": ["camera", ...]}'
-          nullable: true
-          title: ReactCode settings
-        read_only_quick_view_enabled_at:
-          description: Set to current time to prevent creating or editing annotations in quick view.
-          format: date-time
-          nullable: true
-          type: string
-        slug:
-          description: DNS-safe organization slug used to build the default primary domain (<slug>.<ORG_DOMAIN_BASE>). Nullable until the org domains backfill runs (FIT-2959).
-          nullable: true
-          readOnly: true
-          type: string
       required:
-        - organization
-        - slug
+        - default_role
       type: object
+    DefaultRoleDefaultRoleEnum:
+      description: |-
+        * `AD` - Administrator
+        * `MA` - Manager
+        * `RE` - Reviewer
+        * `AN` - Annotator
+        * `NO` - Not Activated
+      enum:
+        - AD
+        - MA
+        - RE
+        - AN
+        - 'NO'
+      type: string
     Dimension:
       description: |-
         Serializer for Dimension model.
@@ -39014,73 +38966,17 @@ components:
       type: object
     PatchedDefaultRoleRequest:
       properties:
-        annotator_reviewer_firewall_enabled_at:
-          description: Set to current time to restrict data sharing between annotators and reviewers in the label stream, review stream, and notifications (which will be disabled). In these settings, information about annotator and reviewer identity is suppressed in the UI.
-          format: date-time
-          nullable: true
-          type: string
-        custom_interfaces_enabled:
-          description: Enable custom interfaces for this organization. When disabled, projects with use_custom_interface=True will not render custom interfaces anywhere in the product (label stream, embed, data manager, interfaces dashboard).
-          nullable: true
-          type: boolean
-        custom_scripts_enabled_at:
-          description: Set to current time to enable custom scripts (Plugins) for this organization. Can only be enabled if no organization members are active members of any other organizations; otherwise an error will be raised. If this occurs, contact the LEAP team for assistance with enabling custom scripts (Plugins).
-          format: date-time
-          nullable: true
-          type: string
         default_role:
           allOf:
-            - $ref: '#/components/schemas/OrganizationRoleEnum'
+            - $ref: '#/components/schemas/DefaultRoleDefaultRoleEnum'
           description: |-
             Default membership role for invited users
 
-            * `OW` - Owner
             * `AD` - Administrator
             * `MA` - Manager
             * `RE` - Reviewer
             * `AN` - Annotator
-            * `DI` - Deactivated
             * `NO` - Not Activated
-            * `VO` - View Only
-        email_notification_settings:
-          description: 'Email notification settings for this organization. Controls which email notifications users can receive. Structure: {"notifications_allowed": {"notification_type": bool}}'
-          nullable: true
-        embed_domains:
-          description: 'List of objects: {"domain": "example.com"}. Used for CSP header on /embed routes.'
-          nullable: true
-        embed_enabled:
-          description: Enable embed functionality for this organization
-          nullable: true
-          type: boolean
-        embed_settings:
-          description: Embed settings for this organization
-          nullable: true
-        external_id:
-          description: External ID to uniquely identify this organization
-          nullable: true
-          type: string
-        extra_data_on_activity_logs:
-          type: boolean
-        interface_settings:
-          description: 'Security settings for custom interfaces: CSP allowlists, script origins, iframe permissions.'
-          nullable: true
-        label_stream_navigation_disabled_at:
-          description: Set to current time to disable the label stream navigation for this organization. This will prevent users from going back in the label stream to view previous labels.
-          format: date-time
-          nullable: true
-          type: string
-        organization:
-          description: A unique integer value identifying this organization.
-          type: integer
-        react_code_settings:
-          description: 'ReactCode tag security settings. Structure: {"mode": "disabled"|"src_only"|"everything", "allowed_origins": ["https://..."], "allowed_permissions": ["camera", ...]}'
-          nullable: true
-          title: ReactCode settings
-        read_only_quick_view_enabled_at:
-          description: Set to current time to prevent creating or editing annotations in quick view.
-          format: date-time
-          nullable: true
-          type: string
       type: object
     PatchedDimensionRequest:
       description: |-
