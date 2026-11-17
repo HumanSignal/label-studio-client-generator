@@ -5383,6 +5383,409 @@ paths:
       summary: ✨ Export a learning resource
       tags:
         - Learning Resources
+  /api/learning-resources/{id}/history/:
+    get:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Author-only. Edit sessions (newest first), pinned versions and recently deleted pages. Summaries only, no page bodies.
+      operationId: api_learning_resources_history_retrieve
+      parameters:
+        - description: 'Revision id: only sessions older than this. Use `next_before`.'
+          in: query
+          name: before
+          schema:
+            minimum: 1
+            type: integer
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - description: Ref (`r<revision>` or `p<pin>`) whose row stays in the response.
+          in: query
+          name: include
+          schema:
+            minLength: 1
+            type: string
+        - in: query
+          name: limit
+          schema:
+            default: 50
+            maximum: 200
+            minimum: 1
+            type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HistoryListResponse'
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ List the version history of a course
+      tags:
+        - Learning Resources
+  /api/learning-resources/{id}/history/pins/:
+    post:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Author-only. Materializes the state at `ref` as a named pin that survives thinning of the revisions behind it.
+      operationId: api_learning_resources_history_pins_create
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PinCreateRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PinCreateRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PinCreateRequest'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HistoryPin'
+          description: ''
+        '410':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HistoryAnchorUnavailable'
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Name a past state of a course
+      tags:
+        - Learning Resources
+  /api/learning-resources/{id}/history/pins/{pin_id}/:
+    delete:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Author-only. `named` and `before_restore` pins are deletable; published pins record what was published and answer 400 `pin_not_deletable`. Deletes only the pin: revisions and other pins are untouched, and the revisions behind it stay subject to thinning.
+      operationId: api_learning_resources_history_pins_destroy
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: pin_id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HistoryError'
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Delete a named or before-restore version
+      tags:
+        - Learning Resources
+    patch:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Author-only. Only `named` pins are renamable; published and before-restore pins answer 400 `pin_not_renamable`.
+      operationId: api_learning_resources_history_pins_partial_update
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: pin_id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedPinRenameRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedPinRenameRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedPinRenameRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HistoryPin'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HistoryError'
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Rename a named version
+      tags:
+        - Learning Resources
+  /api/learning-resources/{id}/history/sessions/{ref}/saves/:
+    get:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Author-only. The individual saves of the session that ends at `ref`.
+      operationId: api_learning_resources_history_sessions_saves_retrieve
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - description: 'State ref: `r<revision_id>` for a revision (session, save, deleted page) or `p<pin_id>` for a pin.'
+          in: path
+          name: ref
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HistorySessionSavesResponse'
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ List the saves of one history session
+      tags:
+        - Learning Resources
+  /api/learning-resources/{id}/history/states/{ref}/:
+    get:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Author-only. The whole course as of a revision or pin: `content` in the shape the live course detail returns, plus snapshot-shaped `modules`. Answers 410 `history_anchor_unavailable` with the nearest surviving state when the revision has been purged.
+      operationId: api_learning_resources_history_states_retrieve
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - description: 'State ref: `r<revision_id>` for a revision (session, save, deleted page) or `p<pin_id>` for a pin.'
+          in: path
+          name: ref
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HistoryStateResponse'
+          description: ''
+        '410':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HistoryAnchorUnavailable'
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Get one past state of a course
+      tags:
+        - Learning Resources
+  /api/learning-resources/{id}/history/states/{ref}/restore-preview/:
+    get:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Author-only. Counts of what a restore would add, change and remove, including the learners who have progress on modules the restore would delete. Writes nothing.
+      operationId: api_learning_resources_history_states_restore_preview_retrieve
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - in: query
+          name: page_id
+          schema:
+            minLength: 1
+            type: string
+        - description: 'State ref: `r<revision_id>` for a revision (session, save, deleted page) or `p<pin_id>` for a pin.'
+          in: path
+          name: ref
+          required: true
+          schema:
+            type: string
+        - description: |-
+            * `course` - course
+            * `page` - page
+          in: query
+          name: scope
+          schema:
+            default: course
+            enum:
+              - course
+              - page
+            minLength: 1
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestorePreviewResponse'
+          description: ''
+        '410':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HistoryAnchorUnavailable'
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Preview a restore
+      tags:
+        - Learning Resources
+  /api/learning-resources/{id}/history/states/{ref}/restore/:
+    post:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Author-only. Forward-only: appends revisions and a `before_restore` pin, never removes history. Restores the whole course, or one page (`scope=page`, which also brings back a deleted page). The result is a draft edit: it never publishes and never changes `content_version`. A stale `structure_version` answers 409 `structure_version_conflict`; a purged revision answers 410 `history_anchor_unavailable` and changes nothing.
+      operationId: api_learning_resources_history_states_restore_create
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - description: 'State ref: `r<revision_id>` for a revision (session, save, deleted page) or `p<pin_id>` for a pin.'
+          in: path
+          name: ref
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RestoreRequestRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RestoreRequestRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RestoreRequestRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestoreResponse'
+          description: ''
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StructureVersionConflict'
+          description: ''
+        '410':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HistoryAnchorUnavailable'
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Restore a past state of a course
+      tags:
+        - Learning Resources
+  /api/learning-resources/{id}/history/viewing/:
+    post:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Author-only. Records a short viewing lease so retention does not thin the course while an author is looking at its history. Send it every `ttl_seconds / 2` seconds or so.
+      operationId: api_learning_resources_history_viewing_create
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HistoryViewingResponse'
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Heartbeat while the versions panel is open
+      tags:
+        - Learning Resources
   /api/learning-resources/{id}/invalidate-progress/:
     post:
       description: |-
@@ -27011,6 +27414,14 @@ components:
         - modules
         - source
       type: object
+    CourseHistoryScopeEnum:
+      description: |-
+        * `course` - course
+        * `page` - page
+      enum:
+        - course
+        - page
+      type: string
     CourseImportResponse:
       properties:
         allow_standalone:
@@ -29890,6 +30301,312 @@ components:
           type: boolean
       required:
         - project
+      type: object
+    HistoryAnchorUnavailable:
+      properties:
+        code:
+          type: string
+        detail:
+          type: string
+        nearest_ref:
+          description: Newest surviving state at or before the anchor.
+          nullable: true
+          type: string
+      required:
+        - code
+        - detail
+        - nearest_ref
+      type: object
+    HistoryCurrent:
+      properties:
+        revision_id:
+          nullable: true
+          type: integer
+        updated_at:
+          format: date-time
+          nullable: true
+          type: string
+        updated_by:
+          allOf:
+            - $ref: '#/components/schemas/HistoryUser'
+          nullable: true
+      required:
+        - revision_id
+        - updated_at
+        - updated_by
+      type: object
+    HistoryDeletedPage:
+      properties:
+        deleted_at:
+          format: date-time
+          type: string
+        deleted_by:
+          allOf:
+            - $ref: '#/components/schemas/HistoryUser'
+          nullable: true
+        module_id:
+          nullable: true
+          type: integer
+        page_id:
+          type: string
+        ref:
+          description: The tombstone revision. Restore it with `scope=page`.
+          type: string
+        title:
+          type: string
+      required:
+        - deleted_at
+        - deleted_by
+        - module_id
+        - page_id
+        - ref
+        - title
+      type: object
+    HistoryError:
+      properties:
+        code:
+          type: string
+        detail:
+          type: string
+      required:
+        - code
+        - detail
+      type: object
+    HistoryListResponse:
+      properties:
+        current:
+          $ref: '#/components/schemas/HistoryCurrent'
+        deleted_pages:
+          items:
+            $ref: '#/components/schemas/HistoryDeletedPage'
+          type: array
+        next_before:
+          nullable: true
+          type: integer
+        pins:
+          items:
+            $ref: '#/components/schemas/HistoryPin'
+          type: array
+        sessions:
+          items:
+            $ref: '#/components/schemas/HistorySession'
+          type: array
+      required:
+        - current
+        - deleted_pages
+        - next_before
+        - pins
+        - sessions
+      type: object
+    HistoryPin:
+      properties:
+        anchor:
+          description: Revision id the pin was taken at.
+          nullable: true
+          type: integer
+        created_at:
+          format: date-time
+          type: string
+        created_by:
+          allOf:
+            - $ref: '#/components/schemas/HistoryUser'
+          nullable: true
+        id:
+          type: integer
+        is_current_published:
+          type: boolean
+        kind:
+          $ref: '#/components/schemas/HistoryPinKindEnum'
+        name:
+          nullable: true
+          type: string
+        ref:
+          type: string
+      required:
+        - anchor
+        - created_at
+        - created_by
+        - id
+        - is_current_published
+        - kind
+        - name
+        - ref
+      type: object
+    HistoryPinKindEnum:
+      description: |-
+        * `named` - named
+        * `published` - published
+        * `before_restore` - before_restore
+      enum:
+        - named
+        - published
+        - before_restore
+      type: string
+    HistoryRestoredFrom:
+      properties:
+        label:
+          description: A pin name or a relative time, to follow "Restored from".
+          type: string
+        ref:
+          type: string
+      required:
+        - label
+        - ref
+      type: object
+    HistorySave:
+      properties:
+        created_at:
+          format: date-time
+          type: string
+        created_by:
+          allOf:
+            - $ref: '#/components/schemas/HistoryUser'
+          nullable: true
+        kind:
+          type: string
+        page_id:
+          nullable: true
+          type: string
+        ref:
+          type: string
+        title:
+          nullable: true
+          type: string
+      required:
+        - created_at
+        - created_by
+        - kind
+        - page_id
+        - ref
+        - title
+      type: object
+    HistorySession:
+      properties:
+        authors:
+          items:
+            $ref: '#/components/schemas/HistoryUser'
+          type: array
+        ended_at:
+          format: date-time
+          type: string
+        in_progress:
+          type: boolean
+        pages:
+          items:
+            $ref: '#/components/schemas/HistorySessionPage'
+          type: array
+        ref:
+          description: The session's last revision.
+          type: string
+        restored_from:
+          allOf:
+            - $ref: '#/components/schemas/HistoryRestoredFrom'
+          nullable: true
+        saves:
+          type: integer
+        started_at:
+          format: date-time
+          type: string
+        structure_changes:
+          type: integer
+      required:
+        - authors
+        - ended_at
+        - in_progress
+        - pages
+        - ref
+        - restored_from
+        - saves
+        - started_at
+        - structure_changes
+      type: object
+    HistorySessionPage:
+      properties:
+        page_id:
+          type: string
+        ref:
+          type: string
+        saves:
+          type: integer
+        title:
+          type: string
+      required:
+        - page_id
+        - ref
+        - saves
+        - title
+      type: object
+    HistorySessionSavesResponse:
+      properties:
+        saves:
+          items:
+            $ref: '#/components/schemas/HistorySave'
+          type: array
+      required:
+        - saves
+      type: object
+    HistoryStateModule:
+      properties:
+        content:
+          additionalProperties: {}
+          type: object
+        id:
+          type: integer
+        sort_order:
+          type: integer
+        title:
+          type: string
+      required:
+        - content
+        - id
+        - sort_order
+        - title
+      type: object
+    HistoryStateResponse:
+      properties:
+        content:
+          additionalProperties: {}
+          description: Same shape as `content` of the course detail.
+          type: object
+        created_at:
+          format: date-time
+          type: string
+        label:
+          type: string
+        modules:
+          items:
+            $ref: '#/components/schemas/HistoryStateModule'
+          type: array
+        pin:
+          allOf:
+            - $ref: '#/components/schemas/HistoryPin'
+          nullable: true
+        ref:
+          type: string
+      required:
+        - content
+        - created_at
+        - label
+        - modules
+        - pin
+        - ref
+      type: object
+    HistoryUser:
+      properties:
+        display_name:
+          type: string
+        id:
+          type: integer
+      required:
+        - display_name
+        - id
+      type: object
+    HistoryViewingResponse:
+      properties:
+        ttl_seconds:
+          type: integer
+      required:
+        - ttl_seconds
       type: object
     Hotkeys:
       properties:
@@ -40632,6 +41349,13 @@ components:
           nullable: true
           type: string
       type: object
+    PatchedPinRenameRequest:
+      properties:
+        name:
+          maxLength: 255
+          minLength: 1
+          type: string
+      type: object
     PatchedPredictionRequest:
       properties:
         cluster:
@@ -41197,6 +41921,20 @@ components:
           type: string
       required:
         - reason
+      type: object
+    PinCreateRequest:
+      properties:
+        name:
+          maxLength: 255
+          minLength: 1
+          type: string
+        ref:
+          description: 'State to name: `r<revision>` or `p<pin>`.'
+          minLength: 1
+          type: string
+      required:
+        - name
+        - ref
       type: object
     Prediction:
       properties:
@@ -43364,6 +44102,69 @@ components:
         - remove
         - flexible
       type: string
+    RestorePreviewResponse:
+      properties:
+        learners_with_progress_on_removed_modules:
+          type: integer
+        modules_added:
+          type: integer
+        modules_removed:
+          type: integer
+        pages_added:
+          type: integer
+        pages_changed:
+          type: integer
+        pages_removed:
+          type: integer
+        scope:
+          $ref: '#/components/schemas/CourseHistoryScopeEnum'
+      required:
+        - learners_with_progress_on_removed_modules
+        - modules_added
+        - modules_removed
+        - pages_added
+        - pages_changed
+        - pages_removed
+        - scope
+      type: object
+    RestoreRequestRequest:
+      properties:
+        page_id:
+          minLength: 1
+          type: string
+        scope:
+          allOf:
+            - $ref: '#/components/schemas/CourseHistoryScopeEnum'
+          default: course
+        structure_version:
+          minimum: 1
+          type: integer
+      required:
+        - structure_version
+      type: object
+    RestoreResponse:
+      properties:
+        before_restore_pin:
+          $ref: '#/components/schemas/HistoryPin'
+        modules:
+          items:
+            $ref: '#/components/schemas/CourseModule'
+          type: array
+        outline:
+          $ref: '#/components/schemas/CourseOutline'
+        restored_ref:
+          description: Newest revision after the restore; null when the restore changed nothing.
+          nullable: true
+          type: string
+        structure_version:
+          type: integer
+      required:
+        - before_restore_pin
+        - modules
+        - outline
+        - restored_ref
+        - structure_version
+      type: object
     RetakeReasonEnum:
       description: |-
         * `manual` - Manual invalidation
@@ -45140,6 +45941,22 @@ components:
         - completed
         - completed_with_errors
       type: string
+    StructureVersionConflict:
+      properties:
+        code:
+          type: string
+        detail:
+          type: string
+        outline:
+          $ref: '#/components/schemas/CourseOutline'
+        structure_version:
+          type: integer
+      required:
+        - code
+        - detail
+        - outline
+        - structure_version
+      type: object
     TaskAgreementMatrixResponse:
       properties:
         matrix:
