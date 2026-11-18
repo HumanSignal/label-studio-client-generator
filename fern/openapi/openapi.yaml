@@ -13883,6 +13883,64 @@ paths:
         - projects
         - assignments
       x-fern-sdk-method-name: bulk_assign
+  /api/projects/{id}/tasks/data-column/:
+    post:
+      description: 'Set one `task.data` key to a different value for each listed task of the project, in one synchronous request. Only that key of the listed tasks is written: other keys and other tasks are not touched, and a new column is created on the listed tasks only (the "Add or Update Columns" Data Manager action, in contrast, writes `null` into every other task when it adds a column). The column then appears in the Data Manager. All values are validated first; if any is invalid, nothing is written. The response lists the tasks that were updated and the requested IDs that are not tasks of this project. Requires the same permission and feature flag as the "Add or Update Columns" action. Values are not checked against the labeling configuration or a custom interface input schema. If an "Add or Update Columns" action that adds the same column is still running in the background, it can overwrite the values with `null`.'
+      operationId: api_projects_tasks_data_column_create
+      parameters:
+        - description: A unique integer value identifying this project.
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            examples:
+              Request:
+                summary: request
+                value:
+                  column_name: customer_feedback
+                  value_type: String
+                  values:
+                    '101': Box 3 is missing
+                    '102': OK
+                    '999': Unknown task
+            schema:
+              $ref: '#/components/schemas/TaskDataColumnRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              examples:
+                Response:
+                  summary: response
+                  value:
+                    not_found_task_ids:
+                      - 999
+                    updated_task_ids:
+                      - 101
+                      - 102
+              schema:
+                $ref: '#/components/schemas/TaskDataColumnResult'
+          description: Values set
+        '400':
+          description: Invalid column name or values; nothing was written
+        '403':
+          description: No permission, or "Add or Update Columns" is disabled
+        '404':
+          description: Project not found
+      security:
+        - Token: []
+      summary: Set a data column on tasks
+      tags:
+        - Tasks
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: tasks
+      x-fern-sdk-method-name: set_data_column
   /api/projects/{id}/tasks/{task_pk}/assignees:
     delete:
       description: |-
@@ -46030,6 +46088,53 @@ components:
         - state
         - task
       type: object
+    TaskDataColumnRequest:
+      properties:
+        column_name:
+          description: 'Data column to set: the key in `task.data`, used exactly as sent. If no task of the project has it yet, it is created on the listed tasks only. A new column name cannot contain whitespace, quotation marks, brackets, semicolons, hashes, control characters, or SQL comments.'
+          minLength: 1
+          type: string
+        value_type:
+          allOf:
+            - $ref: '#/components/schemas/TaskDataColumnValueTypeEnum'
+          default: String
+          description: |-
+            How the values are stored: `String` keeps the text exactly as sent; `Number` stores a number.
+
+            * `String` - String
+            * `Number` - Number
+        values:
+          additionalProperties: {}
+          description: 'Map of task ID to the value for that task, for example `{"101": "Missing box", "102": "OK"}`. At most `TASK_DATA_COLUMN_MAX_TASKS` tasks per request (1000 by default).'
+          type: object
+      required:
+        - column_name
+        - values
+      type: object
+    TaskDataColumnResult:
+      properties:
+        not_found_task_ids:
+          description: Requested task IDs that are not tasks of this project (nothing was written for them).
+          items:
+            type: integer
+          type: array
+        updated_task_ids:
+          description: Tasks whose column value was set, in ascending order.
+          items:
+            type: integer
+          type: array
+      required:
+        - not_found_task_ids
+        - updated_task_ids
+      type: object
+    TaskDataColumnValueTypeEnum:
+      description: |-
+        * `String` - String
+        * `Number` - Number
+      enum:
+        - String
+        - Number
+      type: string
     TaskEvent:
       description: |-
         Serializer for TaskEvent model to handle event creation from frontend.
