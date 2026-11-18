@@ -44401,6 +44401,7 @@ components:
         requeue_rejected_tasks_mode:
           allOf:
             - $ref: '#/components/schemas/RequeueRejectedTasksModeEnum'
+          deprecated: true
           description: |-
             Deprecated. Prefer allowed_reject_actions. Remove rejected annotations from labeling queue / Requeue rejected annotations back to annotators / Allow reviewer to decide: Remove or Requeue
 
@@ -44409,6 +44410,7 @@ components:
             * `flexible` - Flexible
           nullable: true
         requeue_rejected_tasks_to_annotator:
+          deprecated: true
           description: Deprecated. Prefer allowed_reject_actions. If set, the rejected task is requeued to the annotator
           readOnly: true
           type: boolean
@@ -44496,6 +44498,7 @@ components:
         requeue_rejected_tasks_mode:
           allOf:
             - $ref: '#/components/schemas/RequeueRejectedTasksModeEnum'
+          deprecated: true
           description: |-
             Deprecated. Prefer allowed_reject_actions. Remove rejected annotations from labeling queue / Requeue rejected annotations back to annotators / Allow reviewer to decide: Remove or Requeue
 
