@@ -36023,6 +36023,13 @@ components:
         id:
           readOnly: true
           type: integer
+        import_id:
+          description: Original task ID that was at the import step (the "id" of the task in the imported data, or the source task when tasks are copied between projects), or NULL if there was none. It points one step back, so for a copy of a copy it is the ID of the intermediate copy, not of the first task
+          format: int64
+          maximum: 9223372036854775807
+          minimum: -9223372036854775808
+          nullable: true
+          type: integer
         inner_id:
           type: integer
         is_labeled:
@@ -36322,6 +36329,13 @@ components:
           type: object
         file_upload:
           description: Uploaded file used as data source for this task
+          nullable: true
+          type: integer
+        import_id:
+          description: Original task ID that was at the import step (the "id" of the task in the imported data, or the source task when tasks are copied between projects), or NULL if there was none. It points one step back, so for a copy of a copy it is the ID of the intermediate copy, not of the first task
+          format: int64
+          maximum: 9223372036854775807
+          minimum: -9223372036854775808
           nullable: true
           type: integer
         inner_id:
@@ -36640,6 +36654,13 @@ components:
           type: boolean
         id:
           readOnly: true
+          type: integer
+        import_id:
+          description: Original task ID that was at the import step (the "id" of the task in the imported data, or the source task when tasks are copied between projects), or NULL if there was none. It points one step back, so for a copy of a copy it is the ID of the intermediate copy, not of the first task
+          format: int64
+          maximum: 9223372036854775807
+          minimum: -9223372036854775808
+          nullable: true
           type: integer
         inner_id:
           type: integer
@@ -41107,6 +41128,13 @@ components:
           type: boolean
         ground_truth:
           type: boolean
+        import_id:
+          description: Original task ID that was at the import step (the "id" of the task in the imported data, or the source task when tasks are copied between projects), or NULL if there was none. It points one step back, so for a copy of a copy it is the ID of the intermediate copy, not of the first task
+          format: int64
+          maximum: 9223372036854775807
+          minimum: -9223372036854775808
+          nullable: true
+          type: integer
         inner_id:
           type: integer
         is_labeled:
@@ -46276,6 +46304,13 @@ components:
           type: integer
         id:
           readOnly: true
+          type: integer
+        import_id:
+          description: Original task ID that was at the import step (the "id" of the task in the imported data, or the source task when tasks are copied between projects), or NULL if there was none. It points one step back, so for a copy of a copy it is the ID of the intermediate copy, not of the first task
+          format: int64
+          maximum: 9223372036854775807
+          minimum: -9223372036854775808
+          nullable: true
           type: integer
         inner_id:
           description: Internal task ID in the project, starts with 1
