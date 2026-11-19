@@ -33326,6 +33326,12 @@ components:
           description: HumanSignal-provided system template visible to all organizations
           readOnly: true
           type: boolean
+        latest_published_version:
+          description: Stable id of the latest published version, for pickers that show "vN" without loading the versions JSON (derived from versions JSON; 0 for an interface without a versions array)
+          maximum: 2147483647
+          minimum: 0
+          nullable: true
+          type: integer
         metadata:
           description: Arbitrary metadata for this interface
           nullable: true
