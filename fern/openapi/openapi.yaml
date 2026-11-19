@@ -3819,6 +3819,10 @@ paths:
           name: workspace
           schema:
             type: integer
+        - in: query
+          name: workspace_or_shared
+          schema:
+            type: integer
       responses:
         '200':
           content:
@@ -11647,6 +11651,51 @@ paths:
         - projects
         - imports
       x-fern-sdk-method-name: get
+  /api/projects/{id}/interface-compatibility:
+    post:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Check the existing tasks of a project against the input schema of an interface version before attaching it. Read-only: tasks and the project are not changed.
+      operationId: api_projects_interface_compatibility_create
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InterfaceCompatibilityRequestRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/InterfaceCompatibilityRequestRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/InterfaceCompatibilityRequestRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InterfaceCompatibilityResponse'
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Check project tasks against an interface
+      tags:
+        - Projects
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: projects
+      x-fern-sdk-method-name: check_interface_compatibility
   /api/projects/{id}/members/:
     delete:
       description: |-
@@ -30612,6 +30661,56 @@ components:
           description: Total cost of the inference (in USD)
           nullable: true
           type: string
+      type: object
+    InterfaceCompatibilityError:
+      properties:
+        count:
+          description: Number of tasks with this error.
+          type: integer
+        message:
+          type: string
+        sample_task_ids:
+          items:
+            type: integer
+          type: array
+      required:
+        - count
+        - message
+        - sample_task_ids
+      type: object
+    InterfaceCompatibilityRequestRequest:
+      properties:
+        source_interface_id:
+          description: Interface to check the project tasks against.
+          type: integer
+        source_interface_version:
+          description: Published version id. Defaults to the latest published version.
+          nullable: true
+          type: integer
+      required:
+        - source_interface_id
+      type: object
+    InterfaceCompatibilityResponse:
+      properties:
+        errors:
+          items:
+            $ref: '#/components/schemas/InterfaceCompatibilityError'
+          type: array
+        tasks_checked:
+          type: integer
+        tasks_with_errors:
+          type: integer
+        total_tasks:
+          type: integer
+        truncated:
+          description: True when only the first tasks of a large project were checked.
+          type: boolean
+      required:
+        - errors
+        - tasks_checked
+        - tasks_with_errors
+        - total_tasks
+        - truncated
       type: object
     InterfaceMoveBlockerEnum:
       description: |-
