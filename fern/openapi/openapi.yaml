@@ -5108,113 +5108,6 @@ paths:
       summary: ✨ Update a learning resource
       tags:
         - Learning Resources
-  /api/learning-resources/{id}/certificates/:
-    get:
-      description: |-
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
-        List all certificates issued for a course.
-      operationId: api_learning_resources_certificates_list
-      parameters:
-        - description: A unique integer value identifying this learning resource.
-          in: path
-          name: id
-          required: true
-          schema:
-            type: integer
-        - description: Which field to use when ordering the results.
-          in: query
-          name: ordering
-          required: false
-          schema:
-            type: string
-        - description: A page number within the paginated result set.
-          in: query
-          name: page
-          required: false
-          schema:
-            type: integer
-        - description: Number of results to return per page.
-          in: query
-          name: page_size
-          required: false
-          schema:
-            type: integer
-        - in: query
-          name: scope
-          schema:
-            type: string
-        - description: A search term.
-          in: query
-          name: search
-          required: false
-          schema:
-            type: string
-        - in: query
-          name: workspace
-          schema:
-            type: integer
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PaginatedCertificateList'
-          description: ''
-      security:
-        - Token: []
-      summary: ✨ List certificates for a learning resource
-      tags:
-        - Learning Resources
-  /api/learning-resources/{id}/certificates/{certificate_id}/revoke/:
-    post:
-      description: |-
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
-        Revoke a certificate issued for a learning resource.
-      operationId: api_learning_resources_certificates_revoke_create
-      parameters:
-        - in: path
-          name: certificate_id
-          required: true
-          schema:
-            type: integer
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/RevokeCertificateRequest'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/RevokeCertificateRequest'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/RevokeCertificateRequest'
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Certificate'
-          description: ''
-      security:
-        - Token: []
-      summary: ✨ Revoke a certificate
-      tags:
-        - Learning Resources
   /api/learning-resources/{id}/duplicate/:
     post:
       description: |-
@@ -6561,7 +6454,7 @@ paths:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Delete multiple learners' progress on this course and revoke their certificates. Pass `user_ids`, or `select_all` with the Learners tab `filters` to reset every matching learner. Responds 409 when `expected_count` no longer matches the filtered learners.
+        Delete multiple learners' progress on this course. Pass `user_ids`, or `select_all` with the Learners tab `filters` to reset every matching learner. Responds 409 when `expected_count` no longer matches the filtered learners.
       operationId: api_learning_resources_user_progress_bulk_reset_create
       parameters:
         - description: A unique integer value identifying this learning resource.
@@ -6738,7 +6631,7 @@ paths:
                     This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
                 </p>
             </Card>
-        Delete a learner's progress on this course and revoke their certificate so they must retake it.
+        Delete a learner's progress on this course so they must retake it.
       operationId: api_learning_resources_user_progress_reset_create
       parameters:
         - description: A unique integer value identifying this learning resource.
@@ -22742,31 +22635,6 @@ paths:
         - public
       x-fern-sdk-group-name: users
       x-fern-sdk-method-name: create
-  /api/users/me/certificates/:
-    get:
-      description: |-
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
-        List all certificates issued to the current user.
-      operationId: api_users_me_certificates_list
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: '#/components/schemas/Certificate'
-                type: array
-          description: ''
-      security:
-        - Token: []
-      summary: ✨ List certificates for the current user
-      tags:
-        - Learning Resources
   /api/users/{id}/:
     delete:
       description: |-
@@ -26921,47 +26789,6 @@ components:
       required:
         - detail
       type: object
-    Certificate:
-      properties:
-        completed_at:
-          format: date-time
-          readOnly: true
-          type: string
-        created_at:
-          format: date-time
-          readOnly: true
-          type: string
-        expires_at:
-          format: date-time
-          nullable: true
-          readOnly: true
-          type: string
-        id:
-          readOnly: true
-          type: integer
-        learning_resource:
-          readOnly: true
-          type: integer
-        metadata:
-          readOnly: true
-        revoked_at:
-          format: date-time
-          nullable: true
-          readOnly: true
-          type: string
-        serial_number:
-          readOnly: true
-          type: string
-      required:
-        - completed_at
-        - created_at
-        - expires_at
-        - id
-        - learning_resource
-        - metadata
-        - revoked_at
-        - serial_number
-      type: object
     ChatCompletionRequestRequest:
       description: |-
         Validates and sanitizes chat completion request payload.
@@ -27530,8 +27357,6 @@ components:
           minimum: 0
           nullable: true
           type: integer
-        generate_certificate_on_completion:
-          type: boolean
         has_unpublished_changes:
           nullable: true
           readOnly: true
@@ -31986,8 +31811,6 @@ components:
           minimum: 0
           nullable: true
           type: integer
-        generate_certificate_on_completion:
-          type: boolean
         has_unpublished_changes:
           nullable: true
           readOnly: true
@@ -32261,8 +32084,6 @@ components:
           minimum: 0
           nullable: true
           type: integer
-        generate_certificate_on_completion:
-          type: boolean
         has_unpublished_changes:
           nullable: true
           readOnly: true
@@ -32419,8 +32240,6 @@ components:
           minimum: 0
           nullable: true
           type: integer
-        generate_certificate_on_completion:
-          type: boolean
         has_unpublished_changes:
           nullable: true
           readOnly: true
@@ -32533,8 +32352,6 @@ components:
           minimum: 0
           nullable: true
           type: integer
-        generate_certificate_on_completion:
-          type: boolean
         hide_completed_quizzes:
           type: boolean
         single_page_review:
@@ -32585,8 +32402,6 @@ components:
           minimum: 0
           nullable: true
           type: integer
-        generate_certificate_on_completion:
-          type: boolean
         hide_completed_quizzes:
           type: boolean
         single_page_review:
@@ -38511,29 +38326,6 @@ components:
         - count
         - results
       type: object
-    PaginatedCertificateList:
-      properties:
-        count:
-          example: 123
-          type: integer
-        next:
-          example: http://api.example.org/accounts/?page=4
-          format: uri
-          nullable: true
-          type: string
-        previous:
-          example: http://api.example.org/accounts/?page=2
-          format: uri
-          nullable: true
-          type: string
-        results:
-          items:
-            $ref: '#/components/schemas/Certificate'
-          type: array
-      required:
-        - count
-        - results
-      type: object
     PaginatedCourseModuleList:
       properties:
         count:
@@ -40347,8 +40139,6 @@ components:
           minimum: 0
           nullable: true
           type: integer
-        generate_certificate_on_completion:
-          type: boolean
         hide_completed_quizzes:
           type: boolean
         single_page_review:
@@ -40399,8 +40189,6 @@ components:
           minimum: 0
           nullable: true
           type: integer
-        generate_certificate_on_completion:
-          type: boolean
         hide_completed_quizzes:
           type: boolean
         single_page_review:
@@ -44561,12 +44349,6 @@ components:
         - random
         - by_annotator
       type: string
-    RevokeCertificateRequest:
-      properties:
-        reason:
-          default: ''
-          type: string
-      type: object
     RevokeInviteRequest:
       properties:
         email:
