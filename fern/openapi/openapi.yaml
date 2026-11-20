@@ -1800,6 +1800,70 @@ paths:
         - public
       x-fern-sdk-group-name: users
       x-fern-sdk-method-name: update_current_user
+  /api/current-user/acting-role:
+    delete:
+      description: Go back to your own role.
+      operationId: api_current_user_acting_role_destroy
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActingRole'
+          description: ''
+      security:
+        - Token: []
+      summary: Stop acting as a role
+      tags:
+        - Users
+      x-fern-audiences:
+        - internal
+    get:
+      description: Your stored role, the role you act as, and the roles you may act as.
+      operationId: api_current_user_acting_role_retrieve
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActingRole'
+          description: ''
+      security:
+        - Token: []
+      summary: Get acting role
+      tags:
+        - Users
+      x-fern-audiences:
+        - internal
+    post:
+      description: Act as a lower role in your active organization. Replaces the role you act as now.
+      operationId: api_current_user_acting_role_create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ActingRoleStartRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ActingRoleStartRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ActingRoleStartRequest'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActingRole'
+          description: ''
+      security:
+        - Token: []
+      summary: Start acting as a role
+      tags:
+        - Users
+      x-fern-audiences:
+        - internal
   /api/current-user/hotkeys/:
     get:
       description: Retrieve the current user’s account hotkeys, or their stored personal override for the optional project scope.
@@ -23935,6 +23999,59 @@ components:
       required:
         - code
       type: object
+    ActingRole:
+      properties:
+        acting_role:
+          description: Role the user acts as, or null
+          nullable: true
+          type: string
+        allowed_roles:
+          description: Roles the user may act as; empty when they may not act
+          items:
+            type: string
+          type: array
+        real_role:
+          description: Stored organization role of the user
+          nullable: true
+          type: string
+        started_at:
+          description: When acting started, or null
+          format: date-time
+          nullable: true
+          type: string
+      required:
+        - acting_role
+        - allowed_roles
+        - real_role
+        - started_at
+      type: object
+    ActingRoleStartRequest:
+      properties:
+        role:
+          allOf:
+            - $ref: '#/components/schemas/ActingRoleStartRoleEnum'
+          description: |-
+            Role to act as
+
+            * `AD` - Administrator
+            * `MA` - Manager
+            * `RE` - Reviewer
+            * `AN` - Annotator
+      required:
+        - role
+      type: object
+    ActingRoleStartRoleEnum:
+      description: |-
+        * `AD` - Administrator
+        * `MA` - Manager
+        * `RE` - Reviewer
+        * `AN` - Annotator
+      enum:
+        - AD
+        - MA
+        - RE
+        - AN
+      type: string
     ActionsEnum:
       description: |-
         * `PROJECT_CREATED` - PROJECT_CREATED
