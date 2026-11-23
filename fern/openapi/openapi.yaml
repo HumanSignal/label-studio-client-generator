@@ -6213,6 +6213,48 @@ paths:
       summary: ✨ Update learner progress on a learning resource
       tags:
         - Learning Resources
+  /api/learning-resources/{id}/project-assignment-preview/:
+    post:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Read-only. Returns one row per selected project (by title, capped; see total) and says whether assigning this course would turn Courses on there and so hide its written instructions (switch_with_instructions), turn Courses on with nothing to hide (switch_empty), or change nothing (already_on). Assigning a course always turns Courses on for the project. The preview lets the UI say what that costs; it changes nothing and the assignment endpoints never depend on it: assigning through the API or SDK is silent and turns Courses on for the project. Projects of other organizations or that the caller cannot access are left out.
+      operationId: api_learning_resources_project_assignment_preview_create
+      parameters:
+        - description: A unique integer value identifying this learning resource.
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AssignmentPreviewRequestRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AssignmentPreviewRequestRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AssignmentPreviewRequestRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssignmentPreviewResponse'
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Preview what assigning a learning resource does to projects
+      tags:
+        - Learning Resources
   /api/learning-resources/{id}/project-assignments/:
     post:
       description: Create project assignments for many projects in one request.
@@ -14889,6 +14931,46 @@ paths:
       security:
         - Token: []
       summary: ✨ Assign a learning resource to a project
+      tags:
+        - Learning Resources
+  /api/projects/{project_pk}/learning-assignments/courses-enabled/:
+    patch:
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        When Courses are on, Annotation and Reviewer Instructions are hidden from annotators and reviewers and published assigned courses are shown instead. The instruction content is never changed. Assigning a course to a project always turns Courses on automatically. When Courses are off, no assigned course gates or is offered on the project; the assignments are kept and apply again when Courses are turned back on.
+      operationId: api_projects_learning_assignments_courses_enabled_partial_update
+      parameters:
+        - in: path
+          name: project_pk
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedProjectCoursesEnabledRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedProjectCoursesEnabledRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedProjectCoursesEnabledRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectCoursesEnabled'
+          description: ''
+      security:
+        - Token: []
+      summary: ✨ Turn Courses on or off for a project
       tags:
         - Learning Resources
   /api/projects/{project_pk}/learning-assignments/reorder/:
@@ -24448,6 +24530,10 @@ components:
           description: Dict of weights for each control tag in metric calculation. Keys are control tag names from the labeling config. At least one tag must have a non-zero overall weight.
           nullable: true
           type: object
+        courses_enabled:
+          description: Courses replace Annotation and Reviewer Instructions on this project. Changed through the learning-assignments courses-enabled endpoint.
+          readOnly: true
+          type: boolean
         created_at:
           format: date-time
           readOnly: true
@@ -24548,6 +24634,14 @@ components:
           description: Honeypot annotation number in project
           readOnly: true
           type: integer
+        has_annotation_instructions:
+          description: Annotation Instructions hold readable content (not empty or only empty HTML)
+          readOnly: true
+          type: boolean
+        has_review_instructions:
+          description: Review Instructions hold readable content (not empty or only empty HTML)
+          readOnly: true
+          type: boolean
         id:
           readOnly: true
           type: integer
@@ -24802,11 +24896,14 @@ components:
         - collection_mode
         - config_has_control_tags
         - config_suitable_for_bulk_annotation
+        - courses_enabled
         - created_at
         - data_types
         - description_short
         - finished_task_number
         - ground_truth_number
+        - has_annotation_instructions
+        - has_review_instructions
         - id
         - internal_description
         - internal_description_short
@@ -25503,6 +25600,73 @@ components:
         - flex
         - viewonly
       type: string
+    AssignmentPreviewCounts:
+      properties:
+        already_on:
+          type: integer
+        switch_empty:
+          type: integer
+        switch_with_instructions:
+          type: integer
+      required:
+        - already_on
+        - switch_empty
+        - switch_with_instructions
+      type: object
+    AssignmentPreviewProject:
+      properties:
+        has_annotation_instructions:
+          type: boolean
+        has_review_instructions:
+          type: boolean
+        id:
+          type: integer
+        state:
+          description: 'One of switch_with_instructions, switch_empty, already_on. switch_with_instructions: Courses off and written instructions (assigning turns Courses on and hides them). switch_empty: Courses off and no written instructions (assigning turns Courses on). already_on: Courses on (nothing changes).'
+          type: string
+        title:
+          type: string
+      required:
+        - has_annotation_instructions
+        - has_review_instructions
+        - id
+        - state
+        - title
+      type: object
+    AssignmentPreviewRequestRequest:
+      description: Same body as the bulk assignment, so the preview describes exactly what the assignment would do.
+      properties:
+        project_ids:
+          items:
+            minimum: 1
+            type: integer
+          type: array
+      required:
+        - project_ids
+      type: object
+    AssignmentPreviewResponse:
+      properties:
+        already_assigned:
+          description: Selected projects that already have this course
+          type: integer
+        counts:
+          allOf:
+            - $ref: '#/components/schemas/AssignmentPreviewCounts'
+          description: Projects per state, over every project, not just the rows
+        projects:
+          description: One row per project that would get the course, by title (capped; see total)
+          items:
+            $ref: '#/components/schemas/AssignmentPreviewProject'
+          type: array
+        total:
+          description: Projects that would get the course; more than len(projects) if capped
+          type: integer
+      required:
+        - already_assigned
+        - counts
+        - projects
+        - total
+      type: object
     AssignmentSettings:
       properties:
         id:
@@ -33982,6 +34146,10 @@ components:
           description: Dict of weights for each control tag in metric calculation. Keys are control tag names from the labeling config. At least one tag must have a non-zero overall weight.
           nullable: true
           type: object
+        courses_enabled:
+          description: Courses replace Annotation and Reviewer Instructions on this project. Changed through the learning-assignments courses-enabled endpoint.
+          readOnly: true
+          type: boolean
         created_at:
           format: date-time
           readOnly: true
@@ -34082,6 +34250,14 @@ components:
           description: Honeypot annotation number in project
           readOnly: true
           type: integer
+        has_annotation_instructions:
+          description: Annotation Instructions hold readable content (not empty or only empty HTML)
+          readOnly: true
+          type: boolean
+        has_review_instructions:
+          description: Review Instructions hold readable content (not empty or only empty HTML)
+          readOnly: true
+          type: boolean
         id:
           readOnly: true
           type: integer
@@ -34323,11 +34499,14 @@ components:
         - collection_mode
         - config_has_control_tags
         - config_suitable_for_bulk_annotation
+        - courses_enabled
         - created_at
         - data_types
         - dm_column_access
         - finished_task_number
         - ground_truth_number
+        - has_annotation_instructions
+        - has_review_instructions
         - id
         - internal_description
         - is_dimensions_enabled
@@ -35080,6 +35259,10 @@ components:
           description: Dict of weights for each control tag in metric calculation. Keys are control tag names from the labeling config. At least one tag must have a non-zero overall weight.
           nullable: true
           type: object
+        courses_enabled:
+          description: Courses replace Annotation and Reviewer Instructions on this project. Changed through the learning-assignments courses-enabled endpoint.
+          readOnly: true
+          type: boolean
         created_at:
           format: date-time
           readOnly: true
@@ -35180,6 +35363,14 @@ components:
           description: Honeypot annotation number in project
           readOnly: true
           type: integer
+        has_annotation_instructions:
+          description: Annotation Instructions hold readable content (not empty or only empty HTML)
+          readOnly: true
+          type: boolean
+        has_review_instructions:
+          description: Review Instructions hold readable content (not empty or only empty HTML)
+          readOnly: true
+          type: boolean
         id:
           readOnly: true
           type: integer
@@ -35439,11 +35630,14 @@ components:
         - collection_mode
         - config_has_control_tags
         - config_suitable_for_bulk_annotation
+        - courses_enabled
         - created_at
         - data_types
         - dm_column_access
         - finished_task_number
         - ground_truth_number
+        - has_annotation_instructions
+        - has_review_instructions
         - id
         - internal_description
         - is_dimensions_enabled
@@ -41497,6 +41691,12 @@ components:
         task:
           type: integer
       type: object
+    PatchedProjectCoursesEnabledRequest:
+      properties:
+        courses_enabled:
+          description: Courses replace Annotation and Reviewer Instructions on this project
+          type: boolean
+      type: object
     PatchedProjectLearningAssignmentRequest:
       properties:
         allow_manual_access:
@@ -42663,6 +42863,14 @@ components:
       required:
         - annotations
         - count
+      type: object
+    ProjectCoursesEnabled:
+      properties:
+        courses_enabled:
+          description: Courses replace Annotation and Reviewer Instructions on this project
+          type: boolean
+      required:
+        - courses_enabled
       type: object
     ProjectDuplicateModeEnum:
       description: |-
