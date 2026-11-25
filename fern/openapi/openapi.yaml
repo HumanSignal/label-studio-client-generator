@@ -25271,6 +25271,11 @@ components:
         control which fields are displayed, and whether to replace simple
         values with complex, nested serializations
       properties:
+        acting_role:
+          description: Role the user acted as when making this change; empty for normal work
+          maxLength: 2
+          nullable: true
+          type: string
         action:
           allOf:
             - $ref: '#/components/schemas/AnnotationHistoryActionEnum'
