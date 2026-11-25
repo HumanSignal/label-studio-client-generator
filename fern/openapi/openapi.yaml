@@ -32486,12 +32486,15 @@ components:
           readOnly: true
           type: object
         learner_count:
+          nullable: true
           readOnly: true
           type: integer
         learners_completed_count:
+          nullable: true
           readOnly: true
           type: integer
         learners_started_count:
+          nullable: true
           readOnly: true
           type: integer
         module_count:
