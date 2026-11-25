@@ -4504,7 +4504,11 @@ paths:
         required: true
       responses:
         '200':
-          description: Invite sent
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendInviteResponse'
+          description: Invite sent. skipped_user_ids lists invitees who were not added to the requested projects because they must verify their identity first.
         '403':
           description: Organization does not allow to invite people
       security:
@@ -45838,6 +45842,15 @@ components:
           type: array
       required:
         - emails
+      type: object
+    SendInviteResponse:
+      properties:
+        skipped_user_ids:
+          items:
+            type: integer
+          type: array
+      required:
+        - skipped_user_ids
       type: object
     SerializationOption:
       properties:
