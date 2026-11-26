@@ -13636,6 +13636,12 @@ paths:
         Paginated, sortable member performance rows for annotation/review tables.
       operationId: api_projects_stats_member_performance_rows_retrieve
       parameters:
+        - description: End of the date range (ISO 8601, inclusive). Pass together with <code>start</code>.
+          in: query
+          name: end
+          schema:
+            format: date-time
+            type: string
         - in: path
           name: id
           required: true
@@ -13661,6 +13667,12 @@ paths:
           name: page_size
           schema:
             type: integer
+        - description: 'Start of the date range (ISO 8601, inclusive). Pass together with <code>end</code>. Each metric is dated like Analytics &gt; Member Performance: annotation work by the last submit or update, review work by the review, time by when it was spent. Agreement and evaluation metrics are all-time.'
+          in: query
+          name: start
+          schema:
+            format: date-time
+            type: string
         - description: 'Which table to load: "annotations" or "reviews".'
           in: query
           name: table
@@ -13713,6 +13725,12 @@ paths:
         Footer / Total aggregates for annotation or review member tables. Use with paginated <code>member_performance_rows</code>.
       operationId: api_projects_stats_member_performance_summary_retrieve
       parameters:
+        - description: End of the date range (ISO 8601, inclusive). Pass together with <code>start</code>.
+          in: query
+          name: end
+          schema:
+            format: date-time
+            type: string
         - in: path
           name: id
           required: true
@@ -13722,6 +13740,12 @@ paths:
           in: query
           name: ids
           schema:
+            type: string
+        - description: 'Start of the date range (ISO 8601, inclusive). Pass together with <code>end</code>. Each metric is dated like Analytics &gt; Member Performance: annotation work by the last submit or update, review work by the review, time by when it was spent. Agreement and evaluation metrics are all-time.'
+          in: query
+          name: start
+          schema:
+            format: date-time
             type: string
         - description: 'Which table: "annotations" or "reviews".'
           in: query
